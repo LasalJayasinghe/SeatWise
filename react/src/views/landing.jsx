@@ -11,8 +11,6 @@ import { TypeAnimation } from 'react-type-animation';
 import CountUp, { useCountUp } from 'react-countup';
 import {Link} from "react-router-dom";
 
-
-
 export default function landing(){
 
     const [loading, setLoading] = useState(false);
@@ -20,8 +18,17 @@ export default function landing(){
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
-        }, 5000);
+        }, 50);
     }, []);
+
+    // Set preloader until the web page is loaded
+    // const [isLoading, setIsLoading] = useState(true);
+
+    // useEffect(() => {
+    //   window.onload = () => {
+    //     setIsLoading(false);
+    //   };
+    // }, []);
 
     useCountUp({
         ref: 'counter',
@@ -30,7 +37,7 @@ export default function landing(){
         scrollSpyDelay: 1000,
       });
     
-  let [color, setColor] = useState("#3EB075");
+  let [color] = useState("#3EB075");
 
   return (
     <div>
@@ -51,7 +58,8 @@ export default function landing(){
         </div>
     </div>
     :
-    <header className='container p-20 h-screen'>
+    <header>
+        <div className='container p-20 h-screen'>
         <div class="flex flex-row-reverse ">
             <div>
                <Link to = "/signup" > 
@@ -399,6 +407,7 @@ export default function landing(){
   </div>
   </Fade>
 </section>
+</div>
     </header>
     }
     </div>
