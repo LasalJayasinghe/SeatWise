@@ -9,6 +9,7 @@ import {
   SquaresPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import logo from '../assets/logo.svg'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 
 const products = [
@@ -36,7 +37,7 @@ export default function Example() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="w-auto h-8 " src="../assets/logo.svg" alt="logo" />
+            <img className="w-auto h-8 " src={logo} alt="logo" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -131,7 +132,7 @@ export default function Example() {
               <span className="sr-only">Your Company</span>
               <img
                 className="w-auto h-8"
-                src="../assets/logo.svg"
+                src={logo}
                 alt="logo"
               />
             </a>
