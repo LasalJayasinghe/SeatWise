@@ -13,6 +13,7 @@ class Restaurant extends Model
     protected $table = 'restaurants';
 
     // Define the fillable attributes (if applicable)
+<<<<<<< Updated upstream
     protected $fillable = ['name', 'description','image'];
 
     // Add any additional methods or relationships as needed
@@ -27,3 +28,9 @@ class Restaurant extends Model
 // $restaurant->description = $request->input('description');
 // $restaurant->image = $imagePath;
 // $restaurant->save();
+=======
+    protected $fillable = ['name', 'description'];
+
+    // Add any additional methods or relationships as needed
+}
+>>>>>>> Stashed changes

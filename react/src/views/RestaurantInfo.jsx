@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
+<<<<<<< Updated upstream
 import ImageSlideshow from '../components/ImageSlideshow';
 
+=======
+>>>>>>> Stashed changes
 
 const RestaurantInfo = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [error, setError] = useState(null);
+<<<<<<< Updated upstream
   const [toggleState, setToggleState] = useState('tables');
   
+=======
+>>>>>>> Stashed changes
 
   useEffect(() => {
     const fetchRestaurantData = async () => {
@@ -24,6 +30,7 @@ const RestaurantInfo = () => {
     fetchRestaurantData();
   }, [id]);
 
+<<<<<<< Updated upstream
   const handleToggle = (value) => {
     setToggleState(value);
   };
@@ -76,5 +83,27 @@ structure goes here
           </div>
         </div>
       )}
+=======
+  return (
+    <div>
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        <div>
+          {restaurant ? (
+            <div>
+              <h2>{restaurant.name}</h2>
+              <p>{restaurant.description}</p>
+              {/* Display other relevant restaurant information */}
+            </div>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+>>>>>>> Stashed changes
 
 export default RestaurantInfo;
