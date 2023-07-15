@@ -7,6 +7,13 @@ import NotFound from './views/notFound.jsx';
 import Dashboard from './views/dashboard.jsx';
 import DefaultLayout from './components/DefaultLayout.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
+import RestaurantGuestLayout from './components/RestaurantGuestLayout.jsx';
+import RestaurantSignup from './views/RestaurantSignup.jsx';
+import RestaurantDefaultLayout from './components/RestaurantDefaultLayout.jsx';
+import Restaurant from './views/Restaurant.jsx';
+import Restaurants from './views/Restaurants.jsx';
+import RestaurantDashboard from './views/RestaurantDashboard.jsx';
+import RestaurantLogin from './views/RestaurantLogin.jsx';
 
 const router = createBrowserRouter([
     {
@@ -46,6 +53,44 @@ const router = createBrowserRouter([
             {
                 path: '/signup',
                 element : <Signup />
+            },
+
+        ]
+    },
+    {
+        path: '/',
+        element: <RestaurantGuestLayout />,
+        children: [
+            {
+                path: "/restaurantlogin",
+                element: <RestaurantLogin />,
+            },
+            {
+                path: "/restaurantsignup",
+                element: <RestaurantSignup />, 
+            },
+            
+        ]
+    },
+    {
+        path: '/',
+        element: <RestaurantDefaultLayout />,
+        children: [
+            {
+                path: '/',
+                element : <Navigate to ="/restaurant" />
+            },
+            {
+                path: "/restaurant",
+                element: <Restaurant />, 
+            },
+            {
+                path: "/restaurants",
+                element: <Restaurants />, 
+            },
+            {
+                path: "/restaurantDashboard",
+                element: <RestaurantDashboard />, 
             },
 
         ]

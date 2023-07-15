@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import {Link} from "react-router-dom";
-import {useStateContext} from "../context/ContextProvider.jsx";
+// import {Link} from "react-router-dom";
+// import {useStateContext} from "../context/ContextProvider.jsx";
 
 export default function Users(){
 	const [users,setUsers] = useState([]);
@@ -14,13 +14,13 @@ export default function Users(){
 	const getUsers = () => {
 		setLoading(true)
 		axiosClient.get('/users')
-		  .then(({ data }) => {
+		.then(({ data }) => {
 			setLoading(false)
 			setUsers(data.data)
-		  })
-		  .catch(() => {
-			setLoading(false)
-		  })
+		})
+		.catch(() => {
+		setLoading(false)
+		})
 	}
 
 
