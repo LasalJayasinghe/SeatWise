@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import Cards from '../components/Cards';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Datepicker from "tailwind-datepicker-react";
@@ -45,7 +46,7 @@ export default function Dashboard() {
         </div>
       </Carousel>
 
-      <div className="flex flex-wrap justify-center items-center mt-10 mb-10">
+      <div className="flex flex-wrap justify-center items-center mt-10 ">
         <input type="text" className="w-full md:w-auto mb-2 md:mb-0 md:mr-5 p-2 rounded-lg focus:border-gray-400" placeholder="Input 1" />
         <input type="date" className="w-full md:w-auto mb-2 md:mb-0 md:mr-5 p-2 rounded-lg focus:border-gray-400" placeholder="Input 2" />
         <input type="text" className="w-full md:w-auto mb-2 md:mb-0 md:mr-5 p-2 rounded-lg focus:border-gray-400" placeholder="Input 3" />
@@ -53,9 +54,13 @@ export default function Dashboard() {
         <button type="submit" className="w-full md:w-auto p-3 bg-zinc-900 rounded-lg shadow justify-center items-center gap-2 flex text-white">Search</button>
       </div>
 
-      <div className='m-6 bg-slate-400'>
-        Meals you may like
-      </div>
+
+	<div className='m-6'>
+    <Cards/>
+    <Cards/>
+	</div>
+	
+
 
       <div>
         <h2>Dashboard</h2>
