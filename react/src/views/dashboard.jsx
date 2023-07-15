@@ -1,36 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Datepicker from "tailwind-datepicker-react"
+import Datepicker from "tailwind-datepicker-react";
 import slide1 from '../assets/slide1.png';
 import slide2 from '../assets/slide2.png';
 import slide3 from '../assets/slide3.png';
 import slide4 from '../assets/slide4.png';
-import Example from '../components/Header';
+import { Link } from 'react-router-dom';
+import axiosClient from '../axios-client';
 
 export default function Dashboard() {
-//   const DemoComponent = () => {
-//     const [show, setShow] = useState(false);
-//     const handleChange = (selectedDate) => {
-//       console.log(selectedDate);
-//     };
-//     const handleClose = (state) => {
-//       setShow(state);
-//     };
+  const [restaurants, setRestaurants] = useState([]);
 
-//     return (
-//       <div>
-//         <div>
-// 			<Datepicker options={options} onChange={handleChange} show={show} setShow={handleClose} />
-// 		</div>
-//       </div>
-//     );
-//   };
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const response = await axiosClient.get('/restaurants');
+        setRestaurants(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
 
   return (
     <div className='bg-white'>
-      <Example />
+      <Header />
 
       <Carousel autoPlay infiniteLoop showThumbs={false}>
         <div>
@@ -55,12 +53,23 @@ export default function Dashboard() {
         <button type="submit" className="w-full md:w-auto p-3 bg-zinc-900 rounded-lg shadow justify-center items-center gap-2 flex text-white">Search</button>
       </div>
 
-	<div className='m-6 bg-slate-400'>
-		Meals you may like
-	</div>
-	
+      <div className='m-6 bg-slate-400'>
+        Meals you may like
+      </div>
 
-
+      <div>
+        <h2>Dashboard</h2>
+        <div className="restaurant-cards">
+          {restaurants.map((restaurant) => (
+            <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+              <div className="restaurant-card">
+                <h3>{restaurant.name}</h3>
+                <p>{restaurant.description}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

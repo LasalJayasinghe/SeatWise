@@ -18,7 +18,7 @@ export default function landing(){
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
-        }, 50);
+        }, 1000);
     }, []);
 
     // Set preloader until the web page is loaded

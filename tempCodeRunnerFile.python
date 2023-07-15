@@ -1,1 +1,198 @@
-print("hello)")
+class Item:
+    def __init__(self, name='Unknown'):
+        self.name = name
+
+
+class Room:
+    def __init__(self, name='Unknown', item=None, north=None, east=None, south=None, west=None):
+        self.name = name
+        self.item = item
+        self.north = north
+        self.east = east
+        self.south = south
+        self.west = west
+
+    def add_item(self, item):
+        self.item = item
+
+    def remove_item(self):
+        item = self.item
+        self.item = None
+        return item
+
+
+class Player:
+    def __init__(self, name='Unknown'):
+        self.name = name
+        self.inventory = []
+
+    def pick_up_item(self, item):
+        self.inventory.append(item)
+        print(f"Picked up {item.name}.")
+
+    def show_inventory(self):
+        if self.inventory:
+            print("Inventory:")
+            for item in self.inventory:
+                print(item.name)
+        else:
+            print("Inventory is empty.")
+
+
+class Game:
+    def __init__(self, start_room):
+        self.current_room = start_room
+
+    def move(self, direction):
+        if direction == "N" and self.current_room.north:
+            self.current_room = self.current_room.north
+        elif direction == "E" and self.current_room.east:
+            self.current_room = self.current_room.east
+        elif direction == "S" and self.current_room.south:
+            self.current_room = self.current_room.south
+        elif direction == "W" and self.current_room.west:
+            self.current_room = self.current_room.west
+        else:
+            print("You cannot move in that direction.")
+
+    def search_items(self, rooms):
+        found_items = []
+        for room in rooms:
+            if room.item:
+                found_items.append(room.item.name)
+        if found_items:
+            print("Found items:")
+            for item_name in found_items:
+                print(item_name)
+        else:
+            print("No items found in the given rooms.")
+
+    def show_inventory(self, player):
+        player.show_inventory()
+
+    def play(self, player):
+        print(f"Welcome, {player.name}, to the adventure game!")
+        print(f"You are currently in the {self.current_room.name}.")
+        while True:
+            command = input("Enter a command (N, E, S, W, P, I, S <rooms>, Q): ")
+            if command.upper() == "N":
+                self.move("N")
+            elif command.upper() == "E":
+                self.move("E")
+            elif command.upper() == "S":
+                self.move("S")
+            elif command.upper() == "W":
+                self.move("W")
+            elif command.upper() == "P":
+                if self.current_room.item:
+                    item = self.current_room.remove_item()
+                    player.pick_up_item(item)
+                else:
+                    print("There is no item to pick up in this room.")
+            elif command.upper() == "I":
+                self.show_inventory(player)
+            elif command.upper().startswith("S "):
+                room_names = command[2:].split()
+                rooms = []
+                for room_name in room_names:
+                    room = self.find_room_by_name(room_name)
+                    if room:
+                        rooms.append(room)
+                self.search_items(rooms)
+            elif command.upper() == "Q":
+                print("Thank you for playing!")
+                break
+            else:
+                print("Invalid command.")
+
+            print(f"You are now in the {self.current_room.name}.")
+
+
+    def find_room_by_name(self, room_name):
+        queue = [self.current_room]
+        visited = set()
+        while queue:
+            current = queue.pop(0)
+            if current.name == room_name:
+                return current
+            visited.add(current)
+            if current.north and current.north not in visited:
+                queue.append(current.north)
+            if current.east and current.east not in visited:
+                queue.append(current.east)
+            if current.south and current.south not in visited:
+                queue.append(current.south)
+            if current.west and current.west not in visited:
+                queue.append(current.west)
+        return None
+
+
+# Setup the game board
+room1 = Room("Kitchen")
+room2 = Room("Bedroom")
+room3 = Room("Bathroom")
+room4 = Room("Living Room")
+room5 = Room("Study")
+room6 = Room("Dining Room")
+room7 = Room("Garage")
+room8 = Room("Basement")
+room9 = Room("Attic")
+room10 = Room("Pantry")
+room11 = Room("Closet")
+room12 = Room("Laundry Room")
+
+# Set room connections
+room1.north = room2
+room2.south = room1
+room2.west = room4
+room4.east = room2
+room4.south = room3
+room3.north = room4
+room5.west = room2
+room5.north = room6
+room6.south = room5
+room4.northeast = room6
+room6.southwest = room4
+room4.southeast = room7
+room7.northwest = room4
+room7.north = room8
+room8.south = room7
+room8.up = room9
+room9.down = room8
+room10.west = room1
+room10.north = room11
+room11.south = room10
+room11.east = room12
+room12.west = room11
+room12.south = room3
+
+# Add items to rooms
+item1 = Item("Knife")
+item2 = Item("Book")
+item3 = Item("Toothbrush")
+item4 = Item("Laptop")
+item5 = Item("Screwdriver")
+item6 = Item("Flashlight")
+item7 = Item("Screw")
+item8 = Item("Hammer")
+item9 = Item("Saw")
+item10 = Item("Wrench")
+
+room1.add_item(item1)
+room2.add_item(item2)
+room3.add_item(item3)
+room4.add_item(item4)
+room5.add_item(item5)
+room6.add_item(item6)
+room7.add_item(item7)
+room8.add_item(item8)
+room9.add_item(item9)
+room10.add_item(item10)
+
+# Create player
+player_name = input("Enter your name: ")
+player = Player(player_name)
+
+# Start the game
+game = Game(room1)
+game.play(player)

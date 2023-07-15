@@ -1,8 +1,16 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\RestaurantController;
+<<<<<<< Updated upstream
+use App\Http\Controllers\Api\UserController;
+=======
+>>>>>>> Stashed changes
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +28,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
     Route::post('/logout' , [AuthController::class , 'logout']);
+    Route::apiResource('/users', UserController::class);
+    Route::get('/restaurants/{id}', [RestaurantController::class, 'show']);
+
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -29,3 +40,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/signup' , [AuthController::class , 'signup']);
 Route::post('/login' , [AuthController::class , 'login']);
 Route::post('/landing' , [AuthController::class , 'landing']);
+Route::get('/restaurants', [RestaurantController::class, 'index']);
+
+
