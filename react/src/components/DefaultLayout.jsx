@@ -7,7 +7,7 @@ export default function DefaultLayout() {
     const {user, token, setUser, setToken } = useStateContext();
 
     if (!token) {
-        return <Navigate to ='/landing' />
+        return <Navigate to ='/login' />
     }
 
     const onLogout = ev => {
@@ -33,7 +33,6 @@ export default function DefaultLayout() {
         //         <Link to="/dashboard">Dashboard</Link>
         //         <Link to="/users">Users</Link>
         //     </aside>
-        //     <div className="content">
         //         <header>
         //             <div>
         //                 Header
