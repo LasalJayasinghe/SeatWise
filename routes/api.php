@@ -41,9 +41,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     Route::post('/reslogout', [RestaurantController::class, 'logout']);
 // });
 
+Route::post('/landing' , [AuthController::class , 'landing']);
 Route::post('/signup' , [AuthController::class , 'signup']);
 Route::post('/login' , [AuthController::class , 'login']);
-Route::post('/landing' , [AuthController::class , 'landing']);
+
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 
 Route::get('restaurants', [RestaurantController::class, 'show']);

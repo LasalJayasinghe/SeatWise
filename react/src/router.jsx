@@ -11,9 +11,12 @@ import RestaurantGuestLayout from './components/RestaurantGuestLayout.jsx';
 import RestaurantSignup from './views/RestaurantSignup.jsx';
 import RestaurantDefaultLayout from './components/RestaurantDefaultLayout.jsx';
 import Restaurant from './views/Restaurant.jsx';
-import Restaurants from './views/Restaurants.jsx';
 import RestaurantDashboard from './views/RestaurantDashboard.jsx';
 import RestaurantLogin from './views/RestaurantLogin.jsx';
+import Profile from './views/Profile.jsx';
+import Structure from './views/Structure.jsx';
+import Reservations from './views/Reservations.jsx';
+import Employees from './views/Employees.jsx';
 
 const router = createBrowserRouter([
     {
@@ -85,12 +88,24 @@ const router = createBrowserRouter([
                 element: <Restaurant />, 
             },
             {
-                path: "/restaurants",
-                element: <Restaurants />, 
+                path: "/profile",
+                element: <Profile />, 
             },
             {
                 path: "/restaurantDashboard",
                 element: <RestaurantDashboard />, 
+            },
+            {
+                path: "/structure",
+                element: <Structure />, 
+            },
+            {
+                path: "/reservations",
+                element: <Reservations />, 
+            },
+            {
+                path: "/employees",
+                element: <Employees />, 
             },
 
         ]
