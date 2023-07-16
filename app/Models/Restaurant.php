@@ -13,24 +13,13 @@ class Restaurant extends Model
     protected $table = 'restaurants';
 
     // Define the fillable attributes (if applicable)
-<<<<<<< Updated upstream
-    protected $fillable = ['name', 'description','image'];
+    protected $fillable = ['name', 'description', 'image'];
 
     // Add any additional methods or relationships as needed
+
+    // Define the relationship with Occasion model
+    public function occasions()
+    {
+        return $this->hasMany(Occasion::class);
+    }
 }
-
-
-// $image = $request->file('image');
-// $imagePath = $image->store('restaurant_images', 'public');
-
-// $restaurant = new Restaurant();
-// $restaurant->name = $request->input('name');
-// $restaurant->description = $request->input('description');
-// $restaurant->image = $imagePath;
-// $restaurant->save();
-=======
-    protected $fillable = ['name', 'description'];
-
-    // Add any additional methods or relationships as needed
-}
->>>>>>> Stashed changes

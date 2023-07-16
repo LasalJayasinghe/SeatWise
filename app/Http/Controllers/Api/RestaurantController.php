@@ -25,4 +25,19 @@ class RestaurantController extends Controller
 
         return response()->json($restaurant);
     }
+
+    public function occasions($id)
+    {
+        // Find the specific restaurant
+        $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        // Get the occasions for the restaurant
+        $occasions = $restaurant->occasions;
+
+        return response()->json($occasions);
+    }
 }
