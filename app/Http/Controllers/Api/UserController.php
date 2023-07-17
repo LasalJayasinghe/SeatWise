@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -36,11 +38,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
     
-<<<<<<< Updated upstream
-        $user =User::create($data);
-=======
         $user = User::create($data);
->>>>>>> Stashed changes
         return new UserResource($user);
         return response(new UserResource($user), 201);
 
@@ -74,15 +72,16 @@ class UserController extends Controller
             $user->update($data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $user -> delete();
-        return response(null, 204);
-    }
+/**
+ * Remove the specified resource from storage.
+ *
+ * @param  \App\Models\User  $user
+ * @return \Illuminate\Http\Response
+ */
+public function destroy(User $user)
+{
+    $user->delete();
+    return response(null, 204);
+}
+
 }

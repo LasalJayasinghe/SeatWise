@@ -2,10 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\Api\UserController;
-=======
->>>>>>> Stashed changes
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,5 +38,4 @@ Route::post('/signup' , [AuthController::class , 'signup']);
 Route::post('/login' , [AuthController::class , 'login']);
 Route::post('/landing' , [AuthController::class , 'landing']);
 Route::get('/restaurants', [RestaurantController::class, 'index']);
-
 
