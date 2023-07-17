@@ -7,6 +7,8 @@ import NotFound from './views/notFound.jsx';
 import Dashboard from './views/dashboard.jsx';
 import DefaultLayout from './components/DefaultLayout.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
+import RestaurantInfo from './views/RestaurantInfo';
+
 
 const router = createBrowserRouter([
     {
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: '/users',
                 element : <Users />
+            },
+            {
+                path: '/restaurants/:id', // Define the route for restaurant information
+                element: <RestaurantInfo />,
             },
         ]
     },

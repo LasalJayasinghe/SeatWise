@@ -1,11 +1,15 @@
 <?php
 
+
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+
 
 class UserController extends Controller
 {
@@ -33,7 +37,8 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
-        User::create($data);
+    
+        $user = User::create($data);
         return new UserResource($user);
         return response(new UserResource($user), 201);
 
@@ -67,15 +72,16 @@ class UserController extends Controller
             $user->update($data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $user -> delete();
-        return response(null, 204);
-    }
+/**
+ * Remove the specified resource from storage.
+ *
+ * @param  \App\Models\User  $user
+ * @return \Illuminate\Http\Response
+ */
+public function destroy(User $user)
+{
+    $user->delete();
+    return response(null, 204);
+}
+
 }
