@@ -85,7 +85,7 @@ const RestaurantInfo = () => {
               toggleState === 'occasions' ? 'bg-blue-500 text-white' : 'bg-gray-400'
             }`}
           >
-            Occasions
+            Occasion Halls
           </button>
         </div>
         <div className="content bg-gray-300 p-4">
