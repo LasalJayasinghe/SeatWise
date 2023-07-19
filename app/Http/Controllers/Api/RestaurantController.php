@@ -35,7 +35,7 @@ class RestaurantController extends Controller
         return response(compact('user', 'token'));
 
         // return response()->json(['user' => $user, 'token' => $token, 'redirect_url' => '/restaurant']);
-        return redirect('/restaurant');
+        //return redirect('/restaurant');
         // return view('restaurant');
         // return redirect('/restaurant');
     }
