@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
+use App\Http\Requests\addCashierRequest;
 
 class RestaurantController extends Controller
 {
@@ -67,4 +68,31 @@ class RestaurantController extends Controller
         $user->currentAccessToken()->delete();
         return response('', 204);
     }
+
+    public function addCashier(addCashierRequest $request){
+        $data = $request->validated();
+        /** @var Restaurants $user */
+        $user = Restaurants::create([
+          
+            'cashier_name' => $data['cashiername'],
+            'cashier_email' => $data['email'],
+             'cashier_phone_number' => $data['phone'],
+             'cashier_password' => bcrypt($data['password']),
+        ]);
+
+        $token = $user->createToken('main')->plainTextToken;
+
+        return response(compact('user', 'token'));
+
+        
+    }
+
+
+
+
+
+
+
+
+
 }

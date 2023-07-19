@@ -49,6 +49,7 @@ Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup
 
 Route::get('restaurants', [RestaurantController::class, 'show']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
+Route::post('/employees', [RestaurantController::class, 'addCashier'])->name('cashier.signup');
 
 
 // Remove the existing '/user' route that may be conflicting
