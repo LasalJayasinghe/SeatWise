@@ -29,6 +29,10 @@ class Restaurants extends Authenticatable
         'name',
         'phone',
         'password',
+        'cashier_name',
+        'cashier_email',
+        'cashier_phone_number',
+        'cashier_password',
     ];
 
     /**
@@ -39,6 +43,7 @@ class Restaurants extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'cashier_password',
     ];
 
     /**

@@ -16,7 +16,9 @@ import RestaurantLogin from './views/RestaurantLogin.jsx';
 import Profile from './views/Profile.jsx';
 import Structure from './views/Structure.jsx';
 import Reservations from './views/Reservations.jsx';
-import Employees from './views/Employees.jsx';
+//import AddCashier from './views/cddCashier.jsx';
+import AddCashier from './views/addCashier.jsx';
+
 
 const router = createBrowserRouter([
     {
@@ -72,6 +74,8 @@ const router = createBrowserRouter([
                 path: "/restaurantsignup",
                 element: <RestaurantSignup />, 
             },
+
+           
             
         ]
     },
@@ -103,9 +107,10 @@ const router = createBrowserRouter([
                 path: "/reservations",
                 element: <Reservations />, 
             },
+            
             {
                 path: "/employees",
-                element: <Employees />, 
+                element: <AddCashier />, 
             },
 
         ]
