@@ -57,6 +57,18 @@ const HallDetail = () => {
 
   const [showWaitlistForm, setShowWaitlistForm] = useState(false); // New state for showing the waitlist form
 
+  const handleConfirmWaitlist = (formData) => {
+    // Handle the waitlist form submission here
+    console.log('Form Data:', formData);
+    // You can perform any other actions here, such as saving the data to the server.
+    // For demonstration purposes, we are only logging the form data.
+    setShowWaitlistForm(false);
+  };
+
+  const handleWaitlistFormClose = () => {
+    setShowWaitlistForm(false);
+    setSelectedSlot(null);
+  };
 
   if (!hall) {
     return <div>Loading...</div>;
@@ -89,8 +101,8 @@ const HallDetail = () => {
           </div>
         </div>
 
-       {/* Right Column - Time Availabilities */}
-       <div>
+        {/* Right Column - Time Availabilities */}
+        <div>
           {selectedDate && (
             <>
               <h3>{selectedDate.toDateString()}</h3>
@@ -115,7 +127,7 @@ const HallDetail = () => {
                   ))}
                 </ul>
               ) : (
-                <p>No time availabilities for selected date.</p>
+                <p>No time availabilities for the selected date.</p>
               )}
             </>
           )}
@@ -127,7 +139,13 @@ const HallDetail = () => {
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
           {showWaitlistForm ? ( // Conditionally render the waitlist form
-            <WaitlistForm onClose={() => setShowWaitlistForm(false)} />
+            <WaitlistForm
+              user={{ username: 'John Doe', phoneNumber: '123-456-7890' }} // Replace with user data from the database
+              selectedDate={selectedDate}
+              selectedSlot={selectedSlot}
+              onClose={handleWaitlistFormClose}
+              onConfirm={handleConfirmWaitlist}
+            />
           ) : (
             <div className="bg-white p-6 rounded-md shadow-lg">
               {selectedSlot && (
