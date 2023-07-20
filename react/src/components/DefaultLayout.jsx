@@ -29,7 +29,7 @@ const DefaultLayout = () => {
   }, []);
 
   return (
-    <div id="defaultLayout">
+    <div id="defaultLayout" className='bg-white'>
       <div className="content">
         <Header user={user} onLogout={onLogout} />
         <main>
