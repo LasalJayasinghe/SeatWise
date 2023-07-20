@@ -1,6 +1,31 @@
+// import { useEffect } from "react";
+// import { useState } from "react";
+// import axiosClient from "../axios-client";
 
 
 export default function RestaurantDashboard() {
+
+  // const [user, setUser] = useState([]);
+  //   getUsers();
+  // useEffect( () => {
+
+  // }, [])
+
+  // const getUsers = () => {
+  //   axiosClient.get('/restaurantDashboard')
+  //     .then(({data}) => {
+  //       console.log(data);
+  //     })
+  //     .catch(() => {
+      
+  //     })
+  // }
+
+
+
+
+
+
   return (
     <>
       <header className="bg-white shadow">
@@ -9,7 +34,9 @@ export default function RestaurantDashboard() {
           </div>
         </header>
         <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            <p>Restaurant List</p>
+          </div>
         </main>
     </>
   )
