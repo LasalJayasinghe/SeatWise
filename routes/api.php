@@ -27,7 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/reslogout', [RestaurantController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
 });
-
+ 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -49,7 +49,7 @@ Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup
 
 Route::get('restaurants', [RestaurantController::class, 'show']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
-Route::post('/employees', [RestaurantController::class, 'addCashier'])->name('cashier.signup');
+Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
 
 
 // Remove the existing '/user' route that may be conflicting

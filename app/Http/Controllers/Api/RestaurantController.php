@@ -70,9 +70,17 @@ class RestaurantController extends Controller
     }
 
     public function addCashier(addCashierRequest $request){
+         // Make sure the user is authenticated
+   
+
         $data = $request->validated();
-        /** @var Restaurants $user */
-        $user = Restaurants::create([
+          /** @var Restaurants $user */
+        $user = auth('restaurants')->user();
+       $restaurant = Restaurants::where('email', $user->email)->first();
+
+      
+      
+        $user->update([
           
             'cashier_name' => $data['cashiername'],
             'cashier_email' => $data['email'],

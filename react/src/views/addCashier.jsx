@@ -9,7 +9,7 @@ export default function AddCashier() {
      
 	const cashiernameRef =useRef();
     const emailRef = useRef()
-    const nameRef = useRef()
+    //const nameRef = useRef()
     const phoneRef = useRef()
     const passwordRef = useRef()
     const [errors, setErrors] = useState(null);
@@ -22,14 +22,14 @@ export default function AddCashier() {
       ev.preventDefault()
 
       const payLoad = {
-		cashiernameRef: cashiernameRef.current.value,
+		cashiername: cashiernameRef.current.value,
           email: emailRef.current.value,
-          name: nameRef.current.value,
+          //name: nameRef.current.value,
           phone: phoneRef.current.value,
           password: passwordRef.current.value,
          
       }
-      axiosClient.post('/restaurantsignup', payLoad)
+      axiosClient.post('/addCashier', payLoad)
           .then(({data}) => {
               setUser(data.user);
               setToken(data.token);
@@ -42,7 +42,7 @@ export default function AddCashier() {
               if(response && response.status == 422) {
                   setErrors(response.data.errors);
               }
-          })
+          }) 
   } 
 
     return (
@@ -61,7 +61,7 @@ export default function AddCashier() {
         <form
           onSubmit={onSubmit}
           className="space-y-1"
-          action="{{ route('cashier.signup') }}"
+          action='#'
           method="POST"
         >
           
