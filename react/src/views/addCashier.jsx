@@ -2,11 +2,31 @@ import { useRef, useState } from "react";
 import Logo from "../assets/logo.svg";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../context/ContextProvider";
+import React, { useEffect } from 'react';
+
 // import { Navigate } from 'react-router-dom'
 // import { useHistory } from 'react-router-dom';
 
 export default function AddCashier() {
-     
+  const [users,setUsers] = useState([]);
+	const[loading,setLoading] = useState(false);
+
+	useEffect(() => {
+		getUsers()
+	},[])
+
+	const getUsers = () => {
+		setLoading(true)
+		axiosClient.get('/users')
+		  .then(({ data }) => {
+			setLoading(false)
+			setUsers(data.data)
+		  })
+		  .catch(() => {
+			setLoading(false)
+		  })
+	}
+
 	const cashiernameRef =useRef();
     const emailRef = useRef()
     //const nameRef = useRef()
