@@ -84,10 +84,12 @@ class RestaurantController extends Controller
              'cashier_email' => $data['email'],
              'cashier_phone_number' => $data['phone'],
              'cashier_password' => bcrypt($data['password']),
-         ]);
-     
-       //  return redirect()->route('');
-       
+        ]);
+
+       // $token = $user->createToken('main')->plainTextToken;
+
+        //return response(compact('user', 'token'));
+
         
     }
 
