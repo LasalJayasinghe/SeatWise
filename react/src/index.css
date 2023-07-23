@@ -330,3 +330,44 @@ table > tbody > tr > td {
    button:hover .button-text {
     color: #fff;
    }
+
+/*Table staructure page*/
+/* .grid-container {
+    display: grid;
+    grid-template-columns: auto ; 
+    padding: 10px;
+}
+
+.grid-item {
+    border: 5px solid white;
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    background-color: #344054;
+    opacity: 20%;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-bottom: 10px;
+} */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 100px);
+    grid-auto-rows: 1fr;
+    grid-auto-columns: 1fr;
+    gap: 5px; 
+    padding: 10px;
+  }
+  
+  .grid-item {
+    border: 5px solid white;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    background-color: #344054;
+    border-radius: 15px;
+    opacity: 20%;
+    cursor: pointer;
+  }
