@@ -11,8 +11,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 
 const navigation = [
-{ name: 'Dashboard', to: '/restaurantDashboard', current: true },
-{ name: 'profile', to: '/profile', current: false },
+{ name: 'Dashboard', to: '/restaurantDashboard', current: false },
+{ name: 'Profile', to: '/profile', current: false },
 { name: 'Table structure', to: '/structure', current: false },
 { name: 'Reservations', to: '/reservations', current: false },
 { name: 'Employees', to: '/employees', current: false },
@@ -93,8 +93,14 @@ return (
                         key={item.name}
                         to={item.to}
                         className={classNames(
-                          location.pathname === item.to ? 'bg-green-500 text-white' : 'text-gray-500 hover:text-green-500',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          item.current
+                          ? 'bg-green-500 text-white'
+                          : 'text-gray-500 hover: hover:text-green-500',
+                          'block rounded-md px-3 py-2 text-base font-medium',
+                          location.pathname === item.to 
+                          ? 'bg-green-500 text-white' 
+                          : 'text-gray-500 hover:text-green-500',
+                         
                         )}
                       >
                         {item.name}
