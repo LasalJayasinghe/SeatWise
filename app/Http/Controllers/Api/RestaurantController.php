@@ -39,7 +39,7 @@ class RestaurantController extends Controller
         // return response()->json(['user' => $user, 'token' => $token, 'redirect_url' => '/restaurant']);
         //return redirect('/restaurant');
         // return view('restaurant');
-        // return redirect('/restaurant');
+        // 
     }
 
     public function restaurantlogin(RestaurantLoginRequest $request)
@@ -78,16 +78,17 @@ class RestaurantController extends Controller
         // $user = auth('restaurants')->user();
         // $restaurant = Restaurants::where('email', $user->email)->first();
        
-         // Find the specific user instance by its ID and then call update method on it
+        $restaurant = auth('restaurants')->user();
          $user = Cashiers::create ([
+            'brn' => $restaurant->brn, // Associate the cashier with the restaurant
              'cashier_name' => $data['cashiername'],
              'cashier_email' => $data['email'],
              'cashier_phone_number' => $data['phone'],
              'cashier_password' => bcrypt($data['password']),
         ]);
-
+       // return redirect('/restaurant');
        // $token = $user->createToken('main')->plainTextToken;
-
+       return response()->json(['message' => 'Cashier successfully added']);
         //return response(compact('user', 'token'));
 
         

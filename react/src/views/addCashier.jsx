@@ -8,6 +8,31 @@ import React, { useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 
 export default function AddCashier() {
+
+
+  const [message, setMessage] = useState('');
+
+ /* const handleAddCashier = async () => {
+    try {
+      const response = await fetch('/addCashier', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any necessary headers (e.g., authentication token)
+        },
+        body: JSON.stringify({
+          // Add your cashier data here
+        }),
+      });
+
+      const data = await response.json();
+      setMessage(data.message); // Set the message from the response
+
+      // Perform any additional actions based on the response, e.g., redirect or show a success message.
+    } catch (error) {
+      console.error('Error adding cashier:', error);
+    }
+  };
   //const [users,setUsers] = useState([]);
 	//const[loading,setLoading] = useState(false);
 /*
@@ -52,12 +77,12 @@ export default function AddCashier() {
       }
       axiosClient.post('/addCashier', payLoad)
           .then(({data}) => {
-            //console.log(data); 
-              //setUser(data.user);
-              //setToken(data.token);
-              setSuccessMessage('Cashier added successfully!');
-              // <Navigate to="/restaurant" />
-              // history.push('/restaurant');
+            //console.log(data);
+           setMessage(data.message); 
+            // Set the message from the response 
+            <Navigate to="/restaurant" />
+
+             
           })
           .catch(err => {
               const response = err.response;
@@ -86,7 +111,12 @@ export default function AddCashier() {
           action='#'
           method="POST"
         >
-          
+          {message && (
+  <div className="alert">
+    {message}
+  </div>
+)}
+
             {errors && (
               <div className="alert">
                 {Object.keys(errors).map((key) => (
