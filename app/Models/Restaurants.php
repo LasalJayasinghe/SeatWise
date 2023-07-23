@@ -5,11 +5,11 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+Use Illuminate\Database\Eloquent\Model;
 
 class Restaurants extends Authenticatable
 {
@@ -29,10 +29,7 @@ class Restaurants extends Authenticatable
         'name',
         'phone',
         'password',
-        'cashier_name',
-        'cashier_email',
-        'cashier_phone_number',
-        'cashier_password',
+      
     ];
 
     /**
@@ -43,7 +40,7 @@ class Restaurants extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'cashier_password',
+        
     ];
 
     /**

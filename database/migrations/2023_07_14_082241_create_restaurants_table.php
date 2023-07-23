@@ -24,10 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->string('cashier_name')->nullable();
-            $table->string('cashier_email')->nullable();
-            $table->string('cashier_phone_number')->nullable();
-            $table->string('cashier_password')->nullable();
+          
             
         });
     }

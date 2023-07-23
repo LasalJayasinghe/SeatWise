@@ -25,7 +25,7 @@ class addCashierRequest extends FormRequest
     {
         return [
             'cashiername' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:restaurants,email'],
+            'email' => ['required', 'email'],
             'phone' => ['required', 'numeric'],
             'password' => [
                 'required',

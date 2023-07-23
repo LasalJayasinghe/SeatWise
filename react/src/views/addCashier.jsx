@@ -2,38 +2,60 @@ import { useRef, useState } from "react";
 import Logo from "../assets/logo.svg";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../context/ContextProvider";
+import React, { useEffect } from 'react';
+
 // import { Navigate } from 'react-router-dom'
 // import { useHistory } from 'react-router-dom';
 
 export default function AddCashier() {
-     
+  //const [users,setUsers] = useState([]);
+	//const[loading,setLoading] = useState(false);
+/*
+	useEffect(() => {
+		getUsers()
+	},[])
+
+	const getUsers = () => {
+		setLoading(true)
+		axiosClient.get('/users')
+		  .then(({ data }) => {
+			setLoading(false)
+			setUsers(data.data)
+		  })
+		  .catch(() => {
+			setLoading(false)
+		  })
+	}*/
+
 	const cashiernameRef =useRef();
     const emailRef = useRef()
-    const nameRef = useRef()
+    //const nameRef = useRef()
     const phoneRef = useRef()
     const passwordRef = useRef()
     const [errors, setErrors] = useState(null);
-    const {setUser, setToken} = useStateContext();
+   // const {setUser, setToken} = useStateContext();
     // const navigate = useNavigate();
     // const history = useHistory();
+    const [successMessage, setSuccessMessage] = useState('');
 
 
     const onSubmit = (ev) => {
       ev.preventDefault()
 
       const payLoad = {
-		cashiernameRef: cashiernameRef.current.value,
+		cashiername: cashiernameRef.current.value,
           email: emailRef.current.value,
-          name: nameRef.current.value,
+          //name: nameRef.current.value,
           phone: phoneRef.current.value,
           password: passwordRef.current.value,
          
       }
-      axiosClient.post('/restaurantsignup', payLoad)
+      axiosClient.post('/addCashier', payLoad)
           .then(({data}) => {
-              setUser(data.user);
-              setToken(data.token);
-              
+            //console.log(data); 
+              //setUser(data.user);
+              //setToken(data.token);
+              setSuccessMessage('Cashier added successfully!');
               // <Navigate to="/restaurant" />
               // history.push('/restaurant');
           })
@@ -42,7 +64,7 @@ export default function AddCashier() {
               if(response && response.status == 422) {
                   setErrors(response.data.errors);
               }
-          })
+          }) 
   } 
 
     return (
@@ -61,7 +83,7 @@ export default function AddCashier() {
         <form
           onSubmit={onSubmit}
           className="space-y-1"
-          action="{{ route('cashier.signup') }}"
+          action='#'
           method="POST"
         >
           
