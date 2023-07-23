@@ -8,9 +8,9 @@ import React, { useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 
 export default function AddCashier() {
-  const [users,setUsers] = useState([]);
-	const[loading,setLoading] = useState(false);
-
+  //const [users,setUsers] = useState([]);
+	//const[loading,setLoading] = useState(false);
+/*
 	useEffect(() => {
 		getUsers()
 	},[])
@@ -25,7 +25,7 @@ export default function AddCashier() {
 		  .catch(() => {
 			setLoading(false)
 		  })
-	}
+	}*/
 
 	const cashiernameRef =useRef();
     const emailRef = useRef()
@@ -33,9 +33,10 @@ export default function AddCashier() {
     const phoneRef = useRef()
     const passwordRef = useRef()
     const [errors, setErrors] = useState(null);
-    const {setUser, setToken} = useStateContext();
+   // const {setUser, setToken} = useStateContext();
     // const navigate = useNavigate();
     // const history = useHistory();
+    const [successMessage, setSuccessMessage] = useState('');
 
 
     const onSubmit = (ev) => {
@@ -51,9 +52,10 @@ export default function AddCashier() {
       }
       axiosClient.post('/addCashier', payLoad)
           .then(({data}) => {
-              setUser(data.user);
-              setToken(data.token);
-              
+            //console.log(data); 
+              //setUser(data.user);
+              //setToken(data.token);
+              setSuccessMessage('Cashier added successfully!');
               // <Navigate to="/restaurant" />
               // history.push('/restaurant');
           })
