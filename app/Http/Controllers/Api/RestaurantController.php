@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use http\Env\Response;
+use App\Models\Cashier;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
-use App\Http\Requests\addCashierRequest;
+use App\Models\Cashiers;
 
 class RestaurantController extends Controller
 {
@@ -72,26 +74,20 @@ class RestaurantController extends Controller
     public function addCashier(addCashierRequest $request){
          // Make sure the user is authenticated
    
-
-        $data = $request->validated();
-          /** @var Restaurants $user */
-        $user = auth('restaurants')->user();
-       $restaurant = Restaurants::where('email', $user->email)->first();
-
-      
-      
-        $user->update([
-          
-            'cashier_name' => $data['cashiername'],
-            'cashier_email' => $data['email'],
+         $data = $request->validated();
+        // $user = auth('restaurants')->user();
+        // $restaurant = Restaurants::where('email', $user->email)->first();
+       
+         // Find the specific user instance by its ID and then call update method on it
+         $user = Cashiers::create ([
+             'cashier_name' => $data['cashiername'],
+             'cashier_email' => $data['email'],
              'cashier_phone_number' => $data['phone'],
              'cashier_password' => bcrypt($data['password']),
-        ]);
-
-        $token = $user->createToken('main')->plainTextToken;
-
-        return response(compact('user', 'token'));
-
+         ]);
+     
+       //  return redirect()->route('');
+       
         
     }
 
