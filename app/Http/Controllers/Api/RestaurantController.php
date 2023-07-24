@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use http\Env\Response;
 use App\Models\Cashier;
+use App\Models\Cashiers;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
-use App\Models\Cashiers;
 
 class RestaurantController extends Controller
 {
@@ -78,9 +79,13 @@ class RestaurantController extends Controller
         // $user = auth('restaurants')->user();
         // $restaurant = Restaurants::where('email', $user->email)->first();
        
-        $restaurant = auth('restaurants')->user();
+       // $restaurant = auth('restaurants')->user();
+       $restaurant = auth()->guard('restaurants')->user();
+    
+       
          $user = Cashiers::create ([
             'brn' => $restaurant->brn, // Associate the cashier with the restaurant
+            
              'cashier_name' => $data['cashiername'],
              'cashier_email' => $data['email'],
              'cashier_phone_number' => $data['phone'],

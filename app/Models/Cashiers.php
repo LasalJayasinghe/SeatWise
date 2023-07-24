@@ -12,7 +12,7 @@ class Cashiers extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guard = 'Cashier';
+    protected $guard = 'Cashiers';
 
     /**
      * The attributes that are mass assignable.
