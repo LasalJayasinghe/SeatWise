@@ -55,6 +55,9 @@ const WaitlistPage = ({ onClose }) => {
       // Handle error here (e.g., show an error message)
     }
   };
+  const handleClose = () => {
+    navigate(-1); // go back to previous page
+  };
   
 
   return (
@@ -103,9 +106,12 @@ const WaitlistPage = ({ onClose }) => {
           <button type="submit" className="px-4 py-2 rounded bg-green-500 text-white">
             Confirm
           </button>
-          <button type="button" className="px-4 py-2 ml-4 rounded border border-gray-500" onClick={onClose}>
-            Close
-          </button>
+          <button 
+          type="button"
+          onClick={handleClose} 
+          className="px-4 py-2 ml-4 rounded border border-gray-500">
+          Close
+        </button>
         </div>
       </form>
 
