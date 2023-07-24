@@ -4,6 +4,10 @@ import axiosClient from '../axios-client';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import WaitlistForm from '../components/WaitlistForm';
+import '../util/custom-calendar.css'
+
+
+
 
 const HallDetail = () => {
   const { hallId } = useParams();
@@ -76,38 +80,52 @@ const HallDetail = () => {
 
   return (
     <div>
+    
+
+
+
+
+
+
+
+{/* <CustomCalendar/> */}
+
+
+
+      
       {/* Hall Name and Description */}
       <div>
-        <h1 className="text-3xl font-bold mb-4">{hall.name}</h1>
-        <p className="text-gray-600 mb-6">{hall.description}</p>
+        <h1 className="mb-4 text-3xl font-bold">{hall.name}</h1>
+        <p className="mb-6 text-gray-600">{hall.description}</p>
       </div>
 
       {/* Calendar and Time Availabilities */}
-      <div className="flex">
+      <div className="flex justify-center">
         {/* Left Column - Calendar */}
-        <div className="mr-8">
-          <h2 className="text-xl font-bold mb-2">Pick a date to view applicable slots</h2>
-          <div className="border border-gray-300 rounded-md shadow-sm p-2">
+        <div className="mr-8 ">
+          {/* <p className="mb-2 font-semibold text-gray-500 text-md ">Pick a date to view applicable slots</p> */}
+          <div className="p-2 ">
             <Calendar
               onChange={setSelectedDate}
               value={selectedDate}
-              className="rounded-md shadow-sm bg-white p-2"
+              className="p-2 border-transparent "
               tileClassName={({ date, view }) =>
                 view === 'month' && date.toDateString() === new Date().toDateString()
-                  ? 'text-black' // Apply black font color to today's date
-                  : null
+                  ? 'text-green-500' // Apply black font color to today's date
+                  : 'react-calendar__tile--custom'
               }
             />
           </div>
         </div>
 
         {/* Right Column - Time Availabilities */}
-        <div>
+        <div className='mt-6'>
           {selectedDate && (
             <>
-              <h3>{selectedDate.toDateString()}</h3>
-              {timeAvailabilities ? (
-                <ul>
+              <h3 className='text-xl font-bold text-gray-800'>{selectedDate.toDateString()}</h3>
+              <p className='font-semibold text-gray-400'>Pick your time slot</p>
+              {timeAvailabilities  ? (
+                <ul className='mt-6'>
                   {timeAvailabilities.map((availability) => (
                     <li
                       key={availability.id}
@@ -115,10 +133,10 @@ const HallDetail = () => {
                       onClick={() => handleSlotClick(availability)}
                     >
                       <button
-                        className={`p-2 m-2 rounded ${
+                        className={`p-4 m-2 rounded-lg ${
                           availability.availability
-                            ? 'bg-green-500 text-white'
-                            : 'bg-yellow-500 text-white'
+                            ? 'bg-green-500 bg-opacity-10 text-green-500 font-semibold hover:bg-green-500 hover:text-white'
+                            : 'bg-yellow-500 bg-opacity-10 text-yellow-500 font-semibold  hover:bg-yellow-500 hover:text-white'
                         }`}
                       >
                         {availability.start_time} - {availability.end_time}
@@ -147,31 +165,35 @@ const HallDetail = () => {
               onConfirm={handleConfirmWaitlist}
             />
           ) : (
-            <div className="bg-white p-6 rounded-md shadow-lg">
+            <div className="px-10 py-10 bg-white shadow-lg rounded-xl">
               {selectedSlot && (
                 <>
-                  <h4 className="text-lg font-bold mb-4">
-                    {selectedSlot.availability ? 'Slot Available' : 'Slot Unavailable'}
+                  <h4 className="text-lg font-bold ">
+                    {selectedSlot.availability ? 'Slot is available' : 'Slot is unavailable'}
                   </h4>
-                  <div className="mb-4">
-                    {selectedSlot.availability ? (
-                      <button className="px-4 py-2 mr-2 rounded bg-green-500 text-white">
-                        Reserve
-                      </button>
-                    ) : (
-                      <button
-                        className="px-4 py-2 mr-2 rounded bg-yellow-500 text-white"
-                        onClick={() => setShowWaitlistForm(true)} // Show the waitlist form as a pop-up
-                      >
-                        Join the waitlist
-                      </button>
-                    )}
-                    <button
-                      className="px-4 py-2 rounded border border-gray-500"
+                  <p className='mb-6 text-gray-500'>
+                  {selectedSlot.availability ? 'Do you want to reserve the hall?' : 'Do you want to join the waitlist?'}
+                  </p>
+                  <div className="flex justify-end mb-4">
+                  <button
+                      className="px-4 py-2 mr-3 border border-gray-300 rounded"
                       onClick={handlePopupClose}
                     >
                       Close
                     </button>
+                    {selectedSlot.availability ? (
+                      <button className="px-4 py-2 mr-2 text-white bg-green-500 rounded">
+                        Reserve
+                      </button>
+                    ) : (
+                      <button
+                        className="px-4 py-2 mr-2 text-white bg-yellow-500 rounded"
+                        onClick={() => setShowWaitlistForm(true)} // Show the waitlist form as a pop-up
+                      >
+                        Join
+                      </button>
+                    )}
+                    
                   </div>
                 </>
               )}
@@ -179,6 +201,42 @@ const HallDetail = () => {
           )}
         </div>
       )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
     </div>
   );
 };
