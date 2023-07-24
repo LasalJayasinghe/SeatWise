@@ -1,99 +1,90 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const WaitlistPage = ({ selectedDate, selectedSlot }) => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+const WaitlistPage = ({ onClose }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  // Retrieve the selectedDate and selectedSlot from the location state
+  const { selectedDate, selectedSlot } = location.state || {};
+
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // New state for showing the success pop-up
+
+  const handleConfirm = (e) => {
     e.preventDefault();
+    // Handle form submission here and show the success pop-up
+    setShowSuccessPopup(true);
 
-    // Collect the form data
-    const formData = {
-      name: username,
-      email,
-      selected_slot_id: selectedSlot.id,
-      selected_date: selectedDate.toISOString().split('T')[0],
-    };
+    // Close the success pop-up after a delay (e.g., 2000 milliseconds)
+    setTimeout(() => {
+      setShowSuccessPopup(false);
 
-    try {
-      // Make the API call to submit the form data
-      const response = await axios.post('/api/waitlist', formData);
-      console.log(response.data); // Optional: log the response data
-
-      // Call the onConfirm function and close the form (You can handle this based on your requirements)
-      console.log(formData);
-    } catch (error) {
-      // Handle any errors that may occur during the API call
-      console.error('Error saving waitlist data:', error);
-      // You can also display an error message to the user here if needed
-    }
+      // Navigate to the reservations page
+      navigate('/reservations');
+    }, 2000);
   };
 
   return (
-    <div>
-      <h1>Waitlist Page</h1>
-      <div className="bg-white p-6 rounded-md shadow-lg">
-        <h4 className="text-lg font-bold mb-4">Join the Waitlist</h4>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="username" className="block font-bold mb-1">
-              User name:
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="border border-gray-300 rounded-md p-2 w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block font-bold mb-1">
-              Email address:
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border border-gray-300 rounded-md p-2 w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <h5 className="font-bold mb-2">Selected Date:</h5>
-            <p>{selectedDate.toDateString()}</p>
-          </div>
-          <div className="mb-4">
-            <h5 className="font-bold mb-2">Selected Time Slot:</h5>
-            <p>
-              {selectedSlot.availability
+    <div className="bg-white p-6 rounded-md shadow-lg">
+      <h4 className="text-lg font-bold mb-4">Join the Waitlist</h4>
+      <form onSubmit={handleConfirm}> {/* Use handleConfirm for form submission */}
+        <div className="mb-4">
+          <label htmlFor="username" className="block font-bold mb-1">
+            User name:
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="border border-gray-300 rounded-md p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="email" className="block font-bold mb-1">
+            Email address:
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="border border-gray-300 rounded-md p-2 w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <h5 className="font-bold mb-2">Selected Date:</h5>
+          <p>{selectedDate && selectedDate.toDateString()}</p>
+        </div>
+        <div className="mb-4">
+          <h5 className="font-bold mb-2">Selected Time Slot:</h5>
+          <p>
+            {selectedSlot
+              ? selectedSlot.availability
                 ? `${selectedSlot.start_time} - ${selectedSlot.end_time} (Available)`
-                : `${selectedSlot.start_time} - ${selectedSlot.end_time} (Waiting)`}
-            </p>
+                : `${selectedSlot.start_time} - ${selectedSlot.end_time} (Waiting)`
+              : ''}
+          </p>
+        </div>
+        <div className="mb-4">
+          <h5 className="font-bold mb-2">Confirm your details to join the waitlist</h5>
+          <p>You will receive a notice through the email address you provided when the slot is available</p>
+        </div>
+        <div className="mb-4">
+          <button type="submit" className="px-4 py-2 rounded bg-green-500 text-white">
+            Confirm
+          </button>
+          <button type="button" className="px-4 py-2 ml-4 rounded border border-gray-500" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </form>
+
+      {/* Success Pop-up */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75">
+          <div className="bg-white p-6 rounded-md shadow-lg">
+            <h4 className="text-lg font-bold mb-4">Success</h4>
+            <p>You have successfully joined the waitlist.</p>
           </div>
-          <div className="mb-4">
-            <h5 className="font-bold mb-2">Confirm your details to join the waitlist</h5>
-            <p>You will receive a notice through the email address you provided when the slot is available</p>
-          </div>
-          <div className="mb-4">
-            <button type="submit" className="px-4 py-2 rounded bg-green-500 text-white">
-              Confirm
-            </button>
-            <button
-              type="button"
-              className="px-4 py-2 ml-4 rounded border border-gray-500"
-              onClick={() => {
-                // You can handle the closing of the waitlist form here if needed.
-                // For this example, I'm just redirecting back to the previous page.
-                window.history.back();
-              }}
-            >
-              Close
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

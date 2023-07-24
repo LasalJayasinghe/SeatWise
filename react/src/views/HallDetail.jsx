@@ -59,8 +59,9 @@ const HallDetail = () => {
   const handleJoinWaitlist = () => {
     setShowPopup(false);
     setSelectedSlot(null);
-    navigate('/waitlist'); // Navigate to the WaitlistPage
+    navigate('/waitlist', { state: { selectedDate, selectedSlot } });
   };
+  
   
 
   if (!hall) {
