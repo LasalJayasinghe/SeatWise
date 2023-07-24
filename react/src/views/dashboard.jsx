@@ -46,12 +46,13 @@ export default function Dashboard() {
           </div>
         </Carousel>
 
-        <div className="flex flex-wrap justify-center items-center mt-10 ">
-        <input type="text" className="w-full md:w-auto mb-2 md:mb-0 md:mr-5 p-2 rounded-lg focus:border-gray-400" placeholder="Input 1" />
-        <input type="date" className="w-full md:w-auto mb-2 md:mb-0 md:mr-5 p-2 rounded-lg focus:border-gray-400" placeholder="Input 2" />
-        <input type="text" className="w-full md:w-auto mb-2 md:mb-0 md:mr-5 p-2 rounded-lg focus:border-gray-400" placeholder="Input 3" />
-        <input type="text" className="w-full md:w-auto mb-2 md:mb-0 md:mr-5 p-2 rounded-lg focus:border-gray-400" placeholder="Input 4" />
-        <button type="submit" className="w-full md:w-auto p-3 bg-zinc-900 rounded-lg shadow justify-center items-center gap-2 flex text-white">Search</button>
+        <div className="flex flex-wrap items-center justify-center mt-10 ">
+        <input type="text" className="w-full p-2 mb-2 rounded-lg md:w-auto md:mb-0 md:mr-5 focus:border-gray-400" placeholder="Select Area"/>
+        
+        <input type="date" className="w-full p-2 mb-2 rounded-lg md:w-auto md:mb-0 md:mr-5 focus:border-gray-400" placeholder="Input 2" />
+        <input type="text" className="w-full p-2 mb-2 rounded-lg md:w-auto md:mb-0 md:mr-5 focus:border-gray-400" placeholder="Time" />
+        <input type="text" className="w-full p-2 mb-2 rounded-lg md:w-auto md:mb-0 md:mr-5 focus:border-gray-400" placeholder="People" />
+        <button type="submit" className="flex items-center justify-center w-full gap-2 p-3 text-white rounded-lg shadow md:w-auto bg-zinc-900">Search</button>
       </div>
 
         <div className='m-6'>
