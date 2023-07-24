@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import axiosClient from "../axios-client";
+import { useStateContext } from "../context/ContextProvider";
 
 
 export default function Structure() {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   // pop up for the add view
   const [isAddViewModalOpen, setIsAddViewModalOpen] = useState(false);
   const [selectedView, setSelectedView] = useState(null);
+
+  const [errors, setErrors] = useState(null);
+  const {user} = useStateContext();
+  
+
+  const viewnameRef = useRef();
+  const photoRef = useRef();
+  const descriptionRef = useRef();
 
   function handleItemClick(itemNumber) {
     setIsModalOpen(true);
@@ -26,6 +35,32 @@ export default function Structure() {
 
   function handleAddViewModalClose() {
     setIsAddViewModalOpen(false);
+  }
+
+  const onSubmitView = (ev) => {
+    ev.preventDefault()
+    const payload = {
+      restaurant_id: user.id,
+      viewname: viewnameRef.current.value,
+      photo: photoRef.current.value,
+      description: descriptionRef.current.value,
+    }
+    // console.log(payload);
+    setErrors(null)
+    axiosClient.post('/structure', payload)
+    .catch(err => {
+			const response = err.response;
+			if (response && response.status === 422) {
+				if(response.data.errors)
+				{
+					setErrors(response.data.errors)
+				}else{
+					setErrors({
+						email: [response.data.message]
+					})
+				}
+			}
+			})
   }
 
 
@@ -161,15 +196,15 @@ export default function Structure() {
                     <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
                       <h2>Popup Content for Add View {selectedView}</h2>
                       <h2 className="text-2xl font-bold">Create a view</h2>
-                      <form className="space-y-4">
-                        <label htmlFor="table-name" className="block text-sm font-medium leading-6 text-gray-900 mt-0">View Name:</label>
-                        <input className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" id="table-name" name="table-name" />
+                      <form onSubmit={onSubmitView} className="space-y-4" method="post">
+                        <label className="block text-sm font-medium leading-6 text-gray-900 mt-0">View Name:</label>
+                        <input ref={viewnameRef} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" />
       
                         <label htmlFor="capacity" className="block text-sm font-medium leading-6 text-gray-900 mt-0">Add a photo:</label>
-                        <input className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="number" id="capacity" name="capacity" />
+                        <input ref={photoRef} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="file" />
       
                         <label htmlFor="capacity" className="block text-sm font-medium leading-6 text-gray-900 mt-0">Add a description:</label>
-                        <input className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" id="capacity" name="capacity" />
+                        <input ref={descriptionRef} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" />
                         {/* Add more input fields as needed for other table data */}
                         <div className="flex space-x-4">
                         <button onClick={handleAddViewModalClose} className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm">Cancel</button>
@@ -180,18 +215,6 @@ export default function Structure() {
                     </div>
                 </div>
 
-
-
-
-
-                // <div className="fixed inset-0 flex items-center justify-center z-50">
-                //   <div className="absolute inset-0 bg-black opacity-50"></div>
-                //   <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
-                //     <h2>Popup Content for View {selectedView}</h2>
-                //     {/* Add your custom content for the "Add view" modal here */}
-                //     <button onClick={handleAddViewModalClose}>Close</button>
-                //   </div>
-                // </div>
               )}
           </div>
         </main>

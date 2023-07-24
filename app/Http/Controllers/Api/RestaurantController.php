@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\View;
 use http\Env\Response;
 use App\Models\Cashier;
+use App\Models\Cashiers;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
-use App\Models\Cashiers;
 
 class RestaurantController extends Controller
 {
@@ -69,6 +71,21 @@ class RestaurantController extends Controller
         $user = $request->user();
         $user->currentAccessToken()->delete();
         return response('', 204);
+    }
+
+    public function addView(addViewRequest $request)
+    {
+        $data = $request->validated();
+
+        $restaurantId = $data['restaurant_id'];
+
+        /** @var View $user */
+        $user = View::create ([
+            'restaurant_id' => $restaurantId,
+            'name' => $data['viewname'],
+            'photo' => $data['photo'],
+            'description' => $data['description'],
+       ]);
     }
 
     public function addCashier(addCashierRequest $request){
