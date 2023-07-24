@@ -4,11 +4,13 @@ import Login from './views/login.jsx';
 import Signup from './views/signup.jsx';
 import NotFound from './views/notFound.jsx';
 import Dashboard from './views/dashboard.jsx';
+import Users from './views/users.jsx';
 import DefaultLayout from './components/DefaultLayout.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
 import Restaurants from './views/Restaurants.jsx';
 import RestaurantDetail from './views/RestaurantDetail.jsx';
 import HallDetail from './views/HallDetail.jsx';
+import WaitlistPage from './views/WaitlistPage';
 
 
 const router = createBrowserRouter([
@@ -35,6 +37,15 @@ const router = createBrowserRouter([
             {
                 path: '/halls/:hallId', 
                 element: <HallDetail />
+            },
+            {
+                path: '/waitlist',
+                element: <WaitlistPage />,
+            },
+
+            {
+                path: '/users',
+                element : <Users />
             }
         ]
     },

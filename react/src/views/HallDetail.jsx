@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../axios-client';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import WaitlistForm from '../components/WaitlistForm';
 
 const HallDetail = () => {
   const { hallId } = useParams();
@@ -45,6 +44,8 @@ const HallDetail = () => {
     }
   }, [selectedDate]);
 
+  const navigate = useNavigate();
+
   const handleSlotClick = (slot) => {
     setSelectedSlot(slot);
     setShowPopup(true);
@@ -55,20 +56,12 @@ const HallDetail = () => {
     setSelectedSlot(null);
   };
 
-  const [showWaitlistForm, setShowWaitlistForm] = useState(false); // New state for showing the waitlist form
-
-  const handleConfirmWaitlist = (formData) => {
-    // Handle the waitlist form submission here
-    console.log('Form Data:', formData);
-    // You can perform any other actions here, such as saving the data to the server.
-    // For demonstration purposes, we are only logging the form data.
-    setShowWaitlistForm(false);
-  };
-
-  const handleWaitlistFormClose = () => {
-    setShowWaitlistForm(false);
+  const handleJoinWaitlist = () => {
+    setShowPopup(false);
     setSelectedSlot(null);
+    navigate('/waitlist'); // Navigate to the WaitlistPage
   };
+  
 
   if (!hall) {
     return <div>Loading...</div>;
@@ -127,7 +120,7 @@ const HallDetail = () => {
                   ))}
                 </ul>
               ) : (
-                <p>No time availabilities for the selected date.</p>
+                <p>No time availabilities for selected date.</p>
               )}
             </>
           )}
@@ -138,45 +131,32 @@ const HallDetail = () => {
       {/* Pop-up */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          {showWaitlistForm ? ( // Conditionally render the waitlist form
-            <WaitlistForm
-              user={{ username: 'John Doe', phoneNumber: '123-456-7890' }} // Replace with user data from the database
-              selectedDate={selectedDate}
-              selectedSlot={selectedSlot}
-              onClose={handleWaitlistFormClose}
-              onConfirm={handleConfirmWaitlist}
-            />
-          ) : (
-            <div className="bg-white p-6 rounded-md shadow-lg">
-              {selectedSlot && (
-                <>
-                  <h4 className="text-lg font-bold mb-4">
-                    {selectedSlot.availability ? 'Slot Available' : 'Slot Unavailable'}
-                  </h4>
-                  <div className="mb-4">
-                    {selectedSlot.availability ? (
-                      <button className="px-4 py-2 mr-2 rounded bg-green-500 text-white">
-                        Reserve
-                      </button>
-                    ) : (
-                      <button
-                        className="px-4 py-2 mr-2 rounded bg-yellow-500 text-white"
-                        onClick={() => setShowWaitlistForm(true)} // Show the waitlist form as a pop-up
-                      >
-                        Join the waitlist
-                      </button>
-                    )}
-                    <button
-                      className="px-4 py-2 rounded border border-gray-500"
-                      onClick={handlePopupClose}
-                    >
-                      Close
+          <div className="bg-white p-6 rounded-md shadow-lg">
+            {selectedSlot && (
+              <>
+                <h4 className="text-lg font-bold mb-4">
+                  {selectedSlot.availability ? 'Slot Available' : 'Slot Unavailable'}
+                </h4>
+                <div className="mb-4">
+                  {selectedSlot.availability ? (
+                    <button className="px-4 py-2 mr-2 rounded bg-green-500 text-white">
+                      Reserve
                     </button>
-                  </div>
-                </>
-              )}
-            </div>
-          )}
+                  ) : (
+                    <button className="px-4 py-2 mr-2 rounded bg-yellow-500 text-white" onClick={handleJoinWaitlist}>
+                      Join the waitlist
+                    </button>
+                  )}
+                  <button
+                    className="px-4 py-2 rounded border border-gray-500"
+                    onClick={handlePopupClose}
+                  >
+                    Close
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>

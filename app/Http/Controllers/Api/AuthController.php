@@ -34,18 +34,28 @@ class AuthController extends Controller
                 'message' => 'Provided email or password is incorrect'
             ], 422);
         }
-
+    
         /** @var \App\Models\User $user */
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
+    
+        // Return the user data with the 'name' attribute included
+        return response([
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+            'token' => $token,
+        ]);
     }
+    
 
     public function logout(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
-        $user->currentAccessToken()->delete();
+        $user->tokens()->delete();
         return response('', 204);
     }
+    
 }

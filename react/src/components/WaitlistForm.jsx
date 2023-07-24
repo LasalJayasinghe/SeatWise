@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const WaitlistForm = ({ user, selectedDate, selectedSlot, onClose, onConfirm }) => {
-  const [username, setUsername] = useState(user.username);
-  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+const WaitlistForm = ({ selectedDate, selectedSlot, onClose, onConfirm }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Collect the form data and call the onConfirm function
+
+    // Collect the form data
     const formData = {
-      username,
-      phoneNumber,
-      selectedDate,
-      selectedSlot,
+      name: username,
+      email,
+      selected_slot_id: selectedSlot.id,
+      selected_date: selectedDate.toISOString().split('T')[0],
     };
-    onConfirm(formData);
-    onClose();
+
+    try {
+      // Make the API call to submit the form data
+      const response = await axios.post('/api/waitlist', formData);
+      console.log(response.data); // Optional: log the response data
+
+      // Call the onConfirm function and close the form
+      onConfirm(formData);
+      onClose();
+    } catch (error) {
+      // Handle any errors that may occur during the API call
+      console.error('Error saving waitlist data:', error);
+      // You can also display an error message to the user here if needed
+    }
   };
 
   return (
@@ -23,7 +37,7 @@ const WaitlistForm = ({ user, selectedDate, selectedSlot, onClose, onConfirm }) 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="username" className="block font-bold mb-1">
-            Username:
+            User name:
           </label>
           <input
             type="text"
@@ -34,14 +48,14 @@ const WaitlistForm = ({ user, selectedDate, selectedSlot, onClose, onConfirm }) 
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="phoneNumber" className="block font-bold mb-1">
-            Phone Number:
+          <label htmlFor="email" className="block font-bold mb-1">
+            Email address:
           </label>
           <input
-            type="text"
-            id="phoneNumber"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="border border-gray-300 rounded-md p-2 w-full"
           />
         </div>
@@ -59,7 +73,7 @@ const WaitlistForm = ({ user, selectedDate, selectedSlot, onClose, onConfirm }) 
         </div>
         <div className="mb-4">
           <h5 className="font-bold mb-2">Confirm your details to join the waitlist</h5>
-          <p>You will receive a notice through the app when the slot is available</p>
+          <p>You will receive a notice through the email address you provided when the slot is available</p>
         </div>
         <div className="mb-4">
           <button type="submit" className="px-4 py-2 rounded bg-green-500 text-white">
