@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import Logo from "../assets/logo.svg";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../context/ContextProvider";
-import React, { useEffect } from 'react';
+// import React, { useEffect } from 'react';
 
 // import { Navigate } from 'react-router-dom'
 // import { useHistory } from 'react-router-dom';
@@ -61,18 +61,22 @@ export default function AddCashier() {
    // const {setUser, setToken} = useStateContext();
     // const navigate = useNavigate();
     // const history = useHistory();
-    const [successMessage, setSuccessMessage] = useState('');
+
+    // const [successMessage, setSuccessMessage] = useState('');
+
+    const {user} = useStateContext();
 
 
     const onSubmit = (ev) => {
       ev.preventDefault()
 
       const payLoad = {
-		cashiername: cashiernameRef.current.value,
-          email: emailRef.current.value,
-          //name: nameRef.current.value,
-          phone: phoneRef.current.value,
-          password: passwordRef.current.value,
+        restaurant_id: user.id,
+        cashiername: cashiernameRef.current.value,
+        email: emailRef.current.value,
+        //name: nameRef.current.value,
+        phone: phoneRef.current.value,
+        password: passwordRef.current.value,
          
       }
       axiosClient.post('/addCashier', payLoad)
@@ -166,10 +170,6 @@ export default function AddCashier() {
             </div>
           </div>
 
-
-
-		  
-
      
           <div>
             <label
@@ -192,7 +192,7 @@ export default function AddCashier() {
 
          
           <div>
-			 <label htmlFor='password' className="block text-sm font-medium leading-6 text-gray-900">
+		<label htmlFor='password' className="block text-sm font-medium leading-6 text-gray-900">
 				Password 
 				<div className="mt-2">
                  <input
@@ -208,7 +208,7 @@ export default function AddCashier() {
 			</label>
 
 
-		  </div>
+	</div>
 
           <div>
             <button

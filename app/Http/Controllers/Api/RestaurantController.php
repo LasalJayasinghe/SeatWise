@@ -99,9 +99,11 @@ class RestaurantController extends Controller
        // $restaurant = auth('restaurants')->user();
        $restaurant = auth()->guard('restaurants')->user();
     
+       $restaurantId = $data['restaurant_id'];
        
          $user = Cashiers::create ([
-            'brn' => $restaurant->brn, // Associate the cashier with the restaurant
+            'restaurant_id' => $restaurantId,
+            // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
             
              'cashier_name' => $data['cashiername'],
              'cashier_email' => $data['email'],

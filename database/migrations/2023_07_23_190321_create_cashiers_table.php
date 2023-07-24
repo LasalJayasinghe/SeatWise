@@ -15,15 +15,18 @@ return new class extends Migration
     {
         Schema::create('cashiers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('restaurant_id');
            // Add the restaurant_id column as an unsigned big integer
-           $table->string('brn');
+            //    $table->string('brn');
            // Add a foreign key constraint to associate with the restaurants table
-           $table->foreign('brn')->references('brn')->on('restaurants');
+           
             $table->string('cashier_name');
             $table->string('cashier_email');
             $table->string('cashier_phone_number');
             $table->string('cashier_password');
             $table->timestamps();
+
+            $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });
     }
 

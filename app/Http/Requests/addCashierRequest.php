@@ -24,6 +24,7 @@ class addCashierRequest extends FormRequest
     public function rules()
     {
         return [
+            'restaurant_id' => 'required',
             'cashiername' => ['required', 'string'],
             'email' => ['required', 'email'],
             'phone' => ['required', 'numeric'],
