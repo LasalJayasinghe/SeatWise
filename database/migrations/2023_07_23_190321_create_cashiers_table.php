@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('cashiers', function (Blueprint $table) {
             $table->id();
+           // Add the restaurant_id column as an unsigned big integer
+           $table->string('brn');
+           // Add a foreign key constraint to associate with the restaurants table
+           $table->foreign('brn')->references('brn')->on('restaurants');
             $table->string('cashier_name');
             $table->string('cashier_email');
             $table->string('cashier_phone_number');
@@ -30,6 +34,12 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cashier');
+        Schema::table('cashiers', function (Blueprint $table) {
+            // Drop the foreign key constraint before dropping the column
+            $table->dropForeign(['brn']);
+
+            // Remove the restaurant_id column
+            $table->dropColumn('brn');
+        });
     }
 };

@@ -36,7 +36,7 @@ export default function RestaurantSignup() {
               setUser(data.user);
               setToken(data.token);
               
-              // <Navigate to="/restaurant" />
+               <Navigate to="/restaurant" />
               // history.push('/restaurant');
           })
           .catch(err => {

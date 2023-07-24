@@ -12,7 +12,7 @@ class Cashiers extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guard = 'Cashier';
+    protected $guard = 'Cashiers';
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,7 @@ class Cashiers extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-    
+         'brn',
         'cashier_name',
         'cashier_email',
         'cashier_phone_number',
