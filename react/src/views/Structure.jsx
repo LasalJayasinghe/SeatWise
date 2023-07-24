@@ -6,6 +6,10 @@ export default function Structure() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  // pop up for the add view
+  const [isAddViewModalOpen, setIsAddViewModalOpen] = useState(false);
+  const [selectedView, setSelectedView] = useState(null);
+
   function handleItemClick(itemNumber) {
     setIsModalOpen(true);
     setSelectedItem(itemNumber);
@@ -13,6 +17,15 @@ export default function Structure() {
 
   function handleCloseModal() {
     setIsModalOpen(false);
+  }
+
+  function handleAddViewModalOpen(view) {
+    setIsAddViewModalOpen(true);
+    setSelectedView(view);
+  }
+
+  function handleAddViewModalClose() {
+    setIsAddViewModalOpen(false);
   }
 
 
@@ -27,11 +40,11 @@ export default function Structure() {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 
           <h1 className="text-2xl font-bold">Add views for your restaurant</h1>
-          <form className="space-y-4"> <br />
+    
   
             <div className="flex space-x-2 ml-0 max-w-2xl relative">
                 {/* <!-- Create Story Start --> */}
-                <div className="w-36 h-52 rounded-xl overflow-hidden flex flex-col group cursor-pointer relative">
+                <div className="w-36 h-52 rounded-xl overflow-hidden flex flex-col group cursor-pointer relative" onClick={() => handleAddViewModalOpen()}>
                     <input className="w-full h-4/5 object-cover transition duration-300 ease-in-out transform group-hover:scale-105 bg-gray-300 mb-0" />
                     <div className="bg-green-500 relative flex-1 flex flex-col">
                         <div className="bg-green-600 p-0.5 rounded-full border-4 border-gray-100 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -54,9 +67,9 @@ export default function Structure() {
     
             {/* Add more input fields as needed for other table data */}
             
-          </form>
+         
 
-          <br /><br /><br />
+          <br /><br />
 
 
 
@@ -139,13 +152,44 @@ export default function Structure() {
                       
                     </div>
                 </div>
+              )}
+
+              {/* Add view modal */}
+              {isAddViewModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                  <div className="absolute inset-0 bg-black opacity-50"></div>
+                    <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
+                      <h2>Popup Content for Add View {selectedView}</h2>
+                      <h2 className="text-2xl font-bold">Create a view</h2>
+                      <form className="space-y-4">
+                        <label htmlFor="table-name" className="block text-sm font-medium leading-6 text-gray-900 mt-0">View Name:</label>
+                        <input className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" id="table-name" name="table-name" />
+      
+                        <label htmlFor="capacity" className="block text-sm font-medium leading-6 text-gray-900 mt-0">Add a photo:</label>
+                        <input className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="number" id="capacity" name="capacity" />
+      
+                        <label htmlFor="capacity" className="block text-sm font-medium leading-6 text-gray-900 mt-0">Add a description:</label>
+                        <input className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" id="capacity" name="capacity" />
+                        {/* Add more input fields as needed for other table data */}
+                        <div className="flex space-x-4">
+                        <button onClick={handleAddViewModalClose} className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm">Cancel</button>
+                          <button type="submit" className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create view</button>
+                        </div>
+                      </form>
+                      
+                    </div>
+                </div>
+
+
+
+
 
                 // <div className="fixed inset-0 flex items-center justify-center z-50">
                 //   <div className="absolute inset-0 bg-black opacity-50"></div>
-                //   <div className="bg-white p-4 z-10">
-                //     <h2>Popup Content for Item {selectedItem}</h2>
-                //     {/* Add your custom content for the popup here */}
-                //     <button onClick={handleCloseModal}>Close</button>
+                //   <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
+                //     <h2>Popup Content for View {selectedView}</h2>
+                //     {/* Add your custom content for the "Add view" modal here */}
+                //     <button onClick={handleAddViewModalClose}>Close</button>
                 //   </div>
                 // </div>
               )}
