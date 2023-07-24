@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\RestaurantController; // Import the RestaurantContr
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HallController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WaitlistController;
 
 
 /*
@@ -26,6 +28,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
 });
+Route::middleware('auth:sanctum')->post('/waitlist', [WaitlistController::class, 'store']);
+
+Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUserData']);
+
 
 // Additional routes for restaurant data
 Route::get('/restaurants', [RestaurantController::class, 'index']); // This route fetches all restaurants

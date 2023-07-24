@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../axios-client';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import WaitlistForm from '../components/WaitlistForm';
 import '../util/custom-calendar.css'
+import { Carousel } from 'react-responsive-carousel';
 
-
+import slide1 from '../assets/slide1.png';
+import slide2 from '../assets/slide2.png';
+import slide3 from '../assets/slide3.png';
+import slide4 from '../assets/slide4.png';
 
 
 const HallDetail = () => {
@@ -49,6 +52,8 @@ const HallDetail = () => {
     }
   }, [selectedDate]);
 
+  const navigate = useNavigate();
+
   const handleSlotClick = (slot) => {
     setSelectedSlot(slot);
     setShowPopup(true);
@@ -59,20 +64,13 @@ const HallDetail = () => {
     setSelectedSlot(null);
   };
 
-  const [showWaitlistForm, setShowWaitlistForm] = useState(false); // New state for showing the waitlist form
-
-  const handleConfirmWaitlist = (formData) => {
-    // Handle the waitlist form submission here
-    console.log('Form Data:', formData);
-    // You can perform any other actions here, such as saving the data to the server.
-    // For demonstration purposes, we are only logging the form data.
-    setShowWaitlistForm(false);
-  };
-
-  const handleWaitlistFormClose = () => {
-    setShowWaitlistForm(false);
+  const handleJoinWaitlist = () => {
+    setShowPopup(false);
     setSelectedSlot(null);
+    navigate('/waitlist', { state: { selectedDate, selectedSlot } });
   };
+  
+  
 
   if (!hall) {
     return <div>Loading...</div>;
@@ -80,12 +78,6 @@ const HallDetail = () => {
 
   return (
     <div>
-    
-
-
-
-
-
 
 
 {/* <CustomCalendar/> */}
@@ -99,8 +91,23 @@ const HallDetail = () => {
         <p className="mb-6 text-gray-600">{hall.description}</p>
       </div>
 
+      <Carousel autoPlay infiniteLoop showThumbs={false}>
+          <div>
+            <img className="object-contain h-128" src={slide1} alt="Image 1" />
+          </div>
+          <div>
+            <img src={slide2} alt="Image 2" />
+          </div>
+          <div>
+            <img src={slide3} alt="Image 3" />
+          </div>
+          <div>
+            <img src={slide4} alt="Image 4" />
+          </div>
+        </Carousel>
+
       {/* Calendar and Time Availabilities */}
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-20">
         {/* Left Column - Calendar */}
         <div className="mr-8 ">
           {/* <p className="mb-2 font-semibold text-gray-500 text-md ">Pick a date to view applicable slots</p> */}
@@ -145,7 +152,7 @@ const HallDetail = () => {
                   ))}
                 </ul>
               ) : (
-                <p>No time availabilities for the selected date.</p>
+                <p>No time availabilities for selected date.</p>
               )}
             </>
           )}
@@ -156,64 +163,39 @@ const HallDetail = () => {
       {/* Pop-up */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          {showWaitlistForm ? ( // Conditionally render the waitlist form
-            <WaitlistForm
-              user={{ username: 'John Doe', phoneNumber: '123-456-7890' }} // Replace with user data from the database
-              selectedDate={selectedDate}
-              selectedSlot={selectedSlot}
-              onClose={handleWaitlistFormClose}
-              onConfirm={handleConfirmWaitlist}
-            />
-          ) : (
-            <div className="px-10 py-10 bg-white shadow-lg rounded-xl">
-              {selectedSlot && (
-                <>
-                  <h4 className="text-lg font-bold ">
-                    {selectedSlot.availability ? 'Slot is available' : 'Slot is unavailable'}
-                  </h4>
-                  <p className='mb-6 text-gray-500'>
+          <div className="p-6 bg-white rounded-md shadow-lg">
+            {selectedSlot && (
+              <>
+                <h4 className="text-lg font-bold">
+                {selectedSlot.availability ? 'Slot is available' : 'Slot is unavailable'}
+                </h4>
+                <p className='mb-6 text-gray-500'>
                   {selectedSlot.availability ? 'Do you want to reserve the hall?' : 'Do you want to join the waitlist?'}
                   </p>
-                  <div className="flex justify-end mb-4">
-                  <button
+                <div className="flex justify-end mb-4 ">
+                <button
                       className="px-4 py-2 mr-3 border border-gray-300 rounded"
                       onClick={handlePopupClose}
                     >
                       Close
                     </button>
-                    {selectedSlot.availability ? (
-                      <button className="px-4 py-2 mr-2 text-white bg-green-500 rounded">
-                        Reserve
-                      </button>
-                    ) : (
-                      <button
-                        className="px-4 py-2 mr-2 text-white bg-yellow-500 rounded"
-                        onClick={() => setShowWaitlistForm(true)} // Show the waitlist form as a pop-up
-                      >
-                        Join
-                      </button>
-                    )}
-                    
-                  </div>
-                </>
-              )}
-            </div>
-          )}
+                  {selectedSlot.availability ? (
+                    <button className="px-4 py-2 mr-2 text-white bg-green-500 rounded">
+                      Reserve
+                    </button>
+                  ) : (
+                    <button className="px-4 py-2 mr-2 text-white bg-yellow-500 rounded" onClick={handleJoinWaitlist}>
+                      Join
+                    </button>
+                  )}
+                  
+                </div>
+              </>
+            )}
+          </div>
         </div>
       )}
-
-
-
-
-
-
-
-
-
-
-
-
-
+      
 
 
 
