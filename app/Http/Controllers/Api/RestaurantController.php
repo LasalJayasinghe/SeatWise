@@ -15,6 +15,7 @@ use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
+use App\Http\Requests\updateRestaurantRequest;
 
 class RestaurantController extends Controller
 {
@@ -119,11 +120,41 @@ class RestaurantController extends Controller
     }
 
 
+    public function updateRestaurant(updateRestaurantRequest $request) {
+        $data = $request->validated();
+        /** @var Restaurants $restaurant */
+        //$restaurant = auth()->guard('restaurants')->user();
+       $restaurantId = $data['id'];
+       $restaurant = Restaurants::find($restaurantId);
+       // $restaurant = Restaurant::find($id);
+       if ($restaurant) {
+        $restaurant->update([
+            'id' => $restaurantId,
+            'restaurantname' => $data['restaurantname'],
+            'brn' => $data['brn'],
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'phone' => $data['phone'],
+            'password' => bcrypt($data['password']),
+        ]);
+        return response()->json(['message' => ' successfully updated']);
+       }
 
+       else{
+        return response()->json(['message' => 'updatation failed']);  
 
-
-
-
-
+       }
+     //   $token = $restaurant->createToken('main')->plainTextToken;
+    
+        // Now you have updated the restaurant information and generated a new token.
+        // You can return the updated restaurant data and token as a response if needed.
+        // For example, if you want to return JSON response:
+      //  return response()->json(['restaurant' => $restaurant, 'token' => $token]);
+        
+        // If you want to return a redirect or a view, you can do that too:
+        // return redirect('/restaurant');
+        // or
+        // return view('restaurant');
+    }
 
 }
