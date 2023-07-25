@@ -366,8 +366,8 @@ table > tbody > tr > td {
     padding: 20px;
     font-size: 30px;
     text-align: center;
-    background-color: #344054;
+    /* background-color: #344054; */
     border-radius: 15px;
-    opacity: 20%;
+    /* opacity: 20%; */
     cursor: pointer;
   }
