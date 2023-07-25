@@ -19,6 +19,7 @@ import TableStructure from './views/TableStructure.jsx';
 import Reservations from './views/Reservations.jsx';
 //import AddCashier from './views/cddCashier.jsx';
 import AddCashier from './views/addCashier.jsx';
+import Employees from './views/Employees.jsx';
 
 
 const router = createBrowserRouter([
@@ -110,7 +111,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/employees",
-                element: <AddCashier />, 
+                element: <Employees />, 
             },
             {
                 path: "/tablestructure",

@@ -17,6 +17,7 @@ use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
+use App\Http\Requests\updateRestaurantRequest;
 
 class RestaurantController extends Controller
 {
@@ -199,8 +200,40 @@ class RestaurantController extends Controller
     }
 
 
+    public function updateRestaurant(updateRestaurantRequest $request) {
+        $data = $request->validated();
+        /** @var Restaurants $restaurant */
+        //$restaurant = auth()->guard('restaurants')->user();
+       $restaurantId = $data['id'];
+       $restaurant = Restaurants::find($restaurantId);
+       // $restaurant = Restaurant::find($id);
+       if ($restaurant) {
+        $restaurant->update([
+            'id' => $restaurantId,
+            'restaurantname' => $data['restaurantname'],
+            'brn' => $data['brn'],
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'phone' => $data['phone'],
+            'password' => bcrypt($data['password']),
+        ]);
+        return response()->json(['message' => ' successfully updated']);
+       }
+
+       else{
+        return response()->json(['message' => 'updatation failed']);  
+
+       }
+    
+    }
+
+   
 
 
+    public function getCashiers() {
+    
+    
+    }
 
 
 

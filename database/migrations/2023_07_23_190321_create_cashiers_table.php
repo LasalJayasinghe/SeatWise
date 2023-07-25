@@ -39,10 +39,10 @@ return new class extends Migration
     {
         Schema::table('cashiers', function (Blueprint $table) {
             // Drop the foreign key constraint before dropping the column
-            $table->dropForeign(['brn']);
+            $table->dropForeign(['restaurant_id']);
 
             // Remove the restaurant_id column
-            $table->dropColumn('brn');
+            $table->dropColumn('restaurant_id');
         });
     }
 };
