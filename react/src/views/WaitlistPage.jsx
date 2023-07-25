@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../axios-client';
+import backBtn from '../assets/back-button.png'
+
+
 
 
 const WaitlistPage = ({ onClose }) => {
@@ -55,39 +58,78 @@ const WaitlistPage = ({ onClose }) => {
       // Handle error here (e.g., show an error message)
     }
   };
+  const handleClose = () => {
+    navigate(-1); // go back to previous page
+  };
   
 
   return (
-    <div className="bg-white p-6 rounded-md shadow-lg">
-      <h4 className="text-lg font-bold mb-4">Join the Waitlist</h4>
-      <form onSubmit={handleConfirm}> {/* Use handleConfirm for form submission */}
-        <div className="mb-4">
-          <label htmlFor="username" className="block font-bold mb-1">
-            User name:
-          </label>
-          <input
-            type="text"
-            id="username"
-            className="border border-gray-300 rounded-md p-2 w-full"
-          />
+
+  <>
+
+
+<div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className='flex justify-end'>
+          <button 
+          type="button"
+          onClick={handleClose} 
+          className="border-transparent border-radius-50% ">
+          <img src={backBtn} className='w-10' onClick={handleClose} />
+        </button>
+          </div>
+        
+          <h2 className="mt-10 mb-4 text-4xl font-bold leading-9 tracking-tight text-left text-gray-900">
+            Join the waitlist
+          </h2>
+          <p className="font-semibold tracking-tight text-left text-gray-500 text-md mt-">
+          Never miss out on available slot! Share your contact info, and we'll keep you updated.
+          </p>
+        </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-6" onSubmit={handleConfirm}>
+
+          <div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                  Full name
+                </label>
+                
+              </div>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div className="mb-4">
+          <h5 className="mb-1 text-gray-500">Selected Date:</h5>
+          <p className='font-bold text-gray-700'>{selectedDate && selectedDate.toDateString()}</p>
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block font-bold mb-1">
-            Email address:
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="border border-gray-300 rounded-md p-2 w-full"
-          />
-        </div>
-        <div className="mb-4">
-          <h5 className="font-bold mb-2">Selected Date:</h5>
-          <p>{selectedDate && selectedDate.toDateString()}</p>
-        </div>
-        <div className="mb-4">
-          <h5 className="font-bold mb-2">Selected Time Slot:</h5>
-          <p>
+          <h5 className="mb-1 text-gray-500">Selected Time Slot:</h5>
+          <p className='font-bold text-gray-700'>
             {selectedSlot
               ? selectedSlot.availability
                 ? `${selectedSlot.start_time} - ${selectedSlot.end_time} (Available)`
@@ -95,30 +137,56 @@ const WaitlistPage = ({ onClose }) => {
               : ''}
           </p>
         </div>
-        <div className="mb-4">
-          <h5 className="font-bold mb-2">Confirm your details to join the waitlist</h5>
-          <p>You will receive a notice through the email address you provided when the slot is available</p>
+
+            <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-green-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Join
+              </button>
+
+            </div>
+          </form>
+
+          
         </div>
-        <div className="mb-4">
-          <button type="submit" className="px-4 py-2 rounded bg-green-500 text-white">
-            Confirm
-          </button>
-          <button type="button" className="px-4 py-2 ml-4 rounded border border-gray-500" onClick={onClose}>
-            Close
-          </button>
-        </div>
-      </form>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <div className="p-6 bg-white ">
+      
+      
 
       {/* Success Pop-up */}
       {showSuccessPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75">
-          <div className="bg-white p-6 rounded-md shadow-lg">
-            <h4 className="text-lg font-bold mb-4">Success</h4>
-            <p>You have successfully joined the waitlist.</p>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="p-16 bg-white rounded-lg shadow-lg">
+            <h4 className="mb-4 text-lg font-bold">You have successfully joined the waitlist! </h4>
+            <p>We'll notify you as soon as the slot becomes available. Thank you for your interest</p>
           </div>
         </div>
-      )}
+        )}
     </div>
+    </>
   );
 };
 
