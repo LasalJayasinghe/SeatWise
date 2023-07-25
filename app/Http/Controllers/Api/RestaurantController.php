@@ -144,17 +144,19 @@ class RestaurantController extends Controller
         return response()->json(['message' => 'updatation failed']);  
 
        }
-     //   $token = $restaurant->createToken('main')->plainTextToken;
     
-        // Now you have updated the restaurant information and generated a new token.
-        // You can return the updated restaurant data and token as a response if needed.
-        // For example, if you want to return JSON response:
-      //  return response()->json(['restaurant' => $restaurant, 'token' => $token]);
-        
-        // If you want to return a redirect or a view, you can do that too:
-        // return redirect('/restaurant');
-        // or
-        // return view('restaurant');
     }
+
+   
+
+
+    public function getCashiers() {
+    
+    
+    }
+
+
+
+
 
 }

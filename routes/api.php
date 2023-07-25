@@ -52,6 +52,7 @@ Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin']
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
 Route::post('/structure', [RestaurantController::class, 'addView'])->name('structure.addView');
 Route::post('/updateRestaurant', [RestaurantController::class, 'updateRestaurant']);
+Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);
 
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
