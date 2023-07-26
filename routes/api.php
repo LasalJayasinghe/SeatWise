@@ -58,7 +58,8 @@ Route::get('/views', [RestaurantController::class, 'getViews']);
 Route::get('/gettable', [RestaurantController::class, 'getTable']);
 // Route::middleware('auth:api')->get('/views', [RestaurantController::class, 'getViews']);
 Route::post('/updateRestaurant', [RestaurantController::class, 'updateRestaurant']);
-Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);
+//Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);
+Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);
 
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -118,6 +118,13 @@ const router = createBrowserRouter([
                 element: <TableStructure />, 
             },
 
+
+            {
+                path: "/addCashier",
+                element: <AddCashier />, 
+            },
+
+
         ]
     },
     {

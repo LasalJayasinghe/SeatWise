@@ -230,8 +230,12 @@ class RestaurantController extends Controller
    
 
 
-    public function getCashiers() {
+    public function getCashiers($id) {
     
+       // $restaurant = Restaurants::find($id);
+       $cashiers = Cashiers::where('restaurant_id', $id)->get();
+       return response()->json($cashiers);
+
     
     }
 
