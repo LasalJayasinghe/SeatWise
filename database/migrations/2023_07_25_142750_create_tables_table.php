@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('views', function (Blueprint $table) {
+        Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
-            $table->string('name');
-            $table->mediumText('photo')->nullable();
-            $table->string('description');
+            $table->string('table_id');
+            $table->string('table_no');
+            $table->string('chairs');
+            $table->string('view_id');
             $table->timestamps();
 
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('views');
+        Schema::dropIfExists('tables');
     }
 };

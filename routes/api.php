@@ -50,7 +50,13 @@ Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup
 Route::get('restaurants', [RestaurantController::class, 'show']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
+
 Route::post('/structure', [RestaurantController::class, 'addView'])->name('structure.addView');
+Route::post('/table', [RestaurantController::class, 'addTable']);
+
+Route::get('/views', [RestaurantController::class, 'getViews']);
+Route::get('/gettable', [RestaurantController::class, 'getTable']);
+// Route::middleware('auth:api')->get('/views', [RestaurantController::class, 'getViews']);
 Route::post('/updateRestaurant', [RestaurantController::class, 'updateRestaurant']);
 //Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);
 Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);

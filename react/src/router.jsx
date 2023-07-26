@@ -15,6 +15,7 @@ import RestaurantDashboard from './views/RestaurantDashboard.jsx';
 import RestaurantLogin from './views/RestaurantLogin.jsx';
 import Profile from './views/Profile.jsx';
 import Structure from './views/Structure.jsx';
+import TableStructure from './views/TableStructure.jsx';
 import Reservations from './views/Reservations.jsx';
 //import AddCashier from './views/cddCashier.jsx';
 import AddCashier from './views/addCashier.jsx';
@@ -108,10 +109,13 @@ const router = createBrowserRouter([
                 path: "/reservations",
                 element: <Reservations />, 
             },
-            
             {
                 path: "/employees",
                 element: <Employees />, 
+            },
+            {
+                path: "/tablestructure",
+                element: <TableStructure />, 
             },
 
         ]

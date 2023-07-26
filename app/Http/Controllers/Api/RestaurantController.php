@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\View;
+use App\Models\Tables;
 use http\Env\Response;
 use App\Models\Cashier;
 use App\Models\Cashiers;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\addViewRequest;
+use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
@@ -78,16 +80,94 @@ class RestaurantController extends Controller
     public function addView(addViewRequest $request)
     {
         $data = $request->validated();
-
         $restaurantId = $data['restaurant_id'];
 
+        // if ($request->hasFile('photo')) {
+        //     $file = $request->file('photo');
+        //     $extension = $file->getClientOriginalExtension();
+        //     $filename = time() . '.' . $extension;
+        //     $file->move('uploads/views/', $filename);        
+        // }
+
+        // $file = $request->file('photo');
+        // $extension = $file->getClientOriginalExtension();
+        // $filename = time() . '.' . $extension;
+        // $file->move('uploads/views/', $filename);
+
         /** @var View $user */
-        $user = View::create ([
+        $user = View::create([
             'restaurant_id' => $restaurantId,
             'name' => $data['viewname'],
-            'photo' => $data['photo'],
             'description' => $data['description'],
-       ]);
+            'photo' => $data['photo'],
+        ]);
+
+        // $user->save();
+
+    }
+
+    // public function addView(addViewRequest $request)
+    // {
+    //     $data = $request->validated();
+
+    //     $restaurantId = $data['restaurant_id'];
+
+    //     /** @var View $user */
+    //     $user = View::create ([
+    //         'restaurant_id' => $restaurantId,
+    //         'name' => $data['viewname'],
+    //         'description' => $data['description'],
+
+    //         if($request->hasfile('photo')){
+    //             $file = $request->file('photo');
+    //             $extension = $file->getClientOriginalExtension();
+    //             $filename = time() . '.' . $extension;
+    //             $file->move('react/src/assets/', $filename);
+    //             'photo' =>image = $filename;
+    //         } else {
+    //             return $request;
+    //             'photo'->photo = '';
+    //         }
+    //    ]);    
+    // }
+
+    public function addTable(addTableRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+        $tableId = $data['table_id'];
+
+        /** @var Tables $user */
+        $user = Tables::create([
+            'restaurant_id' => $restaurantId,
+            'table_id' => $tableId,
+            'table_no' => $data['table_no'],
+            'chairs' => $data['chairs'],
+            'view_id' => $data['view_id'],
+        ]);
+
+    }
+
+    public function getViews(Request $request)
+    {
+        // Access the 'restaurant_id' parameter from the request
+        $restaurantId = $request->input('restaurant_id');
+
+        // Assuming you have a 'restaurant_id' column in the 'views' table
+        $views = View::where('restaurant_id', $restaurantId)->get();
+
+        return response()->json($views);
+    }
+
+    public function getTable(Request $request)
+    {
+        
+        $restaurantId = $request->input('restaurant_id');
+        // $tableId = $request->input('table_id');
+
+        $tables = Tables::where('restaurant_id', $restaurantId) ->get();
+
+        return response()->json($tables);
     }
 
     public function addCashier(addCashierRequest $request){
