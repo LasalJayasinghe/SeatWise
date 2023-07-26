@@ -109,7 +109,8 @@ const WaitlistPage = ({ onClose }) => {
           <button 
           type="button"
           onClick={handleClose} 
-          className="px-4 py-2 ml-4 rounded border border-gray-500">
+          className="px-4 py-2 ml-4 rounded border border-gray-500"
+          >
           Close
         </button>
         </div>
