@@ -371,3 +371,14 @@ table > tbody > tr > td {
     /* opacity: 20%; */
     cursor: pointer;
   }
+
+  .grid-item-reserve{
+    border: 5px solid white;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    /* background-color: #344054; */
+    border-radius: 15px;
+    /* opacity: 20%; */
+    cursor: pointer;
+  }

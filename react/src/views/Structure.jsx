@@ -215,7 +215,7 @@ export default function Structure() {
           <h1 className="text-2xl font-bold">Add views for your restaurant</h1>
     
   
-          <div className="flex space-x-2 ml-0 max-w-2xl relative">
+          <div className="flex space-x-2 ml-0 mr-0 relative">
   {/* <!-- Create Story Start --> */}
   {views.map((view) => (
     <div
@@ -403,9 +403,10 @@ export default function Structure() {
               )}
 
 
+                <br /><br /><br />
       
-            <a href="/tablestructure" className="font-semibold leading-6 text-green-600 hover:text-indigo-500">
-            go to set up table structure
+            <a href="/tablestructure" className="font-semibold leading-6 text-gray-600 hover:text-indigo-500">
+            Go to set up table structure {'>>'}
             </a>
          
           </div>
