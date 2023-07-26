@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('table_no');
             $table->string('chairs');
             $table->string('view_id');
+            $table->integer('posX');
+            $table->integer('posY');
             $table->timestamps();
 
             $table->foreign('restaurant_id')->references('id')->on('restaurants');

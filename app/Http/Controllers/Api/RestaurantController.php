@@ -144,6 +144,8 @@ class RestaurantController extends Controller
             'table_no' => $data['table_no'],
             'chairs' => $data['chairs'],
             'view_id' => $data['view_id'],
+            'posX' => $data['posX'],
+            'posY' => $data['posY'],
         ]);
 
     }

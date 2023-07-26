@@ -22,5 +22,7 @@ class Tables extends Model
         'table_no',
         'chairs',
         'view_id',
+        'posX',
+        'posY',
     ];
 }

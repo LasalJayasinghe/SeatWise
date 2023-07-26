@@ -29,6 +29,8 @@ class addTableRequest extends FormRequest
             'table_no' => 'required',
             'chairs' => 'required',
             'view_id' => 'required',
+            'posX' => 'required',
+            'posY' => 'required',
             
         ];
     }
