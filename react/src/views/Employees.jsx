@@ -37,14 +37,26 @@ const products = [
 export default function Employees() {
   const [cashiers, setCashiers] = useState([]);
   const {user, token, setUser, setToken} = useStateContext();
-
+ 
   useEffect(() => {
-
-    axiosClient.get('/getCashiers')
+    axiosClient.get('/user')
       .then(({ data }) => {
-        setCashiers(data);
+        setUser(data);
       });
   }, []);
+
+
+   useEffect(() => {
+    if (user && user.id) {
+      axiosClient.get(`/getCashiers/${user.id}`)
+        .then(({ data }) => {
+          setCashiers(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [user]);
   return (
     <div>
     <button style={{ marginLeft: '83rem', marginTop: '4rem' }}className="bg-gray-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
@@ -63,23 +75,13 @@ export default function Employees() {
   <tbody>
 
 
-  
-      
-    <tr className="hover:shadow-md">
-      <td className="px-6 py-8">{user.id} </td>
-      <td className="px-6 py-8">{user.email}</td>
-      <td className="px-6 py-8">0762711495</td>
-    </tr>
-    <tr className="hover:shadow-md">
-      <td className="px-6 py-7">Sanduni</td>
-      <td className="px-6 py-7">Sandu6@gmail.com</td>
-      <td className="px-6 py-7">0762811495</td>
-    </tr>
-    <tr className="hover:shadow-md">
-      <td className="px-6 py-7">Kanishka</td>
-      <td className="px-6 py-7">Kanish5@gmail.com</td>
-      <td className="px-6 py-7">0762711491</td>
-    </tr>
+  {cashiers.map((cashiers) => (
+            <tr className="hover:shadow-md" key={cashiers.id}>
+              <td className="px-6 py-8">{cashiers.cashier_name}</td>
+              <td className="px-6 py-8">{cashiers.cashier_email}</td>
+              <td className="px-6 py-8">{cashiers.cashier_phone_number}</td>
+            </tr>
+          ))}
   </tbody>
 </table>
 </div>
