@@ -3,6 +3,8 @@ import { useRef, useState } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import axiosClient from "../axios-client";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import AddCashier from './addCashier.jsx';
 
 /*
   This example requires some changes to your config:
@@ -35,6 +37,8 @@ const products = [
 ]
 
 export default function Employees() {
+
+  const navigate = useNavigate();
   const [cashiers, setCashiers] = useState([]);
   const {user, token, setUser, setToken} = useStateContext();
  
@@ -57,19 +61,33 @@ export default function Employees() {
         });
     }
   }, [user]);
+
+const handleClick = () =>{
+
+navigate("/addCashier");
+
+}
+
   return (
     <div>
-    <button style={{ marginLeft: '83rem', marginTop: '4rem' }}className="bg-gray-900 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
- Add Cashier
+    <button onClick={handleClick} style={{ marginLeft: '83rem',
+     marginTop: '4rem',
+     fontSize: '1.3rem', // Increase font size
+     padding: '1rem 1rem', // Increase padding vertically and horizontally
+     borderRadius: '0.6rem',
+     
+     }}className="bg-white text-green-500 font-bold py-2 px-4 rounded">
+ + Add Cashier
 </button>
 
 
-      <table className="table-fixed w-81 my-20 bg-white shadow-lg rounded-lg">
+      <table className="table-fixed w-81 my-20 bg-white shadow-lg rounded-lg" style={{ marginTop: '2rem' }}>
   <thead>
     <tr className="hover:shadow-md"> 
-      <th className="bg-gray-900 text-white font-bold px-6 py-3">Cashier name</th>
+      <th className="bg-gray-900 text-white font-bold px-6 py-3">Cashier Name</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3"> Email</th>
-      <th className="bg-gray-900  text-white font-bold px-6 py-3">Phone number</th>
+      <th className="bg-gray-900  text-white font-bold px-6 py-3">Phone Number</th>
+      <th className="bg-gray-900  text-white font-bold px-6 py-3">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -80,6 +98,12 @@ export default function Employees() {
               <td className="px-6 py-8">{cashiers.cashier_name}</td>
               <td className="px-6 py-8">{cashiers.cashier_email}</td>
               <td className="px-6 py-8">{cashiers.cashier_phone_number}</td>
+            <td>  <button style={{ marginLeft: '0rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+Update
+</button>
+ <button style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+Remove
+</button></td>
             </tr>
           ))}
   </tbody>
