@@ -41,5 +41,5 @@ class RestaurantController extends Controller
 
         // Return the fetched table structures as a JSON response
         return response()->json($tableStructures);
-    }
+}
 }

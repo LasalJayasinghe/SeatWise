@@ -27,3 +27,4 @@ class TableStructure extends Model
     }
 }
 
+

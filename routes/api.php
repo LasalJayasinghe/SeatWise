@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HallController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
-use App\Http\Controllers\Api\TableAvailabilityController;
 
 
 /*
@@ -44,8 +43,6 @@ Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']
 Route::get('/halls/{id}', [HallController::class, 'show']);
 
 Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
-
-Route::get('/restaurants/{restaurantId}/available-slots', [TableAvailabilityController::class, 'getAvailableSlots']);
 
 // Authentication routes
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

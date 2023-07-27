@@ -53,8 +53,7 @@ const RestaurantDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Make an API call to fetch table structures based on the user input data
-      const response = await axiosClient.get(`/api/restaurants/${id}/table-structures`, {
+      const response = await axiosClient.get(`/restaurants/${id}/table-structures`, {
         params: {
           date,
           startTime,
@@ -143,7 +142,7 @@ const RestaurantDetail = () => {
       </div>
 
       {/* Form to input date, start time, end time, and number of participants */}
-      <form onSubmit={handleSubmit} className="mt-6 flex gap-4">
+      <form onSubmit={handleSubmit} className="mt-6 flex gap-4" style={{ fontSize: '12px'}}>
         <div className="flex items-center">
           <label className="flex items-center">
             Date:
@@ -206,19 +205,19 @@ const RestaurantDetail = () => {
                 <div
                   key={table.id}
                   className={`relative p-4 border rounded-lg ${
-                    table.reservation ? 'bg-gray-400' : 'bg-green-400'
+                    table.reservation ? 'bg-gray-400' : 'bg-green-500'
                   }`}
                   style={{
                     width: '2cm',
                     height: '1cm',
-                    fontSize: '10px', // Adjust the font size for the table number
+                    fontSize: '10px', 
                     textAlign: 'center',
                     marginRight: '4px',
                   }}
                   onMouseEnter={() => handleTableHover(table)}
                   onMouseLeave={handleTableLeave}
                 >
-                  <h5 className="font-semibold" style={{ fontSize: '9px' }}>{table.table_number}</h5>
+                  <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>{table.table_number}</h5>
                   {/* Pop-up bubble */}
                   {hoveredTable === table && (
                     <div
