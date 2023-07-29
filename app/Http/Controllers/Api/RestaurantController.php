@@ -6,6 +6,7 @@ use App\Models\View;
 use App\Models\Tables;
 use http\Env\Response;
 use App\Models\Cashier;
+use App\Models\Profile;
 use App\Models\Cashiers;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
+use App\Http\Requests\setupProfileRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
@@ -170,6 +172,51 @@ class RestaurantController extends Controller
         $tables = Tables::where('restaurant_id', $restaurantId) ->get();
 
         return response()->json($tables);
+    }
+
+    public function getProfile(Request $request)
+    {
+        
+        $restaurantId = $request->input('restaurant_id');
+        // $tableId = $request->input('table_id');
+
+        /** @var \App\Models\Restaurants $user */
+        $restaurant = Restaurants::where('id', $restaurantId) ->get();
+
+        return response()->json($restaurant);
+    }
+
+    public function setUpProfile(setupProfileRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+
+        $updatedData = [
+            'location' => $data['location'],
+            'address' => $data['address'],
+            'type' => $data['type'],
+            'floors' => $data['floors'],
+            'opening' => $data['opening'],
+            'closing' => $data['closing'],
+        ];
+         /** @var Profile $profile */
+        $profile = Profile::updateOrCreate(
+            ['restaurant_id' => $restaurantId],
+            $updatedData
+        );
+
+    }
+
+    public function getSetUpProfile(Request $request)
+    {
+        
+        $restaurantId = $request->input('restaurant_id');
+        // $tableId = $request->input('table_id');
+
+        /** @var \App\Models\Profile $user */
+        $restaurant = Profile::where('restaurant_id', $restaurantId) ->get();
+
+        return response()->json($restaurant);
     }
 
     public function addCashier(addCashierRequest $request){
