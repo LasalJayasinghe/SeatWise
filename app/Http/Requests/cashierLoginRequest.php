@@ -25,7 +25,9 @@ class cashierLoginRequest extends FormRequest
     {
         return [
             'email' => 'required|email|exists:cashiers,cashier_email',
-            'password' => 'required',
+            'password' => [
+                'required',
+            ],
         ];
     }
 }

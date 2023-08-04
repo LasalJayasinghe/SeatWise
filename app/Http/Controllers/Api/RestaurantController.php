@@ -279,7 +279,7 @@ class RestaurantController extends Controller
 
 
     public function cashierLogin(cashierLoginRequest $request)
-    {
+    {   
         $credentials = $request->validated();
         if (!Auth::guard('cashiers')->attempt(['cashier_email' => $credentials['email'], 'cashier_password' => $credentials['password']])) {
             return response([
@@ -287,7 +287,7 @@ class RestaurantController extends Controller
             ], 422);
         }
 
-        /** @var \App\Models\Restaurants $user */
+        /** @var \App\Models\Cashiers $user */
         $user = Auth::guard('cashiers')->user();
         if (!$user instanceof Cashiers) {
             return response([
