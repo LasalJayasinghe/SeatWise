@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useStateContext } from "../context/ContextProvider";
 import axiosClient from '../axios-client';
 
 const ViewStructure= () => {
-  const { id } = useParams();
+  //const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [tables, setTables] = useState([]); // State to hold table structures data
   const [toggle, setToggle] = useState('tables'); // 'tables' is the default value
-
+  const {user, token, setUser, setToken} = useStateContext();
   // New states for the input fields
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -16,11 +17,17 @@ const ViewStructure= () => {
 
   // State to hold the hovered table
   const [hoveredTable, setHoveredTable] = useState(null);
+  useEffect(() => {
+    axiosClient.get('/user')
+      .then(({ data }) => {
+        setUser(data);
+      });
+  }, []);
 
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}`);
+        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}`);
         setRestaurant(response.data);
       } catch (error) {
         console.error(error);
@@ -28,12 +35,12 @@ const ViewStructure= () => {
     };
 
     fetchRestaurantDetail();
-  }, [id]);
+  }, [user.restaurant_id]);
 
   useEffect(() => {
     const fetchTableStructures = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}/table-structures`);
+        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/table-structures`);
         setTables(response.data);
       } catch (error) {
         console.log(error);
@@ -43,7 +50,7 @@ const ViewStructure= () => {
     if (toggle === 'tables') {
       fetchTableStructures();
     }
-  }, [id, toggle]);
+  }, [user.restaurant_id, toggle]);
 
   const handleToggle = () => {
     setToggle(toggle === 'tables' ? 'halls' : 'tables');
@@ -53,7 +60,7 @@ const ViewStructure= () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosClient.get(`/restaurants/${id}/table-structures`, {
+      const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/table-structures`, {
         params: {
           date,
           startTime,

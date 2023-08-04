@@ -148,7 +148,11 @@ const router = createBrowserRouter([
                 element: <CashierLogin />, 
             },
            
-         
+            {
+                path: "/viewstructure",
+                element: <ViewStructure />, 
+            },
+
             
         ]
     },
@@ -162,11 +166,7 @@ const router = createBrowserRouter([
            
             
 
-            {
-                path: "/viewstructure",
-                element: <ViewStructure />, 
-            },
-
+         
 
         ]
     },
