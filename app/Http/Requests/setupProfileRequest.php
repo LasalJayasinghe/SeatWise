@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class addTableRequest extends FormRequest
+class setupProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,13 @@ class addTableRequest extends FormRequest
     {
         return [
             'restaurant_id' => 'required',
-            'table_id' => 'required',
-            'table_no' => 'required',
-            'chairs' => 'required',
-            'view_id' => 'required',
-            'posX' => 'required',
-            'posY' => 'required',
-            
+            'description' => '',
+            'location' => '',
+            'address' => '',
+            'type' => '',
+            'floors' => '',
+            'opening' => '',
+            'closing' => '',
         ];
     }
 }

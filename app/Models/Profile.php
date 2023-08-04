@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tables extends Model
+class Profile extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,11 +18,12 @@ class Tables extends Model
      */
     protected $fillable = [
         'restaurant_id',
-        'table_id',
-        'table_no',
-        'chairs',
-        'view_id',
-        'posX',
-        'posY',
+        'description',
+        'location',
+        'address',
+        'type',
+        'floors',
+        'opening',
+        'closing',
     ];
 }

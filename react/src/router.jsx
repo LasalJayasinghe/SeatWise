@@ -20,8 +20,8 @@ import Reservations from './views/Reservations.jsx';
 //import AddCashier from './views/cddCashier.jsx';
 import AddCashier from './views/addCashier.jsx';
 import Employees from './views/Employees.jsx';
-import CashierLogin from './views/cashierLogin.jsx';
-
+import Setup from './views/setup.jsx';
+mport CashierLogin from './views/cashierLogin.jsx';
 
 const router = createBrowserRouter([
     {
@@ -123,8 +123,10 @@ const router = createBrowserRouter([
                 path: "/tablestructure",
                 element: <TableStructure />, 
             },
-
-
+            {
+                path: "/setup",
+                element: <Setup />, 
+            },
             {
                 path: "/addCashier",
                 element: <AddCashier />, 

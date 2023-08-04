@@ -54,9 +54,13 @@ Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
 
 Route::post('/structure', [RestaurantController::class, 'addView'])->name('structure.addView');
 Route::post('/table', [RestaurantController::class, 'addTable']);
+Route::post('/setupprofile', [RestaurantController::class, 'setUpProfile']);
 
 Route::get('/views', [RestaurantController::class, 'getViews']);
 Route::get('/gettable', [RestaurantController::class, 'getTable']);
+Route::get('/profile', [RestaurantController::class, 'getProfile']);
+Route::get('/getsetupdata', [RestaurantController::class, 'getSetUpProfile']);
+
 // Route::middleware('auth:api')->get('/views', [RestaurantController::class, 'getViews']);
 Route::post('/updateRestaurant', [RestaurantController::class, 'updateRestaurant']);
 //Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);

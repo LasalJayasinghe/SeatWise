@@ -14,6 +14,10 @@ export default function TableStructure() {
 
   const [errors, setErrors] = useState(null);
   const {user, setUser } = useStateContext();
+
+  // New states to store the selected box coordinates
+  const [selectedItemX, setselectedItemX] = useState(null);
+  const [selectedItemY, setselectedItemY] = useState(null);
   
 
 //   const viewnameRef = useRef();
@@ -23,25 +27,50 @@ export default function TableStructure() {
   const tablenoRef = useRef();
   const chairsRef = useRef();
   const viewidRef = useRef();
+  const popupRef = useRef();
 
   function handleItemClick(itemNumber) {
     setIsModalOpen(true);
     setSelectedItem(itemNumber);
+
+    // const container = event.currentTarget.parentElement;
+    // const gridItems = container.getElementsByClassName("grid-item");
+    // const gridColumns = parseInt(getComputedStyle(container).gridTemplateColumns.split(" ")[0], 10);
+    let columnIndex;
+    if (itemNumber % 11 === 0) {
+      columnIndex = 11;
+    } else {
+      columnIndex = itemNumber % 11;
+    }
+    
+    const rowIndex = Math.floor(itemNumber / 11);
+
+    setselectedItemX(columnIndex);
+    setselectedItemY(rowIndex);
   }
 
   function handleCloseModal() {
     setIsModalOpen(false);
   }
 
+  // const updateCoordinates = (x, y) => {
+  //   setselectedItemX(x);
+  //   setselectedItemY(y);
+  // };
+
 
   const onSubmitTable = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
+    // const x = selectedItemX;
+    // const y = selectedItemY;
     const payload = {
       restaurant_id: user.id,
       table_id: selectedItem,
       table_no: tablenoRef.current.value,
       chairs: chairsRef.current.value,
       view_id: viewidRef.current.value,
+      posX: selectedItemX, 
+      posY: selectedItemY,
     }
     // console.log(payload);
     setErrors(null)
@@ -160,7 +189,7 @@ export default function TableStructure() {
 
               {/* popup */}
               {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center z-50">
+                <div ref={popupRef} className="fixed inset-0 flex items-center justify-center z-50">
                   <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
                       <h2>Popup Content for Item {selectedItem}</h2>
@@ -181,6 +210,11 @@ export default function TableStructure() {
                           ))}
                         </select>
                         {/* Add more input fields as needed for other table data */}
+
+                        {/* Store the selected box's coordinates */}
+                        <input type="hidden" value={selectedItemX} />
+                        <input type="hidden" value={selectedItemY} />
+
                         <div className="flex space-x-4">
                         <button onClick={handleCloseModal} className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm">Cancel</button>
                           <button type="submit" className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create table</button>
