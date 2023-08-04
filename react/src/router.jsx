@@ -21,7 +21,7 @@ import Reservations from './views/Reservations.jsx';
 import AddCashier from './views/addCashier.jsx';
 import Employees from './views/Employees.jsx';
 import Setup from './views/setup.jsx';
-mport CashierLogin from './views/cashierLogin.jsx';
+import CashierLogin from './views/cashierLogin.jsx';
 
 const router = createBrowserRouter([
     {
