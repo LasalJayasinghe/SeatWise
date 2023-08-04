@@ -20,6 +20,7 @@ import Reservations from './views/Reservations.jsx';
 //import AddCashier from './views/cddCashier.jsx';
 import AddCashier from './views/addCashier.jsx';
 import Employees from './views/Employees.jsx';
+import CashierLogin from './views/cashierLogin.jsx';
 
 
 const router = createBrowserRouter([
@@ -75,6 +76,11 @@ const router = createBrowserRouter([
             {
                 path: "/restaurantsignup",
                 element: <RestaurantSignup />, 
+            },
+            
+            {
+                path: "/cashierLogin",
+                element: <CashierLogin />, 
             },
 
            

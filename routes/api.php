@@ -49,6 +49,7 @@ Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup
 
 Route::get('restaurants', [RestaurantController::class, 'show']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
+Route::post('/cashierlogin', [RestaurantController::class, 'cashierlogin'])->name('cashier.login');
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
 
 Route::post('/structure', [RestaurantController::class, 'addView'])->name('structure.addView');

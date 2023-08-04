@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
+use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
@@ -225,6 +226,29 @@ class RestaurantController extends Controller
 
        }
     
+    }
+
+
+
+    public function cashierLogin(cashierLoginRequest $request)
+    {
+        $credentials = $request->validated();
+        if (!Auth::guard('cashiers')->attempt(['cashier_email' => $credentials['email'], 'cashier_password' => $credentials['password']])) {
+            return response([
+                'message' => 'Provided email or password is incorrect'
+            ], 422);
+        }
+
+        /** @var \App\Models\Restaurants $user */
+        $user = Auth::guard('cashiers')->user();
+        if (!$user instanceof Cashiers) {
+            return response([
+                'message' => 'User authentication failed'
+            ], 422);
+        }
+        
+        $token = $user->createToken('main')->plainTextToken;
+        return response(compact('user', 'token'));
     }
 
    
