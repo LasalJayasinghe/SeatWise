@@ -66,6 +66,9 @@ Route::post('/updateRestaurant', [RestaurantController::class, 'updateRestaurant
 //Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);
 Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);
 
+
+Route::get('/restaurants/{id}', [RestaurantController::class, 'showRestaurant']); // This route fetches a single restaurant by ID
+Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

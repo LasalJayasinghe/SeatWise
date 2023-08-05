@@ -311,7 +311,31 @@ class RestaurantController extends Controller
     
     }
 
+    public function showRestaurant($id)
+    {
+        $restaurant = Restaurants::find($id);
 
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        return response()->json($restaurant);
+    }
+
+    public function getTableStructures($id)
+    {
+        $restaurant = Restaurants::find($id);
+
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        // Fetch the table structures associated with the restaurant
+        $tableStructures = TableStructure::where('restaurant_id', $id)->get();
+
+        // Return the fetched table structures as a JSON response
+        return response()->json($tableStructures);
+}
 
 
 
