@@ -194,8 +194,11 @@ class RestaurantController extends Controller
         $restaurantId = $data['restaurant_id'];
 
         $updatedData = [
-            'location' => $data['location'],
-            'address' => $data['address'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip' => $data['zip'],
+            'description' => $data['description'],
+            'cover' => $data['cover'],
             'type' => $data['type'],
             'floors' => $data['floors'],
             'opening' => $data['opening'],

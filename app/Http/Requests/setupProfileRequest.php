@@ -25,9 +25,11 @@ class setupProfileRequest extends FormRequest
     {
         return [
             'restaurant_id' => 'required',
+            'city' => '',
+            'state' => '',
+            'zip' => '',
             'description' => '',
-            'location' => '',
-            'address' => '',
+            'cover' => '',
             'type' => '',
             'floors' => '',
             'opening' => '',

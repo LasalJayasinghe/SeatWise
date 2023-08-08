@@ -16,9 +16,11 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
             $table->string('description')->nullable();
-            $table->string('location')->nullable();
-            $table->string('address')->nullable();
+            $table->string('cover')->nullable();
             $table->string('type')->nullable();
             $table->string('floors')->nullable();
             $table->time('opening')->nullable();

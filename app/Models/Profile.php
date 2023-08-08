@@ -18,9 +18,11 @@ class Profile extends Model
      */
     protected $fillable = [
         'restaurant_id',
+        'city',
+        'state',
+        'zip',
         'description',
-        'location',
-        'address',
+        'cover',
         'type',
         'floors',
         'opening',

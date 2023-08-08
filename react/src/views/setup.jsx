@@ -106,8 +106,11 @@ export default function Setup() {
 
         const payload = {
           restaurant_id: user.id,
-          // location: locationRef.current.value,
-          // address: addressRef.current.value,
+          city: cityRef.current.value,
+          state: stateRef.current.value,
+          zip: zipRef.current.value,
+          description: descriptionRef.current.value,
+          cover: coverRef.current.value,
           type: selectedType,
           floors: floorsRef.current.value,
           opening: openingRef.current.value,
@@ -367,10 +370,7 @@ export default function Setup() {
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="first-name"
-                                    id="first-name"
                                     ref={cityRef}
-                                    autoComplete="given-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                   />
                                 </div>
@@ -382,10 +382,7 @@ export default function Setup() {
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="first-name"
-                                    id="first-name"
                                     ref={stateRef}
-                                    autoComplete="given-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                   />
                                 </div>
@@ -397,10 +394,7 @@ export default function Setup() {
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="first-name"
-                                    id="first-name"
                                     ref={zipRef}
-                                    autoComplete="given-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                   />
                                 </div>
@@ -550,7 +544,7 @@ export default function Setup() {
                                   </label>
                                   <div className="mt-2">
                                     <input
-                                      type="text"
+                                      type="time"
                                       name="first-name"
                                       id="first-name"
                                       ref={openingRef} 
@@ -566,7 +560,7 @@ export default function Setup() {
                                   </label>
                                   <div className="mt-2">
                                     <input
-                                      type="text"
+                                      type="time"
                                       name="first-name"
                                       id="first-name"
                                       ref={closingRef}
