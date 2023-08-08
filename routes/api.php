@@ -48,6 +48,7 @@ Route::post('/login' , [AuthController::class , 'login']);
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 
 Route::get('restaurants', [RestaurantController::class, 'show']);
+Route::get('cashiers', [RestaurantController::class, 'cashierLogin']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
 Route::post('/cashierlogin', [RestaurantController::class, 'cashierlogin'])->name('cashier.login');
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);

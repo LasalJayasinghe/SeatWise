@@ -10,17 +10,19 @@ use App\Models\Profile;
 use App\Models\Cashiers;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
+use App\Models\TableStructure;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
+use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
-use App\Http\Requests\cashierLoginRequest;
+
 class RestaurantController extends Controller
 {
     public function show()
