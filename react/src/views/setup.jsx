@@ -219,23 +219,24 @@ export default function Setup() {
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Add description</dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur
-              qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud
-              pariatur mollit ad adipisicing reprehenderit deserunt qui eu.
+            {otherData.length > 0
+              ? <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{otherData[0]?.description}</dd>
+              : <dd className="mt-1 text-sm leading-6 text-red-500 sm:col-span-2 sm:mt-0">Set up the profile first</dd>
+            }
             </dd>
           </div>
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Location</dt>
+          {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">Address</dt>
             {otherData.length > 0
               ? <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{otherData[0]?.location}</dd>
               : <dd className="mt-1 text-sm leading-6 text-red-500 sm:col-span-2 sm:mt-0">Set up the profile first</dd>
             }
 
-          </div>
+          </div> */}
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Address</dt>
             {otherData.length > 0
-              ? <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{otherData[0]?.address}</dd>
+              ? <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{otherData[0]?.city}, {otherData[0]?.state}, {otherData[0]?.zip}</dd>
               : <dd className="mt-1 text-sm leading-6 text-red-500 sm:col-span-2 sm:mt-0">Set up the profile first</dd>
             } 
           </div>
@@ -249,9 +250,9 @@ export default function Setup() {
                     <div className="ml-0 flex flex-col gap-2">
                       <div className="ml-4 flex min-w-0 flex-1">
                         <span className="truncate font-medium mr-10 pr-20">Reservation type</span>
-                        <div onClick={() => handleAddReservationModalOpen()} className="font-medium text-indigo-600 hover:text-indigo-500">
+                        {/* <div onClick={() => handleAddReservationModalOpen()} className="font-medium text-indigo-600 hover:text-indigo-500">
                           set
-                        </div>
+                        </div> */}
                       </div>
                       
                       <ul className="flex-shrink-0 text-gray-400 ml-4 pl-4">
@@ -365,7 +366,7 @@ export default function Setup() {
                               
                               <div className="sm:col-span-2">
                                 <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                  City
+                                  Street no, name
                                 </label>
                                 <div className="mt-2">
                                   <input
@@ -377,7 +378,7 @@ export default function Setup() {
                               </div>
                               <div className="sm:col-span-2">
                                 <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                  State / Province
+                                  City
                                 </label>
                                 <div className="mt-2">
                                   <input
@@ -389,7 +390,7 @@ export default function Setup() {
                               </div>
                               <div className="sm:col-span-2">
                                 <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                  ZIP / Postal code
+                                  State
                                 </label>
                                 <div className="mt-2">
                                   <input
@@ -759,8 +760,10 @@ export default function Setup() {
                                   </select>
                                 </div>
                               </div> */}
+
+                              
                   
-                              <div className="col-span-full">
+                              {/* <div className="col-span-full">
                                 <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">
                                   Street address
                                 </label>
@@ -774,7 +777,7 @@ export default function Setup() {
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                   />
                                 </div>
-                              </div>
+                              </div> */}
                   
                               {/* <div className="sm:col-span-2 sm:col-start-1">
                                 <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
@@ -842,6 +845,46 @@ export default function Setup() {
                                   </div>
                                 </div>
                               </div> */}
+
+                                <div className="sm:col-span-2">
+                                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                  Street no, name
+                                </label>
+                                <div className="mt-2">
+                                  <input
+                                    type="text"
+                                    ref={cityRef}
+                                    defaultValue={otherData[0]?.city}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                  />
+                                </div>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                  City
+                                </label>
+                                <div className="mt-2">
+                                  <input
+                                    type="text"
+                                    ref={stateRef}
+                                    defaultValue={otherData[0]?.state}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                  />
+                                </div>
+                              </div>
+                              <div className="sm:col-span-2">
+                                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                  State
+                                </label>
+                                <div className="mt-2">
+                                  <input
+                                    type="text"
+                                    ref={zipRef}
+                                    defaultValue={otherData[0]?.zip}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                  />
+                                </div>
+                              </div>
                   
                               <div className="col-span-full">
                                 <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
@@ -853,7 +896,7 @@ export default function Setup() {
                                     name="about"
                                     rows={3}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    defaultValue={''}
+                                    defaultValue={otherData[0]?.description}
                                   />
                                 </div>
                                 <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
