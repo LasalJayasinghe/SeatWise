@@ -48,7 +48,9 @@ Route::post('/login' , [AuthController::class , 'login']);
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 
 Route::get('restaurants', [RestaurantController::class, 'show']);
+Route::get('cashiers', [RestaurantController::class, 'cashierLogin']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
+Route::post('/cashierlogin', [RestaurantController::class, 'cashierlogin'])->name('cashier.login');
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
 
 Route::post('/structure', [RestaurantController::class, 'addView'])->name('structure.addView');
@@ -65,6 +67,9 @@ Route::post('/updateRestaurant', [RestaurantController::class, 'updateRestaurant
 //Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);
 Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);
 
+
+Route::get('/restaurants/{id}', [RestaurantController::class, 'showRestaurant']); // This route fetches a single restaurant by ID
+Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

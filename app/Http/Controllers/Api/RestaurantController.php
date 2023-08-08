@@ -10,12 +10,14 @@ use App\Models\Profile;
 use App\Models\Cashiers;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
+use App\Models\TableStructure;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
+use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
@@ -276,6 +278,29 @@ class RestaurantController extends Controller
     
     }
 
+
+
+    public function cashierLogin(cashierLoginRequest $request)
+    {   
+        $credentials = $request->validated();
+        if (!Auth::guard('cashiers')->attempt(['cashier_email' => $credentials['email'], 'cashier_password' => $credentials['password']])) {
+            return response([
+                'message' => 'Provided email or password is incorrect'
+            ], 422);
+        }
+
+        /** @var \App\Models\Cashiers $user */
+        $user = Auth::guard('cashiers')->user();
+        if (!$user instanceof Cashiers) {
+            return response([
+                'message' => 'User authentication failed'
+            ], 422);
+        }
+        
+        $token = $user->createToken('main')->plainTextToken;
+        return response(compact('user', 'token'));
+    }
+
    
 
 
@@ -288,7 +313,31 @@ class RestaurantController extends Controller
     
     }
 
+    public function showRestaurant($id)
+    {
+        $restaurant = Restaurants::find($id);
 
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        return response()->json($restaurant);
+    }
+
+    public function getTableStructures($id)
+    {
+        $restaurant = Restaurants::find($id);
+
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        // Fetch the table structures associated with the restaurant
+        $tableStructures = TableStructure::where('restaurant_id', $id)->get();
+
+        // Return the fetched table structures as a JSON response
+        return response()->json($tableStructures);
+}
 
 
 

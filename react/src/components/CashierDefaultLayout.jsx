@@ -17,7 +17,7 @@ const navigation = [
 { name: 'Table structure', to: '/structure', current: false },
 { name: 'Reservations', to: '/reservations', current: false },
 { name: 'Employees', to: '/employees', current: false },
-
+{name: 'ViewStructure', to: '/viewstructure',current:false},
 ]
 
 
@@ -27,7 +27,7 @@ return classes.filter(Boolean).join(' ')
 }
 
 
-export default function RestaurantDefaultLayout() {
+export default function CashierDefaultLayout() {
     const {user, token, setUser, setToken} = useStateContext();
 
     if(!token){

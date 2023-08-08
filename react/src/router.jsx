@@ -21,7 +21,11 @@ import Reservations from './views/Reservations.jsx';
 import AddCashier from './views/addCashier.jsx';
 import Employees from './views/Employees.jsx';
 import Setup from './views/setup.jsx';
-
+import CashierLogin from './views/cashierLogin.jsx';
+import ViewStructure from './views/ViewStructure.jsx';
+import CashierGuestLayout from './components/CashierGuestLayout.jsx';  
+import CashierDefaultLayout from './components/CashierDefaultLayout.jsx';
+import CashierDashboard from './views/CashierDashboard.jsx';
 
 const router = createBrowserRouter([
     {
@@ -77,11 +81,14 @@ const router = createBrowserRouter([
                 path: "/restaurantsignup",
                 element: <RestaurantSignup />, 
             },
-
-           
             
+          
         ]
     },
+
+
+
+    
     {
         path: '/',
         element: <RestaurantDefaultLayout />,
@@ -130,6 +137,41 @@ const router = createBrowserRouter([
 
         ]
     },
+
+    {
+        path: '/',
+        element: <CashierGuestLayout />,
+        children: [
+          
+            {
+                path: "/cashierLogin",
+                element: <CashierLogin />, 
+            },
+           
+            {
+                path: "/viewstructure",
+                element: <ViewStructure />, 
+            },
+
+            
+        ]
+    },
+
+
+    {
+        path: '/',
+        element: <CashierDefaultLayout />,
+        children: [
+            
+           
+            
+
+         
+
+        ]
+    },
+
+    
     {
         path: '*',
         element : <NotFound />
