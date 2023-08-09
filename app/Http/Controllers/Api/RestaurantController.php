@@ -224,6 +224,45 @@ class RestaurantController extends Controller
         return response()->json($restaurant);
     }
 
+    public function editRestaurant(updateRestaurantRequest $request) {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+        
+        // Update first table (Assuming 'restaurants' table)
+        $restaurant = Restaurants::find($restaurantId);
+        if ($restaurant) {
+            $restaurant->update([
+                'restaurantname' => $data['restaurantname'],
+                'brn' => $data['brn'],
+                'email' => $data['email'],
+                'name' => $data['name'],
+                'phone' => $data['phone'],
+            ]);
+        } else {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+    
+        // Update second table (Assuming 'restaurant_details' table)
+        $profile = Profile::where('restaurant_id', $restaurantId)->first();
+        if ($profile) {
+            $profile->update([
+                'city' => $data['city'],
+                'state' => $data['state'],
+                'zip' => $data['zip'],
+                'description' => $data['description'],
+                'cover' => $data['cover'],
+                'type' => $data['type'],
+                'floors' => $data['floors'],
+                'opening' => $data['opening'],
+                'closing' => $data['closing'],
+            ]);
+        } else {
+            return response()->json(['message' => 'Restaurant details not found'], 404);
+        }
+    
+        return response()->json(['message' => 'Update successful']);
+    }
+
     public function addCashier(addCashierRequest $request){
          // Make sure the user is authenticated
    
@@ -254,32 +293,8 @@ class RestaurantController extends Controller
     }
 
 
-    public function updateRestaurant(updateRestaurantRequest $request) {
-        $data = $request->validated();
-        /** @var Restaurants $restaurant */
-        //$restaurant = auth()->guard('restaurants')->user();
-       $restaurantId = $data['id'];
-       $restaurant = Restaurants::find($restaurantId);
-       // $restaurant = Restaurant::find($id);
-       if ($restaurant) {
-        $restaurant->update([
-            'id' => $restaurantId,
-            'restaurantname' => $data['restaurantname'],
-            'brn' => $data['brn'],
-            'email' => $data['email'],
-            'name' => $data['name'],
-            'phone' => $data['phone'],
-            'password' => bcrypt($data['password']),
-        ]);
-        return response()->json(['message' => ' successfully updated']);
-       }
-
-       else{
-        return response()->json(['message' => 'updatation failed']);  
-
-       }
     
-    }
+    
 
 
 

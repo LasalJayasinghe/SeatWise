@@ -17,6 +17,9 @@ export default function Setup() {
   const [errors, setErrors] = useState(null);
   const [otherData, setOtherData] = useState([]);
 
+  
+
+
   const cityRef = useRef(); 
   const stateRef = useRef();  
   const zipRef = useRef();  
@@ -28,6 +31,12 @@ export default function Setup() {
   const floorsRef = useRef();
   const openingRef = useRef();
   const closingRef = useRef();
+
+  const restaurantnameRef = useRef();  
+  const brnRef = useRef();
+  const emailRef = useRef();
+  const nameRef = useRef();
+  const phoneRef = useRef();
 
   function handleAddReservationModalOpen() {
     setModalOpen(true);
@@ -60,6 +69,7 @@ export default function Setup() {
           setUser(data)
           getProfile(data.id);
           fetchOtherData(data.id);
+          // onSubmitEdit(data.id);
       })
       }, [])
   
@@ -122,6 +132,53 @@ export default function Setup() {
         .then((response) => {
           console.log('API response:', response.data);
           handleAddReservationModalClose();
+        })
+        .catch(err => {
+          const response = err.response;
+          if (response && response.status === 422) {
+            if(response.data.errors)
+            {
+              setErrors(response.data.errors)
+            }else{
+              setErrors({
+                email: [response.data.message]
+              })
+            }
+          }
+          })
+      }
+
+
+      // const [selectedType, setSelectedType] = useState(otherData[0]?.type || newType);
+      
+      const onSubmitEdit = (ev) => {
+        ev.preventDefault();
+        console.log("extract", user.id);
+        const selectedType = document.querySelector('input[type="radio"]:checked')?.value || '';
+
+        const payload = {
+          restaurant_id: user.id,
+          restaurantname: restaurantnameRef.current.value,
+          brn: brnRef.current.value,
+          email: emailRef.current.value,
+          name: nameRef.current.value,
+          phone: phoneRef.current.value,
+          city: cityRef.current.value,
+          state: stateRef.current.value,
+          zip: zipRef.current.value,
+          description: descriptionRef.current.value,
+          cover: coverRef.current.value,
+          type: selectedType,
+          floors: floorsRef.current.value,
+          opening: openingRef.current.value,
+          closing: closingRef.current.value,
+        }
+        // console.log(payload);
+        setErrors(null)
+        axiosClient.post('/updateprofile', payload)
+        .then((response) => {
+          console.log('API response:', response.data);
+          handleEditModalClose();
         })
         .catch(err => {
           const response = err.response;
@@ -218,12 +275,12 @@ export default function Setup() {
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Add description</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            
             {otherData.length > 0
               ? <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{otherData[0]?.description}</dd>
               : <dd className="mt-1 text-sm leading-6 text-red-500 sm:col-span-2 sm:mt-0">Set up the profile first</dd>
             }
-            </dd>
+  
           </div>
           {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Address</dt>
@@ -648,7 +705,7 @@ export default function Setup() {
 
                       {/* Scrollable Content */}
                       <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "90%" }}>
-                      <form>
+                      <form onSubmit={onSubmitEdit} method="post">
                         <div className="space-y-12">
                           <div className="border-b border-gray-900/10 pb-12">
                             <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
@@ -670,8 +727,7 @@ export default function Setup() {
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="first-name"
-                                    id="first-name"
+                                    ref={restaurantnameRef}
                                     defaultValue={user.restaurantname}
                                     autoComplete="given-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -686,8 +742,7 @@ export default function Setup() {
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="last-name"
-                                    id="last-name"
+                                    ref={brnRef}
                                     defaultValue={user.brn}
                                     autoComplete="family-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -701,9 +756,8 @@ export default function Setup() {
                                 </label>
                                 <div className="mt-2">
                                   <input
-                                    id="email"
-                                    name="email"
                                     type="email"
+                                    ref={emailRef}
                                     defaultValue={user.email}
                                     autoComplete="email"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -718,8 +772,7 @@ export default function Setup() {
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="first-name"
-                                    id="first-name"
+                                    ref={nameRef}
                                     defaultValue={user.name}
                                     autoComplete="given-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -734,8 +787,7 @@ export default function Setup() {
                                 <div className="mt-2">
                                   <input
                                     type="text"
-                                    name="last-name"
-                                    id="last-name"
+                                    ref={phoneRef}
                                     defaultValue={user.phone}
                                     autoComplete="family-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -892,9 +944,8 @@ export default function Setup() {
                                 </label>
                                 <div className="mt-2">
                                   <textarea
-                                    id="about"
-                                    name="about"
                                     rows={3}
+                                    ref={descriptionRef}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     defaultValue={otherData[0]?.description}
                                   />
@@ -930,7 +981,7 @@ export default function Setup() {
                                         className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                                       >
                                         <span>Upload a file</span>
-                                        <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                        <input ref={coverRef} type="file" className="sr-only" />
                                       </label>
                                       <p className="pl-1">or drag and drop</p>
                                     </div>
@@ -943,16 +994,21 @@ export default function Setup() {
 
 
                           <fieldset>
-                                <legend className="text-sm font-semibold leading-6 text-gray-900">Reservations allowing for</legend>
+
+                          <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                              <div className="sm:col-span-3">
+                              <legend className="text-sm font-semibold leading-6 text-gray-900">Reservations allowing for</legend>
                                 {/* <p className="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p> */}
                                 <div className="mt-6 flex items-center gap-x-6">
                                   <div className="flex items-center gap-x-5">
                                     <input
-                                      id="push-everything"
-                                      name="push-notifications"
                                       type="radio"
+                                      ref={typeHallRef}
+                                      value="Hall"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600 mb-0"
                                       checked={otherData[0]?.type === "Hall"}
+                                      // checked={selectedType === "Hall"}
+                                      // onChange={() => setSelectedType("Hall")}
                                     />
                                     <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
                                       Hall
@@ -960,29 +1016,53 @@ export default function Setup() {
                                   </div>
                                   <div className="flex items-center gap-x-3">
                                     <input
-                                      id="push-email"
-                                      name="push-notifications"
                                       type="radio"
+                                      ref={typeTableRef}
+                                      value="Table"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600 mb-0"
                                       checked={otherData[0]?.type === "Table"}
+                                      // checked={selectedType === "Table"}
+                                      // onChange={() => setSelectedType("Table")}
                                     />
                                     <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
-                                      Restaurant
+                                      Table
                                     </label>
                                   </div>
                                   <div className="flex items-center gap-x-3">
                                     <input
-                                      id="push-nothing"
-                                      name="push-notifications"
                                       type="radio"
+                                      ref={typeBothRef}
+                                      value="Both"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600 mb-0"
-                                      checked={otherData[0]?.type === "Both"}
+                                      checked={otherData[0]?.type === "Both"} 
+                                      // onChange={() => setSelectedType("Both")}
                                     />
                                     <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
                                       Both
                                     </label>
                                   </div>
                                 </div>
+
+                              </div>
+
+                              <div className="sm:col-span-3">
+                                <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    No of floors allowing for reservation(including ground floor)
+                                  </label>
+                                  <div className="mt-2">
+                                    <input
+                                      type="text"
+                                      defaultValue={otherData[0]?.floors}
+                                      ref={floorsRef} 
+                                      autoComplete="given-name"
+                                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    />
+                                  </div>
+                                </div>
+                          </div>
+
+
+                                
                               </fieldset>
                   
                           
@@ -1001,9 +1081,8 @@ export default function Setup() {
                                 </label>
                                 <div className="mt-2">
                                   <input
-                                    type="text"
-                                    name="first-name"
-                                    id="first-name"
+                                    type="time"
+                                    ref={openingRef}
                                     defaultValue={otherData[0]?.opening} 
                                     autoComplete="given-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -1017,9 +1096,8 @@ export default function Setup() {
                                 </label>
                                 <div className="mt-2">
                                   <input
-                                    type="text"
-                                    name="first-name"
-                                    id="first-name"
+                                    type="time"
+                                    ref={closingRef}
                                     defaultValue={otherData[0]?.closing} 
                                     autoComplete="given-name"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

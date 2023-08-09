@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
 class updateRestaurantRequest extends FormRequest
@@ -25,20 +24,21 @@ class updateRestaurantRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
-            'restaurantname' => ['required', 'string'],
-            'brn' => ['required', 'string'],
-            'email' => ['required'],
-            'name' => ['required', 'string'],
-            'phone' => ['required', 'numeric'],
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(8)
-                    ->letters()
-                    ->symbols()
-                    ->numbers()
-            ]
+            'restaurant_id' => 'required',
+            'restaurantname' => '',
+            'brn' => '',
+            'email' => '',
+            'name' => '',
+            'phone' => '',
+            'city' => '',
+            'state' => '',
+            'zip' => '',
+            'description' => '',
+            'cover' => '',
+            'type' => '',
+            'floors' => '',
+            'opening' => '',
+            'closing' => '',
         ];
     }
 }

@@ -41,7 +41,7 @@ export default function Profile() {
           password: passwordRef.current.value,
           password_confirmation: passwordConfirmationRef.current.value,
       }
-      axiosClient.post('/updateRestaurant', payLoad)
+      // axiosClient.post('/updateRestaurant', payLoad)
           .then(({data}) => {
               //setUser(data.user);
               //setToken(data.token);
