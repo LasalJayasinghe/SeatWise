@@ -37,4 +37,21 @@ class TableReservation extends Model
     
             return $tableStructures;
         }
+
+        public static function getAvailableTables($restaurantId, $date, $startTime, $endTime, $numParticipants)
+    {
+        $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
+            ->where('reservation_date', $date)
+            ->where('start_time', '<=', $endTime)
+            ->where('end_time', '>=', $startTime)
+            ->pluck('table_structure_id')
+            ->toArray();
+
+        $availableTables = TableStructure::where('restaurant_id', $restaurantId)
+            ->whereNotIn('id', $reservedTableIds)
+            ->where('number_of_chairs', '>=', $numParticipants)
+            ->get();
+
+        return $availableTables;
+    }
 }

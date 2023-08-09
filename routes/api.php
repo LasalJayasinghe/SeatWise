@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser
 Route::get('/restaurants', [RestaurantController::class, 'index']); // This route fetches all restaurants
 Route::get('/restaurants/{id}', [RestaurantController::class, 'show']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
+Route::get('/restaurants/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
 
 Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']);
 Route::get('/halls/{id}', [HallController::class, 'show']);

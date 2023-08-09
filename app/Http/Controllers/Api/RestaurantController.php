@@ -42,4 +42,27 @@ class RestaurantController extends Controller
         // Return the fetched table structures as a JSON response
         return response()->json($tableStructures);
 }
+
+public function getAvailableTables(Request $request, $restaurantId)
+{
+    $date = $request->input('date');
+    $startTime = $request->input('start_time');
+    $endTime = $request->input('end_time');
+    $numParticipants = $request->input('num_participants');
+
+    $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
+        ->where('reservation_date', $date)
+        ->where('start_time', '<=', $endTime)
+        ->where('end_time', '>=', $startTime)
+        ->pluck('table_structure_id')
+        ->toArray();
+
+    $availableTables = TableStructure::where('restaurant_id', $restaurantId)
+        ->whereNotIn('id', $reservedTableIds)
+        ->where('number_of_chairs', '>=', $numParticipants)
+        ->get();
+
+    return response()->json($availableTables);
+}
+
 }

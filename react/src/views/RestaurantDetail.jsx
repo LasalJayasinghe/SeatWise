@@ -5,17 +5,14 @@ import axiosClient from '../axios-client';
 const RestaurantDetail = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
-  const [tables, setTables] = useState([]); // State to hold table structures data
-  const [toggle, setToggle] = useState('tables'); // 'tables' is the default value
-
-  // New states for the input fields
+  const [tables, setTables] = useState([]);
+  const [toggle, setToggle] = useState('tables');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [numParticipants, setNumParticipants] = useState(1); // Default value is set to 1
-
-  // State to hold the hovered table
+  const [numParticipants, setNumParticipants] = useState(1);
   const [hoveredTable, setHoveredTable] = useState(null);
+  const [halls, setHalls] = useState([]);
 
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
@@ -39,9 +36,25 @@ const RestaurantDetail = () => {
         console.log(error);
       }
     };
-
+  
     if (toggle === 'tables') {
-      fetchTableStructures();
+      fetchTableStructures(); // Pass the restaurant ID here
+    }
+  }, [id, toggle]);
+  
+
+  useEffect(() => {
+    const fetchHalls = async () => {
+      try {
+        const response = await axiosClient.get(`/restaurants/${id}/halls`);
+        setHalls(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (toggle === 'halls') {
+      fetchHalls();
     }
   }, [id, toggle]);
 
@@ -53,25 +66,26 @@ const RestaurantDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosClient.get(`/restaurants/${id}/table-structures`, {
+      const response = await axiosClient.get(`/restaurants/${id}/available-tables`, {
         params: {
+          restaurant_id: id, // Add the restaurant ID to the params
           date,
-          startTime,
-          endTime,
-          numParticipants,
+          start_time: startTime,
+          end_time: endTime,
+          num_participants: numParticipants,
         },
       });
-
-      // Assuming the response data is an array of table structures
-      const tableStructures = response.data;
-      setTables(tableStructures); // Update the tables state with the fetched data
-
-      // You can also handle other logic based on the fetched data here
-      console.log('Fetched Table Structures:', tableStructures);
+  
+      const availableTables = response.data;
+      setTables(availableTables);
+      console.log('Available Tables:', availableTables);
     } catch (error) {
       console.error(error);
     }
   };
+  
+  
+
 
   // Function to organize tables into rows based on posX and posY coordinates
   const organizeTablesIntoRows = (tables) => {
@@ -121,9 +135,7 @@ const RestaurantDetail = () => {
       <div className="flex items-center justify-center mb-6">
         <button
           className={`py-2 px-4 rounded-lg ${
-            toggle === 'tables'
-              ? 'bg-green-500 text-white'
-              : 'bg-white text-green-500'
+            toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
           }`}
           onClick={handleToggle}
         >
@@ -131,9 +143,7 @@ const RestaurantDetail = () => {
         </button>
         <button
           className={`py-2 px-4 rounded-lg ml-4 ${
-            toggle === 'halls'
-              ? 'bg-green-500 text-white'
-              : 'bg-white text-green-500'
+            toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
           }`}
           onClick={handleToggle}
         >
@@ -142,58 +152,60 @@ const RestaurantDetail = () => {
       </div>
 
       {/* Form to input date, start time, end time, and number of participants */}
-      <form onSubmit={handleSubmit} className="mt-6 flex gap-4" style={{ fontSize: '12px'}}>
-        <div className="flex items-center">
-          <label className="flex items-center">
-            Date:
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-              className="mr-5 p-2 border rounded-lg"
-            />
-          </label>
+      {toggle === 'tables' && ( // Conditionally render input fields when toggle is 'tables'
+        <form onSubmit={handleSubmit} className="mt-6 flex gap-4" style={{ fontSize: '12px' }}>
+          <div className="flex items-center">
+            <label className="flex items-center">
+              Date:
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+                className="mr-5 p-2 border rounded-lg"
+              />
+            </label>
 
-          <label className="flex items-center">
-            Start Time:
-            <input
-              type="time"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              required
-              className="mr-5 p-2 border rounded-lg"
-            />
-          </label>
+            <label className="flex items-center">
+              Start Time:
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                required
+                className="mr-5 p-2 border rounded-lg"
+              />
+            </label>
 
-          <label className="flex items-center">
-            End Time:
-            <input
-              type="time"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              required
-              className="mr-5 p-2 border rounded-lg"
-            />
-          </label>
+            <label className="flex items-center">
+              End Time:
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                required
+                className="mr-5 p-2 border rounded-lg"
+              />
+            </label>
 
-          <label className="flex items-center">
-            Participant count:
-            <input
-              type="number"
-              value={numParticipants}
-              onChange={(e) => setNumParticipants(Math.max(1, parseInt(e.target.value)))}
-              required
-              className="mr-5 p-2 border rounded-lg"
-              min="1"
-            />
-          </label>
+            <label className="flex items-center">
+              Participant count:
+              <input
+                type="number"
+                value={numParticipants}
+                onChange={(e) => setNumParticipants(Math.max(1, parseInt(e.target.value)))}
+                required
+                className="mr-5 p-2 border rounded-lg"
+                min="1"
+              />
+            </label>
 
-          <button type="submit" className="mr-4 bg-green-500 text-white py-2 px-4 rounded-lg">
-            Search
-          </button>
-        </div>
-      </form>
+            <button type="submit" className="mr-4 bg-green-500 text-white py-2 px-4 rounded-lg">
+              Search
+            </button>
+          </div>
+        </form>
+      )}
 
       {/* Display table structures */}
       {toggle === 'tables' && (
@@ -205,7 +217,7 @@ const RestaurantDetail = () => {
                 <div
                   key={table.id}
                   className={`relative p-4 border rounded-lg ${
-                    table.reservation ? 'bg-gray-400' : 'bg-green-500'
+                    table.reservation ? 'bg-gray-500' : 'bg-green-500'
                   }`}
                   style={{
                     width: '2cm',
