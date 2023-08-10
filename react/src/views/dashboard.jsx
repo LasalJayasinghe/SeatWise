@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Cards from '../components/Cards';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Datepicker from "tailwind-datepicker-react";
+// import Datepicker from "tailwind-datepicker-react";
 import slide1 from '../assets/slide1.png';
 import slide2 from '../assets/slide2.png';
 import slide3 from '../assets/slide3.png';
