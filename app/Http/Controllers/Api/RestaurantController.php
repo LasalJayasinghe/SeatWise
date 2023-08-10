@@ -50,6 +50,7 @@ public function getAvailableTables(Request $request, $restaurantId)
     $endTime = $request->input('end_time');
     $numParticipants = $request->input('num_participants');
 
+    $tableStructures = TableStructure::where('restaurant_id', $restaurantId)->get();
     $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
         ->where('reservation_date', $date)
         ->where('start_time', '<=', $endTime)
@@ -57,12 +58,12 @@ public function getAvailableTables(Request $request, $restaurantId)
         ->pluck('table_structure_id')
         ->toArray();
 
-    $availableTables = TableStructure::where('restaurant_id', $restaurantId)
-        ->whereNotIn('id', $reservedTableIds)
-        ->where('number_of_chairs', '>=', $numParticipants)
-        ->get();
+    foreach ($tableStructures as $table) {
+        $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
+    }
 
-    return response()->json($availableTables);
+    return response()->json($tableStructures);
 }
+
 
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
+import Switch from 'react-switch';
+
 
 const RestaurantDetail = () => {
   const { id } = useParams();
@@ -13,6 +15,8 @@ const RestaurantDetail = () => {
   const [numParticipants, setNumParticipants] = useState(1);
   const [hoveredTable, setHoveredTable] = useState(null);
   const [halls, setHalls] = useState([]);
+  const [tableForTwoToggle, setTableForTwoToggle] = useState(false);
+
 
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
@@ -207,45 +211,60 @@ const RestaurantDetail = () => {
         </form>
       )}
 
-      {/* Display table structures */}
+      {/* Display table for two toggle */}
       {toggle === 'tables' && (
-        <div className="mt-6">
-          {/* Organize tables into rows */}
-          {organizeTablesIntoRows(tables).map((row, rowIndex) => (
-            <div key={rowIndex} className="flex mt-4">
-              {row.map((table) => (
-                <div
-                  key={table.id}
-                  className={`relative p-4 border rounded-lg ${
-                    table.reservation ? 'bg-gray-500' : 'bg-green-500'
-                  }`}
-                  style={{
-                    width: '2cm',
-                    height: '1cm',
-                    fontSize: '10px', 
-                    textAlign: 'center',
-                    marginRight: '4px',
-                  }}
-                  onMouseEnter={() => handleTableHover(table)}
-                  onMouseLeave={handleTableLeave}
-                >
-                  <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>{table.table_number}</h5>
-                  {/* Pop-up bubble */}
-                  {hoveredTable === table && (
-                    <div
-                      className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
-                      style={{ fontSize: '12px', pointerEvents: 'none' }}
-                    >
-                      <p>{table.view}</p>
-                      <p>{table.number_of_chairs} chairs</p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+      <div className="mt-4">
+        <label className="flex items-center">
+          <Switch
+            onChange={setTableForTwoToggle}
+            checked={tableForTwoToggle}
+          />
+          <span className="ml-2">Table for Two</span>
+        </label>
+      </div>
       )}
+{/* Display table structures */}
+{toggle === 'tables' && (
+    <div className="mt-6">
+        {/* Organize tables into rows */}
+        {organizeTablesIntoRows(tables).map((row, rowIndex) => (
+            <div key={rowIndex} className="flex mt-4">
+                {row.map((table) => (
+                    <div
+                        key={table.id}
+                        className={`relative p-4 border rounded-lg ${
+                            table.isAvailable ? 'bg-green-500' : 'bg-gray-500'
+                        }`}
+                        style={{
+                            width: '2cm',
+                            height: '1cm',
+                            fontSize: '10px',
+                            textAlign: 'center',
+                            marginRight: '4px',
+                        }}
+                        onMouseEnter={() => handleTableHover(table)}
+                        onMouseLeave={handleTableLeave}
+                    >
+                        <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                            {table.table_number}
+                        </h5>
+                        {/* Pop-up bubble */}
+                        {hoveredTable === table && (
+                            <div
+                                className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                                style={{ fontSize: '12px', pointerEvents: 'none' }}
+                            >
+                                <p>{table.view}</p>
+                                <p>{table.number_of_chairs} chairs</p>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        ))}
+    </div>
+)}
+
 
       {/* Display other relevant restaurant details here */}
       {toggle === 'halls' && (
