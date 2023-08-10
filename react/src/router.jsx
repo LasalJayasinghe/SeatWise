@@ -13,28 +13,6 @@ import RestaurantInfo from './views/RestaurantInfo';
 const router = createBrowserRouter([
     {
         path: '/',
-        element : <DefaultLayout />,
-        children: [
-            {
-                path: '/',
-                element : <Navigate to ="/users" />
-            },
-            {
-                path: '/dashboard',
-                element : <Dashboard />
-            },
-            {
-                path: '/users',
-                element : <Users />
-            },
-            {
-                path: '/restaurants/:id', // Define the route for restaurant information
-                element: <RestaurantInfo />,
-            },
-        ]
-    },
-    {
-        path: '/',
         element : <GuestLayout />,
         children : [
             {
@@ -54,6 +32,28 @@ const router = createBrowserRouter([
                 element : <Signup />
             },
 
+        ]
+    },
+    {
+        path: '/',
+        element : <DefaultLayout />,
+        children: [
+            {
+                path: '/',
+                element : <Navigate to ="/users" />
+            },
+            {
+                path: '/dashboard',
+                element : <Dashboard />
+            },
+            {
+                path: '/users',
+                element : <Users />
+            },
+            {
+                path: '/restaurants/:id', // Define the route for restaurant information
+                element: <RestaurantInfo />,
+            },
         ]
     },
     {
