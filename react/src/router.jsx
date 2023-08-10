@@ -8,25 +8,8 @@ import Dashboard from './views/dashboard.jsx';
 import DefaultLayout from './components/DefaultLayout.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
 
+
 const router = createBrowserRouter([
-    {
-        path: '/',
-        element : <DefaultLayout />,
-        children: [
-            {
-                path: '/',
-                element : <Navigate to ="/users" />
-            },
-            {
-                path: '/dashboard',
-                element : <Dashboard />
-            },
-            {
-                path: '/users',
-                element : <Users />
-            },
-        ]
-    },
     {
         path: '/',
         element : <GuestLayout />,
@@ -48,6 +31,24 @@ const router = createBrowserRouter([
                 element : <Signup />
             },
 
+        ]
+    },
+    {
+        path: '/',
+        element : <DefaultLayout />,
+        children: [
+            {
+                path: '/',
+                element : <Navigate to ="/users" />
+            },
+            {
+                path: '/dashboard',
+                element : <Dashboard />
+            },
+            {
+                path: '/users',
+                element : <Users />
+            },
         ]
     },
     {
