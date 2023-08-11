@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import Header from "../components/Header.jsx";
 import Sidebar from "../components/Sidebar.jsx";
+import TFTCards from "../components/TFTCards.jsx";
 
 export default function Users(){
 	// const [users,setUsers] = useState([]);
@@ -26,8 +27,13 @@ export default function Users(){
 
 	return(
 	<div>
-		<Header/>
-		<Sidebar/>
+		<Header />
+		<div className="users-container">
+		<Sidebar />
+		<div className="content-container">
+		  <TFTCards />
+		</div>
+	  </div>
 	</div>
 	)
 }
