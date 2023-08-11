@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
+
 });
 Route::middleware('auth:sanctum')->post('/waitlist', [WaitlistController::class, 'store']);
 
@@ -36,12 +37,13 @@ Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser
 // Additional routes for restaurant data
 Route::get('/restaurants', [RestaurantController::class, 'index']); // This route fetches all restaurants
 Route::get('/restaurants/{id}', [RestaurantController::class, 'show']); // This route fetches a single restaurant by ID
+Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
+Route::get('/restaurants/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
 
 Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']);
 Route::get('/halls/{id}', [HallController::class, 'show']);
 
 Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
-
 
 // Authentication routes
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

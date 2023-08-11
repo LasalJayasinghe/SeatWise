@@ -57,5 +57,14 @@ class AuthController extends Controller
         $user->tokens()->delete();
         return response('', 204);
     }
+
+    public function getUserData(Request $request)
+    {
+        // Logic to get user data
+        // For example, you can access the authenticated user's data with $request->user();
+        $user = $request->user();
+
+        return response()->json($user);
+    }
     
 }
