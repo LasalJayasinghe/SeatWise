@@ -24,7 +24,10 @@ import CashierLogin from './views/cashierLogin.jsx';
 import ViewStructure from './views/ViewStructure.jsx';
 import CashierGuestLayout from './components/CashierGuestLayout.jsx';  
 import CashierDefaultLayout from './components/CashierDefaultLayout.jsx';
-// import CashierDashboard from './views/CashierDashboard.jsx';
+import RestaurantLanding from './views/RestaurantLanding.jsx';
+import CashierDashboard from './views/CashierDashboard.jsx';
+import ViewReservations from './views/ViewReservations.jsx';
+
 
 const router = createBrowserRouter([
     {
@@ -66,6 +69,12 @@ const router = createBrowserRouter([
                 element : <Signup />
             },
 
+
+                      
+  
+           
+         
+
         ]
     },
     {
@@ -81,6 +90,10 @@ const router = createBrowserRouter([
                 element: <RestaurantSignup />, 
             },
             
+            {
+                path: "/restaurantlanding",
+                element: <RestaurantLanding />, 
+            },
           
         ]
     },
@@ -137,17 +150,11 @@ const router = createBrowserRouter([
         path: '/',
         element: <CashierGuestLayout />,
         children: [
-          
+
             {
                 path: "/cashierLogin",
                 element: <CashierLogin />, 
             },
-           
-            {
-                path: "/viewstructure",
-                element: <ViewStructure />, 
-            },
-
             
         ]
     },
@@ -158,10 +165,30 @@ const router = createBrowserRouter([
         element: <CashierDefaultLayout />,
         children: [
             
-           
+            {
+                path: '/',
+                element : <Navigate to ="/CashierDashboard" />
+            },
+
+            {
+               
+
+                path: "/CashierDashboard",
+                element: <CashierDashboard />, 
+            },
             
 
-         
+            {
+                path: "/viewstructure",
+                element: <ViewStructure />, 
+            },
+            
+       
+            {
+                path: "/viewReservations",
+                element: <ViewReservations />, 
+            },
+            
 
         ]
     },

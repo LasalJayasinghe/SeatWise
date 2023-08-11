@@ -24,7 +24,7 @@ class cashierLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|exists:cashiers,cashier_email',
+            'email' => 'required|email|exists:cashiers,email',
             'password' => [
                 'required',
             ],

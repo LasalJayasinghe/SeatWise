@@ -23,9 +23,9 @@ class Cashiers extends Authenticatable
         'restaurant_id',
         //  'brn',
         'cashier_name',
-        'cashier_email',
+        'email',
         'cashier_phone_number',
-        'cashier_password',
+        'password',
     ];
 
     /**

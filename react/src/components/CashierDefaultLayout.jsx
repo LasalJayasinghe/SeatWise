@@ -1,3 +1,4 @@
+
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
 import axiosClient from "../axios-client";
@@ -11,13 +12,11 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 
 const navigation = [
-{ name: 'Dashboard', to: '/restaurantDashboard', current: false },
-{ name: 'Profile', to: '/profile', current: false },
-{ name: 'Setup', to: '/setup', current: false },
-{ name: 'Table structure', to: '/structure', current: false },
-{ name: 'Reservations', to: '/reservations', current: false },
-{ name: 'Employees', to: '/employees', current: false },
-{name: 'ViewStructure', to: '/viewstructure',current:false},
+{ name: 'Dashboard', to: '/CashierDashboard', current: false },
+{ name: 'Add Reservation', to: '/ViewStructure', current: false },
+{ name: 'Profile', to: '#', current: false },
+{ name: 'View Reservations', to: '/ViewReservations', current: false },
+
 ]
 
 
@@ -31,7 +30,7 @@ export default function CashierDefaultLayout() {
     const {user, token, setUser, setToken} = useStateContext();
 
     if(!token){
-        return <Navigate to ="/restaurantlogin" />
+        return <Navigate to ="/Cashierlogin" />
     }
 
     
@@ -39,7 +38,7 @@ export default function CashierDefaultLayout() {
     const onLogout = ev => {
         ev.preventDefault()
 
-        axiosClient.post('/reslogout')
+        axiosClient.post('/cashierlogout')
         .then(() => {
             setUser({})
             setToken(null)
@@ -115,7 +114,7 @@ return (
 
               {/* User profile and notification icons */}
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {user.name}
+                {user.cashier_name}
                 <button
                   type="button"
                   className="rounded-full bg-white p-1 text-gray-500 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 focus:ring-offset-green-500 focus:text-green-500"

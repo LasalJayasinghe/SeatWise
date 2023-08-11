@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\cp;
 
 
 
@@ -25,6 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::post('/logout' , [AuthController::class , 'logout']);
     Route::post('/reslogout', [RestaurantController::class, 'logout']);
+    Route::post('/cashierlogout', [RestaurantController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
 });
  
@@ -48,9 +50,9 @@ Route::post('/login' , [AuthController::class , 'login']);
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 
 Route::get('restaurants', [RestaurantController::class, 'show']);
-Route::get('cashiers', [RestaurantController::class, 'cashierLogin']);
+//Route::get('cashiers', [RestaurantController::class, 'cashierLogin']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
-Route::post('/cashierlogin', [RestaurantController::class, 'cashierlogin'])->name('cashier.login');
+Route::post('/cashierLogin', [RestaurantController::class, 'cashierLogin']);
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
 
 Route::post('/structure', [RestaurantController::class, 'addView'])->name('structure.addView');

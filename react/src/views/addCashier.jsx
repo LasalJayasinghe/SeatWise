@@ -2,13 +2,15 @@ import { useRef, useState } from "react";
 import Logo from "../assets/logo.svg";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../context/ContextProvider";
+import { useNavigate } from 'react-router-dom'; // Import useNavigat
+
 // import React, { useEffect } from 'react';
 
 // import { Navigate } from 'react-router-dom'
 // import { useHistory } from 'react-router-dom';
 
 export default function AddCashier() {
-
+  const navigate = useNavigate(); // Get the navigate function
 
   const [message, setMessage] = useState('');
 
@@ -84,7 +86,8 @@ export default function AddCashier() {
             //console.log(data);
            setMessage(data.message); 
             // Set the message from the response 
-            <Navigate to="/restaurant" />
+            //history.push('/Employees'); // 
+            navigate('/Employees'); 
 
              
           })

@@ -263,73 +263,8 @@ class RestaurantController extends Controller
         return response()->json(['message' => 'Update successful']);
     }
 
-    public function addCashier(addCashierRequest $request){
-         // Make sure the user is authenticated
-   
-         $data = $request->validated();
-        // $user = auth('restaurants')->user();
-        // $restaurant = Restaurants::where('email', $user->email)->first();
-       
-       // $restaurant = auth('restaurants')->user();
-       $restaurant = auth()->guard('restaurants')->user();
-    
-       $restaurantId = $data['restaurant_id'];
-       
-         $user = Cashiers::create ([
-            'restaurant_id' => $restaurantId,
-            // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
-            
-             'cashier_name' => $data['cashiername'],
-             'cashier_email' => $data['email'],
-             'cashier_phone_number' => $data['phone'],
-             'cashier_password' => bcrypt($data['password']),
-        ]);
-       // return redirect('/restaurant');
-       // $token = $user->createToken('main')->plainTextToken;
-       return response()->json(['message' => 'Cashier successfully added']);
-        //return response(compact('user', 'token'));
-
-        
-    }
 
 
-    
-    
-
-
-
-    public function cashierLogin(cashierLoginRequest $request)
-    {   
-        $credentials = $request->validated();
-        if (!Auth::guard('cashiers')->attempt(['cashier_email' => $credentials['email'], 'cashier_password' => $credentials['password']])) {
-            return response([
-                'message' => 'Provided email or password is incorrect'
-            ], 422);
-        }
-
-        /** @var \App\Models\Cashiers $user */
-        $user = Auth::guard('cashiers')->user();
-        if (!$user instanceof Cashiers) {
-            return response([
-                'message' => 'User authentication failed'
-            ], 422);
-        }
-        
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
-    }
-
-   
-
-
-    public function getCashiers($id) {
-    
-       // $restaurant = Restaurants::find($id);
-       $cashiers = Cashiers::where('restaurant_id', $id)->get();
-       return response()->json($cashiers);
-
-    
-    }
 
     public function showRestaurant($id)
     {
@@ -357,6 +292,89 @@ class RestaurantController extends Controller
         return response()->json($tableStructures);
 }
 
+
+
+
+
+
+public function addCashier(addCashierRequest $request){
+     // Make sure the user is authenticated
+
+     $data = $request->validated();
+    // $use r = auth('restaurants')->user();
+    // $restaurant = Restaurants::where('email', $user->email)->first();
+   
+   // $restaurant = auth('restaurants')->user();
+   $restaurant = auth()->guard('restaurants')->user();
+
+   $restaurantId = $data['restaurant_id'];
+   
+     $user = Cashiers::create ([
+        'restaurant_id' => $restaurantId,
+        // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
+        
+         'cashier_name' => $data['cashiername'],
+         'cashier_email' => $data['email'],
+         'cashier_phone_number' => $data['phone'],
+         'cashier_password' => bcrypt($data['password']),
+    ]);
+   // return redirect('/restaurant');
+  // return redirect()->route('');
+   // $token = $user->createToken('main')->plainTextToken;
+   return response()->json(['message' => 'Cashier successfully added']);
+    //return response(compact('user', 'token'));
+
+    
+}
+
+
+
+
+
+
+
+    public function cashierLogin(cashierLoginRequest $request)
+{   
+    $credentials = $request->validated();
+    if (!Auth::guard('cashiers')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+        return response([
+            'message' => 'Provided email or password is incorrect'
+        ], 422);
+    }
+
+    /** @var \App\Models\Cashiers $user */
+    $user = Auth::guard('cashiers')->user();
+    if (!$user instanceof Cashiers) {
+        return response([
+            'message' => 'User authentication failed'
+        ], 422);
+    }
+    
+    $token = $user->createToken('main')->plainTextToken;
+    return response(compact('user', 'token'));
+}
+
+
+
+
+public function getCashiers($id) {
+
+   // $restaurant = Restaurants::find($id);
+   $cashiers = Cashiers::where('restaurant_id', $id)->get();
+   return response()->json($cashiers);
+
+
+}
+
+public function getReservations($id) //get the cashier id
+{
+
+    // $restaurant = Restaurants::find($id);
+    $cashiers = Cashiers::where('restaurant_id', $id)->get();
+    return response()->json($cashiers);
+ 
+ 
+ }
 
 
 }

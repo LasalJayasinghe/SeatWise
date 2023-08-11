@@ -3,6 +3,7 @@ import Logo from "../assets/logo.svg";
 import { useStateContext } from "../context/ContextProvider";
 import axiosClient from "../axios-client";
 
+
 export default function CashierLogin() {
 
     const emailRef = useRef();
@@ -17,10 +18,11 @@ export default function CashierLogin() {
 			password: passwordRef.current.value,
 		}
 		setErrors(null)
-		axiosClient.post('/cashierlogin', payload)
+		axiosClient.post('/cashierLogin', payload)
 			.then(({data}) => {
                 setUser(data.user)
                 setToken(data.token);
+				navigate('/CashierDashboard'); 
 			})
 			.catch(err => {
 			const response = err.response;

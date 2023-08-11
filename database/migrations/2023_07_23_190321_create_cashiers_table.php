@@ -21,9 +21,9 @@ return new class extends Migration
            // Add a foreign key constraint to associate with the restaurants table
            
             $table->string('cashier_name');
-            $table->string('cashier_email');
+            $table->string('email');
             $table->string('cashier_phone_number');
-            $table->string('cashier_password');
+            $table->string('password');
             $table->timestamps();
 
             $table->foreign('restaurant_id')->references('id')->on('restaurants');

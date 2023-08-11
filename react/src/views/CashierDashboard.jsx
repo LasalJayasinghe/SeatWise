@@ -1,7 +1,7 @@
 export default function CashierDashboard(){
 	return(
 	<div>
-		Dashboard
+		<h1>Dashboard</h1>
 	</div>
 	)
 }
