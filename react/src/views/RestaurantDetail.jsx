@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
-import Switch from 'react-switch';
-
 
 const RestaurantDetail = () => {
   const { id } = useParams();
@@ -15,7 +13,8 @@ const RestaurantDetail = () => {
   const [numParticipants, setNumParticipants] = useState(1);
   const [hoveredTable, setHoveredTable] = useState(null);
   const [halls, setHalls] = useState([]);
-  const [tableForTwoToggle, setTableForTwoToggle] = useState(false);
+  const [selectedTables, setSelectedTables] = useState([]);
+  
 
 
   useEffect(() => {
@@ -87,6 +86,24 @@ const RestaurantDetail = () => {
       console.error(error);
     }
   };
+  
+  const handleTableClick = (table) => {
+    // Check if any green table is already selected
+    const greenTableSelected = selectedTables.some(selectedTable => selectedTable.isAvailable);
+  
+    // Prevent clicking on yellow tables if a green table is selected
+    if (greenTableSelected && !table.isAvailable) {
+      return;
+    }
+  
+    // Toggle the selected status of the table
+    const updatedSelectedTables = selectedTables.includes(table)
+      ? selectedTables.filter(selectedTable => selectedTable !== table)
+      : [...selectedTables, table];
+  
+    setSelectedTables(updatedSelectedTables);
+  };
+  
   
   
 
@@ -211,18 +228,16 @@ const RestaurantDetail = () => {
         </form>
       )}
 
-      {/* Display table for two toggle */}
-      {toggle === 'tables' && (
-      <div className="mt-4">
-        <label className="flex items-center">
-          <Switch
-            onChange={setTableForTwoToggle}
-            checked={tableForTwoToggle}
-          />
-          <span className="ml-2">Table for Two</span>
-        </label>
-      </div>
-      )}
+      {/* Display toggle for table for two */}
+      {/* <div className="mt-4">  
+<label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" value="" class="sr-only peer"/>
+  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 dark:peer-focus:ring-green-600 rounded-full peer dark:bg-gray-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+  <span class="ml-3 text-sm font-small text-gray-500 dark:text-gray-800">Table for two</span>
+</label>
+      </div> */}
+
+
 {/* Display table structures */}
 {toggle === 'tables' && (
     <div className="mt-6">
@@ -231,37 +246,56 @@ const RestaurantDetail = () => {
             <div key={rowIndex} className="flex mt-4">
                 {row.map((table) => (
                     <div
-                        key={table.id}
-                        className={`relative p-4 border rounded-lg ${
-                            table.isAvailable ? 'bg-green-500' : 'bg-gray-500'
-                        }`}
-                        style={{
-                            width: '2cm',
-                            height: '1cm',
-                            fontSize: '10px',
-                            textAlign: 'center',
-                            marginRight: '4px',
-                        }}
-                        onMouseEnter={() => handleTableHover(table)}
-                        onMouseLeave={handleTableLeave}
-                    >
-                        <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
-                            {table.table_number}
-                        </h5>
-                        {/* Pop-up bubble */}
-                        {hoveredTable === table && (
-                            <div
-                                className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
-                                style={{ fontSize: '12px', pointerEvents: 'none' }}
-                            >
-                                <p>{table.view}</p>
-                                <p>{table.number_of_chairs} chairs</p>
-                            </div>
-                        )}
-                    </div>
+                    key={table.id}
+                    className={`relative p-4 border rounded-lg ${
+                      table.isAvailable
+                        ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                        : table.isTableForTwo
+                        ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                        : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                    }`}
+                    style={{
+                      width: '2cm',
+                      height: '1cm',
+                      fontSize: '10px',
+                      textAlign: 'center',
+                      marginRight: '4px',
+                    }}
+                    onMouseEnter={() => handleTableHover(table)}
+                    onMouseLeave={handleTableLeave}
+                    onClick={() => handleTableClick(table)} // Add the click handler
+                  >
+                    <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                        {table.table_number}
+                    </h5>
+                    {/* Pop-up bubble */}
+                    {hoveredTable === table && (
+                        <div
+                            className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                            style={{ fontSize: '12px', pointerEvents: 'none' }}
+                        >
+                            <p>{table.view}</p>
+                            <p>{table.number_of_chairs} chairs</p>
+                        </div>
+                    )}
+                        {console.log('Is Table for Two?', table.isTableForTwo)}
+
+                </div>
+                
                 ))}
             </div>
         ))}
+
+{/* Show selected tables count and Reserve button for available (green) tables */}
+{selectedTables.some(table => table.isAvailable) && (
+  <div className="mt-6">
+    <p>Selected: {selectedTables.filter(table => table.isAvailable).length} Tables</p>
+    <button className="mt-2 bg-black text-white py-2 px-4 rounded-lg">
+      Reserve
+    </button>
+  </div>
+)}
+
     </div>
 )}
 

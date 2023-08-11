@@ -58,12 +58,23 @@ public function getAvailableTables(Request $request, $restaurantId)
         ->pluck('table_structure_id')
         ->toArray();
 
-    foreach ($tableStructures as $table) {
-        $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
-    }
+        foreach ($tableStructures as $table) {
+            $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
+            
+            // Check if the table is unavailable but has the tablefortwo option enabled
+            $tableReservation = TableReservation::where('restaurant_id', $restaurantId)
+                ->where('reservation_date', $date)
+                ->where('start_time', '<=', $endTime)
+                ->where('end_time', '>=', $startTime)
+                ->where('table_structure_id', $table->id)
+                ->first();
+            
+            $table->isTableForTwo = !$table->isAvailable && $tableReservation && $tableReservation->tablefortwo == 1;
+        }               
 
     return response()->json($tableStructures);
 }
 
 
 }
+
