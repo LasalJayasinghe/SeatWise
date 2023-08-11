@@ -8,7 +8,7 @@ const navigation = [
   { name: 'Home', to: '/dashboard', current: true },
   { name: 'Restaurants', to: '/restaurants', current: false },
   { name: 'Meals', to: '/meals', current: false },
-  { name: 'Reservations', to: '/reservations', current: false },
+  { name: 'Activities', to: '/activities', current: false },
   { name: 'Table for two', to: '/tablefortwo', current: false },
 ];
 

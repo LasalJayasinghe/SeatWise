@@ -11,7 +11,8 @@ import Restaurants from './views/Restaurants.jsx';
 import RestaurantDetail from './views/RestaurantDetail.jsx';
 import HallDetail from './views/HallDetail.jsx';
 import WaitlistPage from './views/WaitlistPage';
-
+import Meals from './views/Meals.jsx';
+import Activities from './views/Activities.jsx';
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
             {
                 path: '/restaurants',
                 element: <Restaurants />
+              },
+              {
+                path: '/meals',
+                element: <Meals/>
+              },
+              {
+                path: '/activities',
+                element: <Activities/>
               },
             {
                 path: '/restaurants/:id', 
