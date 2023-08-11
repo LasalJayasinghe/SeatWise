@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\TableforController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/signup' , [AuthController::class , 'signup']);
 Route::post('/login' , [AuthController::class , 'login']);
 Route::post('/landing' , [AuthController::class , 'landing']);
+// Route::post('/tablefortwo' , [TableforController::class , 'tablefortwo']);
 Route::get('/restaurants', [RestaurantController::class, 'index']);
 
 

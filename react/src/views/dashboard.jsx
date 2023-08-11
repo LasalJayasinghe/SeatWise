@@ -13,6 +13,7 @@ import axiosClient from '../axios-client';
 
 export default function Dashboard() {
   const [restaurants, setRestaurants] = useState([]);
+  
 
   useEffect(() => {
     const fetchRestaurants = async () => {
