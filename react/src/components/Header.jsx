@@ -4,13 +4,17 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import logo from '../assets/logo.svg';
 import { Link, useLocation } from 'react-router-dom'; // Import Link from react-router-dom
 
+// Navigation items
 const navigation = [
-  { name: 'Home', to: '/dashboard', current: true },
+  { name: 'Home', to: '/dashboard', current: false },
   { name: 'Restaurants', to: '/restaurants', current: false },
   { name: 'Meals', to: '/meals', current: false },
   { name: 'Reservations', to: '/reservations', current: false },
   { name: 'Table for two', to: '/tablefortwo', current: false },
 ];
+
+// const location = useLocation(); // Use the location from react-router-dom
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -44,19 +48,20 @@ const imageUrl = user?.profileImageUrl || 'https://images.unsplash.com/photo-147
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4 ml-6">
+                    
                     {/* Map over navigation items to create the tabs */}
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className={classNames(
-                          location.pathname === item.to ? 'bg-green-500 text-white' : 'text-gray-500 hover:text-green-500',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                      {navigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          className={classNames(
+                            location.pathname.startsWith(item.to) ? 'bg-green-500 text-white' : 'text-gray-500 hover:text-green-500',
+                            'rounded-md px-3 py-2 text-sm font-medium'
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
                   </div>
                 </div>
               </div>
