@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
+import ReservationPopup from '../components/ReservationPopup';
 
 const RestaurantDetail = () => {
   const { id } = useParams();
@@ -14,7 +15,8 @@ const RestaurantDetail = () => {
   const [hoveredTable, setHoveredTable] = useState(null);
   const [halls, setHalls] = useState([]);
   const [selectedTables, setSelectedTables] = useState([]);
-  
+  const [showPopup, setShowPopup] = useState(false);
+
 
 
   useEffect(() => {
@@ -71,22 +73,30 @@ const RestaurantDetail = () => {
     try {
       const response = await axiosClient.get(`/restaurants/${id}/available-tables`, {
         params: {
-          restaurant_id: id, // Add the restaurant ID to the params
+          restaurant_id: id,
           date,
           start_time: startTime,
           end_time: endTime,
           num_participants: numParticipants,
         },
       });
-  
+
       const availableTables = response.data;
       setTables(availableTables);
-      console.log('Available Tables:', availableTables);
+      setSelectedTables([]); // Clear selected tables after reservation
     } catch (error) {
       console.error(error);
     }
   };
   
+  // Function to handle clicking the Reserve button
+  const handleReserveClick = () => {
+    if (selectedTables.some(table => table.isAvailable)) {
+      setShowPopup(true);
+    }
+  };
+  
+
   const handleTableClick = (table) => {
     // Check if any green table is already selected
     const greenTableSelected = selectedTables.some(selectedTable => selectedTable.isAvailable);
@@ -153,6 +163,11 @@ const RestaurantDetail = () => {
     <div className="flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-4">{restaurant.name}</h1>
       <p className="text-gray-600 mb-6">{restaurant.description}</p>
+      <Link to={`/restaurants/${id}/meals`}>
+      <button className="border border-green-500 text-green-500 px-4 py-2 rounded-lg mb-6">
+  View Menu
+</button>
+</Link>
       <div className="flex items-center justify-center mb-6">
         <button
           className={`py-2 px-4 rounded-lg ${
@@ -216,7 +231,7 @@ const RestaurantDetail = () => {
                 value={numParticipants}
                 onChange={(e) => setNumParticipants(Math.max(1, parseInt(e.target.value)))}
                 required
-                className="mr-5 p-2 border rounded-lg"
+                className=" w-16 mr-5 p-2 border rounded-lg"
                 min="1"
               />
             </label>
@@ -248,6 +263,7 @@ const RestaurantDetail = () => {
                     <div
                     key={table.id}
                     className={`relative p-4 border rounded-lg ${
+                      selectedTables.includes(table) ? 'bg-black text-white' :
                       table.isAvailable
                         ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
                         : table.isTableForTwo
@@ -278,7 +294,6 @@ const RestaurantDetail = () => {
                             <p>{table.number_of_chairs} chairs</p>
                         </div>
                     )}
-                        {console.log('Is Table for Two?', table.isTableForTwo)}
 
                 </div>
                 
@@ -288,16 +303,25 @@ const RestaurantDetail = () => {
 
 {/* Show selected tables count and Reserve button for available (green) tables */}
 {selectedTables.some(table => table.isAvailable) && (
-  <div className="mt-6">
-    <p>Selected: {selectedTables.filter(table => table.isAvailable).length} Tables</p>
-    <button className="mt-2 bg-black text-white py-2 px-4 rounded-lg">
-      Reserve
-    </button>
-  </div>
-)}
+            <div className="mt-6">
+              <p>Selected: {selectedTables.filter(table => table.isAvailable).length} Tables</p>
+              <button
+                className="mt-2 bg-black text-white py-2 px-4 rounded-lg"
+                onClick={handleReserveClick} // Call the handleReserveClick function
+              >
+                Reserve
+              </button>
+            </div>
+          )}
 
-    </div>
-)}
+{/* Show the ReservationPopup when showPopup is true */}
+          {showPopup && (
+            <ReservationPopup onClose={() => setShowPopup(false)} 
+            selectedTables={selectedTables}
+            />
+          )}
+        </div>
+      )}
 
 
       {/* Display other relevant restaurant details here */}

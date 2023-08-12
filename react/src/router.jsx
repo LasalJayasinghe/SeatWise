@@ -13,6 +13,7 @@ import HallDetail from './views/HallDetail.jsx';
 import WaitlistPage from './views/WaitlistPage';
 import Meals from './views/Meals.jsx';
 import Activities from './views/Activities.jsx';
+import Mealspage from './views/Mealspage.jsx';
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,12 @@ const router = createBrowserRouter([
                 path: '/meals',
                 element: <Meals/>
               },
+
+              {
+                path: '/restaurants/:id/meals', 
+                element: <Mealspage />
+            },
+
               {
                 path: '/activities',
                 element: <Activities/>
