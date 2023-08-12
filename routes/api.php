@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\HallController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
+use App\Http\Controllers\Api\AllMealsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Meal routes
     Route::get('/meals', [MealController::class, 'index'])->name('meals.index');
     Route::get('/meals/{id}', [MealController::class, 'show']);
+
+    Route::get('/all-meals', [AllMealsController::class, 'index']);
 
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
