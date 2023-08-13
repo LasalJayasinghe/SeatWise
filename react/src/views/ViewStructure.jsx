@@ -130,26 +130,9 @@ const ViewStructure= () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-4">{restaurant.name}</h1>
-      <p className="text-gray-600 mb-6">{restaurant.description}</p>
-      <div className="flex items-center justify-center mb-6">
-        <button
-          className={`py-2 px-4 rounded-lg ${
-            toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
-          }`}
-          onClick={handleToggle}
-        >
-          Tables
-        </button>
-        <button
-          className={`py-2 px-4 rounded-lg ml-4 ${
-            toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
-          }`}
-          onClick={handleToggle}
-        >
-          Halls
-        </button>
-      </div>
+      
+     <br></br>  <br></br>  <br></br>
+
 
       {/* Form to input date, start time, end time, and number of participants */}
       {toggle === 'tables' && ( // Conditionally render input fields when toggle is 'tables'
@@ -262,19 +245,7 @@ const ViewStructure= () => {
 )}
 
 
-      {/* Display other relevant restaurant details here */}
-      {toggle === 'halls' && (
-        <div>
-          {halls.map((hall) => (
-            <div key={hall.id} className="mb-4">
-              <Link to={`/halls/${hall.id}`}>
-                <h3 className="text-lg font-semibold">{hall.name}</h3>
-              </Link>
-              <p className="text-gray-600">{hall.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
+ 
 
       
     </div>

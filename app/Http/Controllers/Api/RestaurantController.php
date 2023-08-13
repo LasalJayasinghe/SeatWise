@@ -430,13 +430,8 @@ public function getAvailableTables(Request $request, $restaurantId)
         $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
     }
 
-
+    return response()->json($tableStructures);
 }
-
-
-
-
-
 
 
 
