@@ -52,10 +52,10 @@ export default function RestaurantSignup() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-auto w-15" src={Logo} alt="Your Company" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Crate an account as a Restaurant
+            Crate an Account as a Restaurant
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
-            Please adddetails to create your account.
+            Please add details to create your account.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export default function RestaurantSignup() {
             <label
               htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
-            >Email address
+            >Email Address
             </label>
             <div className="mt-1">
               <input

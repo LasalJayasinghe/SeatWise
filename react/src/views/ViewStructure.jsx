@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
 import { useStateContext } from "../context/ContextProvider";
-//import ReservationPopup from '../components/ReservationPopup';
+import ReservationPopup from '../components/ReservationPopup';
 //sam code
 const ViewStructure = () => {
   const { id } = useParams();
@@ -174,11 +174,7 @@ const ViewStructure = () => {
   return (
     <div className="flex flex-col items-center">
       
-      <Link to={`/restaurants/${id}/meals`}>
-      <button className="border border-green-500 text-green-500 px-4 py-2 rounded-lg mb-6">
-  View Menu
-</button>
-</Link>
+
       <div className="flex items-center justify-center mb-6">
         <button
           className={`py-2 px-4 rounded-lg ${

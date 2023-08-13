@@ -7,7 +7,7 @@ import { AiFillCalendar } from 'react-icons/ai';
 import { FiLogIn } from "react-icons/fi";
 import { FiLogOut } from "react-icons/fi";
 import ChartBox from "../components/chartBox";
-import BarChartBox from "../components/BarChartBox";
+import BarChartBox from "../components/BarChartBoxCashier";
 import BigChartBox from "../components/BigChartBox";
 import PieChartBox from "../components/PieChartBox";
 //import ChartBox from "../components/chartBox";
@@ -147,10 +147,13 @@ export default function CashierDashboard() {
   <div className="mx-auto max-w-5xl py-4 sm:px-6 lg:px-8 shadow-md bg-white rounded-lg" style={{ width: '50%',marginLeft:'10px' }}>
     <table className="table-fixed border-collapse border-none">
       <tr className="border-none">
-        <th className="border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem', height: '43%',fontWeight:'400' }}>Monthly reservations</th>
+        <th className="border-none px-6 py-8 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem', height: '43%',fontWeight:'400' }}>Monthly reservations</th>
       </tr>
      
-              
+      <tr className="border-none">
+        <th className="border-none px-6 py-2 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem', height: '43%',fontWeight:'400' }}></th>
+      </tr>
+            
     
       <tbody>
         {/* Add your content here */}

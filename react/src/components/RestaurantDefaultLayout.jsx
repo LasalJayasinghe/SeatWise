@@ -133,7 +133,7 @@ return (
                       {/* Replace the image source with the user's profile image */}
                       <img
                         className="h-8 w-8 rounded-full"
-                        
+                        src="https://img.freepik.com/free-photo/close-up-shot-pretty-woman-with-perfect-teeth-dark-clean-skin-having-rest-indoors-smiling-happily-after-received-good-positive-news_273609-1248.jpg?size=626&ext=jpg&ga=GA1.2.913152586.1691837569&semt=ais"
                         alt=""
                       />
                     </Menu.Button>

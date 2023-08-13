@@ -132,7 +132,7 @@ return (
                       {/* Replace the image source with the user's profile image */}
                       <img
                         className="h-8 w-8 rounded-full"
-                        
+                         src="https://img.freepik.com/premium-photo/portrait-young-latin-woman-studio_58466-7049.jpg?size=626&ext=jpg&ga=GA1.2.913152586.1691837569&semt=ais" 
                         alt=""
                       />
                     </Menu.Button>
