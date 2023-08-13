@@ -6,6 +6,12 @@ import { useEffect } from "react";
 import { AiFillCalendar } from 'react-icons/ai';
 import { FiLogIn } from "react-icons/fi";
 import { FiLogOut } from "react-icons/fi";
+import ChartBox from "../components/chartBox";
+import BarChartBox from "../components/BarChartBox";
+import BigChartBox from "../components/BigChartBox";
+import PieChartBox from "../components/PieChartBox";
+//import ChartBox from "../components/chartBox";
+
 
 
 
@@ -143,11 +149,15 @@ export default function CashierDashboard() {
       <tr className="border-none">
         <th className="border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem', height: '43%',fontWeight:'400' }}>Monthly reservations</th>
       </tr>
-      
+     
+              
+    
       <tbody>
         {/* Add your content here */}
       </tbody>
     </table>
+    
+    <BarChartBox />
   </div>
 </div>
 
