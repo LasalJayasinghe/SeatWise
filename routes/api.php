@@ -67,12 +67,14 @@ Route::get('/views', [RestaurantController::class, 'getViews']);
 Route::get('/gettable', [RestaurantController::class, 'getTable']);
 Route::get('/profile', [RestaurantController::class, 'getProfile']);
 Route::get('/getsetupdata', [RestaurantController::class, 'getSetUpProfile']);
+Route::post('/handleCheckOut/{reservationId}',[RestaurantController::class, 'HandleCheckOut']);
+Route::post('/handleCheckIn/{reservationId}',[RestaurantController::class, 'HandleCheckIn']);
 
 // Route::middleware('auth:api')->get('/views', [RestaurantController::class, 'getViews']);
 //Route::post('/getCashiers', [RestaurantController::class, 'getCashiers']);
-Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);
-
-
+Route::get('/getReservations/{restaurant_id}', [RestaurantController::class, 'getReservations']);
+Route::get('/getStatus/{reservationId}', [RestaurantController::class, 'getStatus']);
+Route::get('/restaurants/{id}', [RestaurantController::class, 'showRestaurant']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{id}', [RestaurantController::class, 'showRestaurant']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
 // Remove the existing '/user' route that may be conflicting

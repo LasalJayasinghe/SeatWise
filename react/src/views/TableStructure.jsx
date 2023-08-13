@@ -18,6 +18,7 @@ export default function TableStructure() {
   // New states to store the selected box coordinates
   const [selectedItemX, setselectedItemX] = useState(null);
   const [selectedItemY, setselectedItemY] = useState(null);
+
   
 
 //   const viewnameRef = useRef();

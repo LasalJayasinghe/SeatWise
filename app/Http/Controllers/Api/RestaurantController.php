@@ -10,6 +10,7 @@ use App\Models\Cashiers;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Models\TableStructure;
+use App\Models\TableReservation;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -455,15 +456,57 @@ public function getCashiers($id) {
 
 }
 
-public function getReservations($id) //get the cashier id
+public function getReservations($restaurant_id) //get the cashier id
 {
 
     // $restaurant = Restaurants::find($id);
-    $cashiers = Cashiers::where('restaurant_id', $id)->get();
-    return response()->json($cashiers);
+    $reservation = TableReservation::where('restaurant_id', $restaurant_id)->get();
+    return response()->json($reservation);
  
  
  }
+
+
+public function HandleCheckOut($reservationId)
+{
+    
+    $reservation = TableReservation::find($reservationId);
+    if ($reservation) {
+        $reservation->update([
+            'status' => "checked out",
+            
+        ]);
+
+
+}
+}
+
+public function HandleCheckIn($reservationId)
+{
+    
+    $reservation = TableReservation::find($reservationId);
+    if ($reservation) {
+        $reservation->update([
+            'status' => "checked in",
+            
+        ]);
+
+
+}
+}
+
+
+public function getStatus($reservationId,$reservation_date) 
+{   
+    $today = date('Y-m-d');
+    //$today = Carbon::today(); // Get today's date
+    $reservation = TableReservation::where('id', $reservationId)
+    ->where('reservation_date', $today)->get();;
+    return response()->json($reservation);
+ 
+ 
+ }
+
 
 
 }
