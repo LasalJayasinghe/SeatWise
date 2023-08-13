@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
-import Switch from 'react-switch';
 import { useStateContext } from "../context/ContextProvider";
-
-
-const ViewStructure= () => {
+//import ReservationPopup from '../components/ReservationPopup';
+//sam code
+const ViewStructure = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [tables, setTables] = useState([]);
@@ -14,11 +13,13 @@ const ViewStructure= () => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [numParticipants, setNumParticipants] = useState(1);
+  const [hoveredTable, setHoveredTable] = useState(null);
   const [halls, setHalls] = useState([]);
-  const [tableForTwoToggle, setTableForTwoToggle] = useState(false);
+  const [selectedTables, setSelectedTables] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
   const {user, token, setUser, setToken} = useStateContext();
   // State to hold the hovered table
-  const [hoveredTable, setHoveredTable] = useState(null);
+  //const [hoveredTable, setHoveredTable] = useState(null);
   useEffect(() => {
     axiosClient.get('/user')
       .then(({ data }) => {
@@ -57,6 +58,22 @@ const ViewStructure= () => {
       fetchTableStructures();
     }
   }}, [user.restaurant_id, toggle]);
+  
+
+  useEffect(() => {
+    const fetchHalls = async () => {
+      try {
+        const response = await axiosClient.get(`/restaurants/${id}/halls`);
+        setHalls(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (toggle === 'halls') {
+      fetchHalls();
+    }
+  }, [id, toggle]);
 
   const handleToggle = () => {
     setToggle(toggle === 'tables' ? 'halls' : 'tables');
@@ -68,21 +85,47 @@ const ViewStructure= () => {
     try {
       const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/available-tables`, {
         params: {
-          restaurant_id: user.restaurant_id, // Add the restaurant ID to the params
+          restaurant_id: id,
           date,
           start_time: startTime,
           end_time: endTime,
           num_participants: numParticipants,
         },
       });
-  
+
       const availableTables = response.data;
       setTables(availableTables);
-      console.log('Available Tables:', availableTables);
+      setSelectedTables([]); // Clear selected tables after reservation
     } catch (error) {
       console.error(error);
     }
   };
+  
+  // Function to handle clicking the Reserve button
+  const handleReserveClick = () => {
+    if (selectedTables.some(table => table.isAvailable)) {
+      setShowPopup(true);
+    }
+  };
+  
+
+  const handleTableClick = (table) => {
+    // Check if any green table is already selected
+    const greenTableSelected = selectedTables.some(selectedTable => selectedTable.isAvailable);
+  
+    // Prevent clicking on yellow tables if a green table is selected
+    if (greenTableSelected && !table.isAvailable) {
+      return;
+    }
+  
+    // Toggle the selected status of the table
+    const updatedSelectedTables = selectedTables.includes(table)
+      ? selectedTables.filter(selectedTable => selectedTable !== table)
+      : [...selectedTables, table];
+  
+    setSelectedTables(updatedSelectedTables);
+  };
+  
   
   
 
@@ -131,8 +174,29 @@ const ViewStructure= () => {
   return (
     <div className="flex flex-col items-center">
       
-     <br></br>  <br></br>  <br></br>
-
+      <Link to={`/restaurants/${id}/meals`}>
+      <button className="border border-green-500 text-green-500 px-4 py-2 rounded-lg mb-6">
+  View Menu
+</button>
+</Link>
+      <div className="flex items-center justify-center mb-6">
+        <button
+          className={`py-2 px-4 rounded-lg ${
+            toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+          }`}
+          onClick={handleToggle}
+        >
+          Tables
+        </button>
+        <button
+          className={`py-2 px-4 rounded-lg ml-4 ${
+            toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+          }`}
+          onClick={handleToggle}
+        >
+          Halls
+        </button>
+      </div>
 
       {/* Form to input date, start time, end time, and number of participants */}
       {toggle === 'tables' && ( // Conditionally render input fields when toggle is 'tables'
@@ -178,7 +242,7 @@ const ViewStructure= () => {
                 value={numParticipants}
                 onChange={(e) => setNumParticipants(Math.max(1, parseInt(e.target.value)))}
                 required
-                className="mr-5 p-2 border rounded-lg"
+                className=" w-16 mr-5 p-2 border rounded-lg"
                 min="1"
               />
             </label>
@@ -190,18 +254,16 @@ const ViewStructure= () => {
         </form>
       )}
 
-      {/* Display table for two toggle */}
-      {toggle === 'tables' && (
-      <div className="mt-4">
-        <label className="flex items-center">
-          <Switch
-            onChange={setTableForTwoToggle}
-            checked={tableForTwoToggle}
-          />
-          <span className="ml-2">Table for Two</span>
-        </label>
-      </div>
-      )}
+      {/* Display toggle for table for two */}
+      {/* <div className="mt-4">  
+<label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" value="" class="sr-only peer"/>
+  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 dark:peer-focus:ring-green-600 rounded-full peer dark:bg-gray-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+  <span class="ml-3 text-sm font-small text-gray-500 dark:text-gray-800">Table for two</span>
+</label>
+      </div> */}
+
+
 {/* Display table structures */}
 {toggle === 'tables' && (
     <div className="mt-6">
@@ -210,48 +272,86 @@ const ViewStructure= () => {
             <div key={rowIndex} className="flex mt-4">
                 {row.map((table) => (
                     <div
-                        key={table.id}
-                        className={`relative p-4 border rounded-lg ${
-                            table.isAvailable ? 'bg-green-500' : 'bg-gray-500'
-                        }`}
-                        style={{
-                            width: '2cm',
-                            height: '1cm',
-                            fontSize: '10px',
-                            textAlign: 'center',
-                            marginRight: '4px',
-                        }}
-                        onMouseEnter={() => handleTableHover(table)}
-                        onMouseLeave={handleTableLeave}
-                    >
-                        <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
-                            {table.table_number}
-                        </h5>
-                        {/* Pop-up bubble */}
-                        {hoveredTable === table && (
-                            <div
-                                className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
-                                style={{ fontSize: '12px', pointerEvents: 'none' }}
-                            >
-                                <p>{table.view}</p>
-                                <p>{table.number_of_chairs} chairs</p>
-                            </div>
-                        )}
-                    </div>
+                    key={table.id}
+                    className={`relative p-4 border rounded-lg ${
+                      selectedTables.includes(table) ? 'bg-black text-white' :
+                      table.isAvailable
+                        ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                        : table.isTableForTwo
+                        ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                        : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                    }`}
+                    style={{
+                      width: '2cm',
+                      height: '1cm',
+                      fontSize: '10px',
+                      textAlign: 'center',
+                      marginRight: '4px',
+                    }}
+                    onMouseEnter={() => handleTableHover(table)}
+                    onMouseLeave={handleTableLeave}
+                    onClick={() => handleTableClick(table)} // Add the click handler
+                  >
+                    <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                        {table.table_number}
+                    </h5>
+                    {/* Pop-up bubble */}
+                    {hoveredTable === table && (
+                        <div
+                            className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                            style={{ fontSize: '12px', pointerEvents: 'none' }}
+                        >
+                            <p>{table.view}</p>
+                            <p>{table.number_of_chairs} chairs</p>
+                        </div>
+                    )}
+
+                </div>
+                
                 ))}
             </div>
         ))}
-    </div>
-)}
+
+{/* Show selected tables count and Reserve button for available (green) tables */}
+{selectedTables.some(table => table.isAvailable) && (
+            <div className="mt-6">
+              <p>Selected: {selectedTables.filter(table => table.isAvailable).length} Tables</p>
+              <button
+                className="mt-2 bg-black text-white py-2 px-4 rounded-lg"
+                onClick={handleReserveClick} // Call the handleReserveClick function
+              >
+                Reserve
+              </button>
+            </div>
+          )}
+
+{/* Show the ReservationPopup when showPopup is true */}
+          {showPopup && (
+            <ReservationPopup onClose={() => setShowPopup(false)} 
+            selectedTables={selectedTables}
+            />
+          )}
+        </div>
+      )}
 
 
- 
+      {/* Display other relevant restaurant details here */}
+      {toggle === 'halls' && (
+        <div>
+          {halls.map((hall) => (
+            <div key={hall.id} className="mb-4">
+              <Link to={`/halls/${hall.id}`}>
+                <h3 className="text-lg font-semibold">{hall.name}</h3>
+              </Link>
+              <p className="text-gray-600">{hall.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       
     </div>
   );
 };
-
-
 
 export default ViewStructure;
