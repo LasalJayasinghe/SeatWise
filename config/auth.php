@@ -46,7 +46,6 @@ return [
             'provider' => 'restaurants',
         ],
 
-
         'cashiers' => [
             'driver' => 'session',
             'provider' => 'cashiers',
@@ -80,8 +79,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Restaurants::class,
         ],
-
-
 
         'cashiers' => [
             'driver' => 'eloquent',

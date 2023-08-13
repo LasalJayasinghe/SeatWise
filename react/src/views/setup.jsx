@@ -17,6 +17,8 @@ export default function Setup() {
   const [errors, setErrors] = useState(null);
   const [otherData, setOtherData] = useState([]);
 
+  const [loading, setLoading] = useState(false);
+
   
 
 
@@ -83,11 +85,13 @@ export default function Setup() {
           restaurant_id: restaurant_id,
           };
           
+          setLoading(true)
           axiosClient
           .get('/profile', { params: payload })
           .then(({ data }) => {
             setProfile(data);
             console.log("data:", data);
+            setLoading(false)
           })
           .catch((error) => {
               console.error("Error fetching views:", error);
@@ -95,12 +99,14 @@ export default function Setup() {
       };
 
       const fetchOtherData = (restaurant_id) => {
+        setLoading(true)
         axiosClient
         .get("/getsetupdata", { params: { restaurant_id } })
         .then(({ data }) => {
             // console.log("Fetched table data:", data);
             setOtherData(data);
-            console.log("other data:", otherData)
+            console.log("other data:", otherData);
+            setLoading(false)
         })
         .catch((error) => {
             console.error("Error fetching tables:", error);
@@ -128,10 +134,14 @@ export default function Setup() {
         }
         // console.log(payload);
         setErrors(null)
+        setLoading(true)
         axiosClient.post('/setupprofile', payload)
         .then((response) => {
           console.log('API response:', response.data);
           handleAddReservationModalClose();
+          setLoading(false);
+          getProfile();
+          fetchOtherData();
         })
         .catch(err => {
           const response = err.response;
@@ -175,10 +185,13 @@ export default function Setup() {
         }
         // console.log(payload);
         setErrors(null)
+        setLoading(true)
         axiosClient.post('/updateprofile', payload)
         .then((response) => {
           console.log('API response:', response.data);
           handleEditModalClose();
+          setLoading(false);
+          window.location.reload();
         })
         .catch(err => {
           const response = err.response;
@@ -210,9 +223,18 @@ export default function Setup() {
   return (
     <>
     <header className="bg-white shadow">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      {/* <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">Restaurant profile</h1>
-      </div>
+        {loading &&
+            <p>Loading...</p>    
+        }
+      </div> */}
+        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Restaurant profile</h1>
+          <div className="loading-container">
+            {loading && <p className="loading-text">Loading...</p>}
+          </div>
+        </div>
     </header>
 
     <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 rounded-lg" >
@@ -251,6 +273,8 @@ export default function Setup() {
         </button>
       )}
     </div>
+
+    {!loading && (
       <div className="mt-6 border-t border-gray-100">
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -390,8 +414,9 @@ export default function Setup() {
           </div>
 
         </dl>
-      </div>
+      </div> )}
     </div>
+    
 
 
               {/* Add view modal */}

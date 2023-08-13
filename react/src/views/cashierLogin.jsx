@@ -57,7 +57,7 @@ export default function CashierLogin() {
 		</div>
 
 		<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-		<form onSubmit={onSubmit} className="space-y-6" action="{{ route('cashier.login') }}" method="POST">
+		<form onSubmit={onSubmit} className="space-y-6" method="post">
 			<div>
                 {errors && <div className="alert">
                         {Object.keys(errors).map(key => (

@@ -2,8 +2,7 @@ import { useRef, useState } from "react";
 import Logo from "../assets/logo.svg";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../context/ContextProvider";
-import { useNavigate } from 'react-router-dom'; // Import useNavigat
-
+import { Navigate, useNavigate } from "react-router-dom";
 // import React, { useEffect } from 'react';
 
 // import { Navigate } from 'react-router-dom'

@@ -150,7 +150,11 @@ const router = createBrowserRouter([
         path: '/',
         element: <CashierGuestLayout />,
         children: [
-
+            {
+                path: "/cashiers",
+                element: <CashierLogin />, 
+            },
+          
             {
                 path: "/cashierLogin",
                 element: <CashierLogin />, 
@@ -158,8 +162,6 @@ const router = createBrowserRouter([
             
         ]
     },
-
-
     {
         path: '/',
         element: <CashierDefaultLayout />,
