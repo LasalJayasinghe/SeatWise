@@ -278,7 +278,7 @@ class RestaurantController extends Controller
         return response()->json($restaurant);
     }
 
-    public function getTableStructures($id)
+    /*public function getTableStructures($id)
     {
         $restaurant = Restaurants::find($id);
 
@@ -292,11 +292,46 @@ class RestaurantController extends Controller
         // Return the fetched table structures as a JSON response
         return response()->json($tableStructures);
 }
+*/
 
 
+public function getTableStructures($id)
+{
+    $restaurant = Restaurants::find($id);
+
+    if (!$restaurant) {
+        return response()->json(['message' => 'Restaurant not found'], 404);
+    }
+
+    // Fetch the table structures associated with the restaurant
+    $tableStructures = TableStructure::where('restaurant_id', $id)->get();
+
+    // Return the fetched table structures as a JSON response
+    return response()->json($tableStructures);
+}
 
 
+public function getAvailableTables(Request $request, $restaurantId)
+{
+    $date = $request->input('date');
+    $startTime = $request->input('start_time');
+    $endTime = $request->input('end_time');
+    $numParticipants = $request->input('num_participants');
 
+    $tableStructures = TableStructure::where('restaurant_id', $restaurantId)->get();
+    $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
+        ->where('reservation_date', $date)
+        ->where('start_time', '<=', $endTime)
+        ->where('end_time', '>=', $startTime)
+        ->pluck('table_structure_id')
+        ->toArray();
+
+    foreach ($tableStructures as $table) {
+        $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
+    }
+
+
+}
 
 public function addCashier(addCashierRequest $request){
      // Make sure the user is authenticated

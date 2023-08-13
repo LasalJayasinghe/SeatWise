@@ -129,7 +129,7 @@ export default function CashierDashboard() {
           src="https://as1.ftcdn.net/v2/jpg/06/20/73/04/1000_F_620730420_v9RnvoxaA7IH1271Dssk6kixwZs6wTJk.jpg"
           alt="profile"
         /> </td>
-        <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>Shinahaya Awanthi</td>
+        <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>Shenaya Awanthi</td>
         <td className="border-none px-3 py-2" style={{ fontWeight: 600, color: 'gray' }}>Table Number 9</td>
       </tr>
       <tbody>
