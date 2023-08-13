@@ -137,7 +137,7 @@ return (
                         alt=""
                       />
                     </Menu.Button>
-                  </div>
+                   </div>
                   {/* Profile dropdown menu */}
                   <Transition
                     as={Fragment}

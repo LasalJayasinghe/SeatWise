@@ -185,14 +185,14 @@ export default function ViewReservations() {
              <td>  <button
   style={{ marginLeft: '-4rem' }}
   onClick={() => handleCheckIn(Reservation.id)} // Pass a function reference
-  className={`bg-${clickedButtonIdOne === Reservation.id ? 'green-500' : 'white-300'} hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-4 rounded`}
+  className={`hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-4 rounded`}
 >
   Check In
 </button>
 <button
   style={{ marginLeft: '1rem' }}
   onClick={() => handleCheckOut(Reservation.id)} // Pass a function reference
-   className={`bg-${clickedButtonIdTwo === Reservation.id ? 'green-500' : 'white-300'} hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-4 rounded`}
+   className={` hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-4 rounded`}
 >
   Check Out
 </button>

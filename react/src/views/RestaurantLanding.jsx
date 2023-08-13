@@ -62,14 +62,14 @@ export default function RestaurantLanding(){
         <div className='container p-20 h-screen'>
         <div class="flex flex-row-reverse ">
             <div>
-               <Link to = "/signup" > 
+               <Link to = "/restaurantsignup" > 
                     <button className="bg-black hover:bg-transparent text-white font-semibold hover:text-black py-2 px-5 border border-black hover:border-black rounded">
                         Sign Up
                     </button>
                 </Link>
             </div>
             <div className='pr-5'>
-                <Link to = "/login" >
+                <Link to = "/restaurantlogin" >
                 <button className="bg-transparent hover:bg-black text-black hover:text-white font-semibold py-2 px-5 border border-black rounded">
                     Log In
                 </button>

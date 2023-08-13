@@ -289,13 +289,24 @@ class RestaurantController extends Controller
         $restaurant = Restaurants::find($id);
 
         if (!$restaurant) {
-            return response()->json(['message' => 'Restaurant not found'], 404);
+            return response()->json(['message' => 'Restaurantshow not found'], 404);
+        }
+
+        return response()->json($restaurant);
+    }
+    
+    public function showRestaurantx($id)
+    {
+        $restaurant = Restaurants::find($id);
+
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurantshowx not found'], 404);
         }
 
         return response()->json($restaurant);
     }
 
-    public function getTableStructures($id)
+    /*public function getTableStructures($id)
     {
         $restaurant = Restaurants::find($id);
 
@@ -309,37 +320,81 @@ class RestaurantController extends Controller
         // Return the fetched table structures as a JSON response
         return response()->json($tableStructures);
     }
+}
+*/
+
+
+public function getTableStructures($id)
+{
+    $restaurant = Restaurants::find($id);
+
+    if (!$restaurant) {
+        return response()->json(['message' => 'Restauranttt not found'], 404);
+    }
+
+    // Fetch the table structures associated with the restaurant
+    $tableStructures = TableStructure::where('restaurant_id', $id)->get();
+
+    // Return the fetched table structures as a JSON response
+    return response()->json($tableStructures);
+}
+
+
+public function getAvailableTables(Request $request, $restaurantId)
+{
+    $date = $request->input('date');
+    $startTime = $request->input('start_time');
+    $endTime = $request->input('end_time');
+    $numParticipants = $request->input('num_participants');
+
+    $tableStructures = TableStructure::where('restaurant_id', $restaurantId)->get();
+    $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
+        ->where('reservation_date', $date)
+        ->where('start_time', '<=', $endTime)
+        ->where('end_time', '>=', $startTime)
+        ->pluck('table_structure_id')
+        ->toArray();
+
+    foreach ($tableStructures as $table) {
+        $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
+    }
+
+    return response()->json($tableStructures);
+}
+
+
+
 
     public function cashierLogin(cashierLoginRequest $request)
     {   
-    $credentials = $request->validated();
-    if (!Auth::guard('cashiers')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-        return response([
-            'message' => 'Provided email or password is incorrect'
-        ], 422);
+        $credentials = $request->validated();
+        if (!Auth::guard('cashiers')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+            return response([
+                'message' => 'Provided email or password is incorrect'
+            ], 422);
+        }
+
+        /** @var \App\Models\Cashiers $user */
+        $user = Auth::guard('cashiers')->user();
+        if (!$user instanceof Cashiers) {
+            return response([
+                'message' => 'User authentication failed'
+            ], 422);
+        }
+        
+        $token = $user->createToken('main')->plainTextToken;
+        return response(compact('user', 'token'));
     }
 
-    /** @var \App\Models\Cashiers $user */
-    $user = Auth::guard('cashiers')->user();
-    if (!$user instanceof Cashiers) {
-        return response([
-            'message' => 'User authentication failed'
-        ], 422);
-    }
+    public function getReservations($restaurant_id) //get the cashier id
+    {
+
+        // $restaurant = Restaurants::find($id);
+        $reservation = TableReservation::where('restaurant_id', $restaurant_id)->get();
+        return response()->json($reservation);
     
-    $token = $user->createToken('main')->plainTextToken;
-    return response(compact('user', 'token'));
-}
-
-public function getReservations($restaurant_id) //get the cashier id
-{
-
-    // $restaurant = Restaurants::find($id);
-    $reservation = TableReservation::where('restaurant_id', $restaurant_id)->get();
-    return response()->json($reservation);
- 
- 
- }
+    
+    }
 
 
 public function HandleCheckOut($reservationId)
@@ -353,7 +408,7 @@ public function HandleCheckOut($reservationId)
         ]);
 
 
-}
+    }
 }
 
 public function HandleCheckIn($reservationId)
@@ -367,7 +422,7 @@ public function HandleCheckIn($reservationId)
         ]);
 
 
-}
+    }
 }
 
 

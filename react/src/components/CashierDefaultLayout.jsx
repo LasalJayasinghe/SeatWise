@@ -14,7 +14,6 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
 { name: 'Dashboard', to: '/CashierDashboard', current: false },
 { name: 'Add Reservation', to: '/ViewStructure', current: false },
-{ name: 'Profile', to: '#', current: false },
 { name: 'View Reservations', to: '/ViewReservations', current: false },
 
 ]
@@ -133,7 +132,7 @@ return (
                       {/* Replace the image source with the user's profile image */}
                       <img
                         className="h-8 w-8 rounded-full"
-                        
+                         src="https://img.freepik.com/premium-photo/portrait-young-latin-woman-studio_58466-7049.jpg?size=626&ext=jpg&ga=GA1.2.913152586.1691837569&semt=ais" 
                         alt=""
                       />
                     </Menu.Button>

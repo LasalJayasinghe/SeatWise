@@ -47,7 +47,7 @@ export default function RestaurantLogin() {
 			alt="Your Company"
 		/>
 		<h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-			Log In As a Restaurant
+			Log In as a Restaurant
 		</h2>
 		<p className="mt-2 text-center text-sm text-gray-600 max-w">
 			Welcome back! Please login to your account.
@@ -65,7 +65,7 @@ export default function RestaurantLogin() {
                 }
             
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                    Email address
+                    Email Address
                 </label>
                 <div className="mt-2">
                     

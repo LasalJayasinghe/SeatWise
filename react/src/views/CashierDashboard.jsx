@@ -6,6 +6,12 @@ import { useEffect } from "react";
 import { AiFillCalendar } from 'react-icons/ai';
 import { FiLogIn } from "react-icons/fi";
 import { FiLogOut } from "react-icons/fi";
+import ChartBox from "../components/chartBox";
+import BarChartBox from "../components/BarChartBoxCashier";
+import BigChartBox from "../components/BigChartBox";
+import PieChartBox from "../components/PieChartBox";
+//import ChartBox from "../components/chartBox";
+
 
 
 
@@ -129,7 +135,7 @@ return (
           src="https://as1.ftcdn.net/v2/jpg/06/20/73/04/1000_F_620730420_v9RnvoxaA7IH1271Dssk6kixwZs6wTJk.jpg"
           alt="profile"
         /> </td>
-        <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>Shinahaya Awanthi</td>
+        <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>Shenaya Awanthi</td>
         <td className="border-none px-3 py-2" style={{ fontWeight: 600, color: 'gray' }}>Table Number 9</td>
       </tr>
       <tbody>
@@ -141,13 +147,20 @@ return (
   <div className="mx-auto max-w-5xl py-4 sm:px-6 lg:px-8 shadow-md bg-white rounded-lg" style={{ width: '50%',marginLeft:'10px' }}>
     <table className="table-fixed border-collapse border-none">
       <tr className="border-none">
-        <th className="border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem', height: '43%',fontWeight:'400' }}>Monthly reservations</th>
+        <th className="border-none px-6 py-8 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem', height: '43%',fontWeight:'400' }}>Monthly reservations</th>
       </tr>
-      
+     
+      <tr className="border-none">
+        <th className="border-none px-6 py-2 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem', height: '43%',fontWeight:'400' }}></th>
+      </tr>
+            
+    
       <tbody>
         {/* Add your content here */}
       </tbody>
     </table>
+    
+    <BarChartBox />
   </div>
 </div>
 
