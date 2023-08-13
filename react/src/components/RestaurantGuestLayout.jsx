@@ -5,7 +5,7 @@ import { useStateContext } from "../context/ContextProvider";
 export default function RestaurantGuestLayout() {
   const {token} = useStateContext();
     if(token){
-        return <Navigate to ="/restaurant" />
+        return <Navigate to ="/restaurantDashboard" />
     }
 
   return (

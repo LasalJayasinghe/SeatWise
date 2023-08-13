@@ -72,7 +72,7 @@ export default function BarChartBox() {
               labelStyle={{ display: "none" }}
               cursor={{fill:"none"}}
             />
-            <Bar dataKey="uv" fill="#006600" />
+            <Bar dataKey="uv" fill="#22c55e" />
           </BarChart>
         </ResponsiveContainer>
       </div>
