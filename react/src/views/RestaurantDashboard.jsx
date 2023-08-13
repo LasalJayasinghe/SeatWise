@@ -129,19 +129,19 @@ export default function RestaurantDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="box box2 bg-green-500">
+              <div className="box box2">
                 <ChartBox />
               </div>
-              <div className="box box3 bg-green-500">
+              <div className="box box3">
                 <ChartBox />
               </div>
               <div className="box box4">
                 <PieChartBox />
               </div>
-              <div className="box box5 bg-green-500">
+              <div className="box box5">
                 <ChartBox />
               </div>
-              <div className="box box6 bg-green-500">
+              <div className="box box6">
                 <ChartBox />
               </div>
               <div className="box box7">

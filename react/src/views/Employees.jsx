@@ -1,10 +1,10 @@
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import axiosClient from "../axios-client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AddCashier from './addCashier.jsx';
+// import AddCashier from './addCashier.jsx';
 
 /*
   This example requires some changes to your config:
@@ -23,24 +23,24 @@ import AddCashier from './addCashier.jsx';
 
 
 
-const products = [
-  {
-    id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: '$35',
-    color: 'Black',
-  },
-  // More products...
-]
+// const products = [
+//   {
+//     id: 1,
+//     name: 'Basic Tee',
+//     href: '#',
+//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+//     imageAlt: "Front of men's Basic Tee in black.",
+//     price: '$35',
+//     color: 'Black',
+//   },
+//   // More products...
+// ]
 
 export default function Employees() {
 
   const navigate = useNavigate();
   const [cashiers, setCashiers] = useState([]);
-  const {user, token, setUser, setToken} = useStateContext();
+  const {user, setUser} = useStateContext();
  
   useEffect(() => {
     axiosClient.get('/user')
@@ -96,7 +96,7 @@ navigate("/addCashier");
   {cashiers.map((cashiers) => (
             <tr className="hover:shadow-md" key={cashiers.id}>
               <td className="px-6 py-8">{cashiers.cashier_name}</td>
-              <td className="px-6 py-8">{cashiers.cashier_email}</td>
+              <td className="px-6 py-8">{cashiers.email}</td>
               <td className="px-6 py-8">{cashiers.cashier_phone_number}</td>
             <td>  <button style={{ marginLeft: '0rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
 Update

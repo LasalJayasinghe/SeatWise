@@ -16,7 +16,7 @@ const navigation = [
 { name: 'Table structure', to: '/structure', current: false },
 { name: 'Reservations', to: '/reservations', current: false },
 { name: 'Employees', to: '/employees', current: false },
-
+{ name: 'Menu', to: '/menu', current: false },
 ]
 
 
@@ -133,7 +133,7 @@ return (
                       {/* Replace the image source with the user's profile image */}
                       <img
                         className="h-8 w-8 rounded-full"
-                        
+                        src="src/assets/lauren.jpg"
                         alt=""
                       />
                     </Menu.Button>

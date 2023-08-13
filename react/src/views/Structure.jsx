@@ -15,6 +15,8 @@ export default function Structure() {
 
   const [errors, setErrors] = useState(null);
   const {user, setUser } = useStateContext();
+
+  const [loading, setLoading] = useState(false);
   
 
   const viewnameRef = useRef();
@@ -66,6 +68,7 @@ export default function Structure() {
       // For example, show a success message or perform some action
       console.log('API response:', response.data);
       handleAddViewModalClose();
+      window.location.reload();
     })
     .catch(err => {
 			const response = err.response;
@@ -81,70 +84,6 @@ export default function Structure() {
 			}
 			})
   }
-
-  // const onSubmitTable = (ev) => {
-  //   ev.preventDefault()
-  //   const payload = {
-  //     restaurant_id: user.id,
-  //     table_id: selectedItem,
-  //     table_no: tablenoRef.current.value,
-  //     chairs: chairsRef.current.value,
-  //     view_id: viewidRef.current.value,
-  //   }
-  //   // console.log(payload);
-  //   setErrors(null)
-  //   axiosClient.post('/table', payload)
-  //   .then((response) => {
-  //     // Handle successful response here if needed
-  //     // For example, show a success message or perform some action
-  //     console.log('API response:', response.data);
-  //     handleCloseModal();
-  //   })
-  //   .catch(err => {
-	// 		const response = err.response;
-	// 		if (response && response.status === 422) {
-	// 			if(response.data.errors)
-	// 			{
-	// 				setErrors(response.data.errors)
-	// 			}else{
-	// 				setErrors({
-	// 					email: [response.data.message]
-	// 				})
-	// 			}
-	// 		}
-	// 		})
-  // }
-
-  // useEffect(() => {
-  //   // Fetch views for the logged-in user's restaurant
-  //   const fetchViews = async () => {
-  //     try {
-  //       const response = await axiosClient.get("/api/views"); // Replace "/views" with your API endpoint to fetch views
-  //       setViews(response.data); // Assuming the API response returns an array of views
-  //     } catch (error) {
-  //       console.error("Error fetching views:", error);
-  //     }
-  //   };
-
-  //   fetchViews();
-  // }, []);
-
-  // console.log(user.id);
-
-  
-
-  // const getViews = () => {
-    
-  //   axiosClient.get('/views', { params: payload })
-  //     .then(({ data }) => {
-  //       console.log(data);
-  //       // Assuming data is an array of views received from the API
-  //       setViews(data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching views:", error);
-  //     });
-  // }
 
   useEffect(() => {
     axiosClient.get('/user')
@@ -166,54 +105,29 @@ export default function Structure() {
     const payload = {
       restaurant_id: restaurant_id,
     };
-    
+    setLoading(true)
     axiosClient
       .get('/views', { params: payload })
       .then(({ data }) => {
         // console.log(data);
         // Assuming data is an array of views received from the API
         setViews(data);
+        setLoading(false)
       })
       .catch((error) => {
         console.error("Error fetching views:", error);
       });
   };
 
-  // const isTableInStructure = (restaurant_id, table_id) => {
-  
-  //   const payload = {
-  //     restaurant_id: restaurant_id,
-  //     table_id: table_id,
-  //   };
-    
-  //   axiosClient
-  //     .get('/gettable', { params: payload })
-  //     .then((data) => {
-  //       if (data.length > 0) {
-  //         // Set the background color to green if the table exists in the structure
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching tables:", error);
-  //       return false;
-  //     });
-  // };
-  
-
-  
-
-  
-
-
   return (
     <>
       <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Table Structure</h1>
+        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Table Structure</h1>
+          <div className="loading-container">
+            {loading && <p className="loading-text">Loading...</p>}
           </div>
+        </div>
         </header>
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
@@ -227,7 +141,8 @@ export default function Structure() {
             {views.map((view) => (
               <div key={view.id} className="gallery">
                 <a href="">
-                  <img src={"http://localhost:8000/" + view.photo} alt="Mountains" width="600" height="400" />
+                  {/* <img src={"http://localhost:8000/" + view.photo} alt="Mountains" width="600" height="400" /> */}
+                  <img src="/src/assets/add.jpeg" alt="Mountains" width="600" height="400" />
                 </a>
                 <div className="desc">{view.name} <br/> <font size="2"><i>{view.description}</i></font></div>
                 {/* <div className="desc">{view.name}</div>
@@ -237,7 +152,7 @@ export default function Structure() {
 
               <div className="gallery">
                 <div onClick={() => handleAddViewModalOpen()}>
-                  <img src="/src/assets/add.jpeg" width="600" height="400" />
+                  <img src="/src/assets/images.jpeg" width="600" height="400" />
                 </div>
                 
                 <div className="desc">Add View<br/></div>

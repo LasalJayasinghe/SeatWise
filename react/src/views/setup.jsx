@@ -185,12 +185,10 @@ export default function Setup() {
         }
         // console.log(payload);
         setErrors(null)
-        setLoading(true)
         axiosClient.post('/updateprofile', payload)
         .then((response) => {
           console.log('API response:', response.data);
           handleEditModalClose();
-          setLoading(false);
           window.location.reload();
         })
         .catch(err => {
@@ -274,7 +272,7 @@ export default function Setup() {
       )}
     </div>
 
-    {!loading && (
+    
       <div className="mt-6 border-t border-gray-100">
         <dl className="divide-y divide-gray-100">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -414,7 +412,7 @@ export default function Setup() {
           </div>
 
         </dl>
-      </div> )}
+      </div> 
     </div>
     
 

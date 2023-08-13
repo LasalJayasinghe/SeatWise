@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRef, useState } from "react";
+// import React from 'react';
+import { useState } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import axiosClient from "../axios-client";
 import { useEffect } from "react";
@@ -13,32 +13,32 @@ import { FiLogOut } from "react-icons/fi";
 export default function CashierDashboard() {
 
 	const [Reservation, setReservation] = useState([]);
-	const {user, token, setUser, setToken} = useStateContext();
+	const {user, setUser} = useStateContext();
 	//const [statuses, setStatuses] = useState({});
 	//const [clickedButtonIdOne, setClickedButtonIdOne] = useState(null);
 	//const [clickedButtonIdTwo, setClickedButtonIdTwo] = useState(null);
    
 	
-	useEffect(() => {
-	  axiosClient.get('/user')
-		.then(({ data }) => {
-		  setUser(data);
-		});
-	}, []);
+useEffect(() => {
+  axiosClient.get('/user')
+  .then(({ data }) => {
+    setUser(data);
+  });
+}, []);
+
   
-  
-	 useEffect(() => {
-	  if (user && user.id) {
-		axiosClient.get(`/getReservations/${user.restaurant_id}`)
-		  .then(({ data }) => {
-			setReservation(data);
-		  })
-		  .catch((error) => {
-			console.error(error);
-		  });
-	  }
-	}, [user]);
-  return (
+  useEffect(() => {
+  if (user && user.id) {
+  axiosClient.get(`/getReservations/${user.restaurant_id}`)
+    .then(({ data }) => {
+    setReservation(data);
+    })
+    .catch((error) => {
+    console.error(error);
+    });
+  }
+}, [user]);
+return (
 
 
     <div className="mx-auto max-w-7xl py-3 sm:px-6 lg:px-8">
@@ -113,7 +113,7 @@ export default function CashierDashboard() {
         <td className="border-none px-3 py-2" style={{ fontWeight: 600, color: 'gray' }}>Table Number 2</td>
       </tr>
 
-	  <tr className="border-none">
+	<tr className="border-none">
         <td className="border-none px-6 py-2"><img
           className="h-14 w-15 rounded-full"
           src="https://t3.ftcdn.net/jpg/01/86/34/08/240_F_186340800_qlgVLkKLVy19r6SEL7RnniP1Yz6dmq8T.jpg"
@@ -123,7 +123,7 @@ export default function CashierDashboard() {
         <td className="border-none px-3 py-2" style={{ fontWeight: 600, color: 'gray' }}>Table Number 2</td>
       </tr>
 
-	  <tr className="border-none">
+	<tr className="border-none">
         <td className="border-none px-6 py-2"><img
           className="h-14 w-15 rounded-full"
           src="https://as1.ftcdn.net/v2/jpg/06/20/73/04/1000_F_620730420_v9RnvoxaA7IH1271Dssk6kixwZs6wTJk.jpg"

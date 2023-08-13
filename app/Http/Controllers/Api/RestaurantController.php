@@ -112,31 +112,6 @@ class RestaurantController extends Controller
 
     }
 
-    // public function addView(addViewRequest $request)
-    // {
-    //     $data = $request->validated();
-
-    //     $restaurantId = $data['restaurant_id'];
-
-    //     /** @var View $user */
-    //     $user = View::create ([
-    //         'restaurant_id' => $restaurantId,
-    //         'name' => $data['viewname'],
-    //         'description' => $data['description'],
-
-    //         if($request->hasfile('photo')){
-    //             $file = $request->file('photo');
-    //             $extension = $file->getClientOriginalExtension();
-    //             $filename = time() . '.' . $extension;
-    //             $file->move('react/src/assets/', $filename);
-    //             'photo' =>image = $filename;
-    //         } else {
-    //             return $request;
-    //             'photo'->photo = '';
-    //         }
-    //    ]);    
-    // }
-
     public function addTable(addTableRequest $request)
     {
         $data = $request->validated();
@@ -270,15 +245,7 @@ class RestaurantController extends Controller
 
        /**Cashier controller items.................................................. */
 
-    // public function cashiershow()
-    // {
-    //     return view('react.cashierLogin');
-    // }
-
-
-
-
-
+    
     public function addCashier(addCashierRequest $request){
          // Make sure the user is authenticated
    
@@ -296,9 +263,9 @@ class RestaurantController extends Controller
             // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
             
              'cashier_name' => $data['cashiername'],
-             'cashier_email' => $data['email'],
+             'email' => $data['email'],
              'cashier_phone_number' => $data['phone'],
-             'cashier_password' => bcrypt($data['password']),
+             'password' => bcrypt($data['password']),
         ]);
        // return redirect('/restaurant');
        // $token = $user->createToken('main')->plainTextToken;
@@ -307,45 +274,6 @@ class RestaurantController extends Controller
 
         
     }
-
-
-
-
-
-
-    // public function cashierlogin(cashierLoginRequest $request)
-    // {   
-    //     $credentials = [
-    //         'cashier_email' => $request->input('email'),
-    //         'cashier_password' => $request->input('password')
-    //     ];
-
-    //     dd($request->all());
-        
-    //     if (!Auth::guard('cashiers')->attempt([
-    //         'cashier_email' => $credentials['cashier_email'], 
-    //         'cashier_password' => $credentials['cashier_password']
-    //     ])) {
-    //         return response([
-    //             'message' => 'Provided email or password is incorrect'
-    //         ], 422);
-    //     }
-        
-
-    //     /** @var \App\Models\Cashiers $user */
-    //     $user = Auth::guard('cashiers')->user();
-    //     if (!$user instanceof Cashiers) {
-    //         return response([
-    //             'message' => 'User authentication failed'
-    //         ], 422);
-    //     }
-        
-    //     $token = $user->createToken('main')->plainTextToken;
-    //     return response(compact('user', 'token'));
-    // }
-
-   
-
 
     public function getCashiers($id) {
     
@@ -380,51 +308,10 @@ class RestaurantController extends Controller
 
         // Return the fetched table structures as a JSON response
         return response()->json($tableStructures);
-}
-
-
-
-
-
-
-public function addCashier(addCashierRequest $request){
-     // Make sure the user is authenticated
-
-     $data = $request->validated();
-    // $use r = auth('restaurants')->user();
-    // $restaurant = Restaurants::where('email', $user->email)->first();
-   
-   // $restaurant = auth('restaurants')->user();
-   $restaurant = auth()->guard('restaurants')->user();
-
-   $restaurantId = $data['restaurant_id'];
-   
-     $user = Cashiers::create ([
-        'restaurant_id' => $restaurantId,
-        // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
-        
-         'cashier_name' => $data['cashiername'],
-         'cashier_email' => $data['email'],
-         'cashier_phone_number' => $data['phone'],
-         'cashier_password' => bcrypt($data['password']),
-    ]);
-   // return redirect('/restaurant');
-  // return redirect()->route('');
-   // $token = $user->createToken('main')->plainTextToken;
-   return response()->json(['message' => 'Cashier successfully added']);
-    //return response(compact('user', 'token'));
-
-    
-}
-
-
-
-
-
-
+    }
 
     public function cashierLogin(cashierLoginRequest $request)
-{   
+    {   
     $credentials = $request->validated();
     if (!Auth::guard('cashiers')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
         return response([
@@ -442,18 +329,6 @@ public function addCashier(addCashierRequest $request){
     
     $token = $user->createToken('main')->plainTextToken;
     return response(compact('user', 'token'));
-}
-
-
-
-
-public function getCashiers($id) {
-
-   // $restaurant = Restaurants::find($id);
-   $cashiers = Cashiers::where('restaurant_id', $id)->get();
-   return response()->json($cashiers);
-
-
 }
 
 public function getReservations($restaurant_id) //get the cashier id

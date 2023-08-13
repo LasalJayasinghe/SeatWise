@@ -19,6 +19,8 @@ export default function TableStructure() {
   const [selectedItemX, setselectedItemX] = useState(null);
   const [selectedItemY, setselectedItemY] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   
 
 //   const viewnameRef = useRef();
@@ -79,6 +81,7 @@ export default function TableStructure() {
     .then((response) => {
       console.log('API response:', response.data);
       handleCloseModal();
+      window.location.reload();
     })
     .catch(err => {
 			const response = err.response;
@@ -127,11 +130,13 @@ export default function TableStructure() {
     };
 
     const fetchTableData = (restaurant_id) => {
+        setLoading(true);
         axiosClient
         .get("/gettable", { params: { restaurant_id } })
         .then(({ data }) => {
             // console.log("Fetched table data:", data);
             setTableData(data);
+            setLoading(false)
         })
         .catch((error) => {
             console.error("Error fetching tables:", error);
@@ -156,9 +161,12 @@ export default function TableStructure() {
   return (
     <>
       <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Table Structure</h1>
+        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Table Structure</h1>
+          <div className="loading-container">
+            {loading && <p className="loading-text">Loading...</p>}
           </div>
+        </div>
         </header>
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">

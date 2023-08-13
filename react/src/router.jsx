@@ -27,7 +27,8 @@ import CashierDefaultLayout from './components/CashierDefaultLayout.jsx';
 import RestaurantLanding from './views/RestaurantLanding.jsx';
 import CashierDashboard from './views/CashierDashboard.jsx';
 import ViewReservations from './views/ViewReservations.jsx';
-
+import Menu from './views/Menu.jsx';
+import AddMenu from './views/AddMenu.jsx';
 
 const router = createBrowserRouter([
     {
@@ -141,7 +142,14 @@ const router = createBrowserRouter([
                 path: "/addCashier",
                 element: <AddCashier />, 
             },
-
+            {
+                path: "/menu",
+                element: <Menu />, 
+            },
+            {
+                path: "/addmenu",
+                element: <AddMenu />, 
+            },
 
         ]
     },

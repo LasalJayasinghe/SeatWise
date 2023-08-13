@@ -11,6 +11,8 @@ export default function Reservations() {
 
   const [errors, setErrors] = useState(null);
   const {user, setUser } = useStateContext();
+
+  const [loading, setLoading] = useState(false);
   
   function handleItemClick(itemNumber) {
     setIsModalOpen(true);
@@ -52,11 +54,13 @@ export default function Reservations() {
     // };
 
     const fetchTableData = (restaurant_id) => {
+      setLoading(true);
         axiosClient
         .get("/gettable", { params: { restaurant_id } })
         .then(({ data }) => {
             // console.log("Fetched table data:", data);
             setTableData(data);
+            setLoading(false);
         })
         .catch((error) => {
             console.error("Error fetching tables:", error);
@@ -73,9 +77,12 @@ export default function Reservations() {
   return (
     <>
       <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Reservations</h1>
+        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Reservations</h1>
+          <div className="loading-container">
+            {loading && <p className="loading-text">Loading...</p>}
           </div>
+        </div>
         </header>
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
