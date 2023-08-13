@@ -26,7 +26,7 @@ class addViewRequest extends FormRequest
         return [
             'restaurant_id' => 'required',
             'viewname' => 'required',
-            'photo' => 'required',
+            'photo' => '',
             'description' => 'required',
             
         ];

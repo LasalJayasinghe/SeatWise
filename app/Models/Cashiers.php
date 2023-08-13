@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
 class Cashiers extends Authenticatable
 {
@@ -21,7 +23,6 @@ class Cashiers extends Authenticatable
      */
     protected $fillable = [
         'restaurant_id',
-        //  'brn',
         'cashier_name',
         'email',
         'cashier_phone_number',
@@ -34,7 +35,7 @@ class Cashiers extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-       // 'password',
+        // 'password',
         'remember_token',
         'cashier_password',
     ];
