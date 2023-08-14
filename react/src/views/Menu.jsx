@@ -4,6 +4,12 @@ import {
     DataGrid,
     GridToolbar,
   } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import axiosClient from "../axios-client";
+import Switch from '@mui/material/Switch';
+
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
 
 const columns = [
     { field: 'id', headerName: 'Meal ID', width: 90 },
@@ -14,7 +20,7 @@ const columns = [
         }
     },
     {
-      field: 'meal',
+      field: 'name',
       headerName: 'Meal Name',
       width: 150,
       editable: true,
@@ -22,20 +28,27 @@ const columns = [
     {
       field: 'category',
       headerName: 'Category',
-      width: 170,
+      width: 150,
       editable: true,
     },
     {
-      field: 'rating',
-      headerName: 'Rating',
-      width: 110,
-      editable: true,
+        field: 'description',
+        headerName: 'Description',
+        width: 170,
+        editable: true,
     },
+    // {
+    //   field: 'rating',
+    //   headerName: 'Rating',
+    //   width: 100,
+    //   defaultCellValue: '4.5+',
+    //   editable: true,
+    // },
     {
-        field: 'payment',
-        headerName: 'Payment Mode',
+        field: 'price',
+        headerName: 'Price',
         type: 'number',
-        width: 190,
+        width: 110,
         editable: true,
     },
     {
@@ -43,6 +56,9 @@ const columns = [
         headerName: 'Availability',
         type: 'boolean',
         width: 200,
+        renderCell: (params) => {
+            return <Switch {...label} />
+        }
     },
     {
         field:"actions",
@@ -63,32 +79,46 @@ const columns = [
             </div>
         }
     },
-    // {
-    //   field: 'fullName',
-    //   headerName: 'Full name',
-    //   description: 'This column has a value getter and is not sortable.',
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params) =>
-    //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    // },
   ];
   
-  const rows = [
-    { id: 1, category: 'Pizza', meal: 'Margherita', rating: '4.5+', payment: 'Transfer Bank', status: true },
-    { id: 2, category: 'Dessert', meal: 'Mango pie', rating: '4.1+', payment: 'Cash on demand', status: false },
-    { id: 3, category: 'Pizza', meal: 'Margherita', rating: '4.5+', payment: 'Transfer Bank', status: true },
-    { id: 4, category: 'Dessert', meal: 'Mango pie', rating: '4.3+', payment: 'Transfer Bank', status: false },
-    { id: 5, category: 'Beverages', meal: 'Margherita', rating: '4.3+', payment: 'Cash on demand', status: true},
-    { id: 6, category: 'Pizza', meal: 'Margherita', rating: '4.0+', payment: 'Transfer Bank', status: true },
-    { id: 7, category: 'Beverages', meal: 'Margherita', rating: '4.2+', payment: 'Cash on demand', status: false },
-    { id: 8, category: 'Pizza', meal: 'Mango pie', rating: '4.1+', payment: 'Transfer Bank', status: false },
-    { id: 9, category: 'Dessert', meal: 'Mango pie', rating: '4.4+', payment: 'Cash on demand', status: true },
-  ];
+//   const rows = [
+//     { id: 1, category: 'Pizza', meal: 'Margherita', rating: '4.5+', payment: 'Transfer Bank', status: true },
+//     { id: 2, category: 'Dessert', meal: 'Mango pie', rating: '4.1+', payment: 'Cash on demand', status: false },
+//     { id: 3, category: 'Pizza', meal: 'Margherita', rating: '4.5+', payment: 'Transfer Bank', status: true },
+//     { id: 4, category: 'Dessert', meal: 'Mango pie', rating: '4.3+', payment: 'Transfer Bank', status: false },
+//     { id: 5, category: 'Beverages', meal: 'Margherita', rating: '4.3+', payment: 'Cash on demand', status: true},
+//     { id: 6, category: 'Pizza', meal: 'Margherita', rating: '4.0+', payment: 'Transfer Bank', status: true },
+//     { id: 7, category: 'Beverages', meal: 'Margherita', rating: '4.2+', payment: 'Cash on demand', status: false },
+//     { id: 8, category: 'Pizza', meal: 'Mango pie', rating: '4.1+', payment: 'Transfer Bank', status: false },
+//     { id: 9, category: 'Dessert', meal: 'Mango pie', rating: '4.4+', payment: 'Cash on demand', status: true },
+//   ];
 
 // const [loading, setLoading] = useStateContext(false);
 
 export default function Menu() {
+
+    const {user, setUser} = useStateContext();
+    const [menu, setMenu] = useState([]);
+
+    useEffect(() => {
+        if (user && user.id) {
+          axiosClient.get(`/getMenu/${user.id}`)
+            .then(({ data }) => {
+              setMenu(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+      }, [user]);
+
+
+
+
+
+
+
+
   return (
     <>
       <header className="bg-white shadow">
@@ -155,7 +185,7 @@ export default function Menu() {
             
             <div className="dataTable">
                 <DataGrid
-                    rows={rows}
+                    rows={menu}
                     columns={columns}
                     initialState={{
                     pagination: {

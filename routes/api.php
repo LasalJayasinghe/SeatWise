@@ -92,3 +92,8 @@ Route::get('/restaurants/{restaurant_id}/available-tables', [RestaurantControlle
 //     }
 // });
 
+Route::post('/addmeal', [RestaurantController::class, 'addMeal']);
+Route::get('/getMenu/{id}', [RestaurantController::class, 'getMenu']);
+Route::post('/addcategory', [RestaurantController::class, 'addcategory']);
+Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);
+
