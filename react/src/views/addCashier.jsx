@@ -63,7 +63,7 @@ export default function AddCashier() {
     // const navigate = useNavigate();
     // const history = useHistory();
 
-    // const [successMessage, setSuccessMessage] = useState('');
+     const [successMessage, setSuccessMessage] = useState('');
 
     const {user} = useStateContext();
 
@@ -83,10 +83,14 @@ export default function AddCashier() {
       axiosClient.post('/addCashier', payLoad)
           .then(({data}) => {
             //console.log(data);
-           setMessage(data.message); 
+           setMessage(data.message)
+           console.log(data.message); 
             // Set the message from the response 
             //history.push('/Employees'); // 
-            navigate('/Employees'); 
+            //navigate('/Employees'); 
+            setTimeout(() => {
+              navigate('/Employees');
+            }, 2000);
 
              
           })
@@ -117,11 +121,12 @@ export default function AddCashier() {
           action='#'
           method="POST"
         >
-          {message && (
-  <div className="alert">
+{message && (
+  <div className={`p-2 ${message.includes('Successfully') ? 'bg-green-500 text-white-300' : 'bg-red-200 text-white-800'}`}>
     {message}
   </div>
 )}
+
 
             {errors && (
               <div className="alert">

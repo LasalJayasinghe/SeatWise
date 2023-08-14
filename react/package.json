@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "@mui/material": "^5.14.4",
+    "@mui/x-data-grid": "^6.11.1",
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-countup": "^6.4.2",
