@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\View;
+use App\Models\Meals;
 use App\Models\Tables;
 use http\Env\Response;
 use App\Models\Profile;
 use App\Models\Cashiers;
+use App\Models\Category;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Models\TableStructure;
@@ -14,9 +16,11 @@ use App\Models\TableReservation;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\addMealRequest;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
+use App\Http\Requests\addCategoryRequest;
 use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
 use App\Http\Requests\RestaurantLoginRequest;
@@ -238,6 +242,56 @@ class RestaurantController extends Controller
         }
     
         return response()->json(['message' => 'Update successful']);
+    }
+
+    public function addMeal(addMealRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+
+        /** @var Meals $user */
+        $user = Meals::create([
+            'restaurant_id' => $restaurantId,
+            'meal_id' => $data['meal_id'],
+            'name' => $data['name'],
+            'category' => $data['category'],
+            'price' => $data['price'],
+            'description' => $data['description'],
+        ]);
+
+        return response()->json(['message' => 'Meal Added Successfully']);
+
+    }
+
+    public function getMenu($id) {
+     
+        $menu = Meals::where('restaurant_id', $id)->get();
+
+        return response()->json($menu);
+    
+    }
+
+    public function addcategory(addCategoryRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+
+        /** @var Category $user */
+        $user = Category::create([
+            'restaurant_id' => $restaurantId,
+            'category' => $data['category'],
+        ]);
+
+        return response()->json(['message' => 'Category Added Successfully']);
+
+    }
+
+    public function getCategories($id) {
+     
+        $category = Category::where('restaurant_id', $id)->get();
+
+        return response()->json($category);
+    
     }
 
 
