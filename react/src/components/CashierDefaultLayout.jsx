@@ -13,7 +13,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
 { name: 'Dashboard', to: '/CashierDashboard', current: false },
-{ name: 'Add Reservation', to: '/ViewStructure', current: false },
+{ name: 'Add Reservations', to: '/ViewStructure', current: false },
 { name: 'View Reservations', to: '/ViewReservations', current: false },
 
 ]

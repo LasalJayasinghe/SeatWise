@@ -323,7 +323,7 @@ class RestaurantController extends Controller
         ]);
        // return redirect('/restaurant');
        // $token = $user->createToken('main')->plainTextToken;
-       return response()->json(['message' => 'Cashier successfully added']);
+       return response()->json(['message' => 'Successfully added']);
         //return response(compact('user', 'token'));
 
         
