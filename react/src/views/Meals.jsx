@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axiosClient from '../axios-client';
 import mealimage from '../assets/meal.jpg';
 
-
 export default function Meals() {
   const [meals, setMeals] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredMeals, setFilteredMeals] = useState([]);
 
   useEffect(() => {
     const fetchAllMeals = async () => {
       try {
-        const allMealsResponse = await axiosClient.get('/all-meals'); // New endpoint
+        const allMealsResponse = await axiosClient.get('/all-meals');
         setMeals(allMealsResponse.data);
       } catch (error) {
         console.error(error);
@@ -19,38 +20,53 @@ export default function Meals() {
     fetchAllMeals();
   }, []);
 
+  const handleSearch = () => {
+    const newFilteredMeals = meals.filter((meal) =>
+      meal.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredMeals(newFilteredMeals);
+  };
+  
+
+  const handleClear = () => {
+    setSearchTerm('');
+    setFilteredMeals([]);
+  };
+
   return (
     <div>
-          <div className="mx-10">
-    <h1 className='mb-5 text-4xl font-bold'>Meals</h1>
-    <div className="flex flex-col sm:flex-row sm:items-center">
-      <div className="relative flex items-center mb-4 sm:mb-0">
-        <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 opacity-40"
-            fill="none"
-            viewBox="0 3 32 1"
-            stroke="currentColor"
-            style={{ top: "50%", transform: "translateY(-50%)" }}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      <div className="mx-10">
+        <h1 className='mb-5 text-4xl font-bold'>Meals</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center">
+          <div className="relative flex items-center mb-4 sm:mb-0">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6 opacity-40"
+                fill="none"
+                viewBox="0 3 32 1"
+                stroke="currentColor"
+                style={{ top: "50%", transform: "translateY(-50%)" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </span>
+            <input
+              type="text"
+              name="price"
+              id="price"
+              className="block w-full h-12 py-1 pl-10 pr-4 mt-3 text-gray-900 placeholder-gray-400 border-gray-300 rounded-md sm:w-64 focus:ring-2 focus:ring-green-500 focus:border-transparent sm:text-sm"
+              placeholder="Search meals"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-          </svg>
-        </span>
-        <input
-          type="text"
-          name="price"
-          id="price"
-          className="block w-full h-12 py-1 pl-10 pr-4 mt-3 text-gray-900 placeholder-gray-400 border-gray-300 rounded-md sm:w-64 focus:ring-2 focus:ring-green-500 focus:border-transparent sm:text-sm"
-          placeholder="Search meals"
-        />
-      </div>
-      <div className="mb-4 sm:mb-0 sm:ml-3">
+          </div>
+          <div className="mb-4 sm:mb-0 sm:ml-3">
         <label htmlFor="currency" className="sr-only">
           Currency
         </label>
@@ -94,23 +110,33 @@ export default function Meals() {
 
         </select>
       </div>
-      <button className="px-4 py-2 font-semibold text-white bg-black rounded sm:ml-4">
-        Search
-      </button>
-    </div>
-    </div>
-    {/* Display the list of meals */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {meals.map((meal) => (
-          <div key={meal.id} className="bg-white p-4 shadow-md rounded-md">
-            <h2 className="text-lg font-semibold">{meal.name}</h2>
-            <img src={mealimage} alt={meal.name} className="w-full h-40 object-cover mt-2 rounded-md" />
-            <p className="text-gray-600 mt-2">{meal.description}</p>
-            <p className="text-gray-800 font-medium mt-2">Price: ${meal.price}</p>
-            {/* You can add more fields here as needed */}
-          </div>
-        ))}
+          <button
+            className="px-4 py-2 font-semibold text-white bg-black rounded sm:ml-4"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+          <button
+            className="px-4 py-2 font-semibold text-white bg-gray-400 rounded sm:ml-4"
+            onClick={handleClear}
+          >
+            Clear
+          </button>
+        </div>
       </div>
+      {/* Display the list of meals */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {(filteredMeals.length > 0 ? filteredMeals : meals).map((meal) => (
+    <div key={meal.id} className="bg-white p-4 shadow-md rounded-md">
+      <h2 className="text-lg font-semibold">{meal.name}</h2>
+      <img src={mealimage} alt={meal.name} className="w-full h-40 object-cover mt-2 rounded-md" />
+      <p className="text-gray-600 mt-2">{meal.description}</p>
+      <p className="text-gray-800 font-medium mt-2">Price: LKR {meal.price}</p>
+      {/* You can add more fields here as needed */}
     </div>
-  )
+  ))}
+</div>
+
+    </div>
+  );
 }

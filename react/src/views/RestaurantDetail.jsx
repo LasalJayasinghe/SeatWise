@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
 import ReservationPopup from '../components/ReservationPopup';
+import restaurantImage from '../assets/restaurant3.jpg';
+
 
 const RestaurantDetail = () => {
   const { id } = useParams();
@@ -160,15 +162,25 @@ const RestaurantDetail = () => {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-4">{restaurant.name}</h1>
-      <p className="text-gray-600 mb-6">{restaurant.description}</p>
-      <Link to={`/restaurants/${id}/meals`}>
-      <button className="border border-green-500 text-green-500 px-4 py-2 rounded-lg mb-6">
+    <div className="relative mb-4">
+    <div className="relative w-full h-60 overflow-hidden">
+      <img src={restaurantImage} alt="Restaurant" className="w-full h-auto" />
+      <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
+        <h1 className="text-5xl font-bold mb-2 text-white">{restaurant.name}</h1>
+        <p className="text-gray-100">{restaurant.description}</p>
+        <Link to={`/restaurants/${id}/meals`}>
+      <button className="border border-green-500 bg-white text-green-500 px-4 py-2 rounded-lg mb-6 mt-8">
   View Menu
 </button>
 </Link>
-      <div className="flex items-center justify-center mb-6">
+      </div>
+    </div>
+
+   <div className="flex flex-col items-center">
+      {/* <h1 className="text-3xl font-bold mb-4">{restaurant.name}</h1>
+      <p className="text-gray-600 mb-6">{restaurant.description}</p> */}
+      
+      <div className="flex items-center justify-center mb-6 mt-4">
         <button
           className={`py-2 px-4 rounded-lg ${
             toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
@@ -340,6 +352,7 @@ const RestaurantDetail = () => {
 
       
     </div>
+  </div>
   );
 };
 

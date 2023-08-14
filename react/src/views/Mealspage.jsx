@@ -36,7 +36,7 @@ const MealsPage = () => {
             <h2 className="text-lg font-semibold">{meal.name}</h2>
             <img src= {mealimage} alt={meal.name} className="w-full h-40 object-cover mt-2 rounded-md" />
             <p className="text-gray-600 mt-2">{meal.description}</p>
-            <p className="text-gray-800 font-medium mt-2">Price: ${meal.price}</p>
+            <p className="text-gray-800 font-medium mt-2">Price: LKR {meal.price}</p>
             {/* You can add more fields here as needed */}
           </div>
         ))}
