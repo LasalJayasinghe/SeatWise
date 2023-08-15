@@ -36,11 +36,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
     
-<<<<<<< Updated upstream
-        $user =User::create($data);
-=======
         $user = User::create($data);
->>>>>>> Stashed changes
         return new UserResource($user);
         return response(new UserResource($user), 201);
 
