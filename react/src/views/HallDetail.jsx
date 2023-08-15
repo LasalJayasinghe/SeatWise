@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../axios-client';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import '../util/custom-calendar.css'
-import { Carousel } from 'react-responsive-carousel';
+//import Calendar from 'react-calendar';
+//import 'react-calendar/dist/Calendar.css';
+//import '../util/custom-calendar.css'
+//import { Carousel } from 'react-responsive-carousel';
+//import { Carousel } from 'react-responsive-carousel';
+//import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import the CSS for
 
 import slide1 from '../assets/slide1.png';
 import slide2 from '../assets/slide2.png';
