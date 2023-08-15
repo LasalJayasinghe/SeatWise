@@ -5,7 +5,6 @@ import TFTCards from "../../components/tablefortwo/peopleCard.jsx";
 export default function Suggestions(){
 	return (
 		<div>
-		  <Header />
 		  <div className="users-container">
 			<Sidebar />
 			<div className="content-container">

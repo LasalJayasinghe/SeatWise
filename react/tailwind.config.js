@@ -12,8 +12,6 @@ export default {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms'),
-    // require('@tailwindcss/typography'),
-    // Add the nesting plugin here
     require('tailwindcss/nesting'),
  
   ],
