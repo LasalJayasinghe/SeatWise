@@ -48,7 +48,7 @@ const WaitlistPage = ({ onClose }) => {
         setShowSuccessPopup(false);
   
         // Navigate to the reservations page
-        navigate('/reservations');
+        navigate('/activities');
       }, 2000);
     } catch (error) {
       console.error('Error submitting the form:', error);

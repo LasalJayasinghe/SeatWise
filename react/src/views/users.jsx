@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
-import {Link} from "react-router-dom";
-import {useStateContext} from "../context/ContextProvider.jsx";
+import Header from "../components/Header.jsx";
+
 
 export default function Users(){
 	const [users,setUsers] = useState([]);
@@ -24,9 +24,27 @@ export default function Users(){
 	}
 
 
+	const onLogout = ev => {
+		ev.preventDefault()
+	  
+		axiosClient.post('/logout')
+		.then(() => {
+			setUser({})
+			setToken(null)
+		})
+	  }
+
+
 	return(
 	<div>
-		Users
+		<Header/>
+		<a   href="/login"  onClick={onLogout}   >
+             Sign out
+        </a>
+
+		
+
+		
 	</div>
 	)
 }

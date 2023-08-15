@@ -2,14 +2,14 @@ import React, { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import logo from '../assets/logo.svg';
-import { Link, useLocation } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: 'Home', to: '/dashboard', current: true },
-  { name: 'Restaurants', to: '/restaurants', current: false },
-  { name: 'Meals', to: '/meals', current: false },
-  { name: 'Activities', to: '/activities', current: false },
-  { name: 'Table for two', to: '/tablefortwo', current: false },
+  { name: 'Home', to: '/dashboard' },
+  { name: 'Restaurants', to: '/restaurants' },
+  { name: 'Meals', to: '/meals' },
+  { name: 'Activities', to: '/activities' },
+  { name: 'Table for two', to: '/tablefortwo' },
 ];
 
 function classNames(...classes) {
@@ -17,7 +17,12 @@ function classNames(...classes) {
 }
 
 const Header = ({ user, onLogout }) => {
-const imageUrl = user?.profileImageUrl || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
+  const location = useLocation(); // Get the current location
+
+  const imageUrl =
+    user?.profileImageUrl ||
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80';
+
   return (
     <Disclosure as="nav" className="bg-white">
       {({ open }) => (
@@ -44,19 +49,20 @@ const imageUrl = user?.profileImageUrl || 'https://images.unsplash.com/photo-147
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4 ml-6">
+                    
                     {/* Map over navigation items to create the tabs */}
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className={classNames(
-                          location.pathname === item.to ? 'bg-green-500 text-white' : 'text-gray-500 hover:text-green-500',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                      {navigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          className={classNames(
+                            location.pathname.startsWith(item.to) ? 'bg-green-500 text-white' : 'text-gray-500 hover:text-green-500',
+                            'rounded-md px-3 py-2 text-sm font-medium'
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
                   </div>
                 </div>
               </div>

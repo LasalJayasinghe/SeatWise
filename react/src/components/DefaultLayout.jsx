@@ -7,9 +7,9 @@ import Header from './Header.jsx';
 const DefaultLayout = () => {
   const { user, token, setUser, setToken } = useStateContext();
 
-  if (!token) {
-    return <Navigate to="/landing" />;
-  }
+    if (!token) {
+        return <Navigate to ='/login' />
+    }
 
   const onLogout = (ev) => {
     ev.preventDefault();
