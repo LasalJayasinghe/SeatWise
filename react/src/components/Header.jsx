@@ -4,17 +4,13 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import logo from '../assets/logo.svg';
 import { Link, useLocation } from 'react-router-dom'; // Import Link from react-router-dom
 
-// Navigation items
 const navigation = [
-  { name: 'Home', to: '/dashboard', current: false },
+  { name: 'Home', to: '/dashboard', current: true },
   { name: 'Restaurants', to: '/restaurants', current: false },
   { name: 'Meals', to: '/meals', current: false },
-  { name: 'Reservations', to: '/reservations', current: false },
+  { name: 'Activities', to: '/activities', current: false },
   { name: 'Table for two', to: '/tablefortwo', current: false },
 ];
-
-// const location = useLocation(); // Use the location from react-router-dom
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');

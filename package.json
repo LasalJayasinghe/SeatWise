@@ -1,24 +1,50 @@
 {
+    "name": "react",
     "private": true,
+    "version": "0.0.0",
+    "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build"
+        "dev": "vite --port=3000",
+        "build": "vite build",
+        "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview"
     },
-    "devDependencies": {
+    "dependencies": {
+        "@material-tailwind/react": "^2.0.6",
+        "@tailwindcss/forms": "^0.5.4",
+        "axios": "^1.4.0",
+        "react": "^18.2.0",
+        "react-countup": "^6.4.2",
+        "react-dom": "^18.2.0",
+        "react-reveal": "^1.2.2",
+        "react-router-dom": "^6.11.2",
+        "react-spinners": "^0.13.8",
+        "react-switch": "^7.0.0",
+        "react-type-animation": "^3.1.0",
+        "@headlessui/react": "^1.7.15",
+        "@heroicons/react": "^2.0.18",
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "react-icons": "^4.10.1",
+        "react-responsive-carousel": "^3.2.23",
+        "react-slick": "^0.29.0",
+        "tailwind-datepicker-react": "^1.4.0",
+        "@types/react": "^18.0.28",
+        "@types/react-dom": "^18.0.11",
+        "@vitejs/plugin-react": "^4.0.0",
+        "autoprefixer": "^10.4.14",
+        "eslint": "^8.38.0",
+        "eslint-plugin-react": "^7.32.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.3.4",
+        "postcss": "^8.4.24",
+        "tailwindcss": "^3.3.2",
+        "vite": "^4.3.9"
+    } ,
+       "devDependencies": {
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.7.2",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^4.0.0"
-    },
-    "dependencies": {
-        "@headlessui/react": "^1.7.15",
-        "@heroicons/react": "^2.0.18",
-        "@material-tailwind/react": "^2.0.6",
-        "@tailwindcss/aspect-ratio": "^0.4.2",
-        "react-icons": "^4.10.1",
-        "react-responsive-carousel": "^3.2.23",
-        "react-slick": "^0.29.0",
-        "tailwind-datepicker-react": "^1.4.0"
     }
 }
