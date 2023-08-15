@@ -31,6 +31,7 @@ const ViewStructure = () => {
     if (user && user.id) {
     const fetchRestaurantDetail = async () => {
       try {
+        
         const response = await axiosClient.get(`/restaurants/${user.restaurant_id}`);
         setRestaurant(response.data);
       } catch (error) {
@@ -61,9 +62,10 @@ const ViewStructure = () => {
   
 
   useEffect(() => {
+    if (user && user.id){
     const fetchHalls = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}/halls`);
+        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/halls`);
         setHalls(response.data);
       } catch (error) {
         console.log(error);
@@ -73,7 +75,7 @@ const ViewStructure = () => {
     if (toggle === 'halls') {
       fetchHalls();
     }
-  }, [id, toggle]);
+  }}, [user.restaurant_id, toggle]);
 
   const handleToggle = () => {
     setToggle(toggle === 'tables' ? 'halls' : 'tables');
@@ -174,7 +176,7 @@ const ViewStructure = () => {
   return (
 
  <>
-    <header className="bg-white shadow">
+    <header className="bg-white shadow" style={{ marginBottom: '25px' }}>
     <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold tracking-tight text-gray-900">Add Reservations</h1>
       <div className="loading-container">

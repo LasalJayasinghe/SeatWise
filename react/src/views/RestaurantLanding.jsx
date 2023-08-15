@@ -82,10 +82,10 @@ export default function RestaurantLanding(){
         <div className='flex-auto mt-7'>
             <Fade bottom>
                 <p className='text-2xl font-semibold w-1/2 font-inter'>
-                    Discover seamless dining experience<br></br>
-                    with <span className='text-green-500'>Seatwise,</span> <br></br>
-                    the ultimate destination for hassle-free <br></br>
-                    restaurant table bookings.
+                Seamlessly handle reservations<br></br>
+                   and optimize table bookings with <span className='text-green-500'>Seatwise,</span> <br></br>
+                   your all-in-one solution for stress-free <br></br>
+                   restaurant management.
                 </p>
             </Fade>
         
@@ -94,11 +94,11 @@ export default function RestaurantLanding(){
                     sequence={[
                         1000,
                         // Same substring at the start will only be typed out once, initially
-                        'Book your table in ease and dine with delight!!',
+                        'Elevate your earnings',
                         1000, // wait 1s before replacing "Mice" with "Hamsters"
-                        'Reserve your spot effortlessly and savor the joy of dining!!',
+                        'and watch your restaurant',
                         1000,
-                        'Discover the pleasure of sharing a meal with a delightful stranger!!',
+                        'flourish like never before!!',
                         1000,
                     ]}
                     wrapper="span"
@@ -116,14 +116,14 @@ export default function RestaurantLanding(){
         <section className='mt-20'>
             <div className='flex flex-col items-center justify-center'>
                 <Fade><p className='text-5xl font-semibold font-inter'>Why should you use Seatwise?</p></Fade>
-                <Fade><p className='text-2xl w-2/3 text-center text-gray-600 font-light font-inter mt-5'>Because we're here to simplify your dining experience, ensuring you never miss out on a perfect table reservation again!</p></Fade>
+                <Fade><p className='text-2xl w-2/3 text-center text-gray-600 font-light font-inter mt-5'>We are here to increase your profitability.You'll witness a surge in bookings, leading to enhanced revenue and a thriving restaurant business. </p></Fade>
             </div>
             <div className="flex flex-row my-20">
             <Fade left>
                 <div className="flex flex-col items-center  basis-1/3 h-80 hover:shadow-md">
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M38 22C38 20.9 37.1 20 36 20H20C18.9 20 18 20.9 18 22M38 22V34C38 35.1 37.1 36 36 36H20C18.9 36 18 35.1 18 34V22M38 22L28 29L18 22" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
-                <p className='text-xl font-semibold font-inter my-3'>Search restaurants by meals</p>
-                <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5'>Explore a world of culinary delights at your fingertips. With Seatwise, easily search restaurants by meals, unlocking a realm of dining possibilities tailored to your cravings.</p>
+                <p className='text-xl font-semibold font-inter my-3'>Boost Your Brand</p>
+                <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5'>Unleash your restaurant's potential with our platform. Elevate your visibility, reach more customers, and showcase your flavors like never before. Become a culinary hotspot that can't be missed.</p>
                 <button class="learn-more mt-10">
                     <span class="circle" aria-hidden="true">
                         <span class="icon arrow"></span>
@@ -135,8 +135,8 @@ export default function RestaurantLanding(){
             <Fade bottom>
                 <div className="flex flex-col items-center basis-1/3 h-80 hover:shadow-md">
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M29 18L19 30H28L27 38L37 26H28L29 18Z" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
-                <p className='text-xl font-semibold font-inter my-3'>Search meals by restaurant</p>
-                <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5'>Indulge your taste buds like never before. With Seatwise, effortlessly search meals by restaurant, allowing you to discover delectable dishes and savor unforgettable flavors at your preferred dining destinations.</p>
+                <p className='text-xl font-semibold font-inter my-3'>More reservations - more profit</p>
+                <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5'>Experience a surge in reservations and watch your profits soar. Our platform's seamless reservation system empowers you to efficiently manage bookings, ensuring every seat is filled and your restaurant's success is maximized</p>
                 <button class="learn-more mt-5">
                     <span class="circle" aria-hidden="true">
                         <span class="icon arrow"></span>
@@ -148,7 +148,7 @@ export default function RestaurantLanding(){
             <Fade right>
                 <div className="flex flex-col items-center basis-1/3 h-80 hover:shadow-md">
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M34 36V26M28 36V20M22 36V30" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
-                <p className='text-xl font-semibold font-inter my-3'>Table for two</p>
+                <p className='text-xl font-semibold font-inter my-3'>Analytics and Insights</p>
                 <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5 '>Share the joy of dining. With Seatwise, book a table for two and connect with fellow food lovers. Enhance your experience, forge connections, and create lasting memories around a shared table.</p>
                 <button class="learn-more mt-10">
                     <span class="circle" aria-hidden="true">
@@ -174,14 +174,14 @@ export default function RestaurantLanding(){
                 <div class="py-5">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                            <span> How can I make a table reservation using Seatwise?</span>
+                            <span> How can I register in SeatWise</span>
                             <span class="transition group-open:rotate-180">
                                 <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
                             </span>
                         </summary>
                         <Fade>
                         <p class="text-neutral-600 mt-3">
-                        Making a reservation is easy! Simply search for your preferred restaurant, select the date and time, provide the number of guests, and confirm your booking. Seatwise will handle the rest.
+                        To register you can simply enter your restaurant details to our website.
                         </p>
                         </Fade>
                     </details>
@@ -189,14 +189,14 @@ export default function RestaurantLanding(){
                 <div class="py-5">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                            <span> Can I modify or cancel my reservation?</span>
+                            <span> How can I add views of my restaurant</span>
                             <span class="transition group-open:rotate-180">
                                 <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
                             </span>
                         </summary>
                         <Fade>
                         <p class="text-neutral-600 mt-3">
-                        Making a reservation is easy! Simply search for your preferred restaurant, select the date and time, provide the number of guests, and confirm your booking. Seatwise will handle the rest.
+                       adding views of your restaurant is easy! Simplye upload an images of your views.
                         </p>
                         </Fade>
                     </details>
@@ -204,14 +204,14 @@ export default function RestaurantLanding(){
                 <div class="py-5">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                            <span> Can I share my booked table with someone else?</span>
+                            <span> How can I add my table structre</span>
                             <span class="transition group-open:rotate-180">
                                 <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
                             </span>
                         </summary>
                         <Fade>
                         <p class="text-neutral-600 mt-3">
-                        Making a reservation is easy! Simply search for your preferred restaurant, select the date and time, provide the number of guests, and confirm your booking. Seatwise will handle the rest.
+                       Adding your table structure is easy!
                         </p>
                         </Fade>
                     </details>
@@ -219,14 +219,14 @@ export default function RestaurantLanding(){
                 <div class="py-5">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                            <span> Can I leave a review or rating for a restaurant on Seatwise?</span>
+                            <span>  Can I manage manual reservations?</span>
                             <span class="transition group-open:rotate-180">
                                 <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
                             </span>
                         </summary>
                         <Fade>
                         <p class="text-neutral-600 mt-3">
-                        Making a reservation is easy! Simply search for your preferred restaurant, select the date and time, provide the number of guests, and confirm your booking. Seatwise will handle the rest.
+                       Certainely you can manage manual reservationsas well !
                         </p>
                         </Fade>
                     </details>
@@ -234,14 +234,14 @@ export default function RestaurantLanding(){
                 <div class="py-5">
                     <details class="group">
                         <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-                            <span> Are there any fees or charges for using Seatwise?</span>
+                            <span> Is there a registration fee ?</span>
                             <span class="transition group-open:rotate-180">
                                 <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
                             </span>
                         </summary>
                         <Fade>
                         <p class="text-neutral-600 mt-3">
-                        Making a reservation is easy! Simply search for your preferred restaurant, select the date and time, provide the number of guests, and confirm your booking. Seatwise will handle the rest.
+                        No.Registration is totally free !
                         </p>
                         </Fade>
                     </details>
@@ -256,7 +256,7 @@ export default function RestaurantLanding(){
                         </summary>
                         <Fade>
                         <p class="text-neutral-600 mt-3">
-                        Making a reservation is easy! Simply search for your preferred restaurant, select the date and time, provide the number of guests, and confirm your booking. Seatwise will handle the rest.
+                        You can  go to your profile page and update your relevant details.
                         </p>
                         </Fade>
                     </details>
@@ -331,82 +331,7 @@ export default function RestaurantLanding(){
     </section>
 
     {/* ------------------------------------------------New Section------------------------------------------------ */}
-    <section class="bg-green-600 p-5 ">
-    <Fade>
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-            <div class="mx-auto max-w-screen-md text-center mb-8">
-                <h2 class="text-5xl font-semibold font-inter text-white mt-20 ">Choose the best plan for you</h2>
-          <p class="mb-5 font-light text-white sm:text-xl">Discover the perfect fit for your dining needs. Choose the best plan for you and unlock a world of customized privileges with Seatwise</p>
-            </div>
-      <div class="space-y-8 lg:grid lg:grid-cols-2 sm:gap-6 xl:gap-10 lg:space-y-0 ">
-          <div class="flex flex-col p-6 mx-auto w-8/12 text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow xl:p-8 ">
-          <div class="flex justify-center items-baseline my-8">
-                  <span class="mr-2 text-5xl font-extrabold">399 LKR</span>
-                  <span class="text-gray-500">/3 months</span>
-              </div>
-              <p class="font-light text-gray-500 sm:text-lg "> 3 months subscription </p>
-              <ul role="list" class="mb-8 space-y-4 text-left">
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Free table reservation</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Unlimited table sharing facility</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Free cancellation</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Discounts and special offers</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Basic chat and email support</span>
-                  </li>
-              </ul>
-              <button className="bg-black hover:bg-transparent text-white font-semibold hover:text-black py-3 px-5 border border-black hover:border-black rounded mt-6">
-                        Get Started
-                </button>          </div>
-          <div class="flex flex-col p-6 mx-auto w-8/12 text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow xl:p-8 ">
-          <div class="flex justify-center items-baseline my-8">
-                  <span class="mr-2 text-5xl font-extrabold">3599 LKR</span>
-                  <span class="text-gray-500">/year</span>
-              </div>
-              <p class="font-light text-gray-500 sm:text-lg "> 1 year subscription </p>
-              <ul role="list" class="mb-8 space-y-4 text-left">
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Free table reservation</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Unlimited table sharing facility</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Free cancellation</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Discounts and special offers</span>
-                  </li>
-                  <li class="flex items-center space-x-3">
-                      <svg class="flex-shrink-0 w-5 h-5 text-green-500 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                      <span>Basic chat and email support</span>
-                  </li>
-              </ul>
-              
-              <button className="bg-black hover:bg-transparent text-white font-semibold hover:text-black py-3 px-5 border border-black hover:border-black rounded mt-6">
-                        Get Started
-                </button>
-          </div>
-      </div>
-  </div>
-  </Fade>
-</section>
+ 
 </div>
     </header>
     }

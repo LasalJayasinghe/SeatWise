@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\cp;
+use App\Http\Controllers\Api\HallController;
 
 
 
@@ -97,3 +98,9 @@ Route::get('/getMenu/{id}', [RestaurantController::class, 'getMenu']);
 Route::post('/addcategory', [RestaurantController::class, 'addcategory']);
 Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);
 
+Route::get('/restaurants/{restaurant_id}/halls', [HallController::class, 'index']);
+Route::get('/halls/{id}', [HallController::class, 'show']);
+Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
+
+// Waitlist
+Route::post('/waitlist', [WaitlistController::class, 'store']);
