@@ -11,9 +11,18 @@ use App\Models\TableStructure;
 
 class RestaurantController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $restaurants = Restaurant::all();
+        $area = $request->query('area');
+
+        $query = Restaurant::query();
+
+        if ($area) {
+            $query->where('area', $area);
+        }
+
+        $restaurants = $query->get();
+
         return response()->json($restaurants);
     }
 

@@ -120,7 +120,7 @@ export default function Meals() {
             className="px-4 py-2 font-semibold text-white bg-gray-400 rounded sm:ml-4"
             onClick={handleClear}
           >
-            Clear
+            Refresh
           </button>
         </div>
       </div>
