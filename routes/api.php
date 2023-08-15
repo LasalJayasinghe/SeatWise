@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\cp;
+use App\Http\Controllers\Api\HallController;
 
 
 
