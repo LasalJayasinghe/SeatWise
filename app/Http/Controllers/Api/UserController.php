@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+
 
 class UserController extends Controller
 {
@@ -33,7 +35,12 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
-        User::create($data);
+    
+<<<<<<< Updated upstream
+        $user =User::create($data);
+=======
+        $user = User::create($data);
+>>>>>>> Stashed changes
         return new UserResource($user);
         return response(new UserResource($user), 201);
 
