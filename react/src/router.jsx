@@ -32,7 +32,7 @@ import AddMenu from './views/AddMenu.jsx';
 import Orders from './views/Orders.jsx';
 
 import HallDetail from './views/HallDetail.jsx';
-import WaitlistPage from './views/WaitlistPage.jsx';
+import WaitlistPage from './views/WaitlistPage .jsx';
 const router = createBrowserRouter([
     {
         path: '/',
