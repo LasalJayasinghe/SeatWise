@@ -28,6 +28,7 @@ class addMealRequest extends FormRequest
             'meal_id' => 'required',
             'name' => 'required',
             'category' => 'required',
+            'potion' => 'required',
             'price' => 'required',
             'description' => 'required',
         ];

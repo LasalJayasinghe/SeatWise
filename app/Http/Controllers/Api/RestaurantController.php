@@ -255,6 +255,7 @@ class RestaurantController extends Controller
             'meal_id' => $data['meal_id'],
             'name' => $data['name'],
             'category' => $data['category'],
+            'potion' => $data['potion'],
             'price' => $data['price'],
             'description' => $data['description'],
         ]);

@@ -21,6 +21,7 @@ class Meals extends Model
         'meal_id',
         'name',
         'category',
+        'potion',
         'price',
         'description',
     ];

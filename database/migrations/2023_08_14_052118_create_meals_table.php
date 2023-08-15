@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('meal_id');
             $table->string('name');
             $table->string('category');
+            $table->string('potion');
             $table->string('price');
             $table->string('description');
             $table->timestamps();
