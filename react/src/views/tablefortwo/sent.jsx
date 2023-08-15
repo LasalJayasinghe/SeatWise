@@ -5,7 +5,6 @@ import TFTCards from "../../components/tablefortwo/sentCard.jsx";
 export default function Sent(){
 	return (
 		<div>
-		  <Header />
 		  <div className="users-container">
 			<Sidebar />
 			<div className="content-container">

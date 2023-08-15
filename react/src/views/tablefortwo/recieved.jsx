@@ -5,7 +5,6 @@ import TFTCards from "../../components/tablefortwo/recievedCard.jsx";
 export default function Recieved(){
 	return (
 		<div>
-		  <Header />
 		  <div className="users-container">
 			<Sidebar />
 			<div className="content-container">

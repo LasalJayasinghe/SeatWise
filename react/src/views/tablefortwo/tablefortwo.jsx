@@ -27,7 +27,6 @@ export default function TableForTwo(){
 
 	return (
 		<div>
-		  <Header />
 		  <div className="users-container">
 			<Sidebar />
 			<div className="content-container">
