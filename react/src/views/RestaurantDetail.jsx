@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
 import ReservationPopup from '../components/ReservationPopup';
 import restaurantImage from '../assets/restaurant3.jpg';
+import hallImage from '../assets/restaurant1.jpg';
+
 
 
 const RestaurantDetail = () => {
@@ -18,6 +20,8 @@ const RestaurantDetail = () => {
   const [halls, setHalls] = useState([]);
   const [selectedTables, setSelectedTables] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [showTableForTwoPopup, setShowTableForTwoPopup] = useState(false);
+  const [selectedTableForTwo, setSelectedTableForTwo] = useState(null);
 
 
 
@@ -108,6 +112,11 @@ const RestaurantDetail = () => {
       return;
     }
   
+    if (table.isTableForTwo) {
+      setSelectedTableForTwo(table);
+      setShowTableForTwoPopup(true);
+    }
+
     // Toggle the selected status of the table
     const updatedSelectedTables = selectedTables.includes(table)
       ? selectedTables.filter(selectedTable => selectedTable !== table)
@@ -335,20 +344,52 @@ const RestaurantDetail = () => {
         </div>
       )}
 
+{/* Table for Two Pop-up */}
+{showTableForTwoPopup && selectedTableForTwo && (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+            <div className="bg-white rounded-lg p-8">
 
-      {/* Display other relevant restaurant details here */}
-      {toggle === 'halls' && (
-        <div>
-          {halls.map((hall) => (
-            <div key={hall.id} className="mb-4">
-              <Link to={`/halls/${hall.id}`}>
-                <h3 className="text-lg font-semibold">{hall.name}</h3>
-              </Link>
-              <p className="text-gray-600">{hall.description}</p>
-            </div>
-          ))}
+    <p className="text-center font-bold text-lg">Table for Two</p>
+    <p>John Doe - 2 chairs available</p>
+          {/* Buttons and content */}
+          <button
+            className="block mx-auto bg-green-500 text-white py-1 px-4 rounded-md mt-4"
+            onClick={() => {
+              // Add your logic here for the "Request" button
+            }}
+          >
+            Request
+          </button>
+          <button
+            className="block mx-auto bg-gray-500 text-white py-1 px-4 rounded-md mt-2"
+            onClick={() => setShowTableForTwoPopup(false)}
+          >
+            Close
+          </button>
+        </div>
         </div>
       )}
+
+
+      {/* Display other relevant restaurant details here */}
+{toggle === 'halls' && (
+  <div className="mt-6 grid gap-4">
+    {halls.map((hall) => (
+      <div key={hall.id} className="p-4 border rounded-lg">
+        <Link to={`/halls/${hall.id}`}>
+          <h3 className="text-lg font-semibold">{hall.name}</h3>
+        </Link>
+        <img
+          src={hallImage} // Replace with the actual path to the image in your assets folder
+          alt={`Image of ${hall.name}`}
+          className="w-72 h-auto rounded-lg mt-2"
+        />
+        <p className="text-gray-600">{hall.description}</p>
+      </div>
+    ))}
+  </div>
+)}
+
 
       
     </div>
