@@ -16,8 +16,11 @@ import RestaurantDetail from './views/RestaurantDetail.jsx';
 import HallDetail from './views/HallDetail.jsx';
 import WaitlistPage from './views/WaitlistPage';
 import Meals from './views/Meals.jsx';
-import Activities from './views/Activities.jsx';
+// import Activities from './views/Activities.jsx';
 import Mealspage from './views/Mealspage.jsx';
+import Complaints from './views/activities/Complaints.jsx';
+import Activities from './views/activities/Activities.jsx';
+import Completed from './views/activities/Completed.jsx';
 
 const router = createBrowserRouter([
     {
@@ -46,10 +49,10 @@ const router = createBrowserRouter([
                 element: <Mealspage />
             },
 
-              {
-                path: '/activities',
-                element: <Activities/>
-              },
+            //   {
+            //     path: '/activities',
+            //     element: <Activities/>
+            //   },
             {
                 path: '/restaurants/:id', 
                 element: <RestaurantDetail />
@@ -77,6 +80,21 @@ const router = createBrowserRouter([
             {
                 path: '/tablefortwo/sent',
                 element : <Sent />
+            },
+            {
+                path: '/activities',
+                element : <Activities/>
+                
+            },
+            {
+                path: '/activities/complaints',
+                element : <Complaints/>
+                
+            },
+            {
+                path: '/activities/completed',
+                element : <Completed/>
+                
             },
             {
                 path: '/users',
