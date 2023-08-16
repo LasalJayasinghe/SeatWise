@@ -17,11 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(
-            User::query()->orderBy('id', 'desc')->paginate()
-        );
+        // $users = User::orderBy('id', 'desc')->paginate(25);
+        $users = User::orderBy('id', 'desc')->get();
 
-
+        return UserResource::collection($users);
     }
 
     /**
@@ -79,4 +78,6 @@ class UserController extends Controller
         $user -> delete();
         return response(null, 204);
     }
+
+    
 }
