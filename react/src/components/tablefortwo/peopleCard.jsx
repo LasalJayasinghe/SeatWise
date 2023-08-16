@@ -1,16 +1,38 @@
-import profilepic from '../../assets/TFTpic.svg';
-import React from "react";
+import profilepic from '../../assets/defaultProfile.png';
+import React, { useState , useEffect } from "react";
 
-  
-  export default function Cards({user}) {
-    const [showModal, setShowModal] = React.useState(false);
+export default function Cards({ user }) {
+  const [showModal, setShowModal] = useState(false);
+  const [profilePic, setProfilePic] = useState(profilepic);
+
+  useEffect(() => {
+      const profilePicFilename = `../../assets/profile_${user.id}.jpg`;
+
+      // Dynamically import the image
+      import(profilePicFilename)
+          .then(imageModule => {
+              setProfilePic(imageModule.default); // Use the imported image
+          })
+          .catch(() => {
+              setProfilePic(profilepic); // Fall back to default image if profile image not found
+          });
+  }, [user.id]);
+
+  const handleImageError = () => {
+      setProfilePic(profilepic); // Fall back to default image if profile image not found
+  };
         return (
           
     <div>
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8">
                      <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-t-3xl bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                        <img src={profilepic} class="h-full w-full object-cover object-center group-hover:opacity-75"/>
-                     </div>
+                     <img
+                        src={profilePic}
+                        alt="Profile"
+                        onError={handleImageError}
+                        className="h-full w-full object-cover object-center group-hover:opacity-75"
+                    />       
+                                </div>
               <div className='text-center'>
                 <h3 className="mt-4 text-lg font-bold text-gray-700">{user.name}</h3>
                 <h3 className="mt-4 text-m text-gray-700">{user.jobStatus}</h3>
@@ -38,7 +60,7 @@ import React from "react";
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               <div className="py-8 px-16 border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex flex-col md:flex-row">
-                  <img src={profilepic} class="mt-5 h-full w-full rounded-lg"/>
+                  <img src={profilepic} className="mt-5 h-24 w-24 rounded-lg"/>
                   <div className="mx-10 w-full md:w-2/3 p-4">
                     <div className="items-center md:text-left">
                       <div className='gap-px'>
