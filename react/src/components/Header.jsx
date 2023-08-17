@@ -49,22 +49,20 @@ const Header = ({ user, onLogout }) => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4 ml-6">
-              {/* Map over navigation items to create the tabs */}
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.to}
-                  className={classNames(
-                    // Check if the current location matches the navigation item's "to" property
-                    location.pathname === item.to
-                      ? 'bg-green-500 text-white'
-                      : 'text-gray-500 hover:text-green-500',
-                    'rounded-md px-3 py-2 text-sm font-medium'
-                  )}
-                >
-                  {item.name}
-                </Link>
-                    ))}
+                    
+                    {/* Map over navigation items to create the tabs */}
+                      {navigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.to}
+                          className={classNames(
+                            location.pathname.startsWith(item.to) ? 'bg-green-500 text-white' : 'text-gray-500 hover:text-green-500',
+                            'rounded-md px-3 py-2 text-sm font-medium'
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
                   </div>
                 </div>
               </div>

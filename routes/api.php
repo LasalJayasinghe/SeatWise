@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
+use App\Http\Controllers\Api\TablefortwoController;
 
 
 /*
@@ -58,4 +59,3 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 // Additional routes for restaurant data
 Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
-
