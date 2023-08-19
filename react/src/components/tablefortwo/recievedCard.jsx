@@ -73,7 +73,7 @@ const handleImageError = () => {
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               <div className="py-8 px-16 border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex flex-col md:flex-row">
-                  <img src={profilepic} class="mt-5 h-full w-full rounded-lg"/>
+                  <img src={profilepic} class="mt-5 h-24 w-24 rounded-lg"/>
                   <div className="mx-10 w-full md:w-2/3 p-4">
                     <div className="items-center md:text-left">
                       <div className='gap-px'>

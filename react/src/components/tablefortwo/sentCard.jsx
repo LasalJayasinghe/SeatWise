@@ -7,7 +7,7 @@ import React from 'react';
     <div>
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8">
                      <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-t-3xl bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                        <img src={profilepic} class="h-full w-full object-cover object-center group-hover:opacity-75"/>
+                        <img src={profilepic} class="h-24 w-24 object-cover object-center group-hover:opacity-75"/>
                      </div>
                                 <div className='text-center'>
                 <h3 className="mt-4 text-lg font-bold text-gray-700">{user.name}</h3>
