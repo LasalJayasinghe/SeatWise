@@ -31,6 +31,8 @@ import Menu from './views/Menu.jsx';
 import AddMenu from './views/AddMenu.jsx';
 import HallDetail from './views/HallDetail.jsx';
 import WaitlistPage from './views/WaitlistPage .jsx';
+import UpdateEmployee from './views/updateEmployee.jsx';
+
 const router = createBrowserRouter([
     {
         path: '/',
@@ -147,6 +149,11 @@ const router = createBrowserRouter([
                 path: "/menu",
                 element: <Menu />, 
             },
+            
+            {
+                path: '/updateEmployee/:cashierId', 
+                element: <UpdateEmployee />
+            },
             {
                 path: "/addmenu",
                 element: <AddMenu />, 
@@ -204,6 +211,10 @@ const router = createBrowserRouter([
                 path: '/halls/:hallId', 
                 element: <HallDetail />
             },
+
+
+
+
             {
                 path: '/waitlist',
                 element: <WaitlistPage />,

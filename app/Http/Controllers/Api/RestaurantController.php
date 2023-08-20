@@ -23,6 +23,7 @@ use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\addCategoryRequest;
 use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
+use App\Http\Requests\updateEmployeeRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
@@ -338,6 +339,18 @@ class RestaurantController extends Controller
     
     }
 
+
+    public function displayCashier($id) {
+    
+     
+        $cashier = Cashiers::where('id', $id)->get();
+        return response()->json($cashier);
+ 
+     
+     }
+
+
+
     public function showRestaurant($id)
     {
         $restaurant = Restaurants::find($id);
@@ -490,7 +503,34 @@ public function getStatus($reservationId,$reservation_date)
  
  
  }
+ public function updateCashier(updateEmployeeRequest $request) {
+    $data = $request->validated();
+    /** @var Cashiers $cashier */
+    //$restaurant = auth()->guard('restaurants')->user();
+   $cashierId = $data['id'];
+   $cashier = Cashiers::find($cashierId);
+   // $restaurant = Restaurant::find($id);
+   if ($cashier) {
+    $cashier->update([
+        //'id' => $restaurantId,
+        'cashier_name' => $data['cashiername'],
+        'email' => $data['email'],
+        'cashier_phone_number' => $data['phone'],
+        'password' => bcrypt($data['password']),
+    ]);
+    return response()->json(['message' => ' successfully updated']);
+   }
 
+   else{
+    return response()->json(['message' => 'updatation failed']);  
+
+
+
+
+
+   }
+ 
+}
 
 
 }

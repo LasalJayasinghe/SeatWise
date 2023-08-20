@@ -68,6 +68,12 @@ navigate("/addCashier");
 
 }
 
+
+const handleUpdate = (cashierId) => {
+  // Navigate to the updateEmployee page with the cashierId as a route parameter
+  navigate(`/updateEmployee/${cashierId}`);
+}
+
   return (
   <>
     <header className="bg-white shadow">
@@ -107,9 +113,13 @@ navigate("/addCashier");
               <td className="px-6 py-8">{cashiers.cashier_name}</td>
               <td className="px-6 py-8">{cashiers.email}</td>
               <td className="px-6 py-8">{cashiers.cashier_phone_number}</td>
-            <td>  <button style={{ marginLeft: '0rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-Update
-</button>
+            <td>     <button
+                onClick={() => handleUpdate(cashiers.id)} 
+                style={{ marginLeft: '0rem' }}
+                className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Update
+              </button>
  <button style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
 Remove
 </button></td>
