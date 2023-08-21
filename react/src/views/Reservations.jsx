@@ -76,7 +76,7 @@ export default function Reservations() {
 
   return (
     <>
-      <header className="bg-white shadow"  style={{marginBottom: '500px'}}>
+      <header className="bg-white shadow">
         <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Reservations</h1>
           <div className="loading-container">
@@ -133,7 +133,7 @@ export default function Reservations() {
                             className={`grid-item-reserve ${isTablePresent ? "bg-zinc-400" : ""}`}
                             onClick={() => handleItemClick(tableNumber)}
                             >
-                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_no : ""}
+                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_number : ""}
                             </div>
                         );
                     })}

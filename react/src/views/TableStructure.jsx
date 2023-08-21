@@ -69,9 +69,9 @@ export default function TableStructure() {
     const payload = {
       restaurant_id: user.id,
       table_id: selectedItem,
-      table_no: tablenoRef.current.value,
-      chairs: chairsRef.current.value,
-      view_id: viewidRef.current.value,
+      table_number: tablenoRef.current.value,
+      number_of_chairs: chairsRef.current.value,
+      view: viewidRef.current.value,
       posX: selectedItemX, 
       posY: selectedItemY,
     }
@@ -188,7 +188,7 @@ export default function TableStructure() {
                             className={`grid-item ${isTablePresent ? "bg-green-500" : "bg-gray-800"}`}
                             onClick={() => handleItemClick(tableNumber)}
                             >
-                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_no : ""}
+                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_number : ""}
                             </div>
                         );
                     })}

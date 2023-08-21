@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
-            $table->string('meal_id');
             $table->string('name');
             $table->string('category');
             $table->string('potion');

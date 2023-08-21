@@ -2,27 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TableStructure extends Model
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'table_structures';
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'restaurant_id',
+        'table_id',
         'table_number',
         'number_of_chairs',
         'view',
         'posX',
         'posY',
     ];
-
-    // Add the relationship with TableReservation
-    public function reservation()
-    {
-        return $this->hasOne(TableReservation::class, 'table_structure_id');
-    }
 }

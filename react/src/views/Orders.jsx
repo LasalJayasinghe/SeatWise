@@ -1,6 +1,25 @@
+import { useEffect } from "react";
+import axiosClient from "../axios-client";
+import { useStateContext } from "../context/ContextProvider";
 
 
 export default function Orders() {
+
+    const {user, setUser} = useStateContext();
+
+
+
+
+    useEffect(() => {
+        axiosClient.get('/user')
+          .then(({ data }) => {
+            setUser(data);
+          });
+      }, []);
+
+
+
+
     return (
         <>
             <header className="bg-white shadow">

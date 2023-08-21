@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\View;
 use App\Models\Meals;
-use App\Models\Tables;
 use http\Env\Response;
 use App\Models\Profile;
 use App\Models\Cashiers;
@@ -122,13 +121,13 @@ class RestaurantController extends Controller
         $restaurantId = $data['restaurant_id'];
         $tableId = $data['table_id'];
 
-        /** @var Tables $user */
-        $user = Tables::create([
+        /** @var TableStructure $user */
+        $user = TableStructure::create([
             'restaurant_id' => $restaurantId,
             'table_id' => $tableId,
-            'table_no' => $data['table_no'],
-            'chairs' => $data['chairs'],
-            'view_id' => $data['view_id'],
+            'table_number' => $data['table_number'],
+            'number_of_chairs' => $data['number_of_chairs'],
+            'view' => $data['view'],
             'posX' => $data['posX'],
             'posY' => $data['posY'],
         ]);
@@ -152,8 +151,9 @@ class RestaurantController extends Controller
         $restaurantId = $request->input('restaurant_id');
         // $tableId = $request->input('table_id');
 
-        $tables = Tables::where('restaurant_id', $restaurantId) ->get();
+        // $tables = TableStructure::where('restaurant_id', $restaurantId) ->get();
 
+        $tables = TableStructure::where('restaurant_id', $restaurantId)->get();
         return response()->json($tables);
     }
 
@@ -252,7 +252,6 @@ class RestaurantController extends Controller
         /** @var Meals $user */
         $user = Meals::create([
             'restaurant_id' => $restaurantId,
-            'meal_id' => $data['meal_id'],
             'name' => $data['name'],
             'category' => $data['category'],
             'potion' => $data['potion'],
