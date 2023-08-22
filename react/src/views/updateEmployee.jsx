@@ -2,9 +2,10 @@ import { useRef, useState } from "react";
 import Logo from "../assets/logo.svg";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../context/ContextProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+//import { Navigate, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 // import React, { useEffect } from 'react';
@@ -14,7 +15,7 @@ import { useEffect } from "react";
 
 export default function UpdateEmployee() {
   
-
+    const navigate = useNavigate(); // Get the navigate function
   
     const { cashierId } = useParams();
     const [errors, setErrors] = useState(null);
@@ -75,7 +76,9 @@ export default function UpdateEmployee() {
                 //setUser(data.user);
                 //setToken(data.token);
                 setMessage(data.message); 
-  
+                setTimeout(() => {
+                    navigate('/Employees');
+                  }, 2000); 
                 // <Navigate to="/restaurant" />
                 // history.push('/restaurant');
             })

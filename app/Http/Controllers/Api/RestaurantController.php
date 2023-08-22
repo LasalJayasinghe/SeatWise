@@ -458,10 +458,62 @@ public function getAvailableTables(Request $request, $restaurantId)
 
         // $restaurant = Restaurants::find($id);
         $reservation = TableReservation::where('restaurant_id', $restaurant_id)->get();
+
         return response()->json($reservation);
     
     
     }
+
+    public function getCheckInCount($id) //get the res id
+    {$checkedInCount = TableReservation::where('restaurant_id', $id)
+        ->where('status', 'checked in')
+        ->count();
+
+    return response()->json($checkedInCount);
+    
+    }
+
+    public function getCheckOutCount($id) //get the res id
+    {$checkedOutCount = TableReservation::where('restaurant_id', $id)
+        ->where('status', 'checked out')
+        ->count();
+
+    return response()->json($checkedOutCount);
+    
+    }
+
+
+    public function getReservationCount($id) //get the res id
+
+    {
+        $today = date('Y-m-d');
+        
+        $ReservationCount = TableReservation::where('restaurant_id', $id)
+        ->where('reservation_date', $today)
+        ->count();
+
+    return response()->json($ReservationCount);
+    
+    }
+
+
+
+    public function getRecentBookings($id)
+    {
+        $now = now(); // Get the current date and time
+        $today = $now->format('Y-m-d');
+        
+        $upcomingBookings = TableReservation::where('restaurant_id', $id)
+            ->where('reservation_date', $today)
+            ->where('start_time', '>', $now->format('H:i:s')) // Filter future bookings
+            ->orderBy('start_time')
+            ->take(3) // Get the nearest three bookings
+            ->get();
+    
+        return response()->json($upcomingBookings);
+    }
+    
+
 
 
 public function HandleCheckOut($reservationId)
@@ -518,11 +570,11 @@ public function getStatus($reservationId,$reservation_date)
         'cashier_phone_number' => $data['phone'],
         'password' => bcrypt($data['password']),
     ]);
-    return response()->json(['message' => ' successfully updated']);
+    return response()->json(['message' => ' Successfully updated']);
    }
 
    else{
-    return response()->json(['message' => 'updatation failed']);  
+    return response()->json(['message' => 'Updatation failed']);  
 
 
 
@@ -532,5 +584,16 @@ public function getStatus($reservationId,$reservation_date)
  
 }
 
+public function deleteEmployee($id)
+{
+    $cashier = Cashiers::find($id);
+
+    if ($cashier) {
+        $cashier->delete();
+        //return response()->json(['message' => 'Cashier record deleted successfully']);
+    } else {
+       // return response()->json(['message' => 'Cashier record not found'], 404);
+    }
+}
 
 }
