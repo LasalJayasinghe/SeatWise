@@ -29,6 +29,8 @@ import CashierDashboard from './views/CashierDashboard.jsx';
 import ViewReservations from './views/ViewReservations.jsx';
 import Menu from './views/Menu.jsx';
 import AddMenu from './views/AddMenu.jsx';
+import Orders from './views/Orders.jsx';
+
 import HallDetail from './views/HallDetail.jsx';
 import WaitlistPage from './views/WaitlistPage .jsx';
 import UpdateEmployee from './views/updateEmployee.jsx';
@@ -157,6 +159,10 @@ const router = createBrowserRouter([
             {
                 path: "/addmenu",
                 element: <AddMenu />, 
+            },
+            {
+                path: "/orders",
+                element: <Orders />, 
             },
 
         ]

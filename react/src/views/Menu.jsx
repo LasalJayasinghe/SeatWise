@@ -28,9 +28,15 @@ const columns = [
     {
       field: 'category',
       headerName: 'Category',
-      width: 150,
+      width: 130,
       editable: true,
     },
+    {
+        field: 'potion',
+        headerName: 'Potion',
+        width: 90,
+        editable: true,
+      },
     {
         field: 'description',
         headerName: 'Description',
@@ -99,12 +105,22 @@ export default function Menu() {
 
     const {user, setUser} = useStateContext();
     const [menu, setMenu] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        axiosClient.get('/user')
+          .then(({ data }) => {
+            setUser(data);
+          });
+      }, []);
+
+    useEffect(() => {
+        setLoading(true);
         if (user && user.id) {
           axiosClient.get(`/getMenu/${user.id}`)
             .then(({ data }) => {
               setMenu(data);
+              setLoading(false);
             })
             .catch((error) => {
               console.error(error);
@@ -125,7 +141,7 @@ export default function Menu() {
         <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Menu</h1>
           <div className="loading-container">
-            {/* {loading && <p className="loading-text">Loading...</p>} */}
+            {loading && <p className="loading-text">Loading...</p>}
           </div>
         </div>
         </header>

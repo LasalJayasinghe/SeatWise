@@ -26,9 +26,9 @@ class addTableRequest extends FormRequest
         return [
             'restaurant_id' => 'required',
             'table_id' => 'required',
-            'table_no' => 'required',
-            'chairs' => 'required',
-            'view_id' => 'required',
+            'table_number' => 'required',
+            'number_of_chairs' => 'required',
+            'view' => 'required',
             'posX' => 'required',
             'posY' => 'required',
             

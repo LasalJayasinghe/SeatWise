@@ -15,18 +15,17 @@ return new class extends Migration
     {
         Schema::create('table_structures', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('restaurant_id'); // Foreign key to link to the restaurant's table (provided by the restaurant admin)
+            $table->unsignedBigInteger('restaurant_id');
+            $table->string('table_id');
             $table->string('table_number');
-            $table->integer('number_of_chairs');
-            $table->string('view'); // Sea view, wall view, etc.
-            $table->integer('posX'); // New field to store the X-coordinate of the box
-            $table->integer('posY'); // New field to store the Y-coordinate of the box
+            $table->string('number_of_chairs');
+            $table->string('view');
+            $table->integer('posX');
+            $table->integer('posY');
             $table->timestamps();
 
-            // Add foreign key constraint
             $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
         });
-      
     }
 
     /**
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_structures');
+        Schema::dropIfExists('tables');
     }
 };

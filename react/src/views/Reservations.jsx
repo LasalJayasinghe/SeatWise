@@ -133,7 +133,7 @@ export default function Reservations() {
                             className={`grid-item-reserve ${isTablePresent ? "bg-zinc-400" : ""}`}
                             onClick={() => handleItemClick(tableNumber)}
                             >
-                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_no : ""}
+                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_number : ""}
                             </div>
                         );
                     })}
