@@ -4,6 +4,9 @@ import { useStateContext } from "../context/ContextProvider";
 import axiosClient from "../axios-client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+
 // import AddCashier from './addCashier.jsx';
 
 /*
@@ -38,6 +41,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function Employees() {
 
+
+  
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [selectedCashierId, setSelectedCashierId] = useState(null);
+
   const navigate = useNavigate();
   const [cashiers, setCashiers] = useState([]);
   const {user, setUser} = useStateContext();
@@ -67,6 +75,53 @@ const handleClick = () =>{
 navigate("/addCashier");
 
 }
+
+
+const handleUpdate = (cashierId) => {
+  // Navigate to the updateEmployee page with the cashierId as a route parameter
+  navigate(`/updateEmployee/${cashierId}`);
+}
+
+
+const handleRemove = (cashierId) => {
+
+  setSelectedCashierId(cashierId);
+    setShowConfirmationModal(true);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmationModal(false);
+    setSelectedCashierId(null);
+  };
+  const confirmDelete = () => {
+    setShowConfirmationModal(false);
+  //const shouldDelete = window.confirm("Are you sure you want to delete this cashier?");
+  
+  
+    // User confirmed deletion, send a DELETE request to the deleteEmployee API endpoint
+    axiosClient.post(`/deleteEmployee/${selectedCashierId}`)
+      .then(response => {
+        // Handle success (e.g., show a success message)
+        console.log(response.data.message); // Display success message from the server
+        
+        // Fetch updated cashier data
+        if (user && user.id) {
+          axiosClient.get(`/getCashiers/${user.id}`)
+            .then(({ data }) => {
+              setCashiers(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+      })
+      .catch(error => {
+        // Handle error (e.g., show an error message)
+        console.error('Error deleting cashier:', error);
+      });
+  
+};
+
 
   return (
   <>
@@ -107,10 +162,14 @@ navigate("/addCashier");
               <td className="px-6 py-8">{cashiers.cashier_name}</td>
               <td className="px-6 py-8">{cashiers.email}</td>
               <td className="px-6 py-8">{cashiers.cashier_phone_number}</td>
-            <td>  <button style={{ marginLeft: '0rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-Update
-</button>
- <button style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            <td>     <button
+                onClick={() => handleUpdate(cashiers.id)} 
+                style={{ marginLeft: '0rem' }}
+                className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Update
+              </button>
+ <button  onClick={() => handleRemove(cashiers.id)}  style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
 Remove
 </button></td>
             </tr>
@@ -119,6 +178,12 @@ Remove
 </table>
 </div>
 </div>
+
+<DeleteConfirmationModal
+        isOpen={showConfirmationModal}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+      />
 </>
   )
 

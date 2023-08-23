@@ -74,12 +74,19 @@ Route::post('/handleCheckIn/{reservationId}',[RestaurantController::class, 'Hand
 
 // Route::middleware('auth:api')->get('/views', [RestaurantController::class, 'getViews']);
 Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);
+Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
 Route::get('/getReservations/{restaurant_id}', [RestaurantController::class, 'getReservations']);
 Route::get('/getStatus/{reservationId}', [RestaurantController::class, 'getStatus']);
 //Route::get('/restaurants/{id}', [RestaurantController::class, 'showRestaurant']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{restaurant_id}', [RestaurantController::class, 'showRestaurantx']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{restaurant_id}/table-structures', [RestaurantController::class, 'getTableStructures']);
 Route::get('/restaurants/{restaurant_id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
+Route::post('/updateCashier', [RestaurantController::class, 'updateCashier']);
+Route::post('/deleteEmployee/{cashierId}', [RestaurantController::class, 'deleteEmployee']);
+Route::get('/getCheckInCount/{restaurant_id}', [RestaurantController::class, 'getCheckInCount']);
+Route::get('/getCheckOutCount/{restaurant_id}', [RestaurantController::class, 'getCheckOutCount']);
+Route::get('/getReservationCount/{restaurant_id}', [RestaurantController::class, 'getReservationCount']);
+Route::get('/getRecentBookings/{restaurant_id}', [RestaurantController::class, 'getRecentBookings']);
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
