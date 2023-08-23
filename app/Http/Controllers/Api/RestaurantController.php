@@ -149,12 +149,21 @@ class RestaurantController extends Controller
     {
         
         $restaurantId = $request->input('restaurant_id');
-        // $tableId = $request->input('table_id');
-
-        // $tables = TableStructure::where('restaurant_id', $restaurantId) ->get();
 
         $tables = TableStructure::where('restaurant_id', $restaurantId)->get();
         return response()->json($tables);
+    }
+
+    public function getReservedTable(Request $request)
+    {
+        
+        $restaurantId = $request->input('restaurant_id');
+
+        $reservations = TableReservation::where('table_reservations.restaurant_id', $restaurantId)
+            ->join('table_structures', 'table_reservations.table_structure_id', '=', 'table_structures.id')
+            ->select('table_reservations.*', 'table_structures.table_id')
+            ->get();
+        return response()->json($reservations);
     }
 
     public function getProfile(Request $request)

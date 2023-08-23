@@ -33,6 +33,9 @@ import Orders from './views/Orders.jsx';
 
 import HallDetail from './views/HallDetail.jsx';
 import WaitlistPage from './views/WaitlistPage .jsx';
+import OrderHistory from './views/OrderHistory.jsx';
+import People from './views/People.jsx';
+
 const router = createBrowserRouter([
     {
         path: '/',
@@ -156,6 +159,14 @@ const router = createBrowserRouter([
             {
                 path: "/orders",
                 element: <Orders />, 
+            },
+            {
+                path: "/orderhistory",
+                element: <OrderHistory />, 
+            },
+            {
+                path: "/people",
+                element: <People />, 
             },
 
         ]

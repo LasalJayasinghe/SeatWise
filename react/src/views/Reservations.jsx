@@ -5,23 +5,24 @@ import { useStateContext } from "../context/ContextProvider";
 
 export default function Reservations() {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedItem, setSelectedItem] = useState(null);
   const [tableData, setTableData] = useState([]);
+  const [reservedtableData, setReservedTableData] = useState([]);
 
-  const [errors, setErrors] = useState(null);
+  // const [errors, setErrors] = useState(null);
   const {user, setUser } = useStateContext();
 
   const [loading, setLoading] = useState(false);
   
-  function handleItemClick(itemNumber) {
-    setIsModalOpen(true);
-    setSelectedItem(itemNumber);
-  }
+  // function handleItemClick(itemNumber) {
+  //   setIsModalOpen(true);
+  //   setSelectedItem(itemNumber);
+  // }
 
-  function handleCloseModal() {
-    setIsModalOpen(false);
-  }
+  // function handleCloseModal() {
+  //   setIsModalOpen(false);
+  // }
 
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function Reservations() {
         setUser(data)
         // getViews(data.id);
         fetchTableData(data.id);
+        fetchReservedTableData(data.id);
     })
     }, [])
 
@@ -67,11 +69,30 @@ export default function Reservations() {
         });
     };
 
+    const fetchReservedTableData = (restaurant_id) => {
+      setLoading(true);
+        axiosClient
+        .get("/getreservedtable", { params: { restaurant_id } })
+        .then(({ data }) => {
+            // console.log("Fetched table data:", data);
+            setReservedTableData(data);
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.error("Error fetching tables:", error);
+        });
+    };
+
     
 
     const isTableInStructure = (tableNumber) => {
         // const parsedTableNumber = parseInt(tableNumber, 10);
         return tableData.some((table) => (table.table_id) === String(tableNumber));
+      };
+
+      const isTableInReserved = (tableNumber) => {
+        // const parsedTableNumber = parseInt(tableNumber, 10);
+        return reservedtableData.some((table) => (table.table_id) === String(tableNumber));
       };
 
   return (
@@ -126,12 +147,19 @@ export default function Reservations() {
                     {Array.from({ length: 44 }, (_, index) => {
                         const tableNumber = index + 1;
                         const isTablePresent = isTableInStructure(tableNumber);
+                        const isTableReserved = isTableInReserved(tableNumber);
                         console.log(isTablePresent);
+                        console.log(isTableReserved);
+                        let classes = "grid-item-reserve";
+                        if (isTableReserved && isTablePresent) {
+                            classes += " bg-green-500";
+                        } else if (isTablePresent) {
+                            classes += " bg-zinc-400";
+                        }
                         return (
                             <div
                             key={tableNumber}
-                            className={`grid-item-reserve ${isTablePresent ? "bg-zinc-400" : ""}`}
-                            onClick={() => handleItemClick(tableNumber)}
+                            className={classes}
                             >
                             {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_number : ""}
                             </div>

@@ -20,9 +20,8 @@ class TableReservation extends Model
         'reservant_name',
         'number_of_participants',
         'table_structure_id',
-         'status',
-        
-        //'tablefortwo',
+        'tablefortwo',
+        'status',
     ];
 
         public static function getAvailableTables($restaurantId, $date, $startTime, $endTime, $numParticipants)

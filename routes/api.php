@@ -66,6 +66,7 @@ Route::post('updateprofile', [RestaurantController::class, 'editRestaurant']);
 
 Route::get('/views', [RestaurantController::class, 'getViews']);
 Route::get('/gettable', [RestaurantController::class, 'getTable']);
+Route::get('/getreservedtable', [RestaurantController::class, 'getReservedTable']);
 Route::get('/profile', [RestaurantController::class, 'getProfile']);
 Route::get('/getsetupdata', [RestaurantController::class, 'getSetUpProfile']);
 Route::post('/handleCheckOut/{reservationId}',[RestaurantController::class, 'HandleCheckOut']);

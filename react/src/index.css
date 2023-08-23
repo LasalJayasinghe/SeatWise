@@ -617,9 +617,9 @@ table > tbody > tr > td {
           font-size: large;
       }
 
-      .barChartBox .chart{
+      /* .barChartBox .chart{
 
-      }
+      } */
 
       .pieChartBox {
         height: 100%;
@@ -707,6 +707,68 @@ table > tbody > tr > td {
   width: 10px;
   border-radius: 5px;
   color: #00a762;
+}
+
+.menu .item {
+  display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.menu .item .title {
+  font-size: 12px;
+  font-weight: 200;
+  color: #3ae434;
+  text-transform: uppercase;
+
+  /* @include lg{
+    display: none;
+  } */
+}
+
+.menu .item .listItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.menu .item .listItem:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* .menu .item .listItem .listItemTitle{
+  @include lg{
+    display: none;
+  }
+} */
+
+.ordercontainer {
+  display: flex;
+  background-color: #ffffff;
+}
+
+.menuContainer {
+  width: 250px;
+  height: 800px;
+  background-color: #ffffff;
+  padding: 5px 20px;
+  box-shadow: 15px 0px 15px -10px rgba(209, 206, 206, 0.75);
+  
+  /* box-shadow: 5px 0 5px -2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2); */
+  /* border-right: 2px solid #3EB075; */
+
+  /* @include lg{
+    width: max-content;
+  } */
+}
+
+.contentContainer {
+  padding: 0px 0px;
+  width: 100%;
 }
       
       
