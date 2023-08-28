@@ -19,7 +19,7 @@ class Meals extends Model
     protected $fillable = [
         'restaurant_id',
         'name',
-        'category',
+        'category_id',
         'potion',
         'price',
         'description',

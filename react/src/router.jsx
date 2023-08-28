@@ -36,6 +36,7 @@ import WaitlistPage from './views/WaitlistPage .jsx';
 import OrderHistory from './views/OrderHistory.jsx';
 import People from './views/People.jsx';
 import UpdateEmployee from './views/updateEmployee.jsx';
+import Settings from './views/Settings.jsx';
 
 const router = createBrowserRouter([
     {
@@ -174,7 +175,10 @@ const router = createBrowserRouter([
                 path: "/people",
                 element: <People />, 
             },
-
+            {
+                path: "/settings",
+                element: <Settings />, 
+            },
         ]
     },
 
