@@ -105,10 +105,13 @@ Route::post('/addmeal', [RestaurantController::class, 'addMeal']);
 Route::get('/getMenu/{id}', [RestaurantController::class, 'getMenu']);
 Route::post('/addcategory', [RestaurantController::class, 'addcategory']);
 Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);
+Route::get('/getCategoriestoMeal/{id}', [RestaurantController::class, 'getCategoriestoMeal']);
 
 Route::get('/restaurants/{restaurant_id}/halls', [HallController::class, 'index']);
 Route::get('/halls/{id}', [HallController::class, 'show']);
 Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
+
+Route::get('/getOrder/{id}', [RestaurantController::class, 'getOrder']);
 
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store']);

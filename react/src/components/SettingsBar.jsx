@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-export default function SideBar() {
+
+export default function SettingsBar() {
   return (
     <div className="menu">
         <div className="item">
@@ -11,23 +12,27 @@ export default function SideBar() {
           <br />
             <Link to="/orders" className="listItem">
               <img src="" alt="" />
-              <span className="listItemTitle">Orders</span>
+              <span className="listItemTitle">Discounts</span>
             </Link>
             <Link to="/people" className="listItem">
               <img src="" alt="" />
-              <span className="listItemTitle">People</span>
+              <span className="listItemTitle">Offers</span>
             </Link>
             <Link to="/orderhistory" className="listItem">
               <img src="" alt="" />
-              <span className="listItemTitle">Order History</span>
+              <span className="listItemTitle">Advertisements</span>
             </Link>
             <Link to="/requets" className="listItem">
               <img src="" alt="" />
-              <span className="listItemTitle">Requests</span>
+              <span className="listItemTitle">Complaints</span>
             </Link>
             <Link to="/home" className="listItem">
               <img src="" alt="" />
-              <span className="listItemTitle">Home</span>
+              <span className="listItemTitle">Ratings</span>
+            </Link>
+            <Link to="/home" className="listItem">
+              <img src="" alt="" />
+              <span className="listItemTitle">Technical Assistance</span>
             </Link>
         </div>
     </div>

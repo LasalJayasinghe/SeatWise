@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('restaurant_id');
             $table->string('name');
-            $table->string('category');
+            $table->unsignedBigInteger('category_id');
             $table->string('potion');
             $table->string('price');
             $table->string('description');
             $table->timestamps();
 
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
