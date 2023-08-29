@@ -18,7 +18,10 @@ import PieChartBox from "../components/PieChartBox";
 
 export default function CashierDashboard() {
 
-	const [Reservation, setReservation] = useState([]);
+	const [CheckInCount, setCheckInCount] = useState([]);
+  const [CheckOutCount, setCheckOutCount] = useState([]);
+  const [TotalReservationCount,setTotalReservationCount ] = useState([]);
+  const [RecentBookings,setRecentBookings] = useState([]);
 	const {user, setUser} = useStateContext();
 	//const [statuses, setStatuses] = useState({});
 	//const [clickedButtonIdOne, setClickedButtonIdOne] = useState(null);
@@ -35,15 +38,57 @@ useEffect(() => {
   
   useEffect(() => {
   if (user && user.id) {
-  axiosClient.get(`/getReservations/${user.restaurant_id}`)
+  axiosClient.get(`/getCheckInCount/${user.restaurant_id}`)
     .then(({ data }) => {
-    setReservation(data);
+      setCheckInCount(data);
     })
     .catch((error) => {
     console.error(error);
     });
   }
 }, [user]);
+
+
+useEffect(() => {
+  if (user && user.id) {
+  axiosClient.get(`/getCheckOutCount/${user.restaurant_id}`)
+    .then(({ data }) => {
+      setCheckOutCount(data);
+    })
+    .catch((error) => {
+    console.error(error);
+    });
+  }
+}, [user]);
+
+
+useEffect(() => {
+  if (user && user.id) {
+  axiosClient.get(`/getReservationCount/${user.restaurant_id}`)
+    .then(({ data }) => {
+      setTotalReservationCount(data);
+    })
+    .catch((error) => {
+    console.error(error);
+    });
+  }
+}, [user]);
+
+
+
+useEffect(() => {
+  if (user && user.id) {
+  axiosClient.get(`/getRecentBookings/${user.restaurant_id}`)
+    .then(({ data }) => {
+      setRecentBookings(data);
+      console.log("Fetched booking Data:", data);
+    })
+    .catch((error) => {
+    console.error(error);
+    });
+  }
+}, [user]);
+
 return (
   <>
   <header className="bg-white shadow">
@@ -68,7 +113,7 @@ return (
        
         <tbody>
 
-		<tr><td className="border-none border-none px-6 py-0 text-center" colSpan="3" style={{ color: 'gray',fontSize:'4.0rem',fontWeight:'650'}}> 34</td></tr>
+		<tr><td className="border-none border-none px-6 py-0 text-center" colSpan="3" style={{ color: 'gray',fontSize:'4.0rem',fontWeight:'650'}}> {TotalReservationCount}</td></tr>
        
         </tbody>
       </table>
@@ -85,7 +130,7 @@ return (
            
             <tbody>
     
-        <tr><td className="border-none border-none px-6 py-0 text-center" colSpan="3" style={{ color: 'gray',fontSize:'4.0rem',fontWeight:'650'}}> 18</td></tr>
+        <tr><td className="border-none border-none px-6 py-0 text-center" colSpan="3" style={{ color: 'gray',fontSize:'4.0rem',fontWeight:'650'}}> {CheckInCount}</td></tr>
            
             </tbody>
           </table>
@@ -102,7 +147,7 @@ return (
            
             <tbody>
     
-        <tr><td className="border-none border-none px-6 py-0 text-center" colSpan="3" style={{ color: 'gray',fontSize:'4.0rem',fontWeight:'650'}}> 16</td></tr>
+        <tr><td className="border-none border-none px-6 py-0 text-center" colSpan="3" style={{ color: 'gray',fontSize:'4.0rem',fontWeight:'650'}}>{CheckOutCount} </td></tr>
            
             </tbody>
           </table>
@@ -112,43 +157,25 @@ return (
 </div>
 
 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px' }}>
-  <div className="mx-auto max-w-3xl py-4 sm:px-6 lg:px-8 shadow-md bg-white rounded-lg" >
+
+<div className="mx-auto max-w-3xl py-4 sm:px-6 lg:px-8 shadow-md bg-white rounded-lg" >
     <table className="table-fixed border-collapse border-none">
+     
       <tr className="border-none">
         <th className="border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem' ,fontWeight:'400'}}>Today Bookings</th>
       </tr>
-      <tr className="border-none">
-        <td className="border-none px-6 py-2"><img
-          className="h-14 w-15 rounded-full"
-          src="https://img.freepik.com/free-photo/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair_285396-896.jpg?size=626&ext=jpg"
-          alt="profile"
-        /> </td>
-        <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>Ashanya semindi</td>
-        <td className="border-none px-3 py-2" style={{ fontWeight: 600, color: 'gray' }}>Table Number 2</td>
-      </tr>
-
-	<tr className="border-none">
-        <td className="border-none px-6 py-2"><img
-          className="h-14 w-15 rounded-full"
-          src="https://t3.ftcdn.net/jpg/01/86/34/08/240_F_186340800_qlgVLkKLVy19r6SEL7RnniP1Yz6dmq8T.jpg"
-          alt="profile"
-        /> </td>
-        <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>Eshan Fernando</td>
-        <td className="border-none px-3 py-2" style={{ fontWeight: 600, color: 'gray' }}>Table Number 2</td>
-      </tr>
-
-	<tr className="border-none">
-        <td className="border-none px-6 py-2"><img
-          className="h-14 w-15 rounded-full"
-          src="https://as1.ftcdn.net/v2/jpg/06/20/73/04/1000_F_620730420_v9RnvoxaA7IH1271Dssk6kixwZs6wTJk.jpg"
-          alt="profile"
-        /> </td>
-        <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>Shenaya Awanthi</td>
-        <td className="border-none px-3 py-2" style={{ fontWeight: 600, color: 'gray' }}>Table Number 9</td>
-      </tr>
       <tbody>
-        {/* Add your content here */}
-      </tbody>
+      {RecentBookings.map((RecentBooking) => (
+        <tr className="border-none" key={RecentBooking.id}>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking[0].reservant_name}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking[0].start_time}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking[0].table_structure_id}</td>
+        </tr>
+      ))}
+
+
+
+</tbody>
     </table>
   </div>
 
