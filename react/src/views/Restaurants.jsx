@@ -121,7 +121,7 @@ const Restaurants = () => {
   </a>
   <div className="mt-4 px-5 pb-5">
     <a href="#">
-      <h5 class="text-xl tracking-tight text-slate-900 font-bold">{restaurant.name}</h5>
+      <h5 class="text-xl tracking-tight text-slate-900 font-bold">{restaurant.restaurantname}</h5>
     </a>
     <div className="mt-2 mb-5 flex items-center justify-between">
       <p>

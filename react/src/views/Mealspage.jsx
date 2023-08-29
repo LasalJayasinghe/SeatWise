@@ -13,7 +13,7 @@ const MealsPage = () => {
       try {
         // Fetch restaurant details
         const restaurantResponse = await axiosClient.get(`/restaurants/${id}`);
-        setRestaurantName(restaurantResponse.data.name);
+        setRestaurantName(restaurantResponse.data.restaurantname);
 
         // Fetch meals for the restaurant
         const mealsResponse = await axiosClient.get(`/restaurants/${id}/meals`);

@@ -32,7 +32,7 @@ const RestaurantInfo = () => {
         <p>{error}</p>
       ) : restaurant ? (
         <div>
-          <h2>{restaurant.name}</h2>
+          <h2>{restaurant.restaurantname}</h2>
           <p>{restaurant.description}</p>
           {restaurant.images && restaurant.images.length > 0 ? (
             <ImageSlideshow images={restaurant.images} />

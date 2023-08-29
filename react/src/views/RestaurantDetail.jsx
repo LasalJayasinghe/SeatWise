@@ -175,7 +175,7 @@ const RestaurantDetail = () => {
     <div className="relative w-full h-60 overflow-hidden">
       <img src={restaurantImage} alt="Restaurant" className="w-full h-auto" />
       <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
-        <h1 className="text-5xl font-bold mb-2 text-white">{restaurant.name}</h1>
+        <h1 className="text-5xl font-bold mb-2 text-white">{restaurant.restaurantname}</h1>
         <p className="text-gray-100">{restaurant.description}</p>
         <Link to={`/restaurants/${id}/meals`}>
       <button className="border border-green-500 bg-white text-green-500 px-4 py-2 rounded-lg mb-6 mt-8">
