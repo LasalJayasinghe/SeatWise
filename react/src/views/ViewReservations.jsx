@@ -190,13 +190,22 @@ export default function ViewReservations() {
           <td className="px-6 py-4">{Reservation.table_structure_id}</td>
           <td className="px-6 py-4">{Reservation.reservant_name}</td>
           <td className="px-6 py-4">{Reservation.number_of_participants}</td>
-          <td className={`px-6 py-4 ${
-    Reservation.status === "checked in"
+          <td
+  className={`px-6 py-4 ${
+    Reservation.status === 1
       ? "text-green-500"
-      : Reservation.status === "checked out"
+      : Reservation.status === 0
       ? "text-red-500"
       : "text-gray-900"
-  }`}>{Reservation.status}</td>
+  }`}
+>
+  {Reservation.status === 1
+    ? "Checked In"
+    : Reservation.status === 0
+    ? "Checked Out"
+    : "Pending"}
+</td>
+
              <td>  <button
   style={{ marginLeft: '-4rem' }}
   onClick={() => handleCheckIn(Reservation.id)} // Pass a function reference

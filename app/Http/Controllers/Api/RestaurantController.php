@@ -556,7 +556,7 @@ public function HandleCheckOut($reservationId)
     $reservation = TableReservation::find($reservationId);
     if ($reservation) {
         $reservation->update([
-            'status' => "checked out",
+            'status' => 0,
             
         ]);
 
@@ -570,7 +570,7 @@ public function HandleCheckIn($reservationId)
     $reservation = TableReservation::find($reservationId);
     if ($reservation) {
         $reservation->update([
-            'status' => "checked in",
+            'status' => 1,
             
         ]);
 
