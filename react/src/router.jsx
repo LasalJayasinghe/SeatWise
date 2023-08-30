@@ -21,6 +21,7 @@ import Mealspage from './views/Mealspage.jsx';
 import Complaints from './views/activities/Complaints.jsx';
 import Activities from './views/activities/Activities.jsx';
 import Completed from './views/activities/Completed.jsx';
+import Profile from './views/Profile.jsx';
 
 const router = createBrowserRouter([
     {
@@ -94,6 +95,11 @@ const router = createBrowserRouter([
             {
                 path: '/activities/completed',
                 element : <Completed/>
+                
+            },
+            {
+                path: '/profile',
+                element : <Profile/>
                 
             },
             {
