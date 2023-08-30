@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axiosClient from "../../axios-client.js";
-import Sidebar from "../../components/Sidebar.jsx";
-import TFTcard from "../../components/tablefortwo/peopleCard.jsx";
+import axiosClient from "../../../axios-client.js";
+import Sidebar from "../../../components/Sidebar.jsx";
+import TFTcard from "../../../components/tablefortwo/peopleCard.jsx";
 
 export default function TableForTwo() {
   const [users, setUsers] = useState([]);

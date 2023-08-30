@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar2 from '../../components/sidebar2'
+import Sidebar2 from '../../../components/sidebar2'
 
 export default function Complaints() {
   return (

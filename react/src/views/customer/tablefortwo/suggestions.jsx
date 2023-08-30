@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../components/Sidebar.jsx";
-import axiosClient from "../../axios-client.js";
-import TFTCards from "../../components/tablefortwo/peopleCard.jsx";
+import Sidebar from "../../../components/Sidebar.jsx";
+import axiosClient from "../../../axios-client.js";
+import TFTCards from "../../../components/tablefortwo/peopleCard.jsx";
 
 export default function Suggestions(){
 	const [users, setUsers] = useState([]);
