@@ -102,7 +102,7 @@ export default function Dashboard() {
           {displayRestaurants.slice(0, 3).map((restaurant) => (
                         <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
               <div className="bg-white p-4 shadow-md rounded-md">
-                <h3 className="text-xl font-semibold">{restaurant.name}</h3>
+                <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
                 <p className="mt-2 text-sm">{restaurant.description}</p>
                 <div className="mt-2 text-gray-500" style={{ fontSize: '12px' }}>
                   <strong>Opening Days : </strong> 
@@ -114,7 +114,7 @@ export default function Dashboard() {
                   {restaurant.saturday ? 'Sat ' : ''}
                   {restaurant.sunday ? 'Sun ' : ''}
                 </div>
-                <img src={restaurantimage} alt={restaurant.name} className="w-full h-40 object-cover mt-2 rounded-md" />
+                <img src={restaurantimage} alt={restaurant.restaurantname} className="w-full h-40 object-cover mt-2 rounded-md" />
               </div>
             </Link>
           ))}
@@ -126,7 +126,7 @@ export default function Dashboard() {
           {restaurants.slice(0, 3).map((restaurant) => (
                         <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
                         <div className="bg-white p-4 shadow-md rounded-md">
-                          <h3 className="text-xl font-semibold">{restaurant.name}</h3>
+                          <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
                           <p className="mt-2 text-sm">{restaurant.description}</p>
                           <div className="mt-2 text-gray-500" style={{ fontSize: '12px' }}>
                             <strong>Opening Days : </strong> 
@@ -138,7 +138,7 @@ export default function Dashboard() {
                             {restaurant.saturday ? 'Sat ' : ''}
                             {restaurant.sunday ? 'Sun ' : ''}
                           </div>
-                          <img src={restaurantimage2} alt={restaurant.name} className="w-full h-40 object-cover mt-2 rounded-md" />
+                          <img src={restaurantimage2} alt={restaurant.restaurantname} className="w-full h-40 object-cover mt-2 rounded-md" />
                         </div>
                       </Link>
           ))}
@@ -150,7 +150,7 @@ export default function Dashboard() {
           {restaurants.slice(0, 3).map((restaurant) => (
                         <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
                         <div className="bg-white p-4 shadow-md rounded-md">
-                          <h3 className="text-xl font-semibold">{restaurant.name}</h3>
+                          <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
                           <p className="mt-2 text-sm">{restaurant.description}</p>
                           <div className="mt-2 text-gray-500" style={{ fontSize: '12px' }}>
                             <strong>Opening Days : </strong> 

@@ -13,7 +13,7 @@ class Restaurant extends Model
     protected $table = 'restaurants';
 
     // Define the fillable attributes (if applicable)
-    protected $fillable = ['name', 'description','image'];
+    protected $fillable = ['restaurantname', 'description','image'];
 
     // Add any additional methods or relationships as needed
 }
