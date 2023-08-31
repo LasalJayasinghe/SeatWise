@@ -81,9 +81,9 @@ public function getAvailableTables(Request $request, $restaurantId)
             $table->isTableForTwo = !$table->isAvailable && $tableReservation && $tableReservation->tablefortwo == 1;
         }               
 
+        
     return response()->json($tableStructures);
 }
-
 
 }
 

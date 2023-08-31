@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
 use App\Http\Controllers\Api\TablefortwoController;
+use App\Http\Controllers\Api\TableReservationController;
 
 
 /*
@@ -28,6 +29,8 @@ Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/landing', [AuthController::class, 'landing']);
 
+
+
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
@@ -45,11 +48,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
 
+    Route::post('/reserve-tables', [TableReservationController::class, 'reserveTables']);
+
     // Restaurant routes
     Route::get('/restaurants', [RestaurantController::class, 'index']); // Fetch all restaurants
     Route::get('/restaurants/{id}', [RestaurantController::class, 'show']); // Fetch a single restaurant by ID
     Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
     Route::get('/restaurants/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
+
 
     // Hall routes
     Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']);
