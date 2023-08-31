@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axiosClient from '../axios-client';
-import Cards from '../components/Cards';
+import axiosClient from '../../../axios-client';
+import Cards from '../../../components/Cards';
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);

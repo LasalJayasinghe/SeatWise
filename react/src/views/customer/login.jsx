@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+import Logo from "../../assets/logo.svg";
 import { useState, useRef } from "react";
-import axiosClient from "../axios-client.js";
-import { useStateContext } from "../context/ContextProvider.jsx";
+import axiosClient from "../../axios-client.js";
+import { useStateContext } from "../../context/ContextProvider.jsx";
 
 export default function Login() {
   const emailRef = useRef();

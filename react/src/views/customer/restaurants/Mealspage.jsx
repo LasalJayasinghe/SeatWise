@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axiosClient from '../axios-client';
-import mealimage from '../assets/meal.jpg';
+import axiosClient from '../../../axios-client';
+import mealimage from '../../../assets/meal.jpg';
 
 const MealsPage = () => {
   const { id } = useParams();

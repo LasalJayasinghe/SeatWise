@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axiosClient from '../axios-client';
+import axiosClient from '../../../axios-client';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '../util/custom-calendar.css'
+import '../../../util/custom-calendar.css'
 import { Carousel } from 'react-responsive-carousel';
 
-import slide1 from '../assets/slide1.png';
-import slide2 from '../assets/slide2.png';
-import slide3 from '../assets/slide3.png';
-import slide4 from '../assets/slide4.png';
+import slide1 from '../../../assets/slide1.png';
+import slide2 from '../../../assets/slide2.png';
+import slide3 from '../../../assets/slide3.png';
+import slide4 from '../../../assets/slide4.png';
 
 
 const HallDetail = () => {

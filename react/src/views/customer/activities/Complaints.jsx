@@ -1,11 +1,9 @@
 import React from 'react'
-import Sidebar2 from '../../components/sidebar2'
-import AddComplaint from '../../components/AddComplaint'
+import Sidebar2 from '../../../components/sidebar2'
 
 export default function Complaints() {
   return (
     <div>
-      <AddComplaint/>
 		  <div className="users-container">
 			<Sidebar2 />
 			<div className="content-container">

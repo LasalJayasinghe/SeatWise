@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axiosClient from '../axios-client';
-import ReservationPopup from '../components/ReservationPopup';
-import restaurantImage from '../assets/restaurant3.jpg';
-import hallImage from '../assets/restaurant1.jpg';
+import axiosClient from '../../../axios-client';
+import ReservationPopup from '../../../components/ReservationPopup';
+import restaurantImage from '../../../assets/restaurant3.jpg';
+import hallImage from '../../../assets/restaurant1.jpg';
 
 
 

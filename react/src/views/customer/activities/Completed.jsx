@@ -1,8 +1,8 @@
 import React from 'react'
-import Sidebar2 from '../../components/sidebar2'
-import respic from '../../assets/restaurant1.jpg'
-import chocolatecake from '../../assets/chocolatecake.jpeg'
-import pizza from '../../assets/Pizza-3007395.jpg'
+import Sidebar2 from '../../../components/sidebar2'
+import respic from '../../../assets/restaurant1.jpg'
+import chocolatecake from '../../../assets/chocolatecake.jpeg'
+import pizza from '../../../assets/Pizza-3007395.jpg'
 
 
 export default function Completed() {

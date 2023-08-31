@@ -2,26 +2,25 @@ import {createBrowserRouter,Navigate} from 'react-router-dom';
 import DefaultLayout from './components/DefaultLayout.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
 import Landing from './views/landing.jsx';
-import Login from './views/login.jsx';
-import Signup from './views/signup.jsx';
+import Login from './views/customer/login.jsx';
+import Signup from './views/customer/signup.jsx';
 import NotFound from './views/notFound.jsx';
-import Dashboard from './views/dashboard.jsx';
-import Tablefortwo from './views/tablefortwo/tablefortwo.jsx';
-import Suggestions from './views/tablefortwo/suggestions.jsx';
-import Recieved from './views/tablefortwo/recieved.jsx';
-import Sent from './views/tablefortwo/sent.jsx';
+import Dashboard from './views/customer/dashboard.jsx';
+import Tablefortwo from './views/customer/tablefortwo/tablefortwo.jsx';
+import Suggestions from './views/customer/tablefortwo/suggestions.jsx';
+import Recieved from './views/customer/tablefortwo/recieved.jsx';
+import Sent from './views/customer/tablefortwo/sent.jsx';
 import Users from './views/users.jsx';
-import Restaurants from './views/Restaurants.jsx';
-import RestaurantDetail from './views/RestaurantDetail.jsx';
-import HallDetail from './views/HallDetail.jsx';
-import WaitlistPage from './views/WaitlistPage';
-import Meals from './views/Meals.jsx';
-// import Activities from './views/Activities.jsx';
-import Mealspage from './views/Mealspage.jsx';
-import Complaints from './views/activities/Complaints.jsx';
-import Activities from './views/activities/Activities.jsx';
-import Completed from './views/activities/Completed.jsx';
-import Profile from './views/Profile.jsx';
+import Restaurants from './views/customer/restaurants/Restaurants.jsx';
+import RestaurantDetail from './views/customer/restaurants/RestaurantDetail.jsx';
+import HallDetail from './views/customer/restaurants/HallDetail.jsx';
+import WaitlistPage from './views/customer/restaurants/WaitlistPage.jsx';
+import Meals from './views/customer/Meals.jsx';
+// import Activities from './views/customer/Activities.jsx';
+import Mealspage from './views/customer/restaurants/Mealspage.jsx';
+import Complaints from './views/customer/activities/Complaints.jsx';
+import Activities from './views/customer/activities/Activities.jsx';
+import Completed from './views/customer/activities/Completed.jsx';
 
 const router = createBrowserRouter([
     {
@@ -49,11 +48,6 @@ const router = createBrowserRouter([
                 path: '/restaurants/:id/meals', 
                 element: <Mealspage />
             },
-
-            //   {
-            //     path: '/activities',
-            //     element: <Activities/>
-            //   },
             {
                 path: '/restaurants/:id', 
                 element: <RestaurantDetail />
@@ -95,11 +89,6 @@ const router = createBrowserRouter([
             {
                 path: '/activities/completed',
                 element : <Completed/>
-                
-            },
-            {
-                path: '/profile',
-                element : <Profile/>
                 
             },
             {
