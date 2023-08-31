@@ -1,21 +1,12 @@
 import React from "react";
 import {
-  Card,
-  Typography,
-  List,
-  ListItem,
-  ListItemPrefix,
-  ListItemSuffix,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+  Card,  Typography,  List,  ListItem,  ListItemPrefix,  Accordion,  AccordionHeader,  AccordionBody,
+  } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
   UserCircleIcon,
-
 } from "@heroicons/react/24/solid";
-import { ChevronRightIcon, ChevronDownIcon, GifIcon, IdentificationIcon } from "@heroicons/react/24/outline";
+import { ChevronRightIcon, ChevronDownIcon, IdentificationIcon } from "@heroicons/react/24/outline";
 import { Link ,useLocation} from "react-router-dom";
  
 export function SidebarWithContentSeparator() {
@@ -44,9 +35,9 @@ export function SidebarWithContentSeparator() {
             <UserCircleIcon className="h-5 w-5 mr-2" />
           </ListItemPrefix>
           People
-          <ListItemSuffix>
-            {/* <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" /> */}
-          </ListItemSuffix>
+          {/* <ListItemSuffix>
+            <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
+          </ListItemSuffix> */}
         </ListItem>
       </Link>
 
