@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axiosClient from '../axios-client';
-import backBtn from '../assets/back-button.png';
+import axiosClient from '../../../axios-client';
+import backBtn from '../../../assets/back-button.png';
 
 const WaitlistPage = ({ onClose }) => {
   const location = useLocation();

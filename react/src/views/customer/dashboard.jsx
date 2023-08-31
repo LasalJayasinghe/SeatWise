@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import axiosClient from '../axios-client';
-import restaurantimage from '../assets/restaurant3.jpg';
-import restaurantimage2 from '../assets/restaurant1.jpg';
+import axiosClient from '../../axios-client';
+import restaurantimage from '../../assets/restaurant3.jpg';
+import restaurantimage2 from '../../assets/restaurant1.jpg';
 
-import slide1 from '../assets/slide1.png';
-import slide2 from '../assets/slide2.png';
-import slide3 from '../assets/slide3.png';
-import slide4 from '../assets/slide4.png';
+import slide1 from '../../assets/slide1.png';
+import slide2 from '../../assets/slide2.png';
+import slide3 from '../../assets/slide3.png';
+import slide4 from '../../assets/slide4.png';
 
 export default function Dashboard() {
   const [restaurants, setRestaurants] = useState([]);

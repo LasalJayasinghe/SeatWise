@@ -65,10 +65,10 @@
 
 import {Link} from "react-router-dom";
 import {createRef, useState} from "react";
-import axiosClient from "../axios-client.js";
-import {useStateContext} from "../context/ContextProvider.jsx";
+import axiosClient from "../../axios-client.js";
+import {useStateContext} from "../../context/ContextProvider.jsx";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import Logo from "../assets/logo.svg";
+import Logo from "../../assets/logo.svg";
 
 export default function Signup() {
   const nameRef = createRef()

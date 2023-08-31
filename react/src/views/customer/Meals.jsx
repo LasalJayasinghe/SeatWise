@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axiosClient from '../axios-client';
-import mealimage from '../assets/meal.jpg';
+import axiosClient from '../../axios-client';
+import mealimage from '../../assets/meal.jpg';
 
 export default function Meals() {
   const [meals, setMeals] = useState([]);
