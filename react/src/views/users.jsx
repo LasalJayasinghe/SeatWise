@@ -4,24 +4,23 @@ import Header from "../components/Header.jsx";
 
 
 export default function Users(){
-	const [users,setUsers] = useState([]);
+	const [user, setUser] = useState(null); // Initialize user state
 	const[loading,setLoading] = useState(false);
 
 	useEffect(() => {
-		getUsers()
-	},[])
-
-	const getUsers = () => {
-		setLoading(true)
-		axiosClient.get('/users')
+		getLoggedInUser();
+	  }, []);
+	
+	  const getLoggedInUser = () => {
+		axiosClient
+		  .get("/user") // Replace with your API endpoint
 		  .then(({ data }) => {
-			setLoading(false)
-			setUsers(data.data)
+			setUser(data);
 		  })
 		  .catch(() => {
-			setLoading(false)
-		  })
-	}
+			setUser(null);
+		  });
+	  };
 
 
 	const onLogout = ev => {
@@ -33,18 +32,11 @@ export default function Users(){
 			setToken(null)
 		})
 	  }
-
-
 	return(
 	<div>
-		<Header/>
 		<a   href="/login"  onClick={onLogout}   >
              Sign out
-        </a>
-
-		
-
-		
+        </a>		
 	</div>
 	)
 }
