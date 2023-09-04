@@ -23,6 +23,13 @@ return new class extends Migration
             $table->string('cover')->nullable();
             $table->string('type')->nullable();
             $table->string('floors')->nullable();
+            $table->string('monday')->nullable();
+            $table->string('tuesday')->nullable();
+            $table->string('wednesday')->nullable();
+            $table->string('thursday')->nullable();
+            $table->string('friday')->nullable();
+            $table->string('saturday')->nullable();
+            $table->string('sunday')->nullable();
             $table->time('opening')->nullable();
             $table->time('closing')->nullable();
             $table->timestamps();

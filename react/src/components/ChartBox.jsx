@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts";
+import { useStateContext } from "../context/ContextProvider";
+import { useEffect, useState } from "react";
+import axiosClient from "../axios-client";
 
 const data = [
   {
@@ -47,6 +50,29 @@ const data = [
 ];
 
 export default function ChartBox() {
+  const {user, setUser} = useStateContext();
+  const [count1, setCount1] = useState([]);
+
+  useEffect(() => {
+    axiosClient.get('/user')
+      .then(({ data }) => {
+        setUser(data);
+      });
+}, []);
+
+  useEffect(() => {
+    if (user && user.id) {
+    axiosClient.get(`/getTotalUserCount/${user.id}`)
+      .then(({ data }) => {
+        setCount1(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [user]);
+
+
   return (
     <div className="chartBox">
       <div className="boxInfo">
@@ -60,7 +86,7 @@ export default function ChartBox() {
         <Link to="/" style={{ color: props.color }}>
           View all
         </Link> */}
-        <h1><b>11.238</b></h1>
+        <h1><b>{count1}</b></h1>
         <Link className="link">View all</Link>
       </div>
       <div className="chartInfo">

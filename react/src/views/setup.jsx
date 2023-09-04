@@ -31,6 +31,13 @@ export default function Setup() {
   const typeTableRef = useRef();  
   const typeBothRef = useRef();
   const floorsRef = useRef();
+  const mondayRef = useRef();
+  const tuesdayRef = useRef();
+  const wednesdayRef = useRef();
+  const thursdayRef = useRef();
+  const fridayRef = useRef();
+  const saturdayRef = useRef();
+  const sundayRef = useRef();
   const openingRef = useRef();
   const closingRef = useRef();
 
@@ -129,6 +136,13 @@ export default function Setup() {
           cover: coverRef.current.value,
           type: selectedType,
           floors: floorsRef.current.value,
+          monday: mondayRef.current.checked,
+          tuesday: tuesdayRef.current.checked,
+          wednesday: wednesdayRef.current.checked,
+          thursday: thursdayRef.current.checked,
+          friday: fridayRef.current.checked,
+          saturday: saturdayRef.current.checked,
+          sunday: sundayRef.current.checked,
           opening: openingRef.current.value,
           closing: closingRef.current.value,
         }
@@ -367,32 +381,34 @@ export default function Setup() {
             <dt className="text-sm font-medium leading-6 text-gray-900">Restaurant openning</dt>
             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-300">
-                {/* <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"> */}
-                  {/* <div className="flex w-0 flex-1 items-center"> */}
+                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                  <div className="flex w-0 flex-1 items-center">
                     {/* <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" /> */}
-                    {/* <div className="ml-0 flex flex-col gap-2">
+                    <div className="ml-0 flex flex-col gap-2">
                       <div className="ml-4 flex min-w-0 flex-1">
                         <span className="truncate font-medium mr-10 pr-20">Opening days</span>
-                        <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                        {/* <a className="font-medium text-indigo-600 hover:text-indigo-500">
                           set
-                        </a>
+                        </a> */}
                       </div>
                       
                       <ul className="flex-shrink-0 text-gray-400 ml-4 pl-4">
-                        <li>Monday</li>
-                        <li>Tuesday</li>
-                        <li>Wednesday</li>
-                        <li>Thursday</li>
-                        <li>Friday</li>
+                        <li>{otherData[0]?.monday == 1 ? "Monday" : null}</li>
+                        <li>{otherData[0]?.tuesday == 1 ? "Thuesday" : null}</li>
+                        <li>{otherData[0]?.wednesday == 1 ? "Wednesday" : null}</li>
+                        <li>{otherData[0]?.thursday == 1 ? "Thursday" : null}</li>
+                        <li>{otherData[0]?.friday == 1 ? "Friday" : null}</li>
+                        <li>{otherData[0]?.saturday == 1 ? "Saturday" : null}</li>
+                        <li>{otherData[0]?.sunday == 1 ? "Sunday" : null}</li>
                       </ul>
-                    </div> */}
-                  {/* </div> */}
+                    </div>
+                  </div>
                   {/* <div className="ml-4 flex-shrink-0">
                     <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                       set
                     </a>
                   </div> */}
-                {/* </li> */}
+                </li>
                 <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                   <div className="flex w-0 flex-1 items-center">
                     {/* <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" /> */}
@@ -543,6 +559,7 @@ export default function Setup() {
                             <br />
 
                             <fieldset>
+
                             <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                               
                               <div className="sm:col-span-3">
@@ -616,6 +633,138 @@ export default function Setup() {
                            
 
                             <div className="border-b border-gray-900/10 pb-12">
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">Opening days</h2>
+                            <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                <div className="sm:col-span-6">
+                                  <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    Opening time
+                                  </label>
+                                  <div className="flex mt-2">
+                                    <div className="relative flex gap-x-3">
+                                      <div className="flex h-6 items-center">
+                                        <input
+                                          name="monday"
+                                          type="checkbox"
+                                          ref={mondayRef}
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mt-4"
+                                          defaultChecked={false}
+                                        />
+                                      </div>
+                                      <div className="text-sm leading-6">
+                                        <label htmlFor="comments" className="font-medium text-gray-900 mt-0 mr-5">
+                                          Monday
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="relative flex gap-x-3">
+                                      <div className="flex h-6 items-center">
+                                        <input
+                                          name="tuesday"
+                                          type="checkbox"
+                                          ref={tuesdayRef} 
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mt-4"
+                                          defaultChecked={false}
+                                        />
+                                      </div>
+                                      <div className="text-sm leading-6">
+                                        <label htmlFor="comments" className="font-medium text-gray-900 mt-0 mr-5">
+                                          Tuesday
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="relative flex gap-x-3">
+                                      <div className="flex h-6 items-center">
+                                        <input
+                                          name="wednesday"
+                                          type="checkbox"
+                                          ref={wednesdayRef} 
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mt-4"
+                                          defaultChecked={false}
+                                        />
+                                      </div>
+                                      <div className="text-sm leading-6">
+                                        <label htmlFor="comments" className="font-medium text-gray-900 mt-0 mr-5">
+                                          Wednesday
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="relative flex gap-x-3">
+                                      <div className="flex h-6 items-center">
+                                        <input
+                                          name="thursday"
+                                          type="checkbox"
+                                          ref={thursdayRef} 
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mt-4"
+                                          defaultChecked={false}
+                                        />
+                                      </div>
+                                      <div className="text-sm leading-6">
+                                        <label htmlFor="comments" className="font-medium text-gray-900 mt-0 mr-5">
+                                          Thursday
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="flex mt-2">
+                                    <div className="relative flex gap-x-3">
+                                      <div className="flex h-6 items-center">
+                                        <input
+                                          name="friday"
+                                          type="checkbox"
+                                          ref={fridayRef}
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mt-4"
+                                          defaultChecked={false}
+                                        />
+                                      </div>
+                                      <div className="text-sm leading-6">
+                                        <label htmlFor="comments" className="font-medium text-gray-900 mt-0 mr-8">
+                                          Friday
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="relative flex gap-x-3">
+                                      <div className="flex h-6 items-center">
+                                        <input
+                                          name="saturday"
+                                          type="checkbox"
+                                          ref={saturdayRef} 
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mt-4"
+                                          defaultChecked={false}
+                                        />
+                                      </div>
+                                      <div className="text-sm leading-6">
+                                        <label htmlFor="comments" className="font-medium text-gray-900 mt-0 mr-4">
+                                          Saturday
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                    <div className="relative flex gap-x-3">
+                                      <div className="flex h-6 items-center">
+                                        <input
+                                          name="sunday"
+                                          type="checkbox"
+                                          ref={sundayRef} 
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 mt-4"
+                                          defaultChecked={false}
+                                        />
+                                      </div>
+                                      <div className="text-sm leading-6">
+                                        <label htmlFor="comments" className="font-medium text-gray-900 mt-0 mr-5">
+                                          Sunday
+                                        </label>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <br />
                               <h2 className="text-base font-semibold leading-7 text-gray-900">Opening hours</h2>
                   
                               <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -651,7 +800,7 @@ export default function Setup() {
                                 </div>
                               </div>
 
-                              <div className="mt-6 sm:col-span-3 flex items-center justify-end gap-x-6">
+                              <div className="mt-6 sm:col-span-6 flex items-center justify-end gap-x-6">
                                 <button onClick={handleAddReservationModalClose} className="rounded-md px-3 py-1.5 bg-white rounded-lg shadow border border border-gray-300 text-sm font-semibold leading-6 text-gray-900">Cancel</button>
                                 <button type="submit" className="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add details</button>
                               </div>

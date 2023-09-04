@@ -1,33 +1,40 @@
-// import { useEffect } from "react";
-// import { useState } from "react";
-// import axiosClient from "../axios-client";
+import { useEffect, useState } from "react";
+import axiosClient from "../axios-client";
+import { useStateContext } from "../context/ContextProvider";
 
 import BarChartBox from "../components/BarChartBox";
 import BigChartBox from "../components/BigChartBox";
 import PieChartBox from "../components/PieChartBox";
 import ChartBox from "../components/chartBox";
 
+
+
 // import {chartBox} from "../components/chartBox";
 
 
 export default function RestaurantDashboard() {
 
-  // const [user, setUser] = useState([]);
-  //   getUsers();
-  // useEffect( () => {
+  const {user, setUser} = useStateContext();
 
-  // }, [])
+  useEffect(() => {
+    axiosClient.get('/user')
+      .then(({ data }) => {
+        setUser(data);
+      });
+}, []);
 
-  // const getUsers = () => {
-  //   axiosClient.get('/restaurantDashboard')
-  //     .then(({data}) => {
-  //       console.log(data);
+  // useEffect(() => {
+  //   if (user && user.id) {
+  //   axiosClient.get(`/getTotalUserCount/${user.restaurant_id}`)
+  //     .then(({ data }) => {
+  //       setCount1(data);
+  //       console.log(data)
   //     })
-  //     .catch(() => {
-      
-  //     })
-  // }
-
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  //   }
+  // }, [user]);
 
 
 

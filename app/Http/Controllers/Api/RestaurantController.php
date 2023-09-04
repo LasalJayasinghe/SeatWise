@@ -192,6 +192,13 @@ class RestaurantController extends Controller
             'cover' => $data['cover'],
             'type' => $data['type'],
             'floors' => $data['floors'],
+            'monday' => $data['monday'],
+            'tuesday' => $data['tuesday'],
+            'wednesday' => $data['wednesday'],
+            'thursday' => $data['thursday'],
+            'friday' => $data['friday'],
+            'saturday' => $data['saturday'],
+            'sunday' => $data['sunday'],
             'opening' => $data['opening'],
             'closing' => $data['closing'],
         ];
@@ -304,26 +311,18 @@ class RestaurantController extends Controller
     
     }
 
-    public function getCategoriestoMeal($id) {
-     
-        $category = Category::where('categories.restaurant_id', $id)
-            ->join('meals', 'categories.id', '=', 'meals.category_id')
-            ->select('categories.category AS category_name')
-            ->get();
-
-
-        // $reservations = TableReservation::where('table_reservations.restaurant_id', $restaurantId)
-        // ->join('table_structures', 'table_reservations.table_structure_id', '=', 'table_structures.id')
-        // ->select('table_reservations.*', 'table_structures.table_id')
-        // ->get();
-
-        return response()->json($category);
-    
-    }
-
     public function getOrder($id) {
      
         $order = TableReservation::where('restaurant_id', $id)->get();
+
+        return response()->json($order);
+    
+    }
+
+    public function totalUserCount($id) {
+     
+        $order = TableReservation::where('restaurant_id', $id)
+            ->count();
 
         return response()->json($order);
     

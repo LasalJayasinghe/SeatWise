@@ -25,6 +25,13 @@ class Profile extends Model
         'cover',
         'type',
         'floors',
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
         'opening',
         'closing',
     ];
