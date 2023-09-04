@@ -25,9 +25,9 @@ class updateEmployeeRequest extends FormRequest
     {
         return [
             'id' => 'required',
-            'cashiername' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'phone' => ['required', 'numeric'],
+            'cashiername' => ['string'],
+            'email' => [ 'email'],
+            'phone' => ['numeric'],
             'password' => [
                 'required',
             ],

@@ -37,6 +37,7 @@ import OrderHistory from './views/OrderHistory.jsx';
 import People from './views/People.jsx';
 import UpdateEmployee from './views/updateEmployee.jsx';
 import Settings from './views/Settings.jsx';
+import CashierUpdate from './views/CashierUpdate.jsx';
 
 const router = createBrowserRouter([
     {
@@ -136,7 +137,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/employees",
-                element: <Employees />, 
+                element: <CashierUpdate />, 
             },
             {
                 path: "/tablestructure",
