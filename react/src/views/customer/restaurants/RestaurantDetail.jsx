@@ -22,6 +22,7 @@ const RestaurantDetail = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showTableForTwoPopup, setShowTableForTwoPopup] = useState(false);
   const [selectedTableForTwo, setSelectedTableForTwo] = useState(null);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
 
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\customer\UserController;
 use App\Http\Controllers\Api\customer\WaitlistController;
 use App\Http\Controllers\Api\customer\MealController;
 use App\Http\Controllers\Api\customer\AllMealsController;
+use App\Http\Controllers\Api\customer\TableReservationController;
 use App\Http\Controllers\Api\customer\TablefortwoController;
 
 
