@@ -21,24 +21,18 @@ export default function TableStructure() {
 
   const [loading, setLoading] = useState(false);
 
-  
-
-//   const viewnameRef = useRef();
-//   const photoRef = useRef();
-//   const descriptionRef = useRef();
-
   const tablenoRef = useRef();
   const chairsRef = useRef();
   const viewidRef = useRef();
   const popupRef = useRef();
 
+  const [toggle, setToggle] = useState('tables');
+  const [floor, setFloorData] = useState([]);
+
   function handleItemClick(itemNumber) {
     setIsModalOpen(true);
     setSelectedItem(itemNumber);
 
-    // const container = event.currentTarget.parentElement;
-    // const gridItems = container.getElementsByClassName("grid-item");
-    // const gridColumns = parseInt(getComputedStyle(container).gridTemplateColumns.split(" ")[0], 10);
     let columnIndex;
     if (itemNumber % 11 === 0) {
       columnIndex = 11;
@@ -56,10 +50,10 @@ export default function TableStructure() {
     setIsModalOpen(false);
   }
 
-  // const updateCoordinates = (x, y) => {
-  //   setselectedItemX(x);
-  //   setselectedItemY(y);
-  // };
+  const handleToggle = () => {
+    setToggle(toggle === 'tables' ? 'halls' : 'tables');
+  };
+
 
 
   const onSubmitTable = (ev) => {
@@ -106,6 +100,7 @@ export default function TableStructure() {
         setUser(data)
         getViews(data.id);
         fetchTableData(data.id);
+        getfloordata(data.id);
     })
     }, [])
 
@@ -143,6 +138,17 @@ export default function TableStructure() {
         });
     };
 
+    const getfloordata = (restaurant_id) => {
+      axiosClient
+      .get("/getfloor", { params: { restaurant_id } })
+      .then(({ data }) => {
+          setFloorData(data);
+      })
+      .catch((error) => {
+          console.error("Error fetching tables:", error);
+      });
+  };
+
     
 
     const isTableInStructure = (tableNumber) => {
@@ -173,9 +179,30 @@ export default function TableStructure() {
     
             <h1 className="text-1xl font-bold">Arrange your table Structure</h1>
 
-              <p>Select according to your restaurant table staructure</p>
+              {/* <p>Select according to your restaurant table staructure</p>
 
-              <p>Add table count with necessary details</p>
+              <p>Add table count with necessary details</p> */}
+
+              {floors.map({})}
+
+              <div className="flex items-center justify-center mb-6">
+                <button
+                  className={`py-2 px-4 rounded-lg ${
+                    toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+                  }`}
+                  onClick={handleToggle}
+                >
+                  Tables
+                </button>
+                <button
+                  className={`py-2 px-4 rounded-lg ml-4 ${
+                    toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+                  }`}
+                  onClick={handleToggle}
+                >
+                  Halls
+                </button>
+              </div>
 
                 <div className="grid-container">
                     {Array.from({ length: 44 }, (_, index) => {

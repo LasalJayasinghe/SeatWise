@@ -5,7 +5,10 @@ import { useStateContext } from "../context/ContextProvider";
 import BarChartBox from "../components/BarChartBox";
 import BigChartBox from "../components/BigChartBox";
 import PieChartBox from "../components/PieChartBox";
-import ChartBox from "../components/chartBox";
+import ChartBox1 from "../components/ChartBox1";
+import ChartBox2 from "../components/ChartBox2";
+import ChartBox3 from "../components/ChartBox3";
+import ChartBox4 from "../components/ChartBox4";
 
 
 
@@ -15,26 +18,27 @@ import ChartBox from "../components/chartBox";
 export default function RestaurantDashboard() {
 
   const {user, setUser} = useStateContext();
+  const [reservations, setReservations] = useState([]);
+
+//   useEffect(() => {
+//     axiosClient.get('/user')
+//       .then(({ data }) => {
+//         setUser(data);
+//       });
+// }, []);
 
   useEffect(() => {
-    axiosClient.get('/user')
+    if (user && user.id) {
+    axiosClient.get(`/getReservationsByUser/${user.id}`)
       .then(({ data }) => {
-        setUser(data);
+        setReservations(data);
+        console.log("reservation:", data)
+      })
+      .catch((error) => {
+        console.error(error);
       });
-}, []);
-
-  // useEffect(() => {
-  //   if (user && user.id) {
-  //   axiosClient.get(`/getTotalUserCount/${user.restaurant_id}`)
-  //     .then(({ data }) => {
-  //       setCount1(data);
-  //       console.log(data)
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  //   }
-  // }, [user]);
+    }
+  }, [user]);
 
 
 
@@ -54,102 +58,41 @@ export default function RestaurantDashboard() {
                 <div className="topBox">
                   <h1>Top Deals</h1>
                   <div className="list">
-                    {/* {topDealUsers.map(user=>(
+
+                  {/* Top deals menu start */}
+                    {reservations.map( (reservations) =>(
                       <div className="listItem" key={user.id}>
                         <div className="user">
-                          <img src={user.img} alt="" />
+                          <img src="src/assets/slide2.png" alt="" />
+                          {/* <img src={user.img} alt="" /> */}
                           <div className="userTexts">
-                            <span className="username">{user.username}</span>
-                            <span className="email">{user.email}</span>
+                            <span className="username">{reservations.name}</span>
+                            <span className="email">{reservations.email}</span>
                           </div>
                         </div>
-                        <span className="amount">${user.amount}</span>
+                        <span className="amount">$500</span>
+                        {/* <span className="amount">${user.amount}</span> */}
                       </div>
-                    ))} */}
-                    {/* Top deals menu start */}
-                    <div className="listItem">
-                      <div className="user">
-                        <img src="src/assets/slide2.png" alt="" />
-                        <div className="userTexts">
-                          <span className="username">John Doe</span>
-                          <span className="email">johndoe@gmail.com</span>
-                        </div>
-                      </div>
-                      <span className="amount">$500</span>
-                    </div>
+                    ))}
+                  {/* top deals menu stops */}  
 
-                    <div className="listItem">
-                      <div className="user">
-                        <img src="src/assets/slide2.png" alt="" />
-                        <div className="userTexts">
-                          <span className="username">Frank Mark</span>
-                          <span className="email">franckmark@gmail.com</span>
-                        </div>
-                      </div>
-                      <span className="amount">$700</span>
-                    </div>
-
-                    <div className="listItem">
-                      <div className="user">
-                        <img src="src/assets/slide2.png" alt="" />
-                        <div className="userTexts">
-                          <span className="username">Shanel Dovy</span>
-                          <span className="email">shaneldovy@gmail.com</span>
-                        </div>
-                      </div>
-                      <span className="amount">$300</span>
-                    </div>
-
-                    <div className="listItem">
-                      <div className="user">
-                        <img src="src/assets/slide2.png" alt="" />
-                        <div className="userTexts">
-                          <span className="username">Marina Bay</span>
-                          <span className="email">marinabay@gmail.com</span>
-                        </div>
-                      </div>
-                      <span className="amount">$100</span>
-                    </div>
-
-                    <div className="listItem">
-                      <div className="user">
-                        <img src="src/assets/slide2.png" alt="" />
-                        <div className="userTexts">
-                          <span className="username">Devon Mark</span>
-                          <span className="email">devonmark@gmail.com</span>
-                        </div>
-                      </div>
-                      <span className="amount">$500</span>
-                    </div>
-
-                    <div className="listItem">
-                      <div className="user">
-                        <img src="src/assets/slide2.png" alt="" />
-                        <div className="userTexts">
-                          <span className="username">Devon Mark</span>
-                          <span className="email">devonmark@gmail.com</span>
-                        </div>
-                      </div>
-                      <span className="amount">$500</span>
-                    </div>
-                    {/* top deals menu stops */}
                   </div>
                 </div>
               </div>
               <div className="box box2">
-                <ChartBox />
+                <ChartBox1 />
               </div>
               <div className="box box3">
-                <ChartBox />
+                <ChartBox2 />
               </div>
               <div className="box box4">
                 <PieChartBox />
               </div>
               <div className="box box5">
-                <ChartBox />
+                <ChartBox3 />
               </div>
               <div className="box box6">
-                <ChartBox />
+                <ChartBox4 />
               </div>
               <div className="box box7">
                 <BigChartBox />

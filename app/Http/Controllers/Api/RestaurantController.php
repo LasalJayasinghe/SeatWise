@@ -328,6 +328,43 @@ class RestaurantController extends Controller
     
     }
 
+    public function getReservationsByUser($id)
+    {
+        
+        // $restaurantId = $request->input('restaurant_id');
+
+        $reservations = TableReservation::where('table_reservations.restaurant_id', $id)
+            ->join('users', 'table_reservations.reservant_name', '=', 'users.name')
+            ->select('users.*')
+            ->get();
+        return response()->json($reservations);
+    }
+
+    public function getTotalMonthlyReservationCount($id) {
+        // Get the current year and month
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+    
+        $reservationCount = TableReservation::where('restaurant_id', $id)
+            ->whereYear('reservation_date', $currentYear)
+            ->whereMonth('reservation_date', $currentMonth)
+            ->count();
+    
+        return response()->json($reservationCount);
+    }
+
+    public function getFloor(Request $request)
+    {
+        
+        $restaurantId = $request->input('restaurant_id');
+
+        $floors = Profile::where('restaurant_id', $restaurantId)
+            ->select('floors')
+            ->get();
+        return response()->json($floors);
+        
+    }
+
 
 
 

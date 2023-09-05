@@ -13,6 +13,7 @@ export default function AddMenu() {
     const navigate = useNavigate();
     const [isModalOpen, setModalOpen] = useState(false);
     const [category, setCategory] = useState([]);
+    const [isPhotoModalOpen, setPhotoModalOpen] = useState(false);
 
     const addCategoryRef = useRef();
     const nameRef = useRef();
@@ -20,13 +21,23 @@ export default function AddMenu() {
     const potionRef = useRef();
     const priceRef = useRef();
     const descriptionRef = useRef();
+    const photoRef = useRef();
 
     function handleModalOpen() {
         setModalOpen(true);
-      }
+    }
     
     function handleModalClose() {
     setModalOpen(false);
+    }
+
+    
+    function handlePhotoModalOpen() {
+        setPhotoModalOpen(true);
+    }
+    
+    function handlePhotoModalClose() {
+        setPhotoModalOpen(false);
     }
 
     useEffect(() => {
@@ -240,7 +251,7 @@ export default function AddMenu() {
                             <div className="w-[195px] h-[135px] bg-gradient-to-b from-white to-white rounded-[10px] mb-10">
                                 <img src="src/assets/download.png" alt="" />
                                 <div style={{ position: 'relative' }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" className="w-8 h-8" style={{ position: 'absolute', top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}>
+                                    <svg onClick={() => handlePhotoModalOpen()} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" className="w-8 h-8" style={{ position: 'absolute', top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}>
                                         <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clipRule="evenodd" />
                                     </svg>
                                 </div>
@@ -274,6 +285,27 @@ export default function AddMenu() {
                                 <div className="flex space-x-4">
                                     <button onClick={handleModalClose} className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm">Cancel</button>
                                     <button type="submit" className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Category</button>
+                                </div>
+                            </form>
+                        </div>
+                </div>
+            )}
+
+            {isPhotoModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
+                            {/* <h2>Popup Content for Item </h2> */}
+
+                            <h2 className="text-2xl font-bold">Add Photo</h2>
+
+                            <form className="space-y-4">
+                                <label htmlFor="table-name" className="block text-sm font-medium leading-6 text-gray-900 mt-0">Photo:</label>
+                                <input ref={photoRef} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text" />
+
+                                <div className="flex space-x-4">
+                                    <button onClick={handlePhotoModalClose} className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm">Cancel</button>
+                                    <button type="submit" className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Photo</button>
                                 </div>
                             </form>
                         </div>
