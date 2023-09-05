@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'hometown',
         'jobStatus',
+        'google_id',
     ];
 
     /**

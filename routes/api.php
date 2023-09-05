@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\customer\WaitlistController;
 use App\Http\Controllers\Api\customer\MealController;
 use App\Http\Controllers\Api\customer\AllMealsController;
 use App\Http\Controllers\Api\customer\TablefortwoController;
+use App\Http\Controllers\Api\customer\LoginController;
+
 
 
 /*
@@ -59,3 +61,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 // Additional routes for restaurant data
 Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
+
+Route::get('auth/google', 'LoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'LoginController@handleGoogleCallback');

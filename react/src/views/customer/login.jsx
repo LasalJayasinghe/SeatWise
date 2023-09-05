@@ -118,12 +118,10 @@ export default function Login() {
           </div>
         </form>
         <br />
-        <button
-          type="submit"
-          className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm "
-        >
-          Sign in with Google
-        </button>
+        <a href="http://localhost:8000/auth/google" class="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm">
+    Sign in with Google
+        </a>
+
         <p className="mt-10 text-center text-sm text-gray-500">
           Don't have an account?{' '}
           <Link to="/signup" className="font-semibold leading-6 text-green-600 hover:text-indigo-500">

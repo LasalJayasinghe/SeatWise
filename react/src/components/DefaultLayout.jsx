@@ -5,7 +5,7 @@ import axiosClient from '../axios-client.js';
 import Header from './Header.jsx';
 
 const DefaultLayout = () => {
-  const { user, token, setUser, setToken } = useStateContext();
+  const { user,token, setUser, setToken } = useStateContext();
 
     if (!token) {
         return <Navigate to ='/login' />

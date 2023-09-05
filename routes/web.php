@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\customer\AuthController;
+use App\Http\Controllers\Api\customer\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Web routes
+Route::get('/google', function () {
+    return view('googleAuth'); // Assuming this is a web page
+});
+
+
+Route::get('auth/google', 'App\Http\Controllers\Api\customer\LoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'App\Http\Controllers\Api\customer\LoginController@handleGoogleCallback');
