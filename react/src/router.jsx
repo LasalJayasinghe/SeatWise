@@ -22,7 +22,7 @@ import Complaints from './views/activities/Complaints.jsx';
 import Activities from './views/activities/Activities.jsx';
 import Completed from './views/activities/Completed.jsx';
 import Profile from './views/Profile.jsx';
-
+import MealView from './views/MealView.jsx';
 
 const router = createBrowserRouter([
     {
@@ -107,6 +107,12 @@ const router = createBrowserRouter([
                 path: '/users',
                 element : <Users />
             },
+
+            {
+                path: '/mealview',
+                element : <MealView/>
+            },
+   
    
         ]
     },
