@@ -80,15 +80,14 @@ const Header = ({ user, onLogout }) => {
 
               <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button >
-              <button
-                  type="button"
-                  className="p-1 text-gray-500 bg-white rounded-full hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 focus:ring-offset-green-500 focus:text-green-500">
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="w-6 h-6" aria-hidden="true" />
-              </button>
-  
-        </Menu.Button>
+      <Menu.Button >
+  <span
+    className="p-1 text-gray-500 bg-white rounded-full hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 focus:ring-offset-green-500 focus:text-green-500">
+    <span className="sr-only">View notifications</span>
+    <BellIcon className="w-6 h-6" aria-hidden="true" />
+  </span>
+</Menu.Button>
+
       </div>
 
       <Transition

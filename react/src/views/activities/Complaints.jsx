@@ -1,10 +1,20 @@
-import React from 'react'
+import React , { useState } from 'react'
 import Sidebar2 from '../../components/sidebar2'
 import AddComplaint from '../../components/AddComplaint'
 
 export default function Complaints() {
+
+    const [isAddComplaintVisible, setAddComplaintVisible] = useState(false);
+  
+    const toggleAddComplaint = () => {
+      setAddComplaintVisible(!isAddComplaintVisible);
+    };
   return (
     <div>
+      
+      {/* {isAddComplaintVisible && (
+        <AddComplaint open={isAddComplaintVisible} setOpen={setAddComplaintVisible} />
+      )} */}
       <AddComplaint/>
 		  <div className="users-container">
 			<Sidebar2 />

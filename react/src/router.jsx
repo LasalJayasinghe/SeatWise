@@ -23,6 +23,7 @@ import Activities from './views/activities/Activities.jsx';
 import Completed from './views/activities/Completed.jsx';
 import Profile from './views/Profile.jsx';
 
+
 const router = createBrowserRouter([
     {
         path: '/',
@@ -105,7 +106,8 @@ const router = createBrowserRouter([
             {
                 path: '/users',
                 element : <Users />
-            }
+            },
+   
         ]
     },
     {

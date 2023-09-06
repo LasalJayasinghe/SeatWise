@@ -324,12 +324,12 @@ export default function Profile() {
 
         </div>
 
-        <div className="grid grid-cols-1 pb-12 mt-10 border-b border-gray-900/10 gap-x-6 gap-y-8 sm:grid-cols-6">
+        {/* <div className="grid grid-cols-1 pb-12 mt-10 border-b border-gray-900/10 gap-x-6 gap-y-8 sm:grid-cols-6">
           <Link className='font-bold hover:text-green-500'>
           Change Password
           </Link>
           
-        </div>
+        </div> */}
 
         {/* <div className="grid grid-cols-1 pb-12 mt-10 border-b border-gray-900/10 gap-x-6 gap-y-8 sm:grid-cols-6">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 ">Credentials</h2>
