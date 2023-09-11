@@ -38,6 +38,7 @@ import People from './views/People.jsx';
 import UpdateEmployee from './views/updateEmployee.jsx';
 import Settings from './views/Settings.jsx';
 import CashierUpdate from './views/CashierUpdate.jsx';
+import TechnicalAssistance from './views/TechnicalAssistance.jsx';
 
 const router = createBrowserRouter([
     {
@@ -168,6 +169,11 @@ const router = createBrowserRouter([
                 path: "/orders",
                 element: <Orders />, 
             },
+            {
+                path: "/TechnicalAssistance",
+                element: <TechnicalAssistance/>, 
+            },
+
             {
                 path: "/orderhistory",
                 element: <OrderHistory />, 
