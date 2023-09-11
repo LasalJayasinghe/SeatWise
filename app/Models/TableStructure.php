@@ -20,6 +20,7 @@ class TableStructure extends Model
         'restaurant_id',
         'table_id',
         'table_number',
+        'floor',
         'number_of_chairs',
         'view',
         'posX',

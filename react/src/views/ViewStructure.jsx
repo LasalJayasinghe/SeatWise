@@ -61,21 +61,21 @@ const ViewStructure = () => {
   }}, [user.restaurant_id, toggle]);
   
 
-  useEffect(() => {
-    if (user && user.id){
-    const fetchHalls = async () => {
-      try {
-        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/halls`);
-        setHalls(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   if (user && user.id){
+  //   const fetchHalls = async () => {
+  //     try {
+  //       const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/halls`);
+  //       setHalls(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    if (toggle === 'halls') {
-      fetchHalls();
-    }
-  }}, [user.restaurant_id, toggle]);
+  //   if (toggle === 'halls') {
+  //     fetchHalls();
+  //   }
+  // }}, [user.restaurant_id, toggle]);
 
   const handleToggle = () => {
     setToggle(toggle === 'tables' ? 'halls' : 'tables');

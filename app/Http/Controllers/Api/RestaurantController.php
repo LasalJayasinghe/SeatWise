@@ -127,6 +127,7 @@ class RestaurantController extends Controller
             'restaurant_id' => $restaurantId,
             'table_id' => $tableId,
             'table_number' => $data['table_number'],
+            'floor' => $data['floor'],
             'number_of_chairs' => $data['number_of_chairs'],
             'view' => $data['view'],
             'posX' => $data['posX'],
@@ -356,12 +357,25 @@ class RestaurantController extends Controller
     public function getFloor(Request $request)
     {
         
+        // $restaurantId = $request->input('restaurant_id');
+
+        // $floors = Profile::where('restaurant_id', $restaurantId)
+        //     ->get();
+        // return response()->json($floors);
+
         $restaurantId = $request->input('restaurant_id');
 
-        $floors = Profile::where('restaurant_id', $restaurantId)
-            ->select('floors')
-            ->get();
-        return response()->json($floors);
+        $profile = Profile::where('restaurant_id', $restaurantId)->first();
+
+        if ($profile) {
+            // Assuming "floors" is a column in your "profiles" table
+            $floorsValue = $profile->floors;
+
+            return response()->json(['floors' => $floorsValue]);
+        } else {
+            // Handle the case where no matching profile is found for the given restaurant_id
+            return response()->json(['error' => 'Profile not found'], 404);
+        }
         
     }
 

@@ -26,8 +26,15 @@ export default function TableStructure() {
   const viewidRef = useRef();
   const popupRef = useRef();
 
-  const [toggle, setToggle] = useState('tables');
+  // const [toggle, setToggle] = useState('tables');
   const [floor, setFloorData] = useState([]);
+  const [toggle, setToggle] = useState([1]);
+  const [selectedFloor, setSelectedFloor] = useState([1]);
+
+  const handleToggle = (floorNumber) => {
+    setSelectedFloor(floorNumber);
+    setToggle(floorNumber);
+  };
 
   function handleItemClick(itemNumber) {
     setIsModalOpen(true);
@@ -50,9 +57,6 @@ export default function TableStructure() {
     setIsModalOpen(false);
   }
 
-  const handleToggle = () => {
-    setToggle(toggle === 'tables' ? 'halls' : 'tables');
-  };
 
 
 
@@ -64,6 +68,7 @@ export default function TableStructure() {
       restaurant_id: user.id,
       table_id: selectedItem,
       table_number: tablenoRef.current.value,
+      floor: selectedFloor,
       number_of_chairs: chairsRef.current.value,
       view: viewidRef.current.value,
       posX: selectedItemX, 
@@ -142,7 +147,11 @@ export default function TableStructure() {
       axiosClient
       .get("/getfloor", { params: { restaurant_id } })
       .then(({ data }) => {
-          setFloorData(data);
+        if (data !== undefined) {
+          setFloorData([data.floors]);
+        } else {
+          console.error("API response is missing expected data");
+        }
       })
       .catch((error) => {
           console.error("Error fetching tables:", error);
@@ -153,7 +162,7 @@ export default function TableStructure() {
 
     const isTableInStructure = (tableNumber) => {
         // const parsedTableNumber = parseInt(tableNumber, 10);
-        return tableData.some((table) => (table.table_id) === String(tableNumber));
+        return tableData.some((table) => (table.table_id) === String(tableNumber) && (table.floor) == selectedFloor);
       };
 
  
@@ -173,7 +182,8 @@ export default function TableStructure() {
             {loading && <p className="loading-text">Loading...</p>}
           </div>
         </div>
-        </header>
+      </header>
+
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
     
@@ -183,32 +193,30 @@ export default function TableStructure() {
 
               <p>Add table count with necessary details</p> */}
 
-              {floors.map({})}
 
-              <div className="flex items-center justify-center mb-6">
-                <button
-                  className={`py-2 px-4 rounded-lg ${
-                    toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
-                  }`}
-                  onClick={handleToggle}
-                >
-                  Tables
-                </button>
-                <button
-                  className={`py-2 px-4 rounded-lg ml-4 ${
-                    toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
-                  }`}
-                  onClick={handleToggle}
-                >
-                  Halls
-                </button>
-              </div>
 
-                <div className="grid-container">
+              <div>
+                <div className="flex items-center justify-center mb-6">
+                    {Array.from({ length: floor }, (_, index) => (
+                      <div
+                        key={index+1}
+                        className={`py-2 px-4 rounded-lg ${
+                          toggle === index + 1 ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+                        }`}
+                        onClick={() => handleToggle(index + 1)}
+                      >
+                        Floor {index + 1}
+                      </div>
+                    ))}
+                  
+                </div>
+
+                  <div className="grid-container">
                     {Array.from({ length: 44 }, (_, index) => {
                         const tableNumber = index + 1;
                         const isTablePresent = isTableInStructure(tableNumber);
-                        console.log(isTablePresent);
+                        // console.log(isTablePresent);
+                        console.log(selectedFloor);
                         return (
                             <div
                             key={tableNumber}
@@ -219,7 +227,11 @@ export default function TableStructure() {
                             </div>
                         );
                     })}
-                </div>
+                  </div>
+              </div>
+                
+          
+          
 
         
 
@@ -248,6 +260,7 @@ export default function TableStructure() {
                         {/* Add more input fields as needed for other table data */}
 
                         {/* Store the selected box's coordinates */}
+                        <input type="hidden" value={selectedFloor} />
                         <input type="hidden" value={selectedItemX} />
                         <input type="hidden" value={selectedItemY} />
 

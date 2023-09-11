@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('restaurant_id');
             $table->string('table_id');
             $table->string('table_number');
+            $table->integer('floor');
             $table->string('number_of_chairs');
             $table->string('view');
             $table->integer('posX');

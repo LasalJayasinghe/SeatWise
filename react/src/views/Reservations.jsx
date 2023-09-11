@@ -14,15 +14,16 @@ export default function Reservations() {
   const {user, setUser } = useStateContext();
 
   const [loading, setLoading] = useState(false);
-  
-  // function handleItemClick(itemNumber) {
-  //   setIsModalOpen(true);
-  //   setSelectedItem(itemNumber);
-  // }
 
-  // function handleCloseModal() {
-  //   setIsModalOpen(false);
-  // }
+  const [floor, setFloorData] = useState([]);
+  const [toggle, setToggle] = useState([1]);
+  const [selectedFloor, setSelectedFloor] = useState([1]);
+  const [date, setDate] = useState('');
+
+  const handleToggle = (floorNumber) => {
+    setSelectedFloor(floorNumber);
+    setToggle(floorNumber);
+  };
 
 
   useEffect(() => {
@@ -32,28 +33,9 @@ export default function Reservations() {
         // getViews(data.id);
         fetchTableData(data.id);
         fetchReservedTableData(data.id);
+        getfloordata(data.id);
     })
     }, [])
-
-    // const getViews = (restaurant_id) => {
-    //     if (!restaurant_id) {
-    //     console.error("Restaurant ID not available.");
-    //     return;
-    //     }
-  
-    //     const payload = {
-    //     restaurant_id: restaurant_id,
-    //     };
-        
-    //     axiosClient
-    //     .get('/views', { params: payload })
-    //     .then(({ data }) => {
-    //         setViews(data);
-    //     })
-    //     .catch((error) => {
-    //         console.error("Error fetching views:", error);
-    //     });
-    // };
 
     const fetchTableData = (restaurant_id) => {
       setLoading(true);
@@ -83,21 +65,36 @@ export default function Reservations() {
         });
     };
 
+    const getfloordata = (restaurant_id) => {
+      axiosClient
+      .get("/getfloor", { params: { restaurant_id } })
+      .then(({ data }) => {
+        if (data !== undefined) {
+          setFloorData([data.floors]);
+        } else {
+          console.error("API response is missing expected data");
+        }
+      })
+      .catch((error) => {
+          console.error("Error fetching tables:", error);
+      });
+  };
+
     
 
     const isTableInStructure = (tableNumber) => {
         // const parsedTableNumber = parseInt(tableNumber, 10);
-        return tableData.some((table) => (table.table_id) === String(tableNumber));
+        return tableData.some((table) => (table.table_id) === String(tableNumber) && (table.floor) == selectedFloor);
       };
 
       const isTableInReserved = (tableNumber) => {
         // const parsedTableNumber = parseInt(tableNumber, 10);
-        return reservedtableData.some((table) => (table.table_id) === String(tableNumber));
+        return reservedtableData.some((table) => (table.table_id) === String(tableNumber) && table.reservation_date === date);
       };
 
   return (
     <>
-      <header className="bg-white shadow">
+      <header className="bg-white shadow"> 
         <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Reservations</h1>
           <div className="loading-container">
@@ -138,10 +135,35 @@ export default function Reservations() {
             </div>
     
               
+            <div className="flex gap-5 justify-center">
+              <div className="flex items-center justify-center mb-6">
+                    {Array.from({ length: floor }, (_, index) => (
+                      <div
+                        key={index+1}
+                        className={`py-2 px-4 rounded-lg ${
+                          toggle === index + 1 ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+                        }`}
+                        onClick={() => handleToggle(index + 1)}
+                      >
+                        Floor {index + 1}
+                      </div>
+                    ))}
+                  
+                </div>  
 
-              
-
-              
+                <div className="flex items-center">
+                  <label className="flex items-center mt-negative" > Date:</label>
+                   
+                  <input
+                    type="date"
+                    onChange={(e) => setDate(e.target.value)}
+                    required
+                    className="mr-5 p-2 border rounded-lg"
+                  />
+                  
+                </div>
+            </div>
+                
 
                 <div className="grid-container">
                     {Array.from({ length: 44 }, (_, index) => {

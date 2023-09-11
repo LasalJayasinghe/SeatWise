@@ -770,6 +770,10 @@ table > tbody > tr > td {
   padding: 0px 0px;
   width: 100%;
 }
+
+.mt-negative {
+  margin-top: -15px; /* Adjust the value as needed */
+}
       
       
 
