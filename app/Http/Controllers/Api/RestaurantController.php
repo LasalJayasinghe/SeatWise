@@ -12,6 +12,7 @@ use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Models\TableStructure;
 use App\Models\TableReservation;
+use App\Models\TechnicalAssistance;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,11 @@ use App\Http\Requests\updateEmployeeRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
+use App\Http\Requests\TechnicalAssistanceRequest;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\AssistanceRequest;
+
 
 class RestaurantController extends Controller
 {
@@ -519,7 +525,7 @@ public function getTableStructures($id)
     $restaurant = Restaurants::find($id);
 
     if (!$restaurant) {
-        return response()->json(['message' => 'Restauranttt not found'], 404);
+        return response()->json(['message' => 'Restaurant not found'], 404);
     }
 
     // Fetch the table structures associated with the restaurant
@@ -717,6 +723,40 @@ public function deleteEmployee($id)
     } else {
        // return response()->json(['message' => 'Cashier record not found'], 404);
     }
+}
+
+
+public function addTechincalAssistanceRequest(TechnicalAssistanceRequest $request){
+    $data = $request->validated();
+   
+   
+    $reocrd = TechnicalAssistance::create([
+
+           'restaurant_id'=>$data['id'],
+           'issue_description'=>$data['issue'],
+           'priority'=>$data['priority'],
+        
+    ]);
+
+    $emailData = [
+        'priority' => $data['priority'],
+        'restaurantName' => $data['restaurantname'],
+        'brn' => $data['brn'],
+        // Add other email data as needed
+    ];
+
+    // Send an email using the email-related data
+    // You can use Laravel's email sending functionality here
+
+    // Example of sending an email using the Mail facade
+    Mail::to($data['email'])->send(new AssistanceRequest($emailData));
+
+    return response()->json(['message' => 'Successfully sent the email']);
+
+    // return response()->json(['user' => $user, 'token' => $token, 'redirect_url' => '/restaurant']);
+    //return redirect('/restaurant');
+    // return view('restaurant');
+    // 
 }
 
 }

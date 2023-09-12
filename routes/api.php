@@ -108,7 +108,7 @@ Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']
 Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories']);
 Route::get('/getTotalUserCount/{id}', [RestaurantController::class, 'totalUserCount']);
 Route::get('/getTotalMonthlyReservationCount/{id}', [RestaurantController::class, 'getTotalMonthlyReservationCount']);
-
+Route::post('/addTechincalAssistanceRequest', [RestaurantController::class, 'addTechincalAssistanceRequest']);
 Route::get('/restaurants/{restaurant_id}/halls', [HallController::class, 'index']);
 Route::get('/halls/{id}', [HallController::class, 'show']);
 Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
@@ -119,6 +119,7 @@ Route::get('/getReservationsByUser/{id}', [RestaurantController::class, 'getRese
 Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
 Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
+
 
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store']);

@@ -20,20 +20,31 @@ export default function TechnicalAssistance() {
         setUser(data);
       });
   }, []);
+
+
+  
+    const [selectedPriority, setSelectedPriority] = useState('low'); // Default priority is 'low'
+    // ... other state and ref declarations ...
+  
+    // Function to handle radio button click and update the selected priority
+    const handlePriorityChange = (event) => {
+      setSelectedPriority(event.target.value);
+    };
+  
     const restaurantnameRef = useRef()
     const brnRef = useRef()
     const emailRef = useRef()
     const nameRef = useRef()
     const phoneRef = useRef()
-    const passwordRef = useRef()
-    const passwordConfirmationRef = useRef();
-    const issueRef = useRef();
+     const issueRef = useRef();
     // const navigate = useNavigate();
     // const history = useHistory();
 
-
+    
     const onSubmit = (ev) => {
       ev.preventDefault()
+       
+     
 
       const payLoad = {
         id: user.id,
@@ -42,11 +53,11 @@ export default function TechnicalAssistance() {
           email: emailRef.current.value,
           name: nameRef.current.value,
           phone: phoneRef.current.value,
-          password: passwordRef.current.value,
-          password_confirmation: passwordConfirmationRef.current.value,
-          issueRef: issueRef.current.value,
+          issue: issueRef.current.value,
+          priority: selectedPriority, 
+
       }
-      axiosClient.post('/updateRestaurant', payLoad)
+      axiosClient.post('/addTechincalAssistanceRequest', payLoad)
           .then(({data}) => {
               //setUser(data.user);
               //setToken(data.token);
@@ -72,10 +83,10 @@ export default function TechnicalAssistance() {
       <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="mx-auto h-auto w-15" src={Logo} alt="Your Company" />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          
+          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
            Request Assistance 
-          </h2>
+          </h1>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
            Request Technical Assistance for your restaurant.
           </p>
@@ -89,7 +100,7 @@ export default function TechnicalAssistance() {
           method="POST"
         >
              {message && (
-  <div className="alert">
+ <div className={`p-2 ${message.includes('Successfully') ? 'bg-green-500 text-white-300' : 'bg-red-200 text-white-800'}`}>
     {message}
   </div>
 )}
@@ -211,7 +222,64 @@ export default function TechnicalAssistance() {
       
 
           </div>
-
+          <div>
+  <label
+    htmlFor="priority"
+    className="block text-sm font-medium leading-6 text-gray-900"
+  >
+    Priority
+  </label>
+  <div className="mt-2 flex items-center space-x-4">
+  <label className="inline-flex items-center">
+            <input
+              type="radio"
+              id="lowPriority"
+              name="priority"
+              value="low"
+              checked={selectedPriority === 'low'} // Check if 'low' is selected
+              onChange={handlePriorityChange} // Call the function when a radio button is clicked
+              className="form-radio h-4 w-4 text-indigo-600"
+            />
+            <span className="ml-2">Low</span>
+          </label>
+          <label className="inline-flex items-center">
+    <input
+      type="radio"
+      id="mediumPriority"
+      name="priority"
+      value="medium"
+      checked={selectedPriority === 'medium'}
+      onChange={handlePriorityChange}
+      className="form-radio h-4 w-4 text-indigo-600"
+    />
+    <span className="ml-2">Medium</span>
+  </label>
+  <label className="inline-flex items-center">
+    <input
+      type="radio"
+      id="highPriority"
+      name="priority"
+      value="high"
+      checked={selectedPriority === 'high'}
+      onChange={handlePriorityChange}
+      className="form-radio h-4 w-4 text-indigo-600"
+    />
+    <span className="ml-2">High</span>
+  </label>
+  <label className="inline-flex items-center">
+    <input
+      type="radio"
+      id="criticalPriority"
+      name="priority"
+      value="critical"
+      checked={selectedPriority === 'critical'}
+      onChange={handlePriorityChange}
+      className="form-radio h-4 w-4 text-indigo-600"
+    />
+    <span className="ml-2">Critical</span>
+  </label>
+  </div>
+</div>
           <div className="my-4">
             <label
               htmlFor="issue"
@@ -229,78 +297,10 @@ export default function TechnicalAssistance() {
     ></textarea>
             </div>
           </div>
-          <br></br>      <div>
-  <label
-    htmlFor="priority"
-    className="block text-sm font-medium leading-6 text-gray-900"
-  >
-    Priority
-  </label>
-  <div className="mt-2 flex items-center space-x-4">
-    <label className="inline-flex items-center">
-      <input
-        type="radio"
-        id="lowPriority"
-        name="priority"
-        value="low"
-        required
-        className="form-radio h-4 w-4 text-indigo-600"
-      />
-      <span className="ml-2">Low</span>
-    </label>
-    <label className="inline-flex items-center">
-      <input
-        type="radio"
-        id="mediumPriority"
-        name="priority"
-        value="medium"
-        required
-        className="form-radio h-4 w-4 text-indigo-600"
-      />
-      <span className="ml-2">Medium</span>
-    </label>
-    <label className="inline-flex items-center">
-      <input
-        type="radio"
-        id="highPriority"
-        name="priority"
-        value="high"
-        required
-        className="form-radio h-4 w-4 text-indigo-600"
-      />
-      <span className="ml-2">High</span>
-    </label>
-    <label className="inline-flex items-center">
-      <input
-        type="radio"
-        id="criticalPriority"
-        name="priority"
-        value="critical"
-        required
-        className="form-radio h-4 w-4 text-indigo-600"
-      />
-      <span className="ml-2">Critical</span>
-    </label>
-  </div>
-</div>
+          <br></br>     
+         
 <br></br>
-<div>
-  <label
-    htmlFor="attachment"
-    className="block text-sm font-medium leading-6 text-gray-900"
-  >
-    Add attachment 
-  </label>
-  <div className="mt-1">
-    <input
-      type="file"
-      id="attachment"
-      name="attachment"
-      accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" // Specify the allowed file types
-      className="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-    />
-  </div>
-</div>
+
 
 
       <br/>
@@ -309,12 +309,12 @@ export default function TechnicalAssistance() {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            > Update
+            > Request
             </button>
           </div>
         </form>
 
-        <br />
+        <br /> 
 
 
       </div>
