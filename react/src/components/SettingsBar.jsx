@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import TechnicalAssistance from "../views/TechnicalAssistance";
 
 export default function SettingsBar() {
   return (
@@ -30,7 +30,7 @@ export default function SettingsBar() {
               <img src="" alt="" />
               <span className="listItemTitle">Ratings</span>
             </Link>
-            <Link to="/home" className="listItem">
+            <Link to="/TechnicalAssistance" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Technical Assistance</span>
             </Link>
