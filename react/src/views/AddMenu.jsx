@@ -42,7 +42,7 @@ export default function AddMenu() {
 
     useEffect(() => {
         if (user && user.id) {
-          axiosClient.get(`/getCategories/${user.id}`)
+          axiosClient.get(`/getAllCategories`)
             .then(({ data }) => {
               setCategory(data);
             })
