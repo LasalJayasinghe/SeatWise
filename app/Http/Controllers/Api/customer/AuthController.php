@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Models\User;
+use App\Models\Customer;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,13 +17,19 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         /** @var \App\Models\User $user */
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            
+            // 'hometown' => $data['hometown'],
         ]);
 
+        /** @var \App\Models\Customer $customer */
+        // $customer = Customer::create([
+        //     'firstname'=>'hellow',
+        //     'lastname'=>'yellow',
+        // ]);
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
     }
