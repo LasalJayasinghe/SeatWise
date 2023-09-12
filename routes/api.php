@@ -105,6 +105,7 @@ Route::post('/addmeal', [RestaurantController::class, 'addMeal']);
 Route::get('/getMenu/{id}', [RestaurantController::class, 'getMenu']);
 Route::post('/addcategory', [RestaurantController::class, 'addcategory']);
 Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);
+Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories']);
 Route::get('/getTotalUserCount/{id}', [RestaurantController::class, 'totalUserCount']);
 Route::get('/getTotalMonthlyReservationCount/{id}', [RestaurantController::class, 'getTotalMonthlyReservationCount']);
 

@@ -354,9 +354,11 @@ table > tbody > tr > td {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 100px);
+    grid-template-columns: repeat(11, 1fr); /* 11 columns */
+    grid-template-rows: repeat(5, 1fr); /* 5 rows */
+    /* grid-template-columns: repeat(auto-fill, 100px);
     grid-auto-rows: 1fr;
-    grid-auto-columns: 1fr;
+    grid-auto-columns: 1fr; */
     gap: 5px; 
     padding: 10px;
   }

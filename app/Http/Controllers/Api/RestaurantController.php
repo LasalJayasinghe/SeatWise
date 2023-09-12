@@ -306,7 +306,19 @@ class RestaurantController extends Controller
 
     public function getCategories($id) {
      
-        $category = Category::where('restaurant_id', $id)->get();
+        $category = Meals::where('meals.restaurant_id', $id)
+            ->join('categories', 'meals.category_id', '=', 'categories.id')
+            ->distinct()
+            ->select('categories.id','categories.category')
+            ->get();
+
+        return response()->json($category);
+    
+    }
+
+    public function getAllCategories() {
+     
+        $category = Category::all();
 
         return response()->json($category);
     

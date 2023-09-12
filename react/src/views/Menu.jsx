@@ -136,6 +136,7 @@ export default function Menu() {
           axiosClient.get(`/getCategories/${user.id}`)
             .then(({ data }) => {
               setCategory(data);
+              console.log("menu:", data)
             })
             .catch((error) => {
               console.error(error);
