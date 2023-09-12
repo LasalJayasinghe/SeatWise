@@ -114,7 +114,9 @@ Route::get('/halls/{id}', [HallController::class, 'show']);
 Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
 
 Route::get('/getOrder/{id}', [RestaurantController::class, 'getOrder']);
+Route::get('/getAllOrder/{id}', [RestaurantController::class, 'getAllOrder']);
 Route::get('/getReservationsByUser/{id}', [RestaurantController::class, 'getReservationsByUser']);
+Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
 Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
 

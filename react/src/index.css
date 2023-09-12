@@ -776,6 +776,20 @@ table > tbody > tr > td {
 .mt-negative {
   margin-top: -15px; /* Adjust the value as needed */
 }
+
+.user img {
+  width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    /* @include xxl{
+      display: none;
+    }
+    @include lg{
+      display: block;
+    } */
+}
       
       
 
