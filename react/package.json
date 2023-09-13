@@ -15,7 +15,7 @@
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
     "@mui/material": "^5.14.4",
-    "@mui/x-data-grid": "^6.11.1",
+    "@mui/x-data-grid": "^6.13.0",
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-calendar": "^4.6.0",
@@ -29,7 +29,7 @@
     "react-spinners": "^0.13.8",
     "react-switch": "^7.0.0",
     "react-type-animation": "^3.1.0",
-    "recharts": "^2.7.3",
+    "recharts": "^2.8.0",
     "tall": "^8.0.0"
   },
   "devDependencies": {
