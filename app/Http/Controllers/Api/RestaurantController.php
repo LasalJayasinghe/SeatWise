@@ -331,8 +331,21 @@ class RestaurantController extends Controller
     }
 
     public function getOrder($id) {
+
+        $today = now()->toDateString();
      
-        $order = TableReservation::where('restaurant_id', $id)->get();
+        $order = TableReservation::where('restaurant_id', $id)
+            ->whereDate('reservation_date', $today)
+            ->get();
+
+        return response()->json($order);
+    
+    }
+
+    public function getAllOrder($id) {
+     
+        $order = TableReservation::where('restaurant_id', $id)
+            ->get();
 
         return response()->json($order);
     
@@ -353,7 +366,8 @@ class RestaurantController extends Controller
         // $restaurantId = $request->input('restaurant_id');
 
         $reservations = TableReservation::where('table_reservations.restaurant_id', $id)
-            ->join('users', 'table_reservations.reservant_name', '=', 'users.name')
+            ->join('users', 'table_reservations.reservant_ID', '=', 'users.id')
+            ->distinct()
             ->select('users.*')
             ->get();
         return response()->json($reservations);
@@ -395,6 +409,19 @@ class RestaurantController extends Controller
             return response()->json(['error' => 'Profile not found'], 404);
         }
         
+    }
+
+    public function getCustomer(Request $request)
+    {
+        
+        $restaurantId = $request->input('restaurant_id');
+
+        $tables = TableReservation::where('table_reservations.restaurant_id', $restaurantId)
+            ->join('users', 'table_reservations.reservant_ID', '=', 'users.id')
+            ->distinct()
+            ->select('users.*')
+            ->get();
+        return response()->json($tables);
     }
 
 

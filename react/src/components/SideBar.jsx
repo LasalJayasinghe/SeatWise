@@ -13,13 +13,13 @@ export default function SideBar() {
               <img src="" alt="" />
               <span className="listItemTitle">Orders</span>
             </Link>
-            <Link to="/people" className="listItem">
-              <img src="" alt="" />
-              <span className="listItemTitle">People</span>
-            </Link>
             <Link to="/orderhistory" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Order History</span>
+            </Link>
+            <Link to="/people" className="listItem">
+              <img src="" alt="" />
+              <span className="listItemTitle">People</span>
             </Link>
             <Link to="/requets" className="listItem">
               <img src="" alt="" />
