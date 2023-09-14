@@ -2,11 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\RestaurantController;
-use App\Http\Controllers\Api\cp;
-use App\Http\Controllers\Api\HallController;
+use App\Http\Controllers\Api\restaurant\AuthController;
+use App\Http\Controllers\Api\restaurant\UserController;
+use App\Http\Controllers\Api\restaurant\RestaurantController;
+use App\Http\Controllers\Api\restaurant\WaitlistController;
+use App\Http\Controllers\Api\restaurant\cp;
+use App\Http\Controllers\Api\restaurant\HallController;
 
 
 
