@@ -23,5 +23,6 @@ class Meals extends Model
         'potion',
         'price',
         'description',
+        'availability'
     ];
 }

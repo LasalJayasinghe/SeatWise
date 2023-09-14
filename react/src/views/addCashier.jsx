@@ -103,10 +103,20 @@ export default function AddCashier() {
   } 
 
     return (
+    <>
+      <header className="bg-white shadow">
+    <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Employees</h1>
+      <div className="loading-container">
+        {/* {loading && <p className="loading-text">Loading...</p>} */}
+      </div>
+    </div>
+    </header>
+
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
          
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-0 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create Cashier Profile
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
@@ -231,5 +241,6 @@ export default function AddCashier() {
       
       </div>
     </div>
+    </>
     );
 }

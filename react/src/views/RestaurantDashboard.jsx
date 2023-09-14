@@ -20,19 +20,19 @@ export default function RestaurantDashboard() {
   const {user, setUser} = useStateContext();
   const [reservations, setReservations] = useState([]);
 
-//   useEffect(() => {
-//     axiosClient.get('/user')
-//       .then(({ data }) => {
-//         setUser(data);
-//       });
-// }, []);
+  useEffect(() => {
+    axiosClient.get('/user')
+      .then(({ data }) => {
+        setUser(data);
+      });
+}, []);
 
   useEffect(() => {
     if (user && user.id) {
     axiosClient.get(`/getReservationsByUser/${user.id}`)
       .then(({ data }) => {
         setReservations(data);
-        console.log("reservation:", data)
+        // console.log("reservation:", data)
       })
       .catch((error) => {
         console.error(error);
@@ -61,7 +61,7 @@ export default function RestaurantDashboard() {
 
                   {/* Top deals menu start */}
                     {reservations.map( (reservations) =>(
-                      <div className="listItem" key={user.id}>
+                      <div className="listItem" key={reservations.id}>
                         <div className="user">
                           <img src="src/assets/slide2.png" alt="" />
                           {/* <img src={user.img} alt="" /> */}
