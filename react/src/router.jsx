@@ -39,6 +39,8 @@ import UpdateEmployee from './views/updateEmployee.jsx';
 import Settings from './views/Settings.jsx';
 import CashierUpdate from './views/CashierUpdate.jsx';
 import TechnicalAssistance from './views/TechnicalAssistance.jsx';
+import ViewComplaints  from './views/ViewComplaints.jsx';
+import AddOffer  from './views/addOffer.jsx';
 
 const router = createBrowserRouter([
     {
@@ -152,6 +154,11 @@ const router = createBrowserRouter([
                 path: "/addCashier",
                 element: <AddCashier />, 
             },
+
+            {
+                path: "/addOffer",
+                element: <AddOffer />, 
+            },
             {
                 path: "/menu",
                 element: <Menu />, 
@@ -173,6 +180,13 @@ const router = createBrowserRouter([
                 path: "/TechnicalAssistance",
                 element: <TechnicalAssistance/>, 
             },
+             
+
+            {
+                path: "/ViewComplaints",
+                element: <ViewComplaints/>, 
+            },
+
 
             {
                 path: "/orderhistory",

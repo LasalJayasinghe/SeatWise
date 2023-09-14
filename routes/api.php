@@ -74,6 +74,7 @@ Route::post('/handleCheckIn/{reservationId}',[RestaurantController::class, 'Hand
 
 // Route::middleware('auth:api')->get('/views', [RestaurantController::class, 'getViews']);
 Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);
+Route::get('/getComplaints/{id}', [RestaurantController::class, 'getComplaints']);
 Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
 Route::get('/getReservations/{restaurant_id}', [RestaurantController::class, 'getReservations']);
 Route::get('/getStatus/{reservationId}', [RestaurantController::class, 'getStatus']);

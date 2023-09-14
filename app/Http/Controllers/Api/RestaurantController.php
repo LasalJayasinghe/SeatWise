@@ -8,14 +8,17 @@ use http\Env\Response;
 use App\Models\Profile;
 use App\Models\Cashiers;
 use App\Models\Category;
+use App\Models\Complaints;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Models\TableStructure;
+use App\Mail\AssistanceRequest;
 use App\Models\TableReservation;
 use App\Models\TechnicalAssistance;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\addMealRequest;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addTableRequest;
@@ -26,11 +29,9 @@ use App\Http\Requests\setupProfileRequest;
 use App\Http\Requests\updateEmployeeRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
+
 use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
-use Illuminate\Support\Facades\Mail;
-
-use App\Mail\AssistanceRequest;
 
 
 class RestaurantController extends Controller
@@ -712,6 +713,7 @@ public function addTechincalAssistanceRequest(TechnicalAssistanceRequest $reques
     ]);
 
     $emailData = [
+        'email' => $data['email'],
         'priority' => $data['priority'],
         'restaurantName' => $data['restaurantname'],
         'brn' => $data['brn'],
@@ -731,5 +733,18 @@ public function addTechincalAssistanceRequest(TechnicalAssistanceRequest $reques
     // return view('restaurant');
     // 
 }
+
+public function getComplaints($id) {
+    
+    // $restaurant = Restaurants::find($id);
+    $cashiers = Complaints::where('restaurantID', $id)
+    ->join('customer', 'complaints.userID', '=', 'customer.userID')
+    ->select('complaints.*', 'customer.firstname as user_email')
+    ->get();
+
+    return response()->json($cashiers);
+
+ 
+ }
 
 }

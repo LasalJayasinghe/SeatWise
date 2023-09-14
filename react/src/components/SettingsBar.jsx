@@ -14,7 +14,7 @@ export default function SettingsBar() {
               <img src="" alt="" />
               <span className="listItemTitle">Discounts</span>
             </Link>
-            <Link to="/people" className="listItem">
+            <Link to="/addOffer" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Offers</span>
             </Link>
@@ -22,7 +22,7 @@ export default function SettingsBar() {
               <img src="" alt="" />
               <span className="listItemTitle">Advertisements</span>
             </Link>
-            <Link to="/requets" className="listItem">
+            <Link to="/ViewComplaints" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Complaints</span>
             </Link>
