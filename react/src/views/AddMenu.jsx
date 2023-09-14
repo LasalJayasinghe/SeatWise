@@ -89,13 +89,13 @@ export default function AddMenu() {
         ev.preventDefault()
   
         const payLoad = {
-            restaurant_id: user.id,
             category: addCategoryRef.current.value,        
         }
         axiosClient.post('/addcategory', payLoad)
             .then(({data}) => {
                 handleModalClose();
                 setMessage(data.message); 
+                window.location.reload();
                 // navigate('/Menu');
             })
             .catch(err => {

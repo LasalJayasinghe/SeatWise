@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RestaurantController;
-use App\Http\Controllers\Api\cp;
+// use App\Http\Controllers\Api\cp;
 use App\Http\Controllers\Api\HallController;
 
 
@@ -119,6 +119,7 @@ Route::get('/getReservationsByUser/{id}', [RestaurantController::class, 'getRese
 Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
 Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
+Route::post('/updatemealavailability', [RestaurantController::class, 'updateMealAvailability']);
 
 
 // Waitlist

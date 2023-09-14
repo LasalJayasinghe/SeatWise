@@ -298,11 +298,9 @@ class RestaurantController extends Controller
     public function addcategory(addCategoryRequest $request)
     {
         $data = $request->validated();
-        $restaurantId = $data['restaurant_id'];
 
         /** @var Category $user */
         $user = Category::create([
-            'restaurant_id' => $restaurantId,
             'category' => $data['category'],
         ]);
 
@@ -423,6 +421,76 @@ class RestaurantController extends Controller
             ->get();
         return response()->json($tables);
     }
+
+    public function updateMealAvailability(Request $request)
+    {
+        $mealId = $request->input('id');
+        $newAvailability = $request->input('availability'); 
+
+        $meal = Meals::find($mealId);
+        if($meal){
+            $meal->update([
+                'availability' => $newAvailability
+            ]);
+        }
+        
+        return response()->json(['message' => 'Meal Added Successfully']);
+
+    }
+
+    // public function updateMealAvailability(Request $request)
+    // {
+    //     $mealId = $request->input('id');
+    //     $newAvailability = $request->input('availability'); 
+
+    //     $meal = Meals::where('id', $mealId)->first();
+    //     if($meal){
+    //         $meal->update([
+    //             'availability' => $newAvailability
+    //         ]);
+    //     }
+        
+    //     return response()->json(['message' => 'Meal Added Successfully']);
+
+    // }
+
+// public function updateMealAvailability($id)
+// {
+    // $request->validate([
+    //     'id' => 'required|integer',
+    //     'availability' => 'required|boolean', // Assuming availability is a boolean field
+    // ]);
+
+    // $mealId = $request->input('id');
+    // $newAvailability = $request->input('availability');
+
+    // $meal = Meals::find($mealId);
+
+    // if (!$meal) {
+    //     return response()->json(['message' => 'Meal not found'], 404);
+    // }
+
+    // try {
+    //     $meal->update([
+    //         'availability' => $newAvailability,
+    //     ]);
+
+    //     return response()->json(['message' => 'Meal updated successfully']);
+    // } catch (\Exception $e) {
+    //     return response()->json(['message' => 'Failed to update meal'], 500);
+    // }
+
+    // $mealAvailability = Meals::find($id);
+    // if ($mealAvailability) {
+    //     $mealAvailability->update([
+    //         'availability' => $data['availability'],
+            
+    //     ]);
+
+
+    // }
+// }
+
 
 
 
