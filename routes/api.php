@@ -59,3 +59,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 // Additional routes for restaurant data
 Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
+
