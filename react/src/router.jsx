@@ -41,6 +41,7 @@ import CashierUpdate from './views/CashierUpdate.jsx';
 import TechnicalAssistance from './views/TechnicalAssistance.jsx';
 import ViewComplaints  from './views/ViewComplaints.jsx';
 import AddOffer  from './views/addOffer.jsx';
+import ViewOffers  from './views/ViewOffers.jsx';
 
 const router = createBrowserRouter([
     {
@@ -153,6 +154,11 @@ const router = createBrowserRouter([
             {
                 path: "/addCashier",
                 element: <AddCashier />, 
+            },
+
+            {
+                path: "/ViewOffers",
+                element: <ViewOffers />, 
             },
 
             {

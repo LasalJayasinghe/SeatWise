@@ -580,6 +580,14 @@ class RestaurantController extends Controller
     }
 
 
+    public function getOffers($id) {
+    
+        // $restaurant = Restaurants::find($id);
+        $offers = Offers::where('restaurant_id', $id)->get();
+        return response()->json($offers);
+ 
+     
+     }
     public function displayCashier($id) {
     
      

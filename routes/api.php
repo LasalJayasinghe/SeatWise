@@ -74,6 +74,7 @@ Route::post('/handleCheckIn/{reservationId}',[RestaurantController::class, 'Hand
 
 // Route::middleware('auth:api')->get('/views', [RestaurantController::class, 'getViews']);
 Route::get('/getCashiers/{id}', [RestaurantController::class, 'getCashiers']);
+Route::get('/getOffers/{id}', [RestaurantController::class, 'getOffers']);
 Route::get('/getComplaints/{id}', [RestaurantController::class, 'getComplaints']);
 Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
 Route::get('/getReservations/{restaurant_id}', [RestaurantController::class, 'getReservations']);
@@ -82,7 +83,8 @@ Route::get('/getStatus/{reservationId}', [RestaurantController::class, 'getStatu
 Route::get('/restaurants/{restaurant_id}', [RestaurantController::class, 'showRestaurantx']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{restaurant_id}/table-structures', [RestaurantController::class, 'getTableStructures']);
 Route::get('/restaurants/{restaurant_id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
-Route::post('/updateCashier', [RestaurantController::class, 'updateCashier']);
+Route::post('/updateCashier', [RestaurantController::class, 'updateOffer']);
+Route::post('/updateOffer', [RestaurantController::class, 'updateCashier']);
 Route::post('/deleteEmployee/{cashierId}', [RestaurantController::class, 'deleteEmployee']);
 Route::get('/getCheckInCount/{restaurant_id}', [RestaurantController::class, 'getCheckInCount']);
 Route::get('/getCheckOutCount/{restaurant_id}', [RestaurantController::class, 'getCheckOutCount']);

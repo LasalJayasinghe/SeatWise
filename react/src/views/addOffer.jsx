@@ -106,7 +106,7 @@ export default function AddOffer() {
         offer_title  : OfferTitleRef.current.value, 
         offer_percentage:OfferPercentageRef.current.value, 
         offer_description :OfferDescriptionRef.current.value, 
-         start_date,
+        start_date,
         end_date,
         days_of_week:DaysRef.current.value,
         minimum_purchase_amount:MinAmountRef.current.value, 

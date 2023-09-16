@@ -11,7 +11,7 @@ export default function SettingsBar() {
           <br />
           <br />
          
-            <Link to="/addOffer" className="listItem">
+            <Link to="/ViewOffers" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Offers</span>
             </Link>
