@@ -10,12 +10,11 @@ use App\Http\Controllers\Api\customer\WaitlistController;
 use App\Http\Controllers\Api\customer\MealController;
 use App\Http\Controllers\Api\customer\AllMealsController;
 use App\Http\Controllers\Api\customer\TablefortwoController;
-use App\Http\Controllers\Api\restaurant\AuthController;
-use App\Http\Controllers\Api\restaurant\UserController;
-use App\Http\Controllers\Api\restaurant\RestaurantController;
-use App\Http\Controllers\Api\restaurant\WaitlistController;
-use App\Http\Controllers\Api\restaurant\cp;
-use App\Http\Controllers\Api\restaurant\HallController;
+// use App\Http\Controllers\Api\restaurant\AuthController;
+// use App\Http\Controllers\Api\restaurant\UserController;
+// use App\Http\Controllers\Api\restaurant\RestaurantController;
+// use App\Http\Controllers\Api\restaurant\WaitlistController;
+// use App\Http\Controllers\Api\restaurant\HallController;
 
 
 
