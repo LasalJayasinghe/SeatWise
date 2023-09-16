@@ -64,7 +64,7 @@ export default function RestaurantDefaultLayout() {
 
 return (
 <div>
-  <Disclosure as="nav" className="bg-white">
+  <Disclosure as="nav" className="bg-white" style={{ position: 'fixed',width:'100%'}}>
       {({ open }) => (
         <>
           {/* Desktop view */}

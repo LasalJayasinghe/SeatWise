@@ -77,14 +77,14 @@ export default function TechnicalAssistance() {
     return (
       <div className="flex">
       {/* Sidebar */}
-      <div className="menuContainer">
+      <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
         <SettingsBar />
       </div>
       <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           
-          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h1 className="mt-10 text-center text-4xl font-bold leading-12 tracking-tight text-gray-900">
            Request Assistance 
           </h1>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">

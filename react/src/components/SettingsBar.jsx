@@ -3,8 +3,8 @@ import TechnicalAssistance from "../views/TechnicalAssistance";
 
 export default function SettingsBar() {
   return (
-    <div className="menu">
-        <div className="item">
+    <div className="menu" >
+        <div className="item" >
           {/* <span className="title">MAIN</span> */}
           <br />
           <br />
