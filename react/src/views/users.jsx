@@ -14,13 +14,13 @@ export default function Users(){
 	const getUsers = () => {
 		setLoading(true)
 		axiosClient.get('/users')
-		  .then(({ data }) => {
+		.then(({ data }) => {
 			setLoading(false)
 			setUsers(data.data)
-		  })
-		  .catch(() => {
-			setLoading(false)
-		  })
+		})
+		.catch(() => {
+		setLoading(false)
+		})
 	}
 
 
