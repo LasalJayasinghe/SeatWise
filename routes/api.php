@@ -103,6 +103,7 @@ Route::get('/getRecentBookings/{restaurant_id}', [RestaurantController::class, '
 // });
 
 Route::post('/addmeal', [RestaurantController::class, 'addMeal']);
+Route::post('/addOffer', [RestaurantController::class, 'addOffer']);
 Route::get('/getMenu/{id}', [RestaurantController::class, 'getMenu']);
 Route::post('/addcategory', [RestaurantController::class, 'addcategory']);
 Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);

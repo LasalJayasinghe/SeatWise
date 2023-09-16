@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\View;
 use App\Models\Meals;
+use App\Models\Offers;
 use http\Env\Response;
 use App\Models\Profile;
 use App\Models\Cashiers;
@@ -21,15 +22,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\addMealRequest;
 use App\Http\Requests\addViewRequest;
+use App\Http\Requests\addOfferRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\addCategoryRequest;
 use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
 use App\Http\Requests\updateEmployeeRequest;
+
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
-
 use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
 
@@ -528,6 +530,46 @@ class RestaurantController extends Controller
         
     }
 
+
+
+    public function addOffer(addOfferRequest $request){
+        // Make sure the user is authenticated
+  
+        $data = $request->validated();
+       // $user = auth('restaurants')->user();
+       // $restaurant = Restaurants::where('email', $user->email)->first();
+      
+      // $restaurant = auth('restaurants')->user();
+      $start_date = date('Y-m-d H:i:s', strtotime($data['start_date']));
+      $end_date = date('Y-m-d H:i:s', strtotime($data['end_date']));
+      $restaurant = auth()->guard('restaurants')->user();
+    
+      $restaurantId = $data['restaurant_id'];
+      
+        $user = Offers::create ([
+           
+           'restaurant_id' => $restaurantId,
+           // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
+           
+            'meal' => $data['meal'],
+            'offer_type' => $data['offer_type'],
+            'offer_title' => $data['offer_title'],
+            'offer_percentage' => $data['offer_percentage'],
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'days_of_week' => $data['days_of_week'],
+            'minimum_purchase_amount' => $data['minimum_purchase_amount'],
+            'offer_description' => $data['offer_description'],
+          
+           
+       ]);
+      // return redirect('/restaurant');
+      // $token = $user->createToken('main')->plainTextToken;
+      return response()->json(['message' => 'Successfully added']);
+       //return response(compact('user', 'token'));
+
+       
+   }
     public function getCashiers($id) {
     
        // $restaurant = Restaurants::find($id);

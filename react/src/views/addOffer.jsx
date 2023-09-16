@@ -78,8 +78,8 @@ export default function AddOffer() {
      const [successMessage, setSuccessMessage] = useState('');
 
     const {user} = useStateContext();
-    const [startDate, setStartDate] = useState(null);
-    const [EndDate, setEndDate] = useState(null);
+    const [start_date, setStartDate] = useState(null);
+    const [end_date, setEndDate] = useState(null);
    
     
 
@@ -101,14 +101,15 @@ export default function AddOffer() {
 
       const payLoad = {
         restaurant_id: user.id,
-        cashiername: cashiernameRef.current.value,
-        OfferTitle  : OfferTitleRef.current.value, 
-        OfferPercentage:OfferPercentageRef.current.value, 
-        OfferDescription :OfferDescriptionRef.current.value, 
-        StartDate:StartDateRef.current.value, 
-        EndDate:EndDateRef.current.value,
-        Days:DaysRef.current.value,
-        MinAmount:MinAmountRef.current.value, 
+        meal: MealRef.current.value,
+        offer_type: OfferTypeRef.current.value,
+        offer_title  : OfferTitleRef.current.value, 
+        offer_percentage:OfferPercentageRef.current.value, 
+        offer_description :OfferDescriptionRef.current.value, 
+         start_date,
+        end_date,
+        days_of_week:DaysRef.current.value,
+        minimum_purchase_amount:MinAmountRef.current.value, 
          
       }
 
@@ -194,7 +195,7 @@ export default function AddOffer() {
         >
           <option value="">Select a meal</option>
           {menu.map((mealOption) => (
-            <option key={mealOption.id} value={mealOption.id}>
+            <option key={mealOption.id} value={mealOption.name}>
               {mealOption.name}
             </option>
           ))}
@@ -284,12 +285,13 @@ export default function AddOffer() {
 				<div className="mt-1">
         <DatePicker
       ref={StartDateRef}
-      id="StartDate"
-      name="StartDate"
+      id="start_date"
+      name="start_date"
+     
       required
       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      selected={startDate} // Pass the selected date here
-      onChange={date => setStartDate(date)} // Handle date selection
+      selected={start_date} // Pass the selected date here
+      onChange={start_date=> setStartDate(start_date)} // Handle date selection
     />
             </div>
 		
@@ -305,12 +307,13 @@ export default function AddOffer() {
 				<div className="mt-1">
         <DatePicker
       ref={EndDateRef}
-      id="EndDate"
-      name="EndDate"
+      id="end_date"
+      name="end_date"
+      
       required
       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      selected={EndDate} // Pass the selected date here
-      onChange={date => setEndDate(date)} // Handle date selection
+      selected={end_date} // Pass the selected date here
+      onChange={end_date=> setEndDate(end_date)} // Handle date selection
     />
             </div>
 			
