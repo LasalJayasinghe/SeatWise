@@ -144,44 +144,9 @@ export default function CashierUpdateModal({ isOpen, onCancel, onConfirm ,cashie
           </div>
 
          
-          <div>
-		<label htmlFor='password' className="block text-sm font-medium leading-6 text-gray-900">
-				Password 
-				<div className="mt-2">
-                 <input
-                ref={passwordRef}
-                id="password"
-                name="password"
-                type="password"
-        
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-			</label>
 
 
-	</div>
 
-
-    <div>
-            <label
-              htmlFor="passwordConfirmation"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >Confirm Password
-            </label>
-            <div className="mt-1">
-              <input
-                ref={passwordConfirmationRef}
-                id="passwordConfirmation"
-                name="passwordConfirmation"
-                type="password"
-                autoComplete="passwordConfirmation"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
 
           <div className="flex space-x-4">
     <button

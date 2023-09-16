@@ -833,8 +833,8 @@ public function getComplaints($id) {
     
     // $restaurant = Restaurants::find($id);
     $cashiers = Complaints::where('restaurantID', $id)
-    ->join('customer', 'complaints.userID', '=', 'customer.userID')
-    ->select('complaints.*', 'customer.firstname as user_email')
+    ->join('users', 'complaints.userID', '=', 'users.id')
+    ->select('complaints.*','users.name as name', 'users.email as user_email')
     ->get();
 
     return response()->json($cashiers);
