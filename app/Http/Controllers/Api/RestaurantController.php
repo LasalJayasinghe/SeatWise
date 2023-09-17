@@ -26,10 +26,11 @@ use App\Http\Requests\addOfferRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
 use App\Http\Requests\addCategoryRequest;
+use App\Http\Requests\updateOfferRequest;
 use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
-use App\Http\Requests\updateEmployeeRequest;
 
+use App\Http\Requests\updateEmployeeRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
@@ -542,9 +543,9 @@ class RestaurantController extends Controller
       // $restaurant = auth('restaurants')->user();
       $start_date = date('Y-m-d H:i:s', strtotime($data['start_date']));
       $end_date = date('Y-m-d H:i:s', strtotime($data['end_date']));
-      $restaurant = auth()->guard('restaurants')->user();
+      $restaurant = auth()->guard('offers')->user();
     
-      $restaurantId = $data['restaurant_id'];
+      $restaurantId = $data['restaurant_id']; 
       
         $user = Offers::create ([
            
@@ -597,7 +598,15 @@ class RestaurantController extends Controller
      
      }
 
-
+  
+     public function displayOffer($id) {
+    
+     
+        $offer = Offers::where('id', $id)->get();
+        return response()->json($offer);
+ 
+     
+     }
 
     public function showRestaurant($id)
     {
@@ -817,6 +826,47 @@ public function getStatus($reservationId,$reservation_date)
         'email' => $data['email'],
         'cashier_phone_number' => $data['phone'],
         'password' => bcrypt($data['password']),
+    ]);
+    return response()->json(['message' => ' Successfully updated']);
+   }
+
+   else{
+    return response()->json(['message' => 'Updatation failed']);  
+
+
+
+
+
+   }
+ 
+}
+
+
+public function updateOffer(updateOfferRequest $request) {
+    $data = $request->validated();
+    /** @var Offers $offer */
+    //$restaurant = auth()->guard('restaurants')->user();
+   $offerId = $data['id'];
+   $offer = Offers::find($offerId);
+   // $restaurant = Restaurant::find($id);
+   if ($offer) {
+    $start_date = date('Y-m-d H:i:s', strtotime($data['start_date']));
+    $end_date = date('Y-m-d H:i:s', strtotime($data['end_date']));
+    $offer->update([
+        //'id' => $restaurantId,
+       // 'restaurant_id' => $restaurantId,
+           // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
+           
+            'meal' => $data['meal'],
+            'offer_type' => $data['offer_type'],
+            'offer_title' => $data['offer_title'],
+            'offer_percentage' => $data['offer_percentage'],
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'days_of_week' => $data['days_of_week'],
+            'minimum_purchase_amount' => $data['minimum_purchase_amount'],
+            'offer_description' => $data['offer_description'],
+        
     ]);
     return response()->json(['message' => ' Successfully updated']);
    }

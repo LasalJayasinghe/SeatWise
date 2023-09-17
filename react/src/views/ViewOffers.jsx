@@ -3,7 +3,7 @@ import { useStateContext } from "../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
-import CashierUpdateModal from "../components/CashierUpdateModal";
+import OffersUpdateModal from "../components/OffersUpdateModal";
 
 import {
     DataGrid,
@@ -108,7 +108,7 @@ const handleUpdate = (offerId) => {
 
 
 
-  axiosClient.get(`/displayOffers/${offerId}`)
+  axiosClient.get(`/displayOffer/${offerId}`)
     .then(({ data }) => {
         setSelectedOfferForUpdate(data);
       setShowUpdateModal(true);
@@ -134,6 +134,16 @@ const handleUpdate = (offerId) => {
     
  
       const payLoad = {
+        id: updatedOffersData.id,
+        meal: updatedOffersData.meal,
+        offer_type: updatedOffersData.offer_type,
+        offer_title: updatedOffersData.offer_title,
+        offer_percentage: updatedOffersData.offer_percentage,
+        offer_description: updatedOffersData.offer_description,
+        start_date: updatedOffersData.start_date,
+        end_date: updatedOffersData.end_date,
+        days_of_week: updatedOffersData.days_of_week,
+        minimum_purchase_amount: updatedOffersData.minimum_purchase_amount,
       
       };
       console.log(updatedOffersData.id);
@@ -145,7 +155,7 @@ const handleUpdate = (offerId) => {
           if (user && user.id) {
             axiosClient.get(`/getOffers/${user.id}`)
               .then(({ data }) => {
-                setCashiers(data);
+                setOffers(data);
                 window.location.reload(); 
               })
               .catch((error) => {
@@ -328,11 +338,11 @@ Remove
             </div>
 
             </div>
-            <CashierUpdateModal
+            <OffersUpdateModal
         isOpen={showUpdateModal}
         onCancel={cancelUpdate}
         onConfirm={confirmUpdate}
-        offers={setSelectedOfferForUpdate}
+        Offer={selectedOfferForUpdate}
         
         
        
