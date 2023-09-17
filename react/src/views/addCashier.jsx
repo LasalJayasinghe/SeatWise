@@ -58,6 +58,7 @@ export default function AddCashier() {
     //const nameRef = useRef()
     const phoneRef = useRef()
     const passwordRef = useRef()
+    const photoRef = useRef();
     const [errors, setErrors] = useState(null);
    // const {setUser, setToken} = useStateContext();
     // const navigate = useNavigate();
@@ -66,42 +67,44 @@ export default function AddCashier() {
      const [successMessage, setSuccessMessage] = useState('');
 
     const {user} = useStateContext();
-
+    const handlePhotoChange = (e) => {
+      // Update the state with the selected photo file
+      photoRef.current = e.target.files[0];
+    };
 
     const onSubmit = (ev) => {
-      ev.preventDefault()
-
-      const payLoad = {
-        restaurant_id: user.id,
-        cashiername: cashiernameRef.current.value,
-        email: emailRef.current.value,
-        //name: nameRef.current.value,
-        phone: phoneRef.current.value,
-        password: passwordRef.current.value,
-         
+      ev.preventDefault();
+  
+      const formData = new FormData();
+      formData.append("restaurant_id", user.id);
+      formData.append("cashiername", cashiernameRef.current.value);
+      formData.append("email", emailRef.current.value);
+      formData.append("phone", phoneRef.current.value);
+      formData.append("password", passwordRef.current.value);
+      if (photoRef.current) {
+        // Append the photo if it's selected
+        formData.append("photo", photoRef.current);
       }
-      axiosClient.post('/addCashier', payLoad)
-          .then(({data}) => {
-            //console.log(data);
-           setMessage(data.message)
-           console.log(data.message); 
-            // Set the message from the response 
-            //history.push('/Employees'); // 
-            //navigate('/Employees'); 
-            setTimeout(() => {
-              navigate('/Employees');
-            }, 2000);
-
-             
-          })
-          .catch(err => {
-              const response = err.response;
-              if(response && response.status == 422) {
-                  setErrors(response.data.errors);
-              }
-          }) 
-  } 
-
+  
+      axiosClient
+        .post("/addCashier", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set the content type for file upload
+          },
+        })
+        .then(({ data }) => {
+          setMessage(data.message);
+          setTimeout(() => {
+            navigate("/Employees");
+          }, 2000);
+        })
+        .catch((err) => {
+          const response = err.response;
+          if (response && response.status === 422) {
+            setErrors(response.data.errors);
+          }
+        });
+    };
     return (
     <>
       <header className="bg-white shadow">
@@ -221,6 +224,25 @@ export default function AddCashier() {
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+            </div>
+			</label>
+
+
+	</div>
+
+
+  <div>
+		<label htmlFor='photo' className="block text-sm font-medium leading-6 text-gray-900">
+			Upload image 
+				<div className="mt-2">
+        <input
+      type="file"
+      id="photo"
+      name="photo"
+      accept="image/*" 
+      required
+      onChange={(e) => handlePhotoChange(e)}
+    />
             </div>
 			</label>
 

@@ -502,34 +502,37 @@ class RestaurantController extends Controller
        /**Cashier controller items.................................................. */
 
     
-    public function addCashier(addCashierRequest $request){
-         // Make sure the user is authenticated
-   
-         $data = $request->validated();
-        // $user = auth('restaurants')->user();
-        // $restaurant = Restaurants::where('email', $user->email)->first();
-       
-       // $restaurant = auth('restaurants')->user();
-       $restaurant = auth()->guard('restaurants')->user();
+       public function addCashier(addCashierRequest $request) {
+        // Make sure the user is authenticated
     
-       $restaurantId = $data['restaurant_id'];
-       
-         $user = Cashiers::create ([
-            'restaurant_id' => $restaurantId,
-            // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
-            
-             'cashier_name' => $data['cashiername'],
-             'email' => $data['email'],
-             'cashier_phone_number' => $data['phone'],
-             'password' => bcrypt($data['password']),
-        ]);
-       // return redirect('/restaurant');
-       // $token = $user->createToken('main')->plainTextToken;
-       return response()->json(['message' => 'Successfully added']);
-        //return response(compact('user', 'token'));
-
+        $data = $request->validated();
+        $restaurant = auth()->guard('restaurants')->user();
+        $restaurantId = $data['restaurant_id'];
         
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/cashiers/', $filename); 
+            
+            $photoPath = 'uploads/cashiers/' . $filename;
+        }
+        // Check if a photo file was uploaded
+        
+    
+        $user = Cashiers::create([
+            'restaurant_id' => $restaurantId,
+            'cashier_name' => $data['cashiername'],
+            'email' => $data['email'],
+            'cashier_phone_number' => $data['phone'],
+            'password' => bcrypt($data['password']),
+            'photo' => $photoPath ?? null,
+        ]);
+    
+        return response()->json(['message' => 'Successfully added']);
     }
+    
+/////////////
 
 
 
@@ -866,6 +869,7 @@ public function updateOffer(updateOfferRequest $request) {
             'days_of_week' => $data['days_of_week'],
             'minimum_purchase_amount' => $data['minimum_purchase_amount'],
             'offer_description' => $data['offer_description'],
+            
         
     ]);
     return response()->json(['message' => ' Successfully updated']);
