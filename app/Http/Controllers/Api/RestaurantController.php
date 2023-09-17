@@ -713,11 +713,62 @@ public function getAvailableTables(Request $request, $restaurantId)
         return response(compact('user', 'token'));
     }
 
-    public function getReservations($restaurant_id) //get the cashier id
+    public function getReservations($restaurant_id,$filter,$input) 
     {
-
+           if($input){
         // $restaurant = Restaurants::find($id);
-        $reservation = TableReservation::where('restaurant_id', $restaurant_id)->get();
+        if ($filter == "all" ) {
+            $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+            ->where('reservationNumber',$input)
+            ->get();
+        } else if ($filter == "checkedIn") {
+            $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('status', 1)
+                ->where('reservationNumber',$input)
+                ->get();
+        } else if ($filter == "checkedOut") {
+            $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('reservationNumber',$input)
+                ->get();
+        } else if ($filter == "pending") {
+            $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('status', 2)
+                ->where('reservationNumber',$input)
+                ->get();
+        } 
+
+       
+           }
+           
+
+           else
+
+           {
+
+            if ($filter == "all" ) {
+                $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+               
+                ->get();
+            } else if ($filter == "checkedIn") {
+                $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                    ->where('status', 1)
+                  
+                    ->get();
+            } else if ($filter == "checkedOut") {
+                $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('status', 0)
+                    ->get();
+            } else if ($filter == "pending") {
+                $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                    ->where('status', 2)
+                 
+                    ->get();
+            } 
+
+           
+
+
+           }
 
         return response()->json($reservation);
     

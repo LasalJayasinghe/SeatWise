@@ -78,7 +78,7 @@ Route::get('/getOffers/{id}', [RestaurantController::class, 'getOffers']);
 Route::get('/getComplaints/{id}', [RestaurantController::class, 'getComplaints']);
 Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
 Route::get('/displayOffer/{offerId}', [RestaurantController::class, 'displayOffer']);
-Route::get('/getReservations/{restaurant_id}', [RestaurantController::class, 'getReservations']);
+Route::get('/getReservations/{restaurant_id}/{filter}/{input}', [RestaurantController::class, 'getReservations']);
 Route::get('/getStatus/{reservationId}', [RestaurantController::class, 'getStatus']);
 //Route::get('/restaurants/{id}', [RestaurantController::class, 'showRestaurant']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{restaurant_id}', [RestaurantController::class, 'showRestaurantx']); // This route fetches a single restaurant by ID
