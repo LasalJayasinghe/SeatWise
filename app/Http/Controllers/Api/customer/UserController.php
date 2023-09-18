@@ -1,14 +1,9 @@
 <?php
 
-<<<<<<<< HEAD:app/Http/Controllers/Api/customer/UserController.php
 namespace App\Http\Controllers\Api\customer;
-========
-namespace App\Http\Controllers\Api\restaurant;
->>>>>>>> restaurantcopy:app/Http/Controllers/Api/restaurant/UserController.php
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;

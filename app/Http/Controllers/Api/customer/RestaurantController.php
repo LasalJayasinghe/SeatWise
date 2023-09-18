@@ -86,4 +86,3 @@ public function getAvailableTables(Request $request, $restaurantId)
 
 
 }
-
