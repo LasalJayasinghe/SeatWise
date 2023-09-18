@@ -1,11 +1,18 @@
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-/* @import '@tailwindcss/forms'; */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
+/* Import Tailwind CSS */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/* @import 'tailwindcss/forms'; */
+
+/* Apply Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
+/* @tailwind forms; */
 * {
     box-sizing: border-box;
 }
@@ -347,3 +354,465 @@ table > tbody > tr > td {
   margin-right:5%;
   margin-top: 5%;
 }
+/*Table staructure page*/
+/* .grid-container {
+    display: grid;
+    grid-template-columns: auto ; 
+    padding: 10px;
+}
+
+.grid-item {
+    border: 5px solid white;
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    background-color: #344054;
+    opacity: 20%;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-bottom: 10px;
+} */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr); /* 11 columns */
+    grid-template-rows: repeat(5, 1fr); /* 5 rows */
+    /* grid-template-columns: repeat(auto-fill, 100px);
+    grid-auto-rows: 1fr;
+    grid-auto-columns: 1fr; */
+    gap: 5px; 
+    padding: 10px;
+  }
+  
+  .grid-item {
+    border: 5px solid white;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    /* background-color: #344054; */
+    border-radius: 15px;
+    /* opacity: 20%; */
+    cursor: pointer;
+  }
+
+  .grid-item-reserve{
+    border: 5px solid white;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    /* background-color: #344054; */
+    border-radius: 15px;
+    /* opacity: 20%; */
+    cursor: pointer;
+  }
+
+  .loading-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .loading-text {
+    margin-left: 300px; /* Adjust the margin as needed */
+    font-size: 1rem; /* Adjust the font size as needed */
+    font-weight: 1000;
+    color: #3ae434; /* Adjust the color as needed */
+  }
+
+  div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+  }
+  
+  div.gallery:hover {
+    border: 1px solid #43ee5d;
+  }
+  
+  div.gallery img {
+    width: 100%;
+    height: 100px;
+  }
+  
+  div.desc {
+    padding: 15px;
+    padding-bottom: 0;
+    text-align: center;
+  }
+
+  .home {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(100px, 150px);
+    grid-auto-flow: dense;
+  }
+  
+    /* @include xl{
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include lg{
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include md {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    @include sm {
+      grid-auto-rows: minmax(120px, auto);
+    } */
+  
+    .box {
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #43ee5d;
+    }
+  
+     .box1 {
+      grid-column: span 1;
+      grid-row: span 3;
+    }
+  
+    .box4 {
+      grid-column: span 1;
+      grid-row: span 3;
+    }
+    
+    .box7 {
+      grid-column: span 2;
+      grid-row: span 2;
+  
+      /* @include md {
+        display: none;
+      } */
+    } 
+
+    .topBox h1 {
+          margin-bottom: 20px;
+          font-weight: 800;
+          font-size: large;
+      
+          /* @include xxl{
+            font-size: 24px;
+          }
+        } */
+    }
+
+    .list .listItem {
+        display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .list .listItem .user {
+        display: flex;
+        gap: 20px;
+    }
+
+    .list .listItem .user img {
+        width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+
+          /* @include xxl{
+            display: none;
+          }
+          @include lg{
+            display: block;
+          } */
+    }
+
+    .list .listItem .user .userTexts {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .list .listItem .user .userTexts .username {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+    .list .listItem .user .userTexts .email {
+        font-size: 12px;
+
+        /* @include xxl{
+          display: none;
+        }
+        @include lg{
+          display: block;
+        } */
+      }
+
+      .list .listItem .amount {
+        font-weight: 500;
+      }
+
+      .chartBox {
+        display: flex;
+        height: 100%;
+      }
+
+      .box2, .box3, .box5, .box6 {
+        background-color: #22c55e;
+      }
+
+      .chartBox .boxInfo {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    
+        /* @include sm{
+          gap: 20px;
+        } */
+      }
+
+      .chartBox .boxInfo .title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #ccc;
+  
+        /* @include xxl{
+          font-size: 14px;
+        } */
+      }
+
+      .chartBox .boxInfo h1{
+        font-size: 18px;
+        /* @include xxl{
+          font-size: 20px;
+        } */
+      }
+
+      .chartBox .boxInfo .link{
+        color: #c1ecbf;
+        /* @include xxl{
+          font-size: 20px;
+        } */
+      }
+
+      .chartBox .chartInfo {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .chartBox .chartInfo .chart {
+        width: 100%;
+        height: 100%;
+      }
+
+      .chartBox .chartInfo .texts {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+        color: #b3b3b3;
+      }
+
+      .chartBox .chartInfo .texts .percentage {
+        font-weight: bold;
+        font-size: 20px;
+        color: #f6f6f6;
+
+        /* @include xxl{
+          font-size: 16px;
+        } */
+      }
+
+      .chartBox .chartInfo .texts .duration{
+        font-size: 14px;
+        color: #FFFFFF;
+      }
+
+      .barChartBox{
+        width: 100%;
+        height: 60%;
+      }
+
+      .barChartBox h1 {
+        /* font-size: 20px; */
+        margin-bottom: 10px;
+          font-weight: 800;
+          font-size: large;
+      }
+
+      /* .barChartBox .chart{
+
+      } */
+
+      .pieChartBox {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; 
+      }
+
+      .pieChartBox h1 {
+        margin-bottom: 10px;
+          font-weight: 800;
+          font-size: large;
+      }
+
+      .pieChartBox .chart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .pieChartBox .options {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 14px;
+      }
+
+      .pieChartBox .options .option {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .pieChartBox .options .option .title {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .pieChartBox .options .option .title .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .bigChartBox{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; 
+      }
+
+      .bigChartBox h1 {
+        margin-bottom: 10px;
+          font-weight: 800;
+          font-size: large;
+      }
+
+      .bigChartBox .chart{
+        width: 100%;
+        height: 300px;
+      }
+
+.dataTable .MuiDataGrid-toolbarContainer {
+  flex-direction: row-reverse;
+}
+
+.dataTable img {
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.add-menu {
+  margin-left: 200px;
+}
+
+.add-menu .img {
+  height: 10px;
+  width: 10px;
+  border-radius: 5px;
+  color: #00a762;
+}
+
+.menu .item {
+  display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.menu .item .title {
+  font-size: 12px;
+  font-weight: 200;
+  color: #3ae434;
+  text-transform: uppercase;
+
+  /* @include lg{
+    display: none;
+  } */
+}
+
+.menu .item .listItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.menu .item .listItem:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* .menu .item .listItem .listItemTitle{
+  @include lg{
+    display: none;
+  }
+} */
+
+.ordercontainer {
+  display: flex;
+  background-color: #ffffff;
+}
+
+.menuContainer {
+  width: 250px;
+  height: 800px;
+  background-color: #ffffff;
+  padding: 5px 20px;
+  box-shadow: 15px 0px 15px -10px rgba(209, 206, 206, 0.75);
+  
+  /* box-shadow: 5px 0 5px -2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2); */
+  /* border-right: 2px solid #3EB075; */
+
+  /* @include lg{
+    width: max-content;
+  } */
+}
+
+.contentContainer {
+  padding: 0px 0px;
+  width: 100%;
+}
+
+.mt-negative {
+  margin-top: -15px; /* Adjust the value as needed */
+}
+
+.user img {
+  width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    /* @include xxl{
+      display: none;
+    }
+    @include lg{
+      display: block;
+    } */
+}
+      
+      
+

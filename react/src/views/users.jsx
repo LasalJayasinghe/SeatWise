@@ -8,19 +8,20 @@ export default function Users(){
 	const[loading,setLoading] = useState(false);
 
 	useEffect(() => {
-		getLoggedInUser();
-	  }, []);
-	
-	  const getLoggedInUser = () => {
-		axiosClient
-		  .get("/user") // Replace with your API endpoint
-		  .then(({ data }) => {
-			setUser(data);
-		  })
-		  .catch(() => {
-			setUser(null);
-		  });
-	  };
+		getUsers()
+	},[])
+
+	const getUsers = () => {
+		setLoading(true)
+		axiosClient.get('/users')
+		.then(({ data }) => {
+			setLoading(false)
+			setUsers(data.data)
+		})
+		.catch(() => {
+		setLoading(false)
+		})
+	}
 
 
 	const onLogout = ev => {
