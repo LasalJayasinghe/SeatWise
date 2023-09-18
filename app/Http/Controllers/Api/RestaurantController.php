@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api\restaurant;
+namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\View;
 use App\Models\Meals;
-use http\Env\Response;
 use App\Models\Profile;
 use App\Models\Cashiers;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Restaurants;
-use Illuminate\Http\Request;
 use App\Models\TableStructure;
 use App\Models\TableReservation;
 use App\Models\TechnicalAssistance;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use http\Env\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\addMealRequest;
 use App\Http\Requests\addViewRequest;
@@ -28,17 +30,95 @@ use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Mail;
-
 use App\Mail\AssistanceRequest;
 
 
 class RestaurantController extends Controller
 {
-    public function show()
+    public function index(Request $request)
     {
-        return view('react.restaurantlogin');
+        $area = $request->query('area');
+
+        $query = Restaurant::query();
+
+        if ($area) {
+            $query->where('area', $area);
+        }
+
+        $restaurants = $query->get();
+
+        return response()->json($restaurants);
     }
+
+    public function show($id)
+    {
+        $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        return response()->json($restaurant);
+    }
+
+    public function getTableStructures($id)
+    {
+        $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        // Fetch the table structures associated with the restaurant
+        $tableStructures = TableStructure::where('restaurant_id', $id)->get();
+
+        // Return the fetched table structures as a JSON response
+        return response()->json($tableStructures);
+    }
+
+    
+
+    public function getAvailableTables(Request $request, $restaurantId)
+    {
+        $date = $request->input('date');
+        $startTime = $request->input('start_time');
+        $endTime = $request->input('end_time');
+        $numParticipants = $request->input('num_participants');
+
+        $tableStructures = TableStructure::where('restaurant_id', $restaurantId)->get();
+        $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
+            ->where('reservation_date', $date)
+            ->where('start_time', '<=', $endTime)
+            ->where('end_time', '>=', $startTime)
+            ->pluck('table_structure_id')
+            ->toArray();
+
+            foreach ($tableStructures as $table) {
+                $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
+                
+                // Check if the table is unavailable but has the tablefortwo option enabled
+                $tableReservation = TableReservation::where('restaurant_id', $restaurantId)
+                    ->where('reservation_date', $date)
+                    ->where('start_time', '<=', $endTime)
+                    ->where('end_time', '>=', $startTime)
+                    ->where('table_structure_id', $table->id)
+                    ->first();
+                
+                $table->isTableForTwo = !$table->isAvailable && $tableReservation && $tableReservation->tablefortwo == 1;
+            }               
+
+        return response()->json($tableStructures);
+    }
+
+    //Restaurant Side controllers
+
+    // public function show()
+    // {
+    //     return view('react.restaurantlogin');
+    // }
 
     public function restaurantsignup(RestaurantSignupRequest $request){
         $data = $request->validated();
@@ -209,7 +289,7 @@ class RestaurantController extends Controller
             'opening' => $data['opening'],
             'closing' => $data['closing'],
         ];
-         /** @var Profile $profile */
+        /** @var Profile $profile */
         $profile = Profile::updateOrCreate(
             ['restaurant_id' => $restaurantId],
             $updatedData
@@ -246,7 +326,7 @@ class RestaurantController extends Controller
         } else {
             return response()->json(['message' => 'Restaurant not found'], 404);
         }
-    
+
         // Update second table (Assuming 'restaurant_details' table)
         $profile = Profile::where('restaurant_id', $restaurantId)->first();
         if ($profile) {
@@ -264,7 +344,7 @@ class RestaurantController extends Controller
         } else {
             return response()->json(['message' => 'Restaurant details not found'], 404);
         }
-    
+
         return response()->json(['message' => 'Update successful']);
     }
 
@@ -288,11 +368,11 @@ class RestaurantController extends Controller
     }
 
     public function getMenu($id) {
-     
+    
         $menu = Meals::where('restaurant_id', $id)->get();
 
         return response()->json($menu);
-    
+
     }
 
     public function addcategory(addCategoryRequest $request)
@@ -311,7 +391,7 @@ class RestaurantController extends Controller
     }
 
     public function getCategories($id) {
-     
+    
         $category = Meals::where('meals.restaurant_id', $id)
             ->join('categories', 'meals.category_id', '=', 'categories.id')
             ->distinct()
@@ -319,45 +399,45 @@ class RestaurantController extends Controller
             ->get();
 
         return response()->json($category);
-    
+
     }
 
     public function getAllCategories() {
-     
+    
         $category = Category::all();
 
         return response()->json($category);
-    
+
     }
 
     public function getOrder($id) {
 
         $today = now()->toDateString();
-     
+    
         $order = TableReservation::where('restaurant_id', $id)
             ->whereDate('reservation_date', $today)
             ->get();
 
         return response()->json($order);
-    
+
     }
 
     public function getAllOrder($id) {
-     
+    
         $order = TableReservation::where('restaurant_id', $id)
             ->get();
 
         return response()->json($order);
-    
+
     }
 
     public function totalUserCount($id) {
-     
+    
         $order = TableReservation::where('restaurant_id', $id)
             ->count();
 
         return response()->json($order);
-    
+
     }
 
     public function getReservationsByUser($id)
@@ -377,12 +457,12 @@ class RestaurantController extends Controller
         // Get the current year and month
         $currentYear = now()->year;
         $currentMonth = now()->month;
-    
+
         $reservationCount = TableReservation::where('restaurant_id', $id)
             ->whereYear('reservation_date', $currentYear)
             ->whereMonth('reservation_date', $currentMonth)
             ->count();
-    
+
         return response()->json($reservationCount);
     }
 
@@ -427,56 +507,56 @@ class RestaurantController extends Controller
 
 
 
-       /**Cashier controller items.................................................. */
+    /**Cashier controller items.................................................. */
 
-    
+
     public function addCashier(addCashierRequest $request){
-         // Make sure the user is authenticated
-   
-         $data = $request->validated();
+        // Make sure the user is authenticated
+
+        $data = $request->validated();
         // $user = auth('restaurants')->user();
         // $restaurant = Restaurants::where('email', $user->email)->first();
-       
-       // $restaurant = auth('restaurants')->user();
-       $restaurant = auth()->guard('restaurants')->user();
     
-       $restaurantId = $data['restaurant_id'];
-       
-         $user = Cashiers::create ([
+    // $restaurant = auth('restaurants')->user();
+    $restaurant = auth()->guard('restaurants')->user();
+
+    $restaurantId = $data['restaurant_id'];
+    
+        $user = Cashiers::create ([
             'restaurant_id' => $restaurantId,
             // 'brn' => $restaurant->brn, // Associate the cashier with the restaurant
             
-             'cashier_name' => $data['cashiername'],
-             'email' => $data['email'],
-             'cashier_phone_number' => $data['phone'],
-             'password' => bcrypt($data['password']),
+            'cashier_name' => $data['cashiername'],
+            'email' => $data['email'],
+            'cashier_phone_number' => $data['phone'],
+            'password' => bcrypt($data['password']),
         ]);
-       // return redirect('/restaurant');
-       // $token = $user->createToken('main')->plainTextToken;
-       return response()->json(['message' => 'Successfully added']);
+    // return redirect('/restaurant');
+    // $token = $user->createToken('main')->plainTextToken;
+    return response()->json(['message' => 'Successfully added']);
         //return response(compact('user', 'token'));
 
         
     }
 
     public function getCashiers($id) {
-    
-       // $restaurant = Restaurants::find($id);
-       $cashiers = Cashiers::where('restaurant_id', $id)->get();
-       return response()->json($cashiers);
 
-    
+    // $restaurant = Restaurants::find($id);
+    $cashiers = Cashiers::where('restaurant_id', $id)->get();
+    return response()->json($cashiers);
+
+
     }
 
 
     public function displayCashier($id) {
+
     
-     
         $cashier = Cashiers::where('id', $id)->get();
         return response()->json($cashier);
- 
-     
-     }
+
+    
+    }
 
 
 
@@ -490,7 +570,7 @@ class RestaurantController extends Controller
 
         return response()->json($restaurant);
     }
-    
+
     public function showRestaurantx($id)
     {
         $restaurant = Restaurants::find($id);
@@ -516,47 +596,30 @@ class RestaurantController extends Controller
         // Return the fetched table structures as a JSON response
         return response()->json($tableStructures);
     }
-}
-*/
-
-
-public function getTableStructures($id)
-{
-    $restaurant = Restaurants::find($id);
-
-    if (!$restaurant) {
-        return response()->json(['message' => 'Restaurant not found'], 404);
     }
+    */
 
-    // Fetch the table structures associated with the restaurant
-    $tableStructures = TableStructure::where('restaurant_id', $id)->get();
+    // public function getAvailableTables(Request $request, $restaurantId)
+    // {
+    // $date = $request->input('date');
+    // $startTime = $request->input('start_time');
+    // $endTime = $request->input('end_time');
+    // $numParticipants = $request->input('num_participants');
 
-    // Return the fetched table structures as a JSON response
-    return response()->json($tableStructures);
-}
+    // $tableStructures = TableStructure::where('restaurant_id', $restaurantId)->get();
+    // $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
+    //     ->where('reservation_date', $date)
+    //     ->where('start_time', '<=', $endTime)
+    //     ->where('end_time', '>=', $startTime)
+    //     ->pluck('table_structure_id')
+    //     ->toArray();
 
+    // foreach ($tableStructures as $table) {
+    //     $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
+    // }
 
-public function getAvailableTables(Request $request, $restaurantId)
-{
-    $date = $request->input('date');
-    $startTime = $request->input('start_time');
-    $endTime = $request->input('end_time');
-    $numParticipants = $request->input('num_participants');
-
-    $tableStructures = TableStructure::where('restaurant_id', $restaurantId)->get();
-    $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
-        ->where('reservation_date', $date)
-        ->where('start_time', '<=', $endTime)
-        ->where('end_time', '>=', $startTime)
-        ->pluck('table_structure_id')
-        ->toArray();
-
-    foreach ($tableStructures as $table) {
-        $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
-    }
-
-    return response()->json($tableStructures);
-}
+    // return response()->json($tableStructures);
+    // }
 
 
 
@@ -589,8 +652,8 @@ public function getAvailableTables(Request $request, $restaurantId)
         $reservation = TableReservation::where('restaurant_id', $restaurant_id)->get();
 
         return response()->json($reservation);
-    
-    
+
+
     }
 
     public function getCheckInCount($id) //get the res id
@@ -599,7 +662,7 @@ public function getAvailableTables(Request $request, $restaurantId)
         ->count();
 
     return response()->json($checkedInCount);
-    
+
     }
 
     public function getCheckOutCount($id) //get the res id
@@ -608,7 +671,7 @@ public function getAvailableTables(Request $request, $restaurantId)
         ->count();
 
     return response()->json($checkedOutCount);
-    
+
     }
 
 
@@ -622,7 +685,7 @@ public function getAvailableTables(Request $request, $restaurantId)
         ->count();
 
     return response()->json($ReservationCount);
-    
+
     }
 
 
@@ -638,16 +701,16 @@ public function getAvailableTables(Request $request, $restaurantId)
             ->orderBy('start_time')
             ->take(3) // Get the nearest three bookings
             ->get();
-    
+
         return response()->json($upcomingBookings);
     }
-    
 
 
 
-public function HandleCheckOut($reservationId)
-{
-    
+
+    public function HandleCheckOut($reservationId)
+    {
+
     $reservation = TableReservation::find($reservationId);
     if ($reservation) {
         $reservation->update([
@@ -657,11 +720,11 @@ public function HandleCheckOut($reservationId)
 
 
     }
-}
+    }
 
-public function HandleCheckIn($reservationId)
-{
-    
+    public function HandleCheckIn($reservationId)
+    {
+
     $reservation = TableReservation::find($reservationId);
     if ($reservation) {
         $reservation->update([
@@ -671,27 +734,27 @@ public function HandleCheckIn($reservationId)
 
 
     }
-}
+    }
 
 
-public function getStatus($reservationId,$reservation_date) 
-{   
+    public function getStatus($reservationId,$reservation_date) 
+    {   
     $today = date('Y-m-d');
     //$today = Carbon::today(); // Get today's date
     $reservation = TableReservation::where('id', $reservationId)
     ->where('reservation_date', $today)->get();;
     return response()->json($reservation);
- 
- 
- }
- public function updateCashier(updateEmployeeRequest $request) {
+
+
+    }
+    public function updateCashier(updateEmployeeRequest $request) {
     $data = $request->validated();
     /** @var Cashiers $cashier */
     //$restaurant = auth()->guard('restaurants')->user();
-   $cashierId = $data['id'];
-   $cashier = Cashiers::find($cashierId);
-   // $restaurant = Restaurant::find($id);
-   if ($cashier) {
+    $cashierId = $data['id'];
+    $cashier = Cashiers::find($cashierId);
+    // $restaurant = Restaurant::find($id);
+    if ($cashier) {
     $cashier->update([
         //'id' => $restaurantId,
         'cashier_name' => $data['cashiername'],
@@ -700,41 +763,41 @@ public function getStatus($reservationId,$reservation_date)
         'password' => bcrypt($data['password']),
     ]);
     return response()->json(['message' => ' Successfully updated']);
-   }
+    }
 
-   else{
+    else{
     return response()->json(['message' => 'Updatation failed']);  
 
 
 
 
 
-   }
- 
-}
+    }
 
-public function deleteEmployee($id)
-{
+    }
+
+    public function deleteEmployee($id)
+    {
     $cashier = Cashiers::find($id);
 
     if ($cashier) {
         $cashier->delete();
         //return response()->json(['message' => 'Cashier record deleted successfully']);
     } else {
-       // return response()->json(['message' => 'Cashier record not found'], 404);
+    // return response()->json(['message' => 'Cashier record not found'], 404);
     }
-}
+    }
 
 
-public function addTechincalAssistanceRequest(TechnicalAssistanceRequest $request){
+    public function addTechincalAssistanceRequest(TechnicalAssistanceRequest $request){
     $data = $request->validated();
-   
-   
+
+
     $reocrd = TechnicalAssistance::create([
 
-           'restaurant_id'=>$data['id'],
-           'issue_description'=>$data['issue'],
-           'priority'=>$data['priority'],
+        'restaurant_id'=>$data['id'],
+        'issue_description'=>$data['issue'],
+        'priority'=>$data['priority'],
         
     ]);
 
@@ -757,6 +820,6 @@ public function addTechincalAssistanceRequest(TechnicalAssistanceRequest $reques
     //return redirect('/restaurant');
     // return view('restaurant');
     // 
-}
+    }
 
 }
