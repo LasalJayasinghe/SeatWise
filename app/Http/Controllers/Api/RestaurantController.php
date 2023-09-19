@@ -9,6 +9,7 @@ use App\Models\Profile;
 use App\Models\Cashiers;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Restaurant;
 use App\Models\Restaurants;
 use App\Models\TableStructure;
 use App\Models\TableReservation;
@@ -112,9 +113,11 @@ class RestaurantController extends Controller
 
         return response()->json($tableStructures);
     }
-
-    //Restaurant Side controllers
-
+    
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------Restaurant Side controllers---------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    
     // public function show()
     // {
     //     return view('react.restaurantlogin');

@@ -68,8 +68,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Additional routes for restaurant data
     Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
 
-        //--------------------------Restaurant side routes --------------------------
-    Route::get('restaurants', [RestaurantController::class, 'show']);
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------Restaurant Side Routes---------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------------------------------
+    
+    // Route::get('restaurants', [RestaurantController::class, 'show']);   - cause an error in customer side
 
     Route::post('/structure', [RestaurantController::class, 'addView'])->name('structure.addView');
     Route::post('/table', [RestaurantController::class, 'addTable']);
