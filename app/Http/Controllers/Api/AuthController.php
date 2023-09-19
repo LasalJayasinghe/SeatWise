@@ -25,11 +25,6 @@ class AuthController extends Controller
             // 'hometown' => $data['hometown'],
         ]);
 
-        /** @var \App\Models\Customer $customer */
-        // $customer = Customer::create([
-        //     'firstname'=>'hellow',
-        //     'lastname'=>'yellow',
-        // ]);
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
     }

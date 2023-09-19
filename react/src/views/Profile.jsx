@@ -346,9 +346,33 @@ export default function Profile() {
                 />
               </div>
             </div>
+
+
+
+            
+
+          
+   
+
         </div>
+
+
+
       </div>
+
+
     </form>
-  </div>
+
+
+
+
+    </div>
+    // profile top end
+
+
+
+    
+
+
   );
 }

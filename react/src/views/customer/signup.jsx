@@ -490,7 +490,7 @@ export default function Signup() {
 
             <div className="sm:col-span-3">
               <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
-                Conform password
+                Confirm password
               </label>
               <div className="mt-2">
                 <input
