@@ -38,6 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
+    Route::get('/user-data', [AuthController::class, 'getUserData'])->name('user-data');
 
     // Meal routes
     Route::get('/meals', [MealController::class, 'index'])->name('meals.index');

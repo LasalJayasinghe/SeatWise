@@ -33,7 +33,8 @@ class TableReservation extends Model
             ->pluck('table_structure_id')
             ->toArray();
 
-        $availableTables = TableStructure::where('restaurant_id', $restaurantId)
+            $availableTables = TableStructure::with('view') // Eager load the "view" relationship
+            ->where('restaurant_id', $restaurantId)
             ->whereNotIn('id', $reservedTableIds)
             ->where('number_of_chairs', '>=', $numParticipants)
             ->get();

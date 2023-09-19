@@ -4,6 +4,7 @@ import axiosClient from '../../../axios-client';
 import ReservationPopup from '../../../components/ReservationPopup';
 import restaurantImage from '../../../assets/restaurant3.jpg';
 import hallImage from '../../../assets/restaurant1.jpg';
+import LoadingSpinner from '../../../components/LoadingSpinner';
 
 
 
@@ -124,6 +125,7 @@ const RestaurantDetail = () => {
       : [...selectedTables, table];
   
     setSelectedTables(updatedSelectedTables);
+
   };
   
   
@@ -277,51 +279,50 @@ const RestaurantDetail = () => {
 
 {/* Display table structures */}
 {toggle === 'tables' && (
-    <div className="mt-6">
-        {/* Organize tables into rows */}
-        {organizeTablesIntoRows(tables).map((row, rowIndex) => (
+        <div className="mt-6">
+          {/* Organize tables into rows */}
+          {organizeTablesIntoRows(tables).map((row, rowIndex) => (
             <div key={rowIndex} className="flex mt-4">
-                {row.map((table) => (
+              {row.map((table) => (
+                <div
+                  key={table.id}
+                  className={`relative p-4 border rounded-lg ${
+                    selectedTables.includes(table) ? 'bg-black text-white' :
+                    table.isAvailable
+                      ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : table.isTableForTwo
+                      ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                  }`}
+                  style={{
+                    width: '2cm',
+                    height: '1cm',
+                    fontSize: '10px',
+                    textAlign: 'center',
+                    marginRight: '4px',
+                  }}
+                  onMouseEnter={() => handleTableHover(table)}
+                  onMouseLeave={handleTableLeave}
+                  onClick={() => handleTableClick(table)} // Add the click handler
+                >
+                  <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                    {table.table_number}
+                  </h5>
+                  {/* Pop-up bubble */}
+                  {hoveredTable === table && (
                     <div
-                    key={table.id}
-                    className={`relative p-4 border rounded-lg ${
-                      selectedTables.includes(table) ? 'bg-black text-white' :
-                      table.isAvailable
-                        ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                        : table.isTableForTwo
-                        ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                        : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
-                    }`}
-                    style={{
-                      width: '2cm',
-                      height: '1cm',
-                      fontSize: '10px',
-                      textAlign: 'center',
-                      marginRight: '4px',
-                    }}
-                    onMouseEnter={() => handleTableHover(table)}
-                    onMouseLeave={handleTableLeave}
-                    onClick={() => handleTableClick(table)} // Add the click handler
-                  >
-                    <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
-                        {table.table_number}
-                    </h5>
-                    {/* Pop-up bubble */}
-                    {hoveredTable === table && (
-                        <div
-                            className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
-                            style={{ fontSize: '12px', pointerEvents: 'none' }}
-                        >
-                            <p>{table.view}</p>
-                            <p>{table.number_of_chairs} chairs</p>
-                        </div>
-                    )}
-
+                      className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                      style={{ fontSize: '12px', pointerEvents: 'none' }}
+                    >
+                      <p>{table.number_of_chairs} chairs</p>
+                      <p>{table.view.name}</p>
+                      
+                    </div>
+                  )}
                 </div>
-                
-                ))}
+              ))}
             </div>
-        ))}
+          ))}
 
 {/* Show selected tables count and Reserve button for available (green) tables */}
 {selectedTables.some(table => table.isAvailable) && (

@@ -20,6 +20,12 @@ class TableStructure extends Model
         'posY',
     ];
 
+    public function view()
+{
+    return $this->belongsTo(View::class, 'view');
+}
+
+
     // Add the relationship with TableReservation
     public function reservation()
     {

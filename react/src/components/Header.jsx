@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import logo from '../assets/logo.svg';
 import { Link, useLocation } from 'react-router-dom';
+import axiosClient from '../axios-client.js';
 
 const navigation = [
   { name: 'Home', to: '/dashboard' },
