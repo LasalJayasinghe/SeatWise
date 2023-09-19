@@ -124,11 +124,11 @@ export default function landing(){
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M38 22C38 20.9 37.1 20 36 20H20C18.9 20 18 20.9 18 22M38 22V34C38 35.1 37.1 36 36 36H20C18.9 36 18 35.1 18 34V22M38 22L28 29L18 22" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
                 <p className='text-xl font-semibold font-inter my-3'>Search restaurants by meals</p>
                 <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5'>Explore a world of culinary delights at your fingertips. With Seatwise, easily search restaurants by meals, unlocking a realm of dining possibilities tailored to your cravings.</p>
-                <button className="learn-more mt-10">
-                    <span className="circle" aria-hidden="true">
-                        <span className="icon arrow"></span>
+                <button class="learn-more mt-10">
+                    <span class="circle" aria-hidden="true">
+                        <span class="icon arrow"></span>
                     </span>
-                    <span className="button-text">Learn More</span>
+                    <span class="button-text">Learn More</span>
                 </button>
                 </div>
             </Fade>
@@ -137,11 +137,11 @@ export default function landing(){
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M29 18L19 30H28L27 38L37 26H28L29 18Z" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
                 <p className='text-xl font-semibold font-inter my-3'>Search meals by restaurant</p>
                 <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5'>Indulge your taste buds like never before. With Seatwise, effortlessly search meals by restaurant, allowing you to discover delectable dishes and savor unforgettable flavors at your preferred dining destinations.</p>
-                <button className="learn-more mt-5">
-                    <span className="circle" aria-hidden="true">
-                        <span className="icon arrow"></span>
+                <button class="learn-more mt-5">
+                    <span class="circle" aria-hidden="true">
+                        <span class="icon arrow"></span>
                     </span>
-                    <span className="button-text">Learn More</span>
+                    <span class="button-text">Learn More</span>
                 </button>
                 </div>
             </Fade>
@@ -150,11 +150,11 @@ export default function landing(){
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M34 36V26M28 36V20M22 36V30" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
                 <p className='text-xl font-semibold font-inter my-3'>Table for two</p>
                 <p className='text-medium text-center  text-gray-600 font-medium font-inter mt-5 w-4/5 '>Share the joy of dining. With Seatwise, book a table for two and connect with fellow food lovers. Enhance your experience, forge connections, and create lasting memories around a shared table.</p>
-                <button className="learn-more mt-10">
-                    <span className="circle" aria-hidden="true">
-                        <span className="icon arrow"></span>
+                <button class="learn-more mt-10">
+                    <span class="circle" aria-hidden="true">
+                        <span class="icon arrow"></span>
                     </span>
-                    <span className="button-text">Learn More</span>
+                    <span class="button-text">Learn More</span>
                 </button>
                 </div>
             </Fade>
