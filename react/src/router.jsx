@@ -3,7 +3,6 @@ import DefaultLayout from './components/DefaultLayout.jsx';
 import GuestLayout from './components/GuestLayout.jsx';
 import Landing from './views/landing.jsx';
 import NotFound from './views/notFound.jsx';
-import Users from './views/users.jsx';
 
 import Dashboard from './views/customer/dashboard.jsx';
 import Login from './views/customer/login.jsx';
@@ -123,10 +122,6 @@ const router = createBrowserRouter([
                 element : <Completed/>
                 
             },
-            {
-                path: '/users',
-                element : <Users />
-            }
         ]
     },
     {
