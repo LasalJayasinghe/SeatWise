@@ -1,15 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import axiosClient from '../axios-client';
-import ConfirmationPopup from './ConfirmationPopup'; // Import the new component
+import React from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 const ReservationPopup = ({ onClose, selectedTables }) => {
   const { id } = useParams(); // Get the restaurantId from the URL
+  const navigate = useNavigate();
 
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const handleContinueClick = async () => {
+    // Close the popup
+    onClose();
 
-  const handleContinueClick = () => {
-    setShowConfirmation(true);
+    // Prepare the reservation data
+    const reservationData = {
+      restaurant_id: id,
+      reservation_date: '2023-09-20', // Replace with the selected date
+      start_time: '09:00:00', // Replace with the selected start time
+      end_time: '10:00:00', // Replace with the selected end time
+      reservant_ID: 1, // Replace with the logged user's ID
+      number_of_participants: 2, // Replace with the selected number of participants
+      table_structure_id: 1, // Replace with the selected table structure ID
+      tablefortwo: 1, // Replace with 1 for now
+      floor: 1, // Replace with the selected floor
+      status: 2, // Replace with the desired status
+    };
+
+    try {
+      const response = await fetch('/api/reserve-table', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reservationData),
+      });
+
+      if (response.ok) {
+        // Reservation successful
+        // You can handle success here, e.g., show a success message
+        navigate(`/activities`);
+      } else {
+        // Handle errors here, e.g., show an error message
+        console.error('Reservation failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
+  const renderSelectedTables = () => {
+    return selectedTables.map((table) => (
+      <div key={table.id}>
+        <p>
+          Tables: No.{table.table_number} - {table.view.name}
+        </p>
+      </div>
+    ));
   };
 
   return (
@@ -22,6 +66,10 @@ const ReservationPopup = ({ onClose, selectedTables }) => {
         <p className="text-gray-600 mb-4">
           Thank you for reserving your tables with us.
         </p>
+        <div className="mb-4">
+          <h3>Selected Tables:</h3>
+          {renderSelectedTables()}
+        </div>
         <div className="flex gap-4">
           <Link
             to={`/restaurants/${id}/meals`} // Use the available restaurantId from the URL
@@ -35,13 +83,6 @@ const ReservationPopup = ({ onClose, selectedTables }) => {
           >
             Continue
           </button>
-
-          {showConfirmation && (
-            <ConfirmationPopup
-              onClose={() => setShowConfirmation(false)}
-              selectedTables={selectedTables}
-            />
-          )}
         </div>
       </div>
     </div>

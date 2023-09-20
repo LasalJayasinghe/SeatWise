@@ -13,7 +13,9 @@ class TableStructure extends Model
 
     protected $fillable = [
         'restaurant_id',
+        'table_id',
         'table_number',
+        'floor',
         'number_of_chairs',
         'view',
         'posX',

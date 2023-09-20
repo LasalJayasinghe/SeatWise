@@ -21,6 +21,8 @@ class TableReservation extends Model
         'number_of_participants',
         'table_structure_id',
         'tablefortwo',
+        'status',
+        'floor',
     ];
     
 

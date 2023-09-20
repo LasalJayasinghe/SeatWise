@@ -98,11 +98,11 @@ const RestaurantDetail = () => {
   };
   
   // Function to handle clicking the Reserve button
-  const handleReserveClick = () => {
-    if (selectedTables.some(table => table.isAvailable)) {
-      setShowPopup(true);
-    }
-  };
+const handleReserveClick = () => {
+  if (selectedTables.some(table => table.isAvailable)) {
+    setShowPopup(true);
+  }
+};
   
 
   const handleTableClick = (table) => {
@@ -374,20 +374,20 @@ const RestaurantDetail = () => {
 
 
       {/* Display other relevant restaurant details here */}
-{toggle === 'halls' && (
+      {toggle === 'halls' && (
   <div className="mt-6 grid gap-4">
     {halls.map((hall) => (
-      <div key={hall.id} className="p-4 border rounded-lg">
-        <Link to={`/halls/${hall.id}`}>
+      <Link to={`/halls/${hall.id}`} key={hall.id}>
+        <div className="p-4 border rounded-lg">
           <h3 className="text-lg font-semibold">{hall.name}</h3>
-        </Link>
-        <img
-          src={hallImage} // Replace with the actual path to the image in your assets folder
-          alt={`Image of ${hall.name}`}
-          className="w-72 h-auto rounded-lg mt-2"
-        />
-        <p className="text-gray-600">{hall.description}</p>
-      </div>
+          <img
+            src={hallImage} // Replace with the actual path to the image in your assets folder
+            alt={`Image of ${hall.name}`}
+            className="w-72 h-auto rounded-lg mt-2"
+          />
+          <p className="text-gray-600">{hall.description}</p>
+        </div>
+      </Link>
     ))}
   </div>
 )}

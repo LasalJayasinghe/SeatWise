@@ -49,14 +49,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
 
-    Route::post('/reserve-tables', [TableReservationController::class, 'reserveTables']);
-
     // Restaurant routes
     Route::get('/restaurants', [RestaurantController::class, 'index']); // Fetch all restaurants
     Route::get('/restaurants/{id}', [RestaurantController::class, 'show']); // Fetch a single restaurant by ID
     Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
     Route::get('/restaurants/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
 
+    Route::post('/reserve-table', [TableReservationController::class, 'reserveTable']);
 
     // Hall routes
     Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']);

@@ -7,39 +7,29 @@ use App\Models\TableReservation;
 
 class TableReservationController extends Controller
 {
-    public function reserveTables(Request $request)
+    public function reserveTable(Request $request)
     {
-        // Extract the reservation data from the request
-        $selectedTables = $request->input('selectedTables');
-        
-        // Check if $selectedTables is not empty and has at least one element
-        if (!empty($selectedTables) && isset($selectedTables[0]['id'])) {
-            $date = $request->input('date');
-            $startTime = $request->input('start_time');
-            $endTime = $request->input('end_time');
-            $reservantName = $request->input('reservant_name');
-            $numberOfParticipants = $request->input('number_of_participants');
-            $tablefortwo = $request->input('tablefortwo');
-            $restaurantId = $request->input('restaurant_id'); // Fetch restaurant_id directly
+        // Validate the incoming reservation data
+        $validatedData = $request->validate([
+            'restaurant_id' => 'required|exists:restaurants,id',
+            'reservation_date' => 'required|date',
+            'start_time' => 'required|date_format:H:i:s',
+            'end_time' => 'required|date_format:H:i:s|after:start_time',
+            'reservant_ID' => 'required|exists:users,id',
+            'number_of_participants' => 'required|integer|min:1',
+            'table_structure_id' => 'required|exists:table_structures,id',
+            'tablefortwo' => 'required|boolean',
+            'floor' => 'required|integer|min:1',
+            'status' => 'required|integer', // Adjust validation rules as needed
+        ]);
     
-            // Create a new reservation entry
-            $reservation = new TableReservation([
-                'restaurant_id' => $restaurantId,
-                'reservation_date' => $date,
-                'start_time' => $startTime,
-                'end_time' => $endTime,
-                'reservant_name' => $reservantName,
-                'number_of_participants' => $numberOfParticipants,
-                'table_structure_id' => $selectedTables[0]['id'], // Assuming id is in the selectedTables array
-                'tablefortwo' => $tablefortwo,
-            ]);
+        // Create a new reservation record
+        $reservation = TableReservation::create($validatedData);
     
-            $reservation->save();
-    
-            return response()->json(['message' => 'Reservation successful']);
-        } else {
-            return response()->json(['message' => 'Invalid selectedTables data'], 400);
-        }
+        return response()->json(['message' => 'Reservation successful', 'reservation' => $reservation], 201);
     }
     
-}
+    
+    }
+    
+    
