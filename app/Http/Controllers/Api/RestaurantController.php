@@ -949,6 +949,18 @@ public function deleteEmployee($id)
     }
 }
 
+public function deleteComplaint($id)
+{
+    $complaint= Complaints::where('complaintID', $id);
+
+    if ($complaint) {
+        $complaint->delete();
+        //return response()->json(['message' => 'Cashier record deleted successfully']);
+    } else {
+       // return response()->json(['message' => 'Cashier record not found'], 404);
+    }
+}
+
 
 public function addTechincalAssistanceRequest(TechnicalAssistanceRequest $request){
     $data = $request->validated();
