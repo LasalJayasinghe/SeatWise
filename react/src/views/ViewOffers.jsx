@@ -58,7 +58,7 @@ navigate("/addOffer");
 
 const handleRemove = (offerId) => {
 
-    setSelectedOfferForUpdate(offerId);
+    setSelectedOfferForDelete(offerId);
     setShowConfirmationModalDelete(true);
   };
 

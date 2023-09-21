@@ -949,12 +949,12 @@ public function deleteEmployee($id)
     }
 }
 
-public function deleteComplaint($id)
+public function deleteOffer($id)
 {
-    $complaint= Complaints::where('complaintID', $id);
+    $Offer=Offers::find($id);
 
-    if ($complaint) {
-        $complaint->delete();
+    if ($Offer) {
+        $Offer->delete();
         //return response()->json(['message' => 'Cashier record deleted successfully']);
     } else {
        // return response()->json(['message' => 'Cashier record not found'], 404);

@@ -93,6 +93,7 @@ Route::get('/getReservationCount/{restaurant_id}', [RestaurantController::class,
 Route::get('/getRecentBookings/{restaurant_id}', [RestaurantController::class, 'getRecentBookings']);
 
 Route::post('/deleteComplaint/{complaintID}', [RestaurantController::class, 'deleteComplaint']);
+Route::post('/deleteOffer/{offerId}', [RestaurantController::class, 'deleteOffer']);
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
