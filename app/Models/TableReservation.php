@@ -13,11 +13,12 @@ class TableReservation extends Model
     protected $table = 'table_reservations';
 
     protected $fillable = [
+        'reservationNumber',
         'restaurant_id',
         'reservation_date',
         'start_time',
         'end_time',
-        'reservant_name',
+        'reservant_ID',
         'number_of_participants',
         'table_structure_id',
         'tablefortwo',

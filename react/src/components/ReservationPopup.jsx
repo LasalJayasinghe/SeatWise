@@ -1,88 +1,129 @@
-import React from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import React , { useState } from 'react';
+const generateReservationNumber = () => {
+  const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
-const ReservationPopup = ({ onClose, selectedTables }) => {
-  const { id } = useParams(); // Get the restaurantId from the URL
-  const navigate = useNavigate();
+  const getRandomLowercaseLetter = () => {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const randomIndex = getRandomInt(0, alphabet.length - 1);
+    return alphabet[randomIndex];
+  };
 
-  const handleContinueClick = async () => {
-    // Close the popup
-    onClose();
+  const getRandomNumber = () => getRandomInt(0, 9);
 
-    // Prepare the reservation data
+  const reservationNumber = [
+    getRandomNumber(),
+    getRandomNumber(),
+    getRandomNumber(),
+    getRandomNumber(),
+    getRandomLowercaseLetter(),
+    getRandomLowercaseLetter(),
+  ].join('');
+
+  return reservationNumber;
+};
+const ReservationPopup = ({ onClose, selectedTables, formSubmissionData, user,restaurantId, selectedTableStructureId, }) => {
+const [tablefortwo, settablefortwo] = useState(false);
+const reservationNumber = generateReservationNumber();
+const handleConfirmReservation = async () => {
+  try {
+    // Create the reservation object
     const reservationData = {
-      restaurant_id: id,
-      reservation_date: '2023-09-20', // Replace with the selected date
-      start_time: '09:00:00', // Replace with the selected start time
-      end_time: '10:00:00', // Replace with the selected end time
-      reservant_ID: 1, // Replace with the logged user's ID
-      number_of_participants: 2, // Replace with the selected number of participants
-      table_structure_id: 1, // Replace with the selected table structure ID
-      tablefortwo: 1, // Replace with 1 for now
-      floor: 1, // Replace with the selected floor
-      status: 2, // Replace with the desired status
+      reservationNumber: generateReservationNumber(),
+      restaurant_id: restaurantId,
+      reservation_date: formSubmissionData.date,
+      start_time: formSubmissionData.startTime,
+      end_time: formSubmissionData.endTime,
+      reservant_ID: user.id,
+      number_of_participants: formSubmissionData.numParticipants,
+      table_structure_id: selectedTableStructureId,
+      tablefortwo: tablefortwo ? 1 : 0, // Convert to boolean
+      // You may need to include additional fields here based on your API requirements
     };
 
-    try {
-      const response = await fetch('/api/reserve-table', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reservationData),
-      });
+    // Make the POST request to your API
+    const response = await fetch('/make-reservation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reservationData),
+    });
 
-      if (response.ok) {
-        // Reservation successful
-        // You can handle success here, e.g., show a success message
-        navigate(`/activities`);
-      } else {
-        // Handle errors here, e.g., show an error message
-        console.error('Reservation failed');
-      }
-    } catch (error) {
-      console.error('Error:', error);
+    if (response.ok) {
+      // Reservation was successful, you can handle the response as needed
+      onClose();
+    } else {
+      // Reservation failed, handle errors or show a message to the user
+      console.error('Reservation failed:', response.statusText);
     }
-  };
-
-
-  const renderSelectedTables = () => {
-    return selectedTables.map((table) => (
-      <div key={table.id}>
-        <p>
-          Tables: No.{table.table_number} - {table.view.name}
-        </p>
-      </div>
-    ));
-  };
+  } catch (error) {
+    console.error('Error making reservation:', error);
+    // Handle errors as needed
+  }
+};
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
       <div className="bg-white rounded-lg p-8">
-        <span className="popup-close" onClick={onClose}>
-          &#10005;
-        </span>
-        <h2 className="text-xl font-bold mb-4">Your Tables Reserved!</h2>
-        <p className="text-gray-600 mb-4">
-          Thank you for reserving your tables with us.
-        </p>
-        <div className="mb-4">
-          <h3>Selected Tables:</h3>
-          {renderSelectedTables()}
+        <h2 className="text-lg font-semibold mb-4">Reservation Details</h2>
+        {/* Display the generated reservation number */}
+        <p>Reservation Number: {reservationNumber}</p>
+
+        {/* Display the restaurant ID */}
+        <p>Restaurant ID: {restaurantId}</p>
+        {/* Display the selected table information */}
+        
+        {selectedTables.map((table) => (
+          <div key={table.id} className="mb-2">
+           
+
+            <p>Table Number: {table.table_number}</p>
+            <p>View: {table.view.name}</p>
+          </div>
+        ))}
+
+        {/* Display reservation form data */}
+        <h3 className="mt-4">Reservation Form Data:</h3>
+        <p>Date: {formSubmissionData.date}</p>
+        <p>Start Time: {formSubmissionData.startTime}</p>
+        <p>End Time: {formSubmissionData.endTime}</p>
+        <p>Number of Participants: {formSubmissionData.numParticipants}</p>
+
+        <p>reservant name : {user.name}</p>
+            <p>reservant id : {user.id}</p>
+
+        <p>Selected Table Structure ID: {selectedTableStructureId}</p>
+
+        {/* Checkbox for "Enable table for two to sharing" */}
+        <div className="mt-4">
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={tablefortwo}
+              onChange={() => settablefortwo(!tablefortwo)}
+            />
+            <span>Enable table for two to sharing</span>
+          </label>
         </div>
-        <div className="flex gap-4">
-          <Link
-            to={`/restaurants/${id}/meals`} // Use the available restaurantId from the URL
-            className="border border-green-500 text-green-500 px-4 py-2 rounded-lg"
-          >
-            Order Meal
-          </Link>
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded-lg"
-            onClick={handleContinueClick}
-          >
-            Continue
-          </button>
+
+        {/* Buttons and content */}
+        <div className="mt-4 flex justify-center space-x-4">
+        <button
+          className="bg-green-500 text-white py-1 px-4 rounded-md"
+          onClick={handleConfirmReservation}
+        >
+          Confirm
+        </button>
+        <button
+          className="bg-red-500 text-white py-1 px-4 rounded-md"
+          onClick={onClose}
+        >
+          Cancel
+        </button>
         </div>
       </div>
     </div>

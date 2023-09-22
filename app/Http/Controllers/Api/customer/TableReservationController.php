@@ -2,34 +2,40 @@
 namespace App\Http\Controllers\Api\customer;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\TableReservation;
+use Illuminate\Http\Request;
 
 class TableReservationController extends Controller
 {
-    public function reserveTable(Request $request)
+    public function makeReservation(Request $request)
     {
-        // Validate the incoming reservation data
+        // Validate the incoming request data
         $validatedData = $request->validate([
-            'restaurant_id' => 'required|exists:restaurants,id',
+            'reservationNumber' => 'required|string',
+            'table_number' => 'required|string',
+            'restaurant_id' => 'required|integer',
             'reservation_date' => 'required|date',
-            'start_time' => 'required|date_format:H:i:s',
-            'end_time' => 'required|date_format:H:i:s|after:start_time',
-            'reservant_ID' => 'required|exists:users,id',
-            'number_of_participants' => 'required|integer|min:1',
-            'table_structure_id' => 'required|exists:table_structures,id',
-            'tablefortwo' => 'required|boolean',
-            'floor' => 'required|integer|min:1',
-            'status' => 'required|integer', // Adjust validation rules as needed
+            'start_time' => 'required|time',
+            'end_time' => 'required|time',
+            'reservant_ID' => 'required|integer',
+            'number_of_participants' => 'required|integer',
+            'table_structure_id' => 'required|integer',
+            'tablefortwo' => 'required|boolean', // Assuming it's a checkbox with a boolean value
+            'status' => 'integer',
+            'floor' => 'integer',
         ]);
-    
-        // Create a new reservation record
-        $reservation = TableReservation::create($validatedData);
-    
-        return response()->json(['message' => 'Reservation successful', 'reservation' => $reservation], 201);
+
+        // Create a new TableReservation instance and fill it with validated data
+        $reservation = new TableReservation();
+        $reservation->fill($validatedData);
+        
+        // Save the reservation to the database
+        $reservation->save();
+
+        // Optionally, you can return a response indicating success or failure
+        return response()->json(['message' => 'Reservation created successfully'], 201);
     }
-    
-    
-    }
+}
+
     
     

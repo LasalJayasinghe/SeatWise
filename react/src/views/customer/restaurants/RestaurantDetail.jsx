@@ -5,10 +5,13 @@ import ReservationPopup from '../../../components/ReservationPopup';
 import restaurantImage from '../../../assets/restaurant3.jpg';
 import hallImage from '../../../assets/restaurant1.jpg';
 import LoadingSpinner from '../../../components/LoadingSpinner';
+import { useStateContext } from '../../../context/ContextProvider';
+
 
 
 
 const RestaurantDetail = () => {
+  const { user } = useStateContext();
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [tables, setTables] = useState([]);
@@ -24,7 +27,14 @@ const RestaurantDetail = () => {
   const [showTableForTwoPopup, setShowTableForTwoPopup] = useState(false);
   const [selectedTableForTwo, setSelectedTableForTwo] = useState(null);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+const [formSubmissionData, setFormSubmissionData] = useState({
+    date: '',
+    startTime: '',
+    endTime: '',
+    numParticipants: 1,
+  });
 
+  const [selectedTableStructureId, setSelectedTableStructureId] = useState(null);
 
 
   useEffect(() => {
@@ -85,13 +95,20 @@ const RestaurantDetail = () => {
           date,
           start_time: startTime,
           end_time: endTime,
-          num_participants: numParticipants,
+          number_of_participants: numParticipants,
         },
       });
 
       const availableTables = response.data;
       setTables(availableTables);
       setSelectedTables([]); // Clear selected tables after reservation
+          // Store the form submission data in state
+    setFormSubmissionData({
+      date,
+      startTime,
+      endTime,
+      numParticipants,
+    });
     } catch (error) {
       console.error(error);
     }
@@ -123,7 +140,9 @@ const handleReserveClick = () => {
     const updatedSelectedTables = selectedTables.includes(table)
       ? selectedTables.filter(selectedTable => selectedTable !== table)
       : [...selectedTables, table];
-  
+      
+    setSelectedTableStructureId(table.id);
+
     setSelectedTables(updatedSelectedTables);
 
   };
@@ -341,6 +360,10 @@ const handleReserveClick = () => {
           {showPopup && (
             <ReservationPopup onClose={() => setShowPopup(false)} 
             selectedTables={selectedTables}
+            formSubmissionData={formSubmissionData} // Pass the form submission data
+            user={user}
+            restaurantId={restaurant.id}
+            selectedTableStructureId={selectedTableStructureId}
             />
           )}
         </div>
