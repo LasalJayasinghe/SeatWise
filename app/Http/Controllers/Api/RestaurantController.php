@@ -739,6 +739,9 @@ public function getAvailableTables(Request $request, $restaurantId)
 
        
            }
+
+
+       
            
 
            else
@@ -776,8 +779,12 @@ public function getAvailableTables(Request $request, $restaurantId)
     }
 
     public function getCheckInCount($id) //get the res id
-    {$checkedInCount = TableReservation::where('restaurant_id', $id)
-        ->where('status', 'checked in')
+
+    {   $today = date('Y-m-d');
+        
+        $checkedInCount = TableReservation::where('restaurant_id', $id)
+        ->where('reservation_date', $today)
+        ->where('status', 1)
         ->count();
 
     return response()->json($checkedInCount);
@@ -785,8 +792,11 @@ public function getAvailableTables(Request $request, $restaurantId)
     }
 
     public function getCheckOutCount($id) //get the res id
-    {$checkedOutCount = TableReservation::where('restaurant_id', $id)
-        ->where('status', 'checked out')
+    {  
+        $today = date('Y-m-d');
+        $checkedOutCount = TableReservation::where('restaurant_id', $id)
+        ->where('reservation_date', $today)
+        ->where('status', 0)
         ->count();
 
     return response()->json($checkedOutCount);
@@ -829,7 +839,7 @@ public function getAvailableTables(Request $request, $restaurantId)
 
 public function HandleCheckOut($reservationId)
 {
-    
+     
     $reservation = TableReservation::find($reservationId);
     if ($reservation) {
         $reservation->update([

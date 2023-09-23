@@ -17,11 +17,12 @@ class TableReservation extends Model
         'reservation_date',
         'start_time',
         'end_time',
-        'reservant_name',
+        'reservant_ID',
         'number_of_participants',
         'table_structure_id',
         'tablefortwo',
         'status',
+        'floor'
     ];
 
         public static function getAvailableTables($restaurantId, $date, $startTime, $endTime, $numParticipants)

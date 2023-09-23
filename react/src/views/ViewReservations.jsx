@@ -54,6 +54,7 @@ export default function ViewReservations() {
   const [clickedButtonIdTwo, setClickedButtonIdTwo] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [input, setInput] = useState(0);
+  const [inputDate, setInputDate] = useState("");
  
   
   useEffect(() => {
@@ -66,7 +67,8 @@ export default function ViewReservations() {
 
    useEffect(() => {
     if (user && user.id) {
-      axiosClient.get(`/getReservations/${user.restaurant_id}/${selectedFilter}/${input}`)
+      axiosClient.get(`/getReservations/${user.restaurant_id}/${selectedFilter}/${input}/${inputDate}`)
+      
         .then(({ data }) => {
           setReservation(data);
         })
@@ -74,7 +76,7 @@ export default function ViewReservations() {
           console.error(error);
         });
     }
-  }, [user,selectedFilter,input]);
+  }, [user,selectedFilter,input,inputDate]);
 
 
  
@@ -174,6 +176,8 @@ export default function ViewReservations() {
                 </option>
               ))}
             </select>
+        
+
   <input
     type="text"
     placeholder="Search by Reservation ID"
@@ -195,6 +199,7 @@ export default function ViewReservations() {
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Table number</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Reservant ID</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Number of participants</th>
+      <th className="bg-gray-900  text-white font-bold px-5 py-3">Table for two</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Status</th>
       
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Action</th>
@@ -209,7 +214,9 @@ export default function ViewReservations() {
           <td className="px-6 py-4">{Reservation.end_time}</td>
           <td className="px-6 py-4">{Reservation.table_structure_id}</td>
           <td className="px-6 py-4">{Reservation.	reservant_ID}</td>
-          <td className="px-6 py-4">{Reservation.number_of_participants}</td>
+         <td className="px-6 py-4">{Reservation.number_of_participants}</td>
+         <td className="px-6 py-4">{Reservation.tablefortwo}</td>
+  
           <td
   className={`px-6 py-4 ${
     Reservation.status === 1
@@ -222,7 +229,7 @@ export default function ViewReservations() {
   {Reservation.status === 1
     ? "Checked In"
     : Reservation.status === 0
-    ? "Checked Out"
+    ? "CheckedOut"
     : "Pending"}
 </td>
 
