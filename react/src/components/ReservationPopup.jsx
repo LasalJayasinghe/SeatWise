@@ -39,7 +39,7 @@ const handleConfirmReservation = async () => {
     // Create the reservation object
     const reservationData = {
       reservationNumber: generateReservationNumber(),
-      table_number: tableNumbers,
+      table_number: selectedTables.map((table) => table.table_number).join(','), // Convert to a comma-separated string
       restaurant_id: restaurantId,
       reservation_date: formSubmissionData.date,
       start_time: formSubmissionData.startTime,
