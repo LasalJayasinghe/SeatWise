@@ -1,4 +1,8 @@
 import React , { useState } from 'react';
+import axiosClient from '../axios-client';
+
+
+
 const generateReservationNumber = () => {
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -25,14 +29,17 @@ const generateReservationNumber = () => {
 
   return reservationNumber;
 };
-const ReservationPopup = ({ onClose, selectedTables, formSubmissionData, user,restaurantId, selectedTableStructureId, }) => {
+const ReservationPopup = ({ onClose, selectedTables, formSubmissionData, user,restaurantId, selectedTableStructureId }) => {
 const [tablefortwo, settablefortwo] = useState(false);
 const reservationNumber = generateReservationNumber();
+const tableNumbers = selectedTables.map((table) => table.table_number);
+
 const handleConfirmReservation = async () => {
   try {
     // Create the reservation object
     const reservationData = {
       reservationNumber: generateReservationNumber(),
+      table_number: tableNumbers,
       restaurant_id: restaurantId,
       reservation_date: formSubmissionData.date,
       start_time: formSubmissionData.startTime,
@@ -44,16 +51,10 @@ const handleConfirmReservation = async () => {
       // You may need to include additional fields here based on your API requirements
     };
 
-    // Make the POST request to your API
-    const response = await fetch('/make-reservation', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(reservationData),
-    });
+    // Make the POST request to your API using Axios
+    const response = await axiosClient.post('/make-reservation', reservationData);
 
-    if (response.ok) {
+    if (response.status === 201) {
       // Reservation was successful, you can handle the response as needed
       onClose();
     } else {

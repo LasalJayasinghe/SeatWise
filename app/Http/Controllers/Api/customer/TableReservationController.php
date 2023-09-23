@@ -9,25 +9,14 @@ class TableReservationController extends Controller
 {
     public function makeReservation(Request $request)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'reservationNumber' => 'required|string',
-            'table_number' => 'required|string',
-            'restaurant_id' => 'required|integer',
-            'reservation_date' => 'required|date',
-            'start_time' => 'required|time',
-            'end_time' => 'required|time',
-            'reservant_ID' => 'required|integer',
-            'number_of_participants' => 'required|integer',
-            'table_structure_id' => 'required|integer',
-            'tablefortwo' => 'required|boolean', // Assuming it's a checkbox with a boolean value
-            'status' => 'integer',
-            'floor' => 'integer',
-        ]);
+        // Remove the validation rules
+        // $validatedData = $request->validate([
+        //     ...
+        // ]);
 
-        // Create a new TableReservation instance and fill it with validated data
+        // Create a new TableReservation instance and fill it with the request data
         $reservation = new TableReservation();
-        $reservation->fill($validatedData);
+        $reservation->fill($request->all());
         
         // Save the reservation to the database
         $reservation->save();
@@ -36,6 +25,3 @@ class TableReservationController extends Controller
         return response()->json(['message' => 'Reservation created successfully'], 201);
     }
 }
-
-    
-    
