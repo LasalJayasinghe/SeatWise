@@ -3,8 +3,12 @@ import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
 import { useStateContext } from "../context/ContextProvider";
 import ReservationPopup from '../components/ReservationPopup';
-//sam code
+
+
+
+
 const ViewStructure = () => {
+ 
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [tables, setTables] = useState([]);
@@ -17,15 +21,26 @@ const ViewStructure = () => {
   const [halls, setHalls] = useState([]);
   const [selectedTables, setSelectedTables] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const {user, token, setUser, setToken} = useStateContext();
-  // State to hold the hovered table
-  //const [hoveredTable, setHoveredTable] = useState(null);
+  const [showTableForTwoPopup, setShowTableForTwoPopup] = useState(false);
+  const [selectedTableForTwo, setSelectedTableForTwo] = useState(null);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+   const {user, token, setUser, setToken} = useStateContext();
+const [formSubmissionData, setFormSubmissionData] = useState({
+    date: '',
+    startTime: '',
+    endTime: '',
+    numParticipants: 1,
+  });
+
+  const [selectedTableStructureId, setSelectedTableStructureId] = useState(null);
+
   useEffect(() => {
     axiosClient.get('/user')
       .then(({ data }) => {
         setUser(data);
       });
   }, []);
+
 
   useEffect(() => { 
     if (user && user.id) {
@@ -43,39 +58,38 @@ const ViewStructure = () => {
     fetchRestaurantDetail();
 }}, [user.restaurant_id]);
 
-  useEffect(() => {
+useEffect(() => {
 
-    if (user && user.id){
-    const fetchTableStructures = async () => {
+  if (user && user.id){
+  const fetchTableStructures = async () => {
+    try {
+      const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/table-structures`);
+      setTables(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  if (toggle === 'tables') {
+    fetchTableStructures();
+  }
+}}, [user.restaurant_id, toggle]);
+  
+
+  useEffect(() => {
+    const fetchHalls = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/table-structures`);
-        setTables(response.data);
+        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/halls`);
+        setHalls(response.data);
       } catch (error) {
         console.log(error);
       }
     };
 
-    if (toggle === 'tables') {
-      fetchTableStructures();
+    if (toggle === 'halls') {
+      fetchHalls();
     }
-  }}, [user.restaurant_id, toggle]);
-  
-
-  // useEffect(() => {
-  //   if (user && user.id){
-  //   const fetchHalls = async () => {
-  //     try {
-  //       const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/halls`);
-  //       setHalls(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   if (toggle === 'halls') {
-  //     fetchHalls();
-  //   }
-  // }}, [user.restaurant_id, toggle]);
+  }, [id, toggle]);
 
   const handleToggle = () => {
     setToggle(toggle === 'tables' ? 'halls' : 'tables');
@@ -91,24 +105,31 @@ const ViewStructure = () => {
           date,
           start_time: startTime,
           end_time: endTime,
-          num_participants: numParticipants,
+          number_of_participants: numParticipants,
         },
       });
 
       const availableTables = response.data;
       setTables(availableTables);
       setSelectedTables([]); // Clear selected tables after reservation
+          // Store the form submission data in state
+    setFormSubmissionData({
+      date,
+      startTime,
+      endTime,
+      numParticipants,
+    });
     } catch (error) {
       console.error(error);
     }
   };
   
   // Function to handle clicking the Reserve button
-  const handleReserveClick = () => {
-    if (selectedTables.some(table => table.isAvailable)) {
-      setShowPopup(true);
-    }
-  };
+const handleReserveClick = () => {
+  if (selectedTables.some(table => table.isAvailable)) {
+    setShowPopup(true);
+  }
+};
   
 
   const handleTableClick = (table) => {
@@ -120,12 +141,20 @@ const ViewStructure = () => {
       return;
     }
   
+    if (table.isTableForTwo) {
+      setSelectedTableForTwo(table);
+      setShowTableForTwoPopup(true);
+    }
+
     // Toggle the selected status of the table
     const updatedSelectedTables = selectedTables.includes(table)
       ? selectedTables.filter(selectedTable => selectedTable !== table)
       : [...selectedTables, table];
-  
+      
+    setSelectedTableStructureId(table.id);
+
     setSelectedTables(updatedSelectedTables);
+
   };
   
   
@@ -174,20 +203,21 @@ const ViewStructure = () => {
   }
 
   return (
+    <div className="relative mb-4">
+    <div className="relative w-full h-60 overflow-hidden">
 
- <>
-    <header className="bg-white shadow" style={{ marginBottom: '25px' }}>
-    <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Add Reservations</h1>
-      <div className="loading-container">
-        {/* {loading && <p className="loading-text">Loading...</p>} */}
+      <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
+        <h1 className="text-5xl font-bold mb-2 text-white">{restaurant.restaurantname}</h1>
+        <p className="text-gray-100">{restaurant.description}</p>
+    
       </div>
     </div>
-    </header>
-    <div className="flex flex-col items-center">
-      
 
-      <div className="flex items-center justify-center mb-6">
+   <div className="flex flex-col items-center">
+      {/* <h1 className="text-3xl font-bold mb-4">{restaurant.name}</h1>
+      <p className="text-gray-600 mb-6">{restaurant.description}</p> */}
+      
+      <div className="flex items-center justify-center mb-6 mt-4">
         <button
           className={`py-2 px-4 rounded-lg ${
             toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
@@ -274,51 +304,50 @@ const ViewStructure = () => {
 
 {/* Display table structures */}
 {toggle === 'tables' && (
-    <div className="mt-6">
-        {/* Organize tables into rows */}
-        {organizeTablesIntoRows(tables).map((row, rowIndex) => (
+        <div className="mt-6">
+          {/* Organize tables into rows */}
+          {organizeTablesIntoRows(tables).map((row, rowIndex) => (
             <div key={rowIndex} className="flex mt-4">
-                {row.map((table) => (
+              {row.map((table) => (
+                <div
+                  key={table.id}
+                  className={`relative p-4 border rounded-lg ${
+                    selectedTables.includes(table) ? 'bg-black text-white' :
+                    table.isAvailable
+                      ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : table.isTableForTwo
+                      ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                  }`}
+                  style={{
+                    width: '2cm',
+                    height: '1cm',
+                    fontSize: '10px',
+                    textAlign: 'center',
+                    marginRight: '4px',
+                  }}
+                  onMouseEnter={() => handleTableHover(table)}
+                  onMouseLeave={handleTableLeave}
+                  onClick={() => handleTableClick(table)} // Add the click handler
+                >
+                  <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                    {table.table_number}
+                  </h5>
+                  {/* Pop-up bubble */}
+                  {hoveredTable === table && (
                     <div
-                    key={table.id}
-                    className={`relative p-4 border rounded-lg ${
-                      selectedTables.includes(table) ? 'bg-black text-white' :
-                      table.isAvailable
-                        ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                        : table.isTableForTwo
-                        ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                        : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
-                    }`}
-                    style={{
-                      width: '2cm',
-                      height: '1cm',
-                      fontSize: '10px',
-                      textAlign: 'center',
-                      marginRight: '4px',
-                    }}
-                    onMouseEnter={() => handleTableHover(table)}
-                    onMouseLeave={handleTableLeave}
-                    onClick={() => handleTableClick(table)} // Add the click handler
-                  >
-                    <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
-                        {table.table_number}
-                    </h5>
-                    {/* Pop-up bubble */}
-                    {hoveredTable === table && (
-                        <div
-                            className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
-                            style={{ fontSize: '12px', pointerEvents: 'none' }}
-                        >
-                            <p>{table.view}</p>
-                            <p>{table.number_of_chairs} chairs</p>
-                        </div>
-                    )}
-
+                      className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                      style={{ fontSize: '12px', pointerEvents: 'none' }}
+                    >
+                      <p>{table.number_of_chairs} chairs</p>
+                      <p>{table.view.name}</p>
+                      
+                    </div>
+                  )}
                 </div>
-                
-                ))}
+              ))}
             </div>
-        ))}
+          ))}
 
 {/* Show selected tables count and Reserve button for available (green) tables */}
 {selectedTables.some(table => table.isAvailable) && (
@@ -337,29 +366,65 @@ const ViewStructure = () => {
           {showPopup && (
             <ReservationPopup onClose={() => setShowPopup(false)} 
             selectedTables={selectedTables}
+            formSubmissionData={formSubmissionData} // Pass the form submission data
+            user={user}
+            restaurantId={restaurant.id}
+            selectedTableStructureId={selectedTableStructureId}
             />
           )}
+        </div>
+      )}
+
+{/* Table for Two Pop-up */}
+{showTableForTwoPopup && selectedTableForTwo && (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+            <div className="bg-white rounded-lg p-8">
+
+    <p className="text-center font-bold text-lg">Table for Two</p>
+    <p>John Doe - 2 chairs available</p>
+          {/* Buttons and content */}
+          <button
+            className="block mx-auto bg-green-500 text-white py-1 px-4 rounded-md mt-4"
+            onClick={() => {
+              // Add your logic here for the "Request" button
+            }}
+          >
+            Request
+          </button>
+          <button
+            className="block mx-auto bg-gray-500 text-white py-1 px-4 rounded-md mt-2"
+            onClick={() => setShowTableForTwoPopup(false)}
+          >
+            Close
+          </button>
+        </div>
         </div>
       )}
 
 
       {/* Display other relevant restaurant details here */}
       {toggle === 'halls' && (
-        <div>
-          {halls.map((hall) => (
-            <div key={hall.id} className="mb-4">
-              <Link to={`/halls/${hall.id}`}>
-                <h3 className="text-lg font-semibold">{hall.name}</h3>
-              </Link>
-              <p className="text-gray-600">{hall.description}</p>
-            </div>
-          ))}
+  <div className="mt-6 grid gap-4">
+    {halls.map((hall) => (
+      <Link to={`/halls/${hall.id}`} key={hall.id}>
+        <div className="p-4 border rounded-lg">
+          <h3 className="text-lg font-semibold">{hall.name}</h3>
+          <img
+            src={hallImage} // Replace with the actual path to the image in your assets folder
+            alt={`Image of ${hall.name}`}
+            className="w-72 h-auto rounded-lg mt-2"
+          />
+          <p className="text-gray-600">{hall.description}</p>
         </div>
-      )}
+      </Link>
+    ))}
+  </div>
+)}
+
 
       
     </div>
-    </>
+  </div>
   );
 };
 

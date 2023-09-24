@@ -128,6 +128,7 @@ Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
 Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
 Route::post('/updatemealavailability', [RestaurantController::class, 'updateMealAvailability']);
+Route::post('/reserve-table', [TableReservationController::class, 'reserveTable']);
 
 
 // Waitlist
