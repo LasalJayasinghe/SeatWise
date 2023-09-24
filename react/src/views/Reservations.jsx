@@ -183,7 +183,7 @@ export default function Reservations() {
                             key={tableNumber}
                             className={classes}
                             >
-                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_number : ""}
+                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber) && (table.floor) == selectedFloor).table_number : ""}
                             </div>
                         );
                     })}
