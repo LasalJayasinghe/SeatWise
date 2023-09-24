@@ -3,8 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import axiosClient from '../axios-client';
 import { useStateContext } from "../context/ContextProvider";
 import ReservationPopup from '../components/ReservationPopup';
-
-
+import hallImage from '../assets/restaurant1.jpg';
+import restaurantImage from '../assets/restaurant3.jpg';
 
 
 const ViewStructure = () => {
@@ -205,6 +205,7 @@ const handleReserveClick = () => {
   return (
     <div className="relative mb-4">
     <div className="relative w-full h-60 overflow-hidden">
+    <img src={restaurantImage} alt="Restaurant" className="w-full h-auto" />
 
       <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
         <h1 className="text-5xl font-bold mb-2 text-white">{restaurant.restaurantname}</h1>
