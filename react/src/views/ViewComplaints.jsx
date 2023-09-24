@@ -137,40 +137,28 @@ Remove
 
   return (
     <>
-      <header className="bg-white shadow">
-      <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
-        <SettingsBar />
-      </div>
-        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Complaints</h1>
-          <div className="loading-container">
-            {loading && <p className="loading-text">Loading...</p>}
-          </div>
-        </div>
-        </header>
-        <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8" style={{ marginLeft: '400px' }}>
 
-            <div className="flex mb-5">
-                
-
+    <div className="main">
         
-                
 
-                
+        <div className="ordercontainer">
+            <div className="menuContainer">
+                <SettingsBar />
             </div>
-
-            
-            <div className="w-[1253px] h-[72px] p-4 justify-start items-center gap-[1000px] inline-flex">
-                <div className="h-8 justify-start items-start gap-6 flex">
-                    {/* <div style={{width:'250px'}} className="grow shrink basis-0 h-8 px-[9px] py-2 rounded-lg border border-neutral-400 justify-start items-center gap-2 flex">
-                    <div className="w-4 h-4 relative" />
-                    <div className="grow shrink basis-0 text-neutral-400 text-xs font-medium">Search...</div>
-                    </div> */}
+            <div className="contentContainer">
+                <div>
+                    <header className="bg-white shadow">
+                        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                            <h1 className="text-3xl font-bold tracking-tight text-gray-900 mt-20">Complaints</h1>
+                            <div className="loading-container">
+                                {/* {loading && <p className="loading-text">Loading...</p>} */}
+                            </div>
+                        </div>
+                    </header>
                 </div>
-           
-            </div>
-            
+                <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                    
+                  
             <div className="dataTable">
                 <DataGrid
                     rows={complaints}
@@ -200,14 +188,24 @@ Remove
                 />
 
             </div>
+                </div>
 
+                
+                
             </div>
-            <OfferDeleteConfirmationModel
-        isOpen={showConfirmationModalDelete}
-        onCancel={cancelDelete}
-        onConfirm={confirmDelete}
-      />
-        </main>
+        </div>
+
+        
+
+        {/* <Footer /> */}
+    </div>
+
+
+
+
+
+
+        
     </>
-  )
+)
 }
