@@ -1,26 +1,34 @@
 {
+    "name": "react",
     "private": true,
+    "version": "0.0.0",
+    "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.1.2",
-        "laravel-vite-plugin": "^0.7.2",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
-        "vite": "^4.0.0"
+        "dev": "vite --port=3000",
+        "build": "vite build",
+        "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview"
     },
     "dependencies": {
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
+        "@material-tailwind/react": "^2.1.1",
         "@mui/material": "^5.14.4",
         "@mui/x-data-grid": "^6.11.1",
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "autoprefixer": "^10.4.15",
         "react-datepicker": "^4.18.0",
         "react-icons": "^4.10.1",
         "react-responsive-carousel": "^3.2.23",
         "react-router-dom": "^6.14.1",
         "recharts": "^2.7.3",
         "tailwindcss": "^3.3.3"
+    },
+    "devDependencies": {
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^0.7.2",
+        "lodash": "^4.17.19",
+        "postcss": "^8.4.29",
+        "vite": "^4.0.0"
     }
 }
