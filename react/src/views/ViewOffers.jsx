@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import OffersUpdateModal from "../components/OffersUpdateModal";
+import SettingsBar from "../components/SettingsBar";
 
 import {
     DataGrid,
@@ -268,6 +269,9 @@ Remove
     <>
         
       <header className="bg-white shadow">
+      <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
+        <SettingsBar />
+      </div>
         <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Offers</h1>
           <div className="loading-container">
@@ -286,7 +290,7 @@ Remove
      }}className="bg-white text-green-500 font-bold py-2 px-4 rounded">
  + Add Offers
 </button>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 " style={{ marginLeft: '400px' }}>
 
             <div className="flex mb-5">
                 
@@ -333,6 +337,7 @@ Remove
                     disableColumnFilter
                     disableDensitySelector
                     disableColumnSelector
+                    style={{ maxWidth: '900px' }}
                 />
 
             </div>
