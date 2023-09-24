@@ -223,7 +223,7 @@ export default function TableStructure() {
                             className={`grid-item ${isTablePresent ? "bg-green-500" : "bg-gray-800"}`}
                             onClick={() => handleItemClick(tableNumber)}
                             >
-                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber)).table_number : ""}
+                            {isTablePresent ? tableData.find((table) => table.table_id === String(tableNumber) && (table.floor) == selectedFloor).table_number : ""}
                             </div>
                         );
                     })}
