@@ -267,52 +267,30 @@ Remove
 
   return (
     <>
+
+    <div className="main">
         
-      <header className="bg-white shadow">
-      <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
-        <SettingsBar />
-      </div>
-        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Offers</h1>
-          <div className="loading-container">
-            
-          </div>
-        </div>
-        </header>
 
-        <main>
-        <button onClick={handleClick} style={{ marginLeft: '73rem',
-     marginTop: '3rem',
-     fontSize: '1.3rem', // Increase font size
-     padding: '1rem 1rem', // Increase padding vertically and horizontally
-     borderRadius: '0.6rem',
-     
-     }}className="bg-white text-green-500 font-bold py-2 px-4 rounded">
- + Add Offers
-</button>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 " style={{ marginLeft: '400px' }}>
-
-            <div className="flex mb-5">
-                
-
-        
-                
-
-                
+        <div className="ordercontainer">
+            <div className="menuContainer">
+                <SettingsBar />
             </div>
-
-            
-            <div className="w-[1253px] h-[72px] p-4 justify-start items-center gap-[1000px] inline-flex">
-                <div className="h-8 justify-start items-start gap-6 flex">
-                    {/* <div style={{width:'250px'}} className="grow shrink basis-0 h-8 px-[9px] py-2 rounded-lg border border-neutral-400 justify-start items-center gap-2 flex">
-                    <div className="w-4 h-4 relative" />
-                    <div className="grow shrink basis-0 text-neutral-400 text-xs font-medium">Search...</div>
-                    </div> */}
+            <div className="contentContainer">
+                <div>
+                    <header className="bg-white shadow">
+                        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                            <h1 className="text-3xl font-bold tracking-tight text-gray-900 mt-20">Offers</h1>
+                            <div className="loading-container">
+                                {/* {loading && <p className="loading-text">Loading...</p>} */}
+                            </div>
+                        </div>
+                    </header>
                 </div>
-           
-            </div>
-            
-            <div className="dataTable">
+                <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                    
+                  
+             
+                <div className="dataTable">
                 <DataGrid
                     rows={offers}
                     getRowId={(row) => row.id}
@@ -341,23 +319,24 @@ Remove
                 />
 
             </div>
+                </div>
 
+                
+                
             </div>
-            <OffersUpdateModal
-        isOpen={showUpdateModal}
-        onCancel={cancelUpdate}
-        onConfirm={confirmUpdate}
-        Offer={selectedOfferForUpdate}
+        </div>
+
         
+
+        {/* <Footer /> */}
+    </div>
+
+
+
+
+
+
         
-       
-      />
-<DeleteConfirmationModal
-        isOpen={showConfirmationModalDelete}
-        onCancel={cancelDelete}
-        onConfirm={confirmDelete}
-      />
-        </main>
     </>
-  )
+)
 }
