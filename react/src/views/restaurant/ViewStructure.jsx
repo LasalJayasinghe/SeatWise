@@ -1,0 +1,366 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import axiosClient from '../../axios-client';
+import { useStateContext } from "../../context/ContextProvider";
+import ReservationPopup from '../../components/restaurant/ReservationPopup';
+//sam code
+const ViewStructure = () => {
+  const { id } = useParams();
+  const [restaurant, setRestaurant] = useState(null);
+  const [tables, setTables] = useState([]);
+  const [toggle, setToggle] = useState('tables');
+  const [date, setDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [numParticipants, setNumParticipants] = useState(1);
+  const [hoveredTable, setHoveredTable] = useState(null);
+  const [halls, setHalls] = useState([]);
+  const [selectedTables, setSelectedTables] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const {user, token, setUser, setToken} = useStateContext();
+  // State to hold the hovered table
+  //const [hoveredTable, setHoveredTable] = useState(null);
+  useEffect(() => {
+    axiosClient.get('/user')
+      .then(({ data }) => {
+        setUser(data);
+      });
+  }, []);
+
+  useEffect(() => { 
+    if (user && user.id) {
+    const fetchRestaurantDetail = async () => {
+      try {
+        
+        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}`);
+        setRestaurant(response.data);
+      } catch (error) {
+        console.error(error);
+        console.log(user.restaurant_id)
+      }
+    };
+
+    fetchRestaurantDetail();
+}}, [user.restaurant_id]);
+
+  useEffect(() => {
+
+    if (user && user.id){
+    const fetchTableStructures = async () => {
+      try {
+        const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/table-structures`);
+        setTables(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (toggle === 'tables') {
+      fetchTableStructures();
+    }
+  }}, [user.restaurant_id, toggle]);
+  
+
+  // useEffect(() => {
+  //   if (user && user.id){
+  //   const fetchHalls = async () => {
+  //     try {
+  //       const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/halls`);
+  //       setHalls(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   if (toggle === 'halls') {
+  //     fetchHalls();
+  //   }
+  // }}, [user.restaurant_id, toggle]);
+
+  const handleToggle = () => {
+    setToggle(toggle === 'tables' ? 'halls' : 'tables');
+  };
+
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosClient.get(`/restaurants/${user.restaurant_id}/available-tables`, {
+        params: {
+          restaurant_id: id,
+          date,
+          start_time: startTime,
+          end_time: endTime,
+          num_participants: numParticipants,
+        },
+      });
+
+      const availableTables = response.data;
+      setTables(availableTables);
+      setSelectedTables([]); // Clear selected tables after reservation
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  // Function to handle clicking the Reserve button
+  const handleReserveClick = () => {
+    if (selectedTables.some(table => table.isAvailable)) {
+      setShowPopup(true);
+    }
+  };
+  
+
+  const handleTableClick = (table) => {
+    // Check if any green table is already selected
+    const greenTableSelected = selectedTables.some(selectedTable => selectedTable.isAvailable);
+  
+    // Prevent clicking on yellow tables if a green table is selected
+    if (greenTableSelected && !table.isAvailable) {
+      return;
+    }
+  
+    // Toggle the selected status of the table
+    const updatedSelectedTables = selectedTables.includes(table)
+      ? selectedTables.filter(selectedTable => selectedTable !== table)
+      : [...selectedTables, table];
+  
+    setSelectedTables(updatedSelectedTables);
+  };
+  
+  
+  
+
+
+  // Function to organize tables into rows based on posX and posY coordinates
+  const organizeTablesIntoRows = (tables) => {
+    const rows = [];
+    const sortedTables = [...tables].sort((a, b) => a.posY - b.posY || a.posX - b.posX);
+    let currentRow = [];
+    let prevPosY = -1;
+
+    sortedTables.forEach((table) => {
+      if (table.posY !== prevPosY) {
+        if (currentRow.length > 0) {
+          rows.push(currentRow);
+        }
+        currentRow = [table];
+      } else {
+        currentRow.push(table);
+      }
+      prevPosY = table.posY;
+    });
+
+    if (currentRow.length > 0) {
+      rows.push(currentRow);
+    }
+
+    return rows;
+  };
+
+  // Function to handle hovering over a table
+  const handleTableHover = (table) => {
+    setHoveredTable(table);
+  };
+
+  // Function to handle mouse leaving a table
+  const handleTableLeave = () => {
+    setHoveredTable(null);
+  };
+
+  // If the data is not yet fetched, display a loading message or spinner
+  if (!restaurant) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+
+ <>
+    <header className="bg-white shadow" style={{ marginBottom: '25px' }}>
+    <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Add Reservations</h1>
+      <div className="loading-container">
+        {/* {loading && <p className="loading-text">Loading...</p>} */}
+      </div>
+    </div>
+    </header>
+    <div className="flex flex-col items-center">
+      
+
+      <div className="flex items-center justify-center mb-6">
+        <button
+          className={`py-2 px-4 rounded-lg ${
+            toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+          }`}
+          onClick={handleToggle}
+        >
+          Tables
+        </button>
+        <button
+          className={`py-2 px-4 rounded-lg ml-4 ${
+            toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+          }`}
+          onClick={handleToggle}
+        >
+          Halls
+        </button>
+      </div>
+
+      {/* Form to input date, start time, end time, and number of participants */}
+      {toggle === 'tables' && ( // Conditionally render input fields when toggle is 'tables'
+        <form onSubmit={handleSubmit} className="mt-6 flex gap-4" style={{ fontSize: '12px' }}>
+          <div className="flex items-center">
+            <label className="flex items-center">
+              Date:
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+                className="mr-5 p-2 border rounded-lg"
+              />
+            </label>
+
+            <label className="flex items-center">
+              Start Time:
+              <input
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                required
+                className="mr-5 p-2 border rounded-lg"
+              />
+            </label>
+
+            <label className="flex items-center">
+              End Time:
+              <input
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                required
+                className="mr-5 p-2 border rounded-lg"
+              />
+            </label>
+
+            <label className="flex items-center">
+              Participant count:
+              <input
+                type="number"
+                value={numParticipants}
+                onChange={(e) => setNumParticipants(Math.max(1, parseInt(e.target.value)))}
+                required
+                className=" w-16 mr-5 p-2 border rounded-lg"
+                min="1"
+              />
+            </label>
+
+            <button type="submit" className="mr-4 bg-green-500 text-white py-2 px-4 rounded-lg">
+              Search
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* Display toggle for table for two */}
+      {/* <div className="mt-4">  
+<label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" value="" class="sr-only peer"/>
+  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 dark:peer-focus:ring-green-600 rounded-full peer dark:bg-gray-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+  <span class="ml-3 text-sm font-small text-gray-500 dark:text-gray-800">Table for two</span>
+</label>
+      </div> */}
+
+
+{/* Display table structures */}
+{toggle === 'tables' && (
+    <div className="mt-6">
+        {/* Organize tables into rows */}
+        {organizeTablesIntoRows(tables).map((row, rowIndex) => (
+            <div key={rowIndex} className="flex mt-4">
+                {row.map((table) => (
+                    <div
+                    key={table.id}
+                    className={`relative p-4 border rounded-lg ${
+                      selectedTables.includes(table) ? 'bg-black text-white' :
+                      table.isAvailable
+                        ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                        : table.isTableForTwo
+                        ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                        : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                    }`}
+                    style={{
+                      width: '2cm',
+                      height: '1cm',
+                      fontSize: '10px',
+                      textAlign: 'center',
+                      marginRight: '4px',
+                    }}
+                    onMouseEnter={() => handleTableHover(table)}
+                    onMouseLeave={handleTableLeave}
+                    onClick={() => handleTableClick(table)} // Add the click handler
+                  >
+                    <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                        {table.table_number}
+                    </h5>
+                    {/* Pop-up bubble */}
+                    {hoveredTable === table && (
+                        <div
+                            className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                            style={{ fontSize: '12px', pointerEvents: 'none' }}
+                        >
+                            <p>{table.view}</p>
+                            <p>{table.number_of_chairs} chairs</p>
+                        </div>
+                    )}
+
+                </div>
+                
+                ))}
+            </div>
+        ))}
+
+{/* Show selected tables count and Reserve button for available (green) tables */}
+{selectedTables.some(table => table.isAvailable) && (
+            <div className="mt-6">
+              <p>Selected: {selectedTables.filter(table => table.isAvailable).length} Tables</p>
+              <button
+                className="mt-2 bg-black text-white py-2 px-4 rounded-lg"
+                onClick={handleReserveClick} // Call the handleReserveClick function
+              >
+                Reserve
+              </button>
+            </div>
+          )}
+
+{/* Show the ReservationPopup when showPopup is true */}
+          {showPopup && (
+            <ReservationPopup onClose={() => setShowPopup(false)} 
+            selectedTables={selectedTables}
+            />
+          )}
+        </div>
+      )}
+
+
+      {/* Display other relevant restaurant details here */}
+      {toggle === 'halls' && (
+        <div>
+          {halls.map((hall) => (
+            <div key={hall.id} className="mb-4">
+              <Link to={`/halls/${hall.id}`}>
+                <h3 className="text-lg font-semibold">{hall.name}</h3>
+              </Link>
+              <p className="text-gray-600">{hall.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      
+    </div>
+    </>
+  );
+};
+
+export default ViewStructure;

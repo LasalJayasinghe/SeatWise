@@ -40,6 +40,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'restaurants' => [
+            'driver' => 'session',
+            'provider' => 'restaurants',
+        ],
+
+        'cashiers' => [
+            'driver' => 'session',
+            'provider' => 'cashiers',
+        ],
     ],
 
     /*
@@ -65,6 +75,15 @@ return [
             'model' => App\Models\User::class,
         ],
 
+        'restaurants' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Restaurants::class,
+        ],
+
+        'cashiers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Cashiers::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
