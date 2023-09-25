@@ -74,7 +74,7 @@ export default function MealView() {
           </div>
           
         </div>
-        <p className='font-semibold'>Special instrutons</p>
+        <p className='font-semibold'>Special instructons</p>
         <textarea class="resize-y rounded-md w-full mt-4 mb-10 focus:border-green-500 " placeholder="Add note"></textarea>
         <div class="flex items-center border-t border-gray-300 pt-4">
           <span class="title-font font-medium text-4xl text-gray-900"> LKR 3200.00</span>
