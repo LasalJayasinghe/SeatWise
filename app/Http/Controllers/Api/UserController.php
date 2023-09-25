@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -16,11 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(
-            User::query()->orderBy('id', 'desc')->paginate()
-        );
+        // $users = User::orderBy('id', 'desc')->paginate(25);
+        $users = User::orderBy('id', 'desc')->get();
 
-
+        return UserResource::collection($users);
     }
 
     /**
@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
-        User::create($data);
+        $user = User::create($data);
         return new UserResource($user);
         return response(new UserResource($user), 201);
 
@@ -78,4 +78,6 @@ class UserController extends Controller
         $user -> delete();
         return response(null, 204);
     }
+
+    
 }
