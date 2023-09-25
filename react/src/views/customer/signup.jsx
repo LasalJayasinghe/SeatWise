@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {createRef, useState} from "react";
+import {createRef, useState, useEffect, map} from "react";
 import axiosClient from "../../axios-client.js";
 import {useStateContext} from "../../context/ContextProvider.jsx";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
@@ -7,32 +7,51 @@ import Logo from "../../assets/logo.svg";
 
 export default function Signup() {
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [categories, setCategories] = useState([]); // State to store categories
 
-   const handleOptionClick = (option) => {
-    // Check if the option is already selected
+  useEffect(() => {
+    // Fetch categories data when the component mounts
+    axiosClient.get("/getAllCategories").then(({ data }) => {
+      if (Array.isArray(data)) {
+        // Set the categories in the state
+        setCategories(data);
+      }
+    });
+  }, []);
+  
+  const handleOptionClick = (option) => {
     if (selectedOptions.includes(option)) {
       // If it's selected, remove it
       setSelectedOptions(selectedOptions.filter((item) => item !== option));
+      ref.current.classList.remove("bg-green-100", "border-green-300");
     } else {
       // If it's not selected, add it
       setSelectedOptions([...selectedOptions, option]);
+      ref.current.classList.add("bg-green-100", "border-green-300");
     }
   };
+  
 
 
-  const nameRef = createRef()
+  const firstnameRef = createRef()
+  const dessertRef = createRef();
+  const bakeryRef = createRef();
+  const snackRef = createRef();
+  const mealPreferences = createRef();
+  // Add more refs for other meal preferences as needed
+  
   const lastnameRef = createRef()
   const hometownRef = createRef()
-  // const birthdateRef = createRef()
-  // const genderRef = createRef()
-  // const photoRef = createRef()
-  // const aboutRef = createRef()
-  // const mealRef = createRef()
-  // const cuisineRef = createRef()
-  // const beverageRef = createRef()
-  // const restaurantRef = createRef()
-  // const whoareyouRef = createRef()
-  // const personalityRef = createRef()
+  const dobRef = createRef()
+  // const genderRef = useRef()
+  const photoRef = createRef()
+  const aboutRef = createRef()
+  const mealRef = createRef()
+  const cuisineRef = createRef()
+  const beverageRef = createRef()
+  const restaurantRef = createRef()
+  const whoareyouRef = createRef()
+  const personalityRef = createRef()
   const emailRef = createRef()
   const passwordRef = createRef()
   const passwordConfirmationRef = createRef()
@@ -43,10 +62,13 @@ export default function Signup() {
     ev.preventDefault()
 
     const payload = {
-      name: nameRef.current.value,
+      mealPreferences: selectedOptions,  
+      firstname: firstnameRef.current.value,
       lastname: lastnameRef.current.value,
       hometown: hometownRef.current.value,
-      // birthdate: birthdateRef.current.value,
+      dob: dobRef.current.value,
+      about: aboutRef.current.value,
+      // photo: photoRef.current.value,
       // gender: genderRef.current.value, 
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -63,6 +85,7 @@ export default function Signup() {
           setErrors(response.data.errors)
         }
       })
+    
   }
 
   return (
@@ -104,7 +127,7 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <input
-                  ref={nameRef}
+                  ref={firstnameRef}
                   type="text"
                   name="firstname"
                   id="firstname"
@@ -155,7 +178,7 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <input
-                  // ref={birthdateRef}
+                  ref={dobRef}
                   type="date"
                   name="birth-date"
                   id="birth-date"
@@ -180,6 +203,7 @@ export default function Signup() {
                     id="push-everything"
                     name="push-notifications"
                     type="radio"
+                    value="M"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
                   />
                   <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
@@ -192,6 +216,7 @@ export default function Signup() {
                     id="push-email"
                     name="push-notifications"
                     type="radio"
+                    value="F"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
                   />
                   <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -204,6 +229,7 @@ export default function Signup() {
                     id="push-nothing"
                     name="push-notifications"
                     type="radio"
+                    value="O"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
                   />
                   <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
@@ -236,7 +262,7 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <textarea
-                // ref={aboutRef}
+                ref={aboutRef}
                   id="about"
                   name="about"
                   rows={3}
@@ -259,44 +285,30 @@ export default function Signup() {
 
           {/* Meal Preferences */}
           <div className="mt-5 col-span-full">
-              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                Meal preferences
-              </label>
-              <button
-            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
-              selectedOptions.includes("Dessert") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
-            }`}
-            onClick={() => handleOptionClick("Dessert")}
-          >
-            Dessert
-          </button>
-          <button
-            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
-              selectedOptions.includes("Bakery") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
-            }`}
-            onClick={() => handleOptionClick("Bakery")}
-          >
-            Bakery
-          </button>
-          <button
-            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
-              selectedOptions.includes("Snack") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
-            }`}
-            onClick={() => handleOptionClick("Snack")}
-          >
-            Snack
-          </button>
-              
+            <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+              Meal preferences
+            </label>
+          </div>   
+          <div>
+            <div className="flex">
+              {categories.map((data) => (
+                <div key={data.id} className="mr-2">
+                  <button
+                    className={`p-2 px-5 rounded-full ${
+                      selectedOptions.includes(data.category)
+                        ? "bg-green-100 border-green-300"
+                        : "bg-gray-100 border-gray-300"
+                    }`}
+                    onClick={() => handleOptionClick(data.category)}
+                  >
+                    {data.category}
+                  </button>
+                </div>
+              ))}
             </div>
-            {/* Display selected options */}
-      {/* <div>
-        <h2>Selected Options:</h2>
-        <ul>
-          {selectedOptions.map((option, index) => (
-            <li key={index}>{option}</li>
-          ))}
-        </ul>
-      </div> */}
+          </div>
+
+
 
       {/* Cuisine Preferences */}
             <div className="mt-5 col-span-full">

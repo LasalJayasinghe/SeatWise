@@ -16,13 +16,19 @@ class AuthController extends Controller
     public function signup(SignupRequest $request)
     {
         $data = $request->validated();
+        var_dump($data);
         /** @var \App\Models\User $user */
-
         $user = User::create([
-            'name' => $data['name'],
+            'firstname' => $data['firstname'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'mealPreferences' => json_encode($data['mealPreferences']), // Convert to JSON
+            // 'lastname' => $data['lastname'],
+            // 'dob' => $data['dob'],
+            // 'gender' => $data['gender'],
+            // 'photo' => $data['photo'],
+            // 'about' => $data['about'],
             // 'hometown' => $data['hometown'],
+            'password' => bcrypt($data['password']),
         ]);
 
         $token = $user->createToken('main')->plainTextToken;

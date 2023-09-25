@@ -30,6 +30,9 @@ Route::post('/cashierLogin', [RestaurantController::class, 'cashierLogin']);
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
 
 Route::post('/signup', [AuthController::class, 'signup']);
+Route::get('/signup', [RestaurantController::class, 'getAllCategories']);
+Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories']);
+
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 
 Route::post('/landing', [AuthController::class, 'landing']);
@@ -105,7 +108,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/getMenu/{id}', [RestaurantController::class, 'getMenu']);
     Route::post('/addcategory', [RestaurantController::class, 'addcategory']);
     Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);
-    Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories']);
     Route::get('/getTotalUserCount/{id}', [RestaurantController::class, 'totalUserCount']);
     Route::get('/getTotalMonthlyReservationCount/{id}', [RestaurantController::class, 'getTotalMonthlyReservationCount']);
     Route::post('/addTechincalAssistanceRequest', [RestaurantController::class, 'addTechincalAssistanceRequest']);

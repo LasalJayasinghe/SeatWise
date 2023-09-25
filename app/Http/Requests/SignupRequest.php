@@ -25,17 +25,23 @@ class SignupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string'],
-            'hometown'=>['required'],
+            'firstname' => ['required', 'string'],
+            // 'lastname' => ['required', 'string'],
+            // 'dob' => ['required','date'],
+            // 'gender' => ['required', Rule::in(['M', 'L', 'O'])],
+            // 'photo' => ['url'],
+            // 'about' => ['required', 'string'],
+            // 'hometown'=>['required'],
+            'mealPreferences' => 'required|array',
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => [
                 'required',
                 'confirmed',
-                Password::min(8)
+                Password::min(1)
                     ->letters()
                     ->symbols()
                     ->numbers()
-            ]
+            ],
         ];
     }
 }
