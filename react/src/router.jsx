@@ -23,6 +23,8 @@ import Activities from './views/activities/Activities.jsx';
 import Completed from './views/activities/Completed.jsx';
 import Profile from './views/Profile.jsx';
 import MealView from './views/MealView.jsx';
+import Advertisements from './views/Advertisements.jsx';
+import AddBanner from './views/AddBanner.jsx';
 
 const router = createBrowserRouter([
     {
@@ -111,6 +113,14 @@ const router = createBrowserRouter([
             {
                 path: '/mealview',
                 element : <MealView/>
+            },
+            {
+                path: '/advertisements',
+                element : <Advertisements/>
+            },
+            {
+                path: '/advertisements/addbanner',
+                element : <AddBanner/>
             },
    
    
