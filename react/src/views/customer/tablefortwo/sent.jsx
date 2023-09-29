@@ -25,7 +25,7 @@ export default function Sent(){
 	  };
 
 	  const filteredUsers = users.filter(user =>
-		user.name.toLowerCase().includes(searchTerm.toLowerCase())
+		user.firstname.toLowerCase().includes(searchTerm.toLowerCase())
 	  );
 	  const loggedInUserId = 24; // Replace with your actual logged-in user's ID
 	  const visibleUsers = filteredUsers.filter(user => user.id !== loggedInUserId).slice(6, 12);

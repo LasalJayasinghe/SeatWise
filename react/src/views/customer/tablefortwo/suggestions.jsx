@@ -30,6 +30,11 @@ export default function Suggestions(){
 		}
 		return user.hometown.toLowerCase() === filterHometown.toLowerCase();
 	});
+
+	useEffect(() => {
+		// Log the updated userData whenever it changes
+		console.log('Updated userData:', users);
+	  }, [users]);
 	return (
 		<div>
 		  <div className="users-container">
@@ -42,7 +47,7 @@ export default function Suggestions(){
 <div className="mb-4">
 						<input
 							type="text"
-							className="block w-full h-12 py-1 pl-3 pr-4 text-gray-900 placeholder-gray-400 border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent sm:text-sm"
+							className="block w-full h-12 py-1 pl-10 pr-4 mt-3 text-gray-900 placeholder-gray-400 border-gray-300 rounded-md sm:w-64 focus:ring-2 focus:ring-green-500 focus:border-transparent sm:text-sm"
 							placeholder="Filter by Hometown"
 							value={filterHometown}
 							onChange={(e) => setFilterHometown(e.target.value)}

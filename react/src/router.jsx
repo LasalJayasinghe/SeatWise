@@ -101,11 +101,11 @@ const router = createBrowserRouter([
                 element : <Suggestions />
             },
             {
-                path: '/tablefortwo/requests',
+                path: '/tablefortwo/requestRecieved',
                 element : <Recieved />
             },
             {
-                path: '/tablefortwo/sent',
+                path: '/tablefortwo/requestSent',
                 element : <Sent />
             },
             {

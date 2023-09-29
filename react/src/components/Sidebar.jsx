@@ -88,10 +88,10 @@ export function SidebarWithContentSeparator() {
           </ListItem>
           <AccordionBody className="py-1">
             <List className="p-0">
-              <Link to="/tablefortwo/requests">
+              <Link to="/tablefortwo/requestRecieved">
                 <ListItem
                   className={`${
-                    location.pathname === "/tablefortwo/requests"
+                    location.pathname === "/tablefortwo/requestRecieved"
                       ? "text-green-500"
                       : "text-blue-gray-500 hover:text-green-500"
                   }`}
@@ -102,10 +102,10 @@ export function SidebarWithContentSeparator() {
                   Received
                 </ListItem>
               </Link>
-              <Link to="/tablefortwo/sent">
+              <Link to="/tablefortwo/requestSent">
                 <ListItem
                   className={`${
-                    location.pathname === "/tablefortwo/sent"
+                    location.pathname === "/tablefortwo/requestSent"
                       ? "text-green-500"
                       : "text-blue-gray-500 hover:text-green-500"
                   }`}

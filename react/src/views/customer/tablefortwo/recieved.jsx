@@ -25,7 +25,7 @@ export default function Recieved(){
 	  };
 	
 	  const filteredUsers = users.filter(user =>
-		user.name.toLowerCase().includes(searchTerm.toLowerCase())
+		user.firstname.toLowerCase().includes(searchTerm.toLowerCase())
 	  );
 	
 	  // Assuming loggedInUserId contains the ID of the logged-in user

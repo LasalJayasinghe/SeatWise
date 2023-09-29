@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
+use App\Http\Controllers\Api\TablefortwoController;
 
 
 /*
@@ -28,13 +29,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/restaurantlogin', [RestaurantController::class, 'restaurantlogin'])->name('restaurants.login');
 Route::post('/cashierLogin', [RestaurantController::class, 'cashierLogin']);
 Route::post('/addCashier', [RestaurantController::class, 'addCashier']);
-
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::get('/signup', [RestaurantController::class, 'getAllCategories']);
 Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories']);
-
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
-
 Route::post('/landing', [AuthController::class, 'landing']);
 
 // Authenticated routes
@@ -42,7 +40,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/reslogout', [RestaurantController::class, 'logout']);
     Route::post('/cashierlogout', [RestaurantController::class, 'logout']);
@@ -51,7 +48,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Meal routes
     Route::get('/meals', [MealController::class, 'index'])->name('meals.index');
     Route::get('/meals/{id}', [MealController::class, 'show']);
-
     Route::get('/all-meals', [AllMealsController::class, 'index']);
 
     // Waitlist
@@ -70,6 +66,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Additional routes for restaurant data
     Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
+
+    //TableForTwo routes
+    Route::prefix('/tablefortwo')->group(function () {
+        Route::get('/userdata', [AuthController::class, 'getUserData']);
+        Route::get('/requests/{id}', [TablefortwoController::class, 'getRequests']);
+        Route::get('/invitations/{id}', [TablefortwoController::class, 'getInvitations']);
+        Route::get('/acceptedInvites/{id}', [TablefortwoController::class, 'getAcceptedInvites']);
+        Route::get('/acceptedRequests/{id}', [TablefortwoController::class, 'getAcceptedRequests']);
+        Route::get('/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
+        Route::get('/getPending/{id}', [TablefortwoController::class, 'getPendingRequests']);
+
+    });
+
 
     //---------------------------------------------------------------------------------------------------------------------------------------------
     //---------------------------------------------------------Restaurant Side Routes---------------------------------------------------------

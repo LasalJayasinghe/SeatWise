@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class TableReservation extends Model
 {
     use HasFactory;
@@ -13,6 +14,7 @@ class TableReservation extends Model
     protected $table = 'table_reservations';
 
     protected $fillable = [
+        'reservant_ID',
         'restaurant_id',
         'reservation_date',
         'start_time',
@@ -40,4 +42,12 @@ class TableReservation extends Model
 
         return $availableTables;
     }
+
+    public function tablefortwo()
+    {
+        return $this->hasMany(Tablefortwo::class, 'reservationNumber', 'reservationNumber');
+    }
+    
+    
+
 }
