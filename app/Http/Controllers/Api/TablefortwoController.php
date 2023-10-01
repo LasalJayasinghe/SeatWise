@@ -82,7 +82,7 @@ class TablefortwoController extends Controller
                       ->where('status', 'completed')
                       ->orWhere('status', 'rejected');
             })
-            ->with(['restaurant', 'user' , 'tablefortwo'])
+            ->with(['restaurant' , 'tablefortwo'])
             ->get();
     
         return response()->json($requests);

@@ -67,7 +67,7 @@ export default function TableForTwo() {
       })
       .then((response) => {
         // Handle the response data from the getRequest here
-        console.log('Response from getRequest:', response.data);
+        // console.log('Response from getRequest:', response.data);
         setInviteData(response.data);
       })
       .catch((error) => {

@@ -80,8 +80,7 @@ class AuthController extends Controller
     
     public function getUserDetails($id)
     {
-        $data = User::where('id',$id)
-        ->get();
+        $data = User::where('id', $id)->first();
         
         return response()->json($data);
     }
