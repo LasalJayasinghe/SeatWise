@@ -88,4 +88,16 @@ class TablefortwoController extends Controller
         return response()->json($requests);
     }
 
+    public function getHistoryAcceptedRequests($id)
+    {
+        $statuses = ['completed', 'rejected'];
+    
+        $Invites = TableForTwo::where('acceptedID', $id)
+            ->whereIn('status', $statuses)
+            ->with('reservation') // Eager load the reservation relationship
+            ->get();
+    
+        return response()->json($Invites);
+    }
+
 }

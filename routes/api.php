@@ -70,26 +70,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //TableForTwo routes
     Route::prefix('/tablefortwo')->group(function () {
         Route::get('/userdata', [AuthController::class, 'getUserData']);
-        Route::get('/requests/{id}', [TablefortwoController::class, 'getRequests']);
-        Route::get('/invitations/{id}', [TablefortwoController::class, 'getInvitations']);
-        Route::get('/acceptedInvites/{id}', [TablefortwoController::class, 'getAcceptedInvites']);
-        Route::get('/acceptedRequests/{id}', [TablefortwoController::class, 'getAcceptedRequests']);
-        Route::get('/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
-        Route::get('/getPending/{id}', [TablefortwoController::class, 'getPendingRequests']);
         Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
-
-
     });
-    Route::get('/tablefortwo/userDetails/{id} ',[AuthController::class, 'getUserDetails']);
+
     Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
-
-
-    Route::prefix('/tablefortwo/Invitations')->group(function () {
-        Route::get('/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
-        Route::get('/userdata', [AuthController::class, 'getUserData']);
-
-    });
-
+    Route::get('/restaurantDetails/{id}', [AuthController::class, 'getRestaurantDetails']);
+    Route::get('/tablefortwo/Invitations/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
+    Route::get('/tablefortwo/Requests/getRequests/{id}', [TablefortwoController::class, 'getHistoryAcceptedRequests']);
 
 
 

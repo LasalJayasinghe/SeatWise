@@ -115,10 +115,10 @@ export function SidebarWithContentSeparator() {
           </ListItem>
           <AccordionBody className="py-1">
             <List className="p-0">
-              <Link to="/tablefortwo/requestRecieved">
+              <Link to="/tablefortwo/Requests">
                 <ListItem
                   className={`${
-                    location.pathname === "/tablefortwo/requestRecieved"
+                    location.pathname === "/tablefortwo/Requests"
                       ? "text-green-500"
                       : "text-blue-gray-500 hover:text-green-500"
                   }`}

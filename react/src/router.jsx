@@ -101,7 +101,7 @@ const router = createBrowserRouter([
                 element : <Suggestions />
             },
             {
-                path: '/tablefortwo/requestRecieved',
+                path: '/tablefortwo/Requests',
                 element : <Recieved />
             },
             {
