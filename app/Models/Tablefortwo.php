@@ -24,4 +24,8 @@ class tablefortwo extends Model
         return $this->hasMany(TableReservation::class, 'reservationNumber', 'reservationNumber');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'acceptedID');
+    }
 }

@@ -16,7 +16,7 @@ export default function Users(){
 		axiosClient.get('/users')
 		.then(({ data }) => {
 			setLoading(false)
-			setUsers(data.data)
+			setUser(data.data)
 		})
 		.catch(() => {
 		setLoading(false)

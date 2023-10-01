@@ -45,9 +45,19 @@ class TableReservation extends Model
 
     public function tablefortwo()
     {
-        return $this->hasMany(Tablefortwo::class, 'reservationNumber', 'reservationNumber');
-    }
-    
-    
+        // return $this->hasMany(Tablefortwo::class, 'reservationNumber', 'reservationNumber');
+        return $this->belongsTo(Tablefortwo::class, 'reservationNumber', 'reservationNumber');
 
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
+
+    public function user()
+    {
+        
+        return $this->belongsTo(User::class, TableforTwo::class,'acceptedID');
+        }
 }

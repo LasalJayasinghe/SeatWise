@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon; // Import Carbon for working with dates and times
 use App\Models\Tablefortwo;
 use App\Models\TableReservation;
+use App\Models\Restaurants;
+use App\Models\User;
 
 class TablefortwoController extends Controller
 {
@@ -74,14 +76,16 @@ class TablefortwoController extends Controller
     public function getHistoryRequests($id)
     {
         $requests = TableReservation::where('reservant_ID', $id)
-        ->where('tablefortwo', 1)
-        ->whereHas('tablefortwo', function ($query) {
-            $query->where('status', 'completed')
-                  ->orWhere('status', 'rejected');        })
-        ->get();    
-    }
-
-
+            ->where('tablefortwo', 1)
+            ->whereHas('tablefortwo.user', function ($query) {
+                $query->whereColumn('acceptedID', 'users.id') 
+                      ->where('status', 'completed')
+                      ->orWhere('status', 'rejected');
+            })
+            ->with(['restaurant', 'user' , 'tablefortwo'])
+            ->get();
     
+        return response()->json($requests);
+    }
 
 }

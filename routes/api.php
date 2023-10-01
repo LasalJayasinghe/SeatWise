@@ -76,8 +76,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/acceptedRequests/{id}', [TablefortwoController::class, 'getAcceptedRequests']);
         Route::get('/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
         Route::get('/getPending/{id}', [TablefortwoController::class, 'getPendingRequests']);
+        Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
+
 
     });
+    Route::get('/tablefortwo/userDetails/{id} ',[AuthController::class, 'getUserDetails']);
+    Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
+
+
+    Route::prefix('/tablefortwo/Invitations')->group(function () {
+        Route::get('/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
+        Route::get('/userdata', [AuthController::class, 'getUserData']);
+
+    });
+
+
 
 
     //---------------------------------------------------------------------------------------------------------------------------------------------
