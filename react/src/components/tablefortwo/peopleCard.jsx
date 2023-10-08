@@ -1,12 +1,35 @@
 import profilepic from '../../assets/defaultProfile.png';
+import axiosClient from "../../axios-client.js";
 import React, { useState , useEffect } from "react";
 
 export default function Cards({ user }) {
+  const [data , setInviteData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [profilePic, setProfilePic] = useState(profilepic);
+  const [resData, setResData] = useState({});
 
   useEffect(() => {
-      const profilePicFilename = `../../assets/profile_${user.id}.jpg`;
+    const getUserDetails = axiosClient.get('userDetails/' + user.reservation.reservant_ID);
+    const getRestaurantDetails = axiosClient.get('restaurantDetails/' + user.reservation.restaurant_id);
+
+    Promise.all([getUserDetails, getRestaurantDetails])
+      .then((responses) => {
+        const [userData, restaurantData] = responses;
+        console.log('user data', userData.data);
+        console.log('restaurant data', restaurantData.data);
+
+        setInviteData(userData.data);
+        setResData(restaurantData.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, [user.reservation.reservant_ID, user.reservation.restaurant_id]);
+  
+
+
+  useEffect(() => {
+      const profilePicFilename = `../../assets/profile_${user.reservation.reservant_ID}.jpg`;
 
       // Dynamically import the image
       import(profilePicFilename)
@@ -16,12 +39,34 @@ export default function Cards({ user }) {
           .catch(() => {
               setProfilePic(profilepic); // Fall back to default image if profile image not found
           });
-  }, [user.id]);
+  }, [user.reservation.reservant_ID]);
 
   const handleImageError = () => {
       setProfilePic(profilepic); // Fall back to default image if profile image not found
   };
-        return (
+
+  // Time formatting function
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(':');
+    let period = 'AM';
+
+    const hoursNum = parseInt(hours, 10);
+
+    if (hoursNum >= 12) {
+      period = 'PM';
+    }
+
+    const formattedHours = hoursNum % 12 || 12;
+
+    return `${formattedHours}:${minutes} ${period}`;
+  };
+
+  // Date formatting function
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+  return (
           
     <div>
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -34,14 +79,10 @@ export default function Cards({ user }) {
                     />       
                                 </div>
               <div className='text-center'>
-                <h3 className="mt-4 text-lg font-bold text-gray-700">{user.name}</h3>
-                <h3 className="mt-4 text-m text-gray-700">{user.jobStatus}</h3>
+                <h3 className="mt-4 text-lg font-bold text-gray-700">{data.firstname}</h3>
                   <div className="flex items-center gap-2 mt-2 ml-20 text-sm text-gray-700">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                      </svg>
-                      <h3 className="text-center text-gray-700">{user.hometown}</h3>
+                      <h3 className="text-center text-gray-700">{user.reservation.reservation_date}</h3>
+
                   </div>
                   
                 
@@ -64,24 +105,12 @@ export default function Cards({ user }) {
                   <div className="mx-10 w-full md:w-2/3 p-4">
                     <div className="items-center md:text-left">
                       <div className='gap-px'>
-                        <div className="text-neutral-950 text-lg font-semibold mb-1">{user.name}</div>
-                        {/* <div className="text-stone-300 text-xs font-normal mb-1">Level 23</div> */}
+                        <div className="text-neutral-950 text-lg font-semibold mb-1">{data.firstname} {data.lastname}</div>
                       </div>
-                      <div className="text-green-400 text-sm font-normal mb-1">88% match</div>
-                      <div className="text-gray-400 text-sm mt-6 font-normal ">{user.jobStatus}</div>
-                      <div className="flex ">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-gray-400">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                        </svg>
-                        <h3 className="text-center text-gray-400 mb-4 ">{user.hometown}</h3>
-                      </div>
+                      <h3 className="text-sm text-gray-700">{resData.restaurantname}</h3>
                     </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="text-slate-500 text-xs font-normal">Lu-lana Nugegoda</div>
-                    </div>
-                    <div className="text-slate-500 text-xs font-normal mb-1">Thu 14 July</div>
-                    <div className="text-slate-500 text-xs font-normal mb-2">6.00pm - 7.00pm</div>
+                    <h3 className="text-sm text-gray-700"> {formatDate(user.reservation.reservation_date)} </h3>
+                    <h3 className="text-sm text-gray-700"> {formatTime(user.reservation.start_time)} -{' '} {formatTime(user.reservation.end_time)}</h3>
                   </div>
                 </div>
                 <div className="flex items-center justify-end px-6 pt-6 pb-2 border-t border-solid border-slate-200 rounded-b">

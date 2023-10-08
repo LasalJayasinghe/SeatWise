@@ -58,7 +58,7 @@ export function SidebarWithContentSeparator() {
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5 mr-2" />
             </ListItemPrefix>
-            People
+            Reservations
           </ListItem>
         </Link>
 
