@@ -21,9 +21,10 @@ import Mealspage from './views/customer/restaurants/Mealspage.jsx';
 import Complaints from './views/customer/activities/Complaints.jsx';
 import Activities from './views/customer/activities/Activities.jsx';
 import Completed from './views/customer/activities/Completed.jsx';
-import MealView from './views/MealView.jsx';
-import Advertisements from './views/Advertisements.jsx';
-import AddBanner from './views/AddBanner.jsx';
+import MealView from './views/customer/MealView.jsx';
+import Advertisements from './views/customer/Advertisements.jsx';
+import AddBanner from './views/customer/AddBanner.jsx';
+import Profile from './views/customer/Profile.jsx';
 
 import RestaurantGuestLayout from './components/restaurant/RestaurantGuestLayout.jsx';
 import RestaurantDefaultLayout from './components/restaurant/RestaurantDefaultLayout.jsx';
@@ -144,7 +145,10 @@ const router = createBrowserRouter([
                 path: '/advertisements/addbanner',
                 element : <AddBanner/>
             },
-   
+            {
+                path: '/profile',
+                element : <Profile/>
+            },   
    
         ]
     },

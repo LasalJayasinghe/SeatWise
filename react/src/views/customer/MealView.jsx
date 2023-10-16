@@ -1,5 +1,5 @@
 import React from 'react'
-import CounterInput from '../components/CounterInput'
+import CounterInput from '../../components/CounterInput'
 
 export default function MealView() {
   return (

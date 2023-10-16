@@ -1,5 +1,5 @@
 import React from 'react'
-import adimage from '../assets/slide2.png'
+import adimage from '../../assets/slide2.png'
 
 export default function Advertisements() {
   return (
