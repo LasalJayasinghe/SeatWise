@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
 use App\Http\Controllers\Api\TablefortwoController;
+use App\Http\Controllers\Api\TableReservationController;
 
 
 // Authentication routes
