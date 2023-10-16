@@ -12,17 +12,6 @@ use App\Http\Controllers\Api\AllMealsController;
 use App\Http\Controllers\Api\TablefortwoController;
 
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 // Authentication routes
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -35,6 +24,8 @@ Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories'
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 Route::post('/landing', [AuthController::class, 'landing']);
 
+
+
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
@@ -44,6 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/reslogout', [RestaurantController::class, 'logout']);
     Route::post('/cashierlogout', [RestaurantController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
+    Route::get('/user-data', [AuthController::class, 'getUserData'])->name('user-data');
 
     // Meal routes
     Route::get('/meals', [MealController::class, 'index'])->name('meals.index');
@@ -58,6 +50,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/restaurants/{id}', [RestaurantController::class, 'show']); // Fetch a single restaurant by ID
     Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
     Route::get('/restaurants/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
+
+    Route::post('/make-reservation', [TableReservationController::class, 'makeReservation']);
 
     // Hall routes
     Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']);

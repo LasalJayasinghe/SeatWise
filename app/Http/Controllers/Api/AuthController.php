@@ -77,7 +77,7 @@ class AuthController extends Controller
         // For example, you can access the authenticated user's data with $request->user();
         $user = $request->user();
 
-        return response()->json($user);
+        return response()->json(['name' => $user->name, 'id' => $user->id]);
     }
     
     public function getUserDetails($id)

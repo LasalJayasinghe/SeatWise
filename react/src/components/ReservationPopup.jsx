@@ -1,51 +1,131 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React , { useState } from 'react';
 import axiosClient from '../axios-client';
-import ConfirmationPopup from './ConfirmationPopup'; // Import the new component
 
-const ReservationPopup = ({ onClose , selectedTables}) => {
-    const [showConfirmation, setShowConfirmation] = useState(false); // Add state
-  
-    const handleContinueClick = () => {
-        setShowConfirmation(true); // Show the confirmation popup
-      };
-      
-  
-    return (
+
+
+const generateReservationNumber = () => {
+  const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const getRandomLowercaseLetter = () => {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const randomIndex = getRandomInt(0, alphabet.length - 1);
+    return alphabet[randomIndex];
+  };
+
+  const getRandomNumber = () => getRandomInt(0, 9);
+
+  const reservationNumber = [
+    getRandomNumber(),
+    getRandomNumber(),
+    getRandomNumber(),
+    getRandomNumber(),
+    getRandomLowercaseLetter(),
+    getRandomLowercaseLetter(),
+  ].join('');
+
+  return reservationNumber;
+};
+const ReservationPopup = ({ onClose, selectedTables, formSubmissionData, user,restaurantId, selectedTableStructureId }) => {
+const [tablefortwo, settablefortwo] = useState(false);
+const reservationNumber = generateReservationNumber();
+const tableNumbers = selectedTables.map((table) => table.table_number);
+
+const handleConfirmReservation = async () => {
+  try {
+    // Create the reservation object
+    const reservationData = {
+      reservationNumber: generateReservationNumber(),
+      table_number: selectedTables.map((table) => table.table_number).join(','), // Convert to a comma-separated string
+      restaurant_id: restaurantId,
+      reservation_date: formSubmissionData.date,
+      start_time: formSubmissionData.startTime,
+      end_time: formSubmissionData.endTime,
+      reservant_ID: user.id,
+      number_of_participants: formSubmissionData.numParticipants,
+      table_structure_id: selectedTableStructureId,
+      tablefortwo: tablefortwo ? 1 : 0, // Convert to boolean
+      // You may need to include additional fields here based on your API requirements
+    };
+
+    // Make the POST request to your API using Axios
+    const response = await axiosClient.post('/make-reservation', reservationData);
+
+    if (response.status === 201) {
+      // Reservation was successful, you can handle the response as needed
+      onClose();
+    } else {
+      // Reservation failed, handle errors or show a message to the user
+      console.error('Reservation failed:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error making reservation:', error);
+    // Handle errors as needed
+  }
+};
+
+  return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
       <div className="bg-white rounded-lg p-8">
-      <span className="popup-close" onClick={onClose}>
-          &#10005; {/* Use the 'times' character for the cross */}
-        </span>
-        <h2 className="text-xl font-bold mb-4">Your Tables Reserved!</h2>
-        <p className="text-gray-600 mb-4">
-          Thank you for reserving your tables with us.
-        </p>
-        <div className="flex gap-4">
-        <button
-          className="border border-green-500 text-green-500 px-4 py-2 rounded-lg"
-          onClick={() => {
-            // Perform action for "Order Meal"
-          }}
-        >
-          Order Meal
-        </button>
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded-lg"
-          onClick={handleContinueClick} // Show the confirmation popup on "Continue" click
-        >
-          Continue
-        </button>
+        <h2 className="text-lg font-semibold mb-4">Reservation Details</h2>
+        {/* Display the generated reservation number */}
+        <p>Reservation Number: {reservationNumber}</p>
 
-        {/* Show the ConfirmationPopup when showConfirmation is true */}
-        {showConfirmation && (
-          <ConfirmationPopup
-            onClose={() => setShowConfirmation(false)}
-            // userName={user.name}
-            selectedTables={selectedTables}
-          />
-        )}
-      </div>
+        {/* Display the restaurant ID */}
+        <p>Restaurant ID: {restaurantId}</p>
+        {/* Display the selected table information */}
+        
+        {selectedTables.map((table) => (
+          <div key={table.id} className="mb-2">
+           
+
+            <p>Table Number: {table.table_number}</p>
+            <p>View: {table.view.name}</p>
+          </div>
+        ))}
+
+        {/* Display reservation form data */}
+        <h3 className="mt-4">Reservation Form Data:</h3>
+        <p>Date: {formSubmissionData.date}</p>
+        <p>Start Time: {formSubmissionData.startTime}</p>
+        <p>End Time: {formSubmissionData.endTime}</p>
+        <p>Number of Participants: {formSubmissionData.numParticipants}</p>
+
+        <p>reservant name : {user.name}</p>
+            <p>reservant id : {user.id}</p>
+
+        <p>Selected Table Structure ID: {selectedTableStructureId}</p>
+
+        {/* Checkbox for "Enable table for two to sharing" */}
+        <div className="mt-4">
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={tablefortwo}
+              onChange={() => settablefortwo(!tablefortwo)}
+            />
+            <span>Enable table for two to sharing</span>
+          </label>
+        </div>
+
+        {/* Buttons and content */}
+        <div className="mt-4 flex justify-center space-x-4">
+        <button
+          className="bg-green-500 text-white py-1 px-4 rounded-md"
+          onClick={handleConfirmReservation}
+        >
+          Confirm
+        </button>
+        <button
+          className="bg-red-500 text-white py-1 px-4 rounded-md"
+          onClick={onClose}
+        >
+          Cancel
+        </button>
+        </div>
       </div>
     </div>
   );

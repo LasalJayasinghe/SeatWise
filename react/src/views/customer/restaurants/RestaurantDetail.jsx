@@ -4,10 +4,14 @@ import axiosClient from '../../../axios-client';
 import ReservationPopup from '../../../components/ReservationPopup';
 import restaurantImage from '../../../assets/restaurant3.jpg';
 import hallImage from '../../../assets/restaurant1.jpg';
+import LoadingSpinner from '../../../components/LoadingSpinner';
+import { useStateContext } from '../../../context/ContextProvider';
+
 
 
 
 const RestaurantDetail = () => {
+  const { user } = useStateContext();
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [tables, setTables] = useState([]);
@@ -22,7 +26,15 @@ const RestaurantDetail = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showTableForTwoPopup, setShowTableForTwoPopup] = useState(false);
   const [selectedTableForTwo, setSelectedTableForTwo] = useState(null);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+const [formSubmissionData, setFormSubmissionData] = useState({
+    date: '',
+    startTime: '',
+    endTime: '',
+    numParticipants: 1,
+  });
 
+  const [selectedTableStructureId, setSelectedTableStructureId] = useState(null);
 
 
   useEffect(() => {
@@ -83,24 +95,31 @@ const RestaurantDetail = () => {
           date,
           start_time: startTime,
           end_time: endTime,
-          num_participants: numParticipants,
+          number_of_participants: numParticipants,
         },
       });
 
       const availableTables = response.data;
       setTables(availableTables);
       setSelectedTables([]); // Clear selected tables after reservation
+          // Store the form submission data in state
+    setFormSubmissionData({
+      date,
+      startTime,
+      endTime,
+      numParticipants,
+    });
     } catch (error) {
       console.error(error);
     }
   };
   
   // Function to handle clicking the Reserve button
-  const handleReserveClick = () => {
-    if (selectedTables.some(table => table.isAvailable)) {
-      setShowPopup(true);
-    }
-  };
+const handleReserveClick = () => {
+  if (selectedTables.some(table => table.isAvailable)) {
+    setShowPopup(true);
+  }
+};
   
 
   const handleTableClick = (table) => {
@@ -121,8 +140,11 @@ const RestaurantDetail = () => {
     const updatedSelectedTables = selectedTables.includes(table)
       ? selectedTables.filter(selectedTable => selectedTable !== table)
       : [...selectedTables, table];
-  
+      
+    setSelectedTableStructureId(table.id);
+
     setSelectedTables(updatedSelectedTables);
+
   };
   
   
@@ -276,51 +298,50 @@ const RestaurantDetail = () => {
 
 {/* Display table structures */}
 {toggle === 'tables' && (
-    <div className="mt-6">
-        {/* Organize tables into rows */}
-        {organizeTablesIntoRows(tables).map((row, rowIndex) => (
+        <div className="mt-6">
+          {/* Organize tables into rows */}
+          {organizeTablesIntoRows(tables).map((row, rowIndex) => (
             <div key={rowIndex} className="flex mt-4">
-                {row.map((table) => (
+              {row.map((table) => (
+                <div
+                  key={table.id}
+                  className={`relative p-4 border rounded-lg ${
+                    selectedTables.includes(table) ? 'bg-black text-white' :
+                    table.isAvailable
+                      ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : table.isTableForTwo
+                      ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                  }`}
+                  style={{
+                    width: '2cm',
+                    height: '1cm',
+                    fontSize: '10px',
+                    textAlign: 'center',
+                    marginRight: '4px',
+                  }}
+                  onMouseEnter={() => handleTableHover(table)}
+                  onMouseLeave={handleTableLeave}
+                  onClick={() => handleTableClick(table)} // Add the click handler
+                >
+                  <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                    {table.table_number}
+                  </h5>
+                  {/* Pop-up bubble */}
+                  {hoveredTable === table && (
                     <div
-                    key={table.id}
-                    className={`relative p-4 border rounded-lg ${
-                      selectedTables.includes(table) ? 'bg-black text-white' :
-                      table.isAvailable
-                        ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                        : table.isTableForTwo
-                        ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                        : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
-                    }`}
-                    style={{
-                      width: '2cm',
-                      height: '1cm',
-                      fontSize: '10px',
-                      textAlign: 'center',
-                      marginRight: '4px',
-                    }}
-                    onMouseEnter={() => handleTableHover(table)}
-                    onMouseLeave={handleTableLeave}
-                    onClick={() => handleTableClick(table)} // Add the click handler
-                  >
-                    <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
-                        {table.table_number}
-                    </h5>
-                    {/* Pop-up bubble */}
-                    {hoveredTable === table && (
-                        <div
-                            className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
-                            style={{ fontSize: '12px', pointerEvents: 'none' }}
-                        >
-                            <p>{table.view}</p>
-                            <p>{table.number_of_chairs} chairs</p>
-                        </div>
-                    )}
-
+                      className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                      style={{ fontSize: '12px', pointerEvents: 'none' }}
+                    >
+                      <p>{table.number_of_chairs} chairs</p>
+                      <p>{table.view.name}</p>
+                      
+                    </div>
+                  )}
                 </div>
-                
-                ))}
+              ))}
             </div>
-        ))}
+          ))}
 
 {/* Show selected tables count and Reserve button for available (green) tables */}
 {selectedTables.some(table => table.isAvailable) && (
@@ -339,6 +360,10 @@ const RestaurantDetail = () => {
           {showPopup && (
             <ReservationPopup onClose={() => setShowPopup(false)} 
             selectedTables={selectedTables}
+            formSubmissionData={formSubmissionData} // Pass the form submission data
+            user={user}
+            restaurantId={restaurant.id}
+            selectedTableStructureId={selectedTableStructureId}
             />
           )}
         </div>
@@ -372,20 +397,20 @@ const RestaurantDetail = () => {
 
 
       {/* Display other relevant restaurant details here */}
-{toggle === 'halls' && (
+      {toggle === 'halls' && (
   <div className="mt-6 grid gap-4">
     {halls.map((hall) => (
-      <div key={hall.id} className="p-4 border rounded-lg">
-        <Link to={`/halls/${hall.id}`}>
+      <Link to={`/halls/${hall.id}`} key={hall.id}>
+        <div className="p-4 border rounded-lg">
           <h3 className="text-lg font-semibold">{hall.name}</h3>
-        </Link>
-        <img
-          src={hallImage} // Replace with the actual path to the image in your assets folder
-          alt={`Image of ${hall.name}`}
-          className="w-72 h-auto rounded-lg mt-2"
-        />
-        <p className="text-gray-600">{hall.description}</p>
-      </div>
+          <img
+            src={hallImage} // Replace with the actual path to the image in your assets folder
+            alt={`Image of ${hall.name}`}
+            className="w-72 h-auto rounded-lg mt-2"
+          />
+          <p className="text-gray-600">{hall.description}</p>
+        </div>
+      </Link>
     ))}
   </div>
 )}

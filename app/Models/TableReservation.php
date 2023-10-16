@@ -15,16 +15,19 @@ class TableReservation extends Model
 
     protected $fillable = [
         'reservant_ID',
+        'reservationNumber',
+        'table_number',
         'restaurant_id',
         'reservation_date',
         'start_time',
         'end_time',
-        'reservant_name',
         'number_of_participants',
         'table_structure_id',
         'tablefortwo',
         'status',
+        'floor',
     ];
+    
 
         public static function getAvailableTables($restaurantId, $date, $startTime, $endTime, $numParticipants)
     {
@@ -35,7 +38,8 @@ class TableReservation extends Model
             ->pluck('table_structure_id')
             ->toArray();
 
-        $availableTables = TableStructure::where('restaurant_id', $restaurantId)
+            $availableTables = TableStructure::with('view') // Eager load the "view" relationship
+            ->where('restaurant_id', $restaurantId)
             ->whereNotIn('id', $reservedTableIds)
             ->where('number_of_chairs', '>=', $numParticipants)
             ->get();
