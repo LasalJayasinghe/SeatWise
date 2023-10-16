@@ -49,6 +49,9 @@ import People from './views/restaurant/People.jsx';
 import UpdateEmployee from './views/restaurant/updateEmployee.jsx';
 import Settings from './views/restaurant/Settings.jsx';
 import TechnicalAssistance from './views/restaurant/TechnicalAssistance.jsx';
+import ViewOffers from './views/restaurant/ViewOffers.jsx';
+import AddOffer from './views/restaurant/addOffer.jsx';
+import ViewComplaints from './views/restaurant/ViewComplaints.jsx';
 
 import CashierGuestLayout from './components/restaurant/CashierGuestLayout.jsx';  
 import CashierDefaultLayout from './components/restaurant/CashierDefaultLayout.jsx';

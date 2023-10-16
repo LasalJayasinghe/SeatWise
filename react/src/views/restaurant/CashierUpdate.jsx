@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useStateContext } from "../../context/ContextProvider";
 import axiosClient from "../../axios-client";
@@ -10,8 +9,6 @@ import {
   DataGrid,
   GridToolbar,
 } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
-import axiosClient from "../axios-client";
 import Switch from '@mui/material/Switch';
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 

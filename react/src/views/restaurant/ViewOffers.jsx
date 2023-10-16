@@ -1,17 +1,15 @@
-import { Link } from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
+import { useStateContext } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
-import OffersUpdateModal from "../components/OffersUpdateModal";
-import SettingsBar from "../components/SettingsBar";
+import DeleteConfirmationModal from "../../components/restaurant/DeleteConfirmationModal";
+import OffersUpdateModal from "../../components/OffersUpdateModal";
+import SettingsBar from "../../components/restaurant/SettingsBar";
 
 import {
     DataGrid,
     GridToolbar,
   } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import axiosClient from "../axios-client";
+import axiosClient from "../../axios-client";
 import Switch from '@mui/material/Switch';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };

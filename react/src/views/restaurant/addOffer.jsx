@@ -2,11 +2,11 @@ import { useRef, useState } from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect} from "react";
-import Logo from "../assets/logo.svg";
-import axiosClient from "../axios-client";
-import { useStateContext } from "../context/ContextProvider";
+import Logo from "../../assets/logo.svg";
+import axiosClient from "../../axios-client";
+import { useStateContext } from "../../context/ContextProvider";
 import { Navigate, useNavigate } from "react-router-dom";
-import SettingsBar from "../components/SettingsBar";
+import SettingsBar from "../../components/restaurant/SettingsBar";
 // import React, { useEffect } from 'react';
 
 // import { Navigate } from 'react-router-dom'

@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
+import { useStateContext } from "../../context/ContextProvider";
 import {
     DataGrid,
     GridToolbar,
   } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import axiosClient from "../axios-client";
+import axiosClient from "../../axios-client";
 import Switch from '@mui/material/Switch';
-import OfferDeleteConfirmationModel from "../components/OfferDeleteConfirmationModel";
-import SettingsBar from "../components/SettingsBar";
+import OfferDeleteConfirmationModel from "../../components/OfferDeleteConfirmationModel";
+import SettingsBar from "../../components/restaurant/SettingsBar";
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
