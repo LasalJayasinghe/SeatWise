@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class addCashierRequest extends FormRequest
+class addOfferRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +25,17 @@ class addCashierRequest extends FormRequest
     {
         return [
             'restaurant_id' => 'required',
-            'cashiername' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'phone' => ['required', 'numeric'],
-            'password' => [
-                'required',
-            ],
-            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'meal' => ['required', 'string'],
+            'offer_type' => ['required', 'string'],
+            'offer_title' => ['required', 'string'],
+            'offer_percentage' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+            'minimum_purchase_amount'=>['required'],
+            'days_of_week'=>['required'],
+            'offer_description'=> ['required', 'string'],
             
+         
         ];
     }
 }

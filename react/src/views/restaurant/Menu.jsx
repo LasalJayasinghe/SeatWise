@@ -65,13 +65,6 @@ export default function Menu() {
             width: 170,
             editable: true,
         },
-        // {
-        //   field: 'rating',
-        //   headerName: 'Rating',
-        //   width: 100,
-        //   defaultCellValue: '4.5+',
-        //   editable: true,
-        // },
         {
             field: 'price',
             headerName: 'Price',
@@ -80,12 +73,42 @@ export default function Menu() {
             editable: true,
         },
         {
-            field: 'status',
+            field: 'availability',
             headerName: 'Availability',
             type: 'boolean',
             width: 200,
             renderCell: (params) => {
-                return <Switch {...label} />
+
+              const handleSwitchToggle = (ev) => {
+                ev.preventDefault()
+
+                const updatedAvailability = params.value === 1 ? 0 : 1;
+                // updateAvailabilityInDatabase(params.id, updatedAvailability);
+                // console.log(updatedAvailability)
+          
+                const payLoad = {
+                  id: params.id,
+                  availability: updatedAvailability 
+                }
+                console.log("payload", payLoad);
+                axiosClient.post(`/updatemealavailability`, payLoad)
+                    .then(() => {
+                      window.location.reload();
+                        // setMessage(data.message); 
+                        // navigate('/Menu');
+                    })
+                    .catch((error) => {
+                      console.error("Error fetching tables:", error);
+                  });
+              } 
+
+
+                // const isAvailable = params.value === 1
+
+                return <Switch
+                        checked={params.value === 1}
+                        onChange={handleSwitchToggle}
+                      />
             }
         },
         {

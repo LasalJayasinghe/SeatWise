@@ -24,7 +24,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('cashier_phone_number');
             $table->string('password');
+             $table->string('photo');
             $table->timestamps();
+
 
             $table->foreign('restaurant_id')->references('id')->on('restaurants');
         });

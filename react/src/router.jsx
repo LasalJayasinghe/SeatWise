@@ -235,6 +235,16 @@ const router = createBrowserRouter([
                 path: "/addCashier",
                 element: <AddCashier />, 
             },
+
+            {
+                path: "/ViewOffers",
+                element: <ViewOffers />, 
+            },
+
+            {
+                path: "/addOffer",
+                element: <AddOffer />, 
+            },
             {
                 path: "/menu",
                 element: <Menu />, 
@@ -255,6 +265,13 @@ const router = createBrowserRouter([
                 path: "/TechnicalAssistance",
                 element: <TechnicalAssistance/>, 
             },
+             
+
+            {
+                path: "/ViewComplaints",
+                element: <ViewComplaints/>, 
+            },
+
 
             {
                 path: "/orderhistory",

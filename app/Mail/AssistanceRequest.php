@@ -20,9 +20,15 @@ class AssistanceRequest extends Mailable
         $this->emailData = $emailData;
     }
 
-    public function build()
-    {
-        return $this->subject('Assistance Request')
-            ->view('emails.request-assistance-text');
+    public function build(){
+    $message = "Dear sir, I am from {$this->emailData['restaurantName']}. I need your technical support.";
+    $emailAddress =$this->emailData['email'];
+    $ToMail = "weerawarnamadushi@gmail.com";
+    return $this->
+    from($emailAddress)
+    ->to( $ToMail)
+    ->subject('Assistance Request')
+   
+        ->text($message);
     }
 }

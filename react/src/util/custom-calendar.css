@@ -8,14 +8,13 @@
 @import 'tailwindcss/utilities';
 /* @import 'tailwindcss/forms'; */
 
-
 /* Custom CSS for React Calendar */
 .react-calendar__tile {
-  border-radius: 60% !important;
-  height: 48px;
-}
-
-.react-calendar__tile--active {
-  background-color: #3EB075 !important;
-  color: white !important;
-}
+    border-radius: 60% !important;
+    height: 48px;
+  }
+  
+  .react-calendar__tile--active {
+    background-color: #3EB075 !important;
+    color: white !important;
+  }

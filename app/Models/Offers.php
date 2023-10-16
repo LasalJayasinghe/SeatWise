@@ -10,11 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
-class Cashiers extends Authenticatable
+class Offers extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guard = 'cashiers';
+    protected $guard = 'offers';
 
     /**
      * The attributes that are mass assignable.
@@ -22,12 +22,17 @@ class Cashiers extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'restaurant_id',
-        'cashier_name',
-        'email',
-        'cashier_phone_number',
-        'password',
-        'photo',
+        
+       'restaurant_id',
+       'meal',
+       'offer_type',
+       'offer_title',
+       'offer_percentage',
+       'start_date',		
+       'end_date',
+       'days_of_week',	
+       'minimum_purchase_amount',
+       'offer_description',
     ];
 
     /**
@@ -35,11 +40,7 @@ class Cashiers extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        // 'password',
-        'remember_token',
-        'cashier_password',
-    ];
+  
 
     /**
      * The attributes that should be cast.
