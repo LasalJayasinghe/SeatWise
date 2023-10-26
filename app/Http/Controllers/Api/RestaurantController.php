@@ -59,6 +59,7 @@ class RestaurantController extends Controller
         return response()->json($restaurants);
     }
 
+    
     public function show($id)
     {
         $restaurant = Restaurant::find($id);
