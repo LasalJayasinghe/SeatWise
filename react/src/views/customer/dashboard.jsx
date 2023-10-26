@@ -22,7 +22,7 @@ export default function Dashboard() {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await axiosClient.get('/restaurants');
+      const response = await axiosClient.get('/restaurantss');
       setRestaurants(response.data);
     } catch (error) {
       console.error(error);
@@ -37,10 +37,10 @@ export default function Dashboard() {
   
       if (selectedArea === "") {
         // If "All areas" is selected, retrieve all restaurants
-        response = await axiosClient.get('/restaurants');
+        response = await axiosClient.get('/restaurantss');
       } else {
         // Otherwise, retrieve restaurants by selected area
-        response = await axiosClient.get(`/restaurants?area=${selectedArea}`);
+        response = await axiosClient.get(`/restaurantss?area=${selectedArea}`);
       }
   
       setSearchResults(response.data); // Store search results
@@ -124,7 +124,7 @@ export default function Dashboard() {
         <h2 className="mt-8 text-2xl font-semibold">Restaurants you may like</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {restaurants.slice(0, 3).map((restaurant) => (
-                        <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+                        <Link to={`/restaurantss/${restaurant.id}`} key={restaurant.id}>
                         <div className="bg-white p-4 shadow-md rounded-md">
                           <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
                           <p className="mt-2 text-sm">{restaurant.description}</p>
@@ -148,7 +148,7 @@ export default function Dashboard() {
         <h2 className="mt-8 text-2xl font-semibold">Popular Restaurants</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {restaurants.slice(0, 3).map((restaurant) => (
-                        <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+                        <Link to={`/restaurantss/${restaurant.id}`} key={restaurant.id}>
                         <div className="bg-white p-4 shadow-md rounded-md">
                           <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
                           <p className="mt-2 text-sm">{restaurant.description}</p>

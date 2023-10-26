@@ -40,7 +40,7 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}`);
+        const response = await axiosClient.get(`/restaurantss/${id}`);
         setRestaurant(response.data);
       } catch (error) {
         console.error(error);
@@ -53,7 +53,7 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   useEffect(() => {
     const fetchTableStructures = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}/table-structures`);
+        const response = await axiosClient.get(`/restaurantss/${id}/table-structures`);
         setTables(response.data);
       } catch (error) {
         console.log(error);
@@ -69,7 +69,7 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   useEffect(() => {
     const fetchHalls = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}/halls`);
+        const response = await axiosClient.get(`/restaurantss/${id}/halls`);
         setHalls(response.data);
       } catch (error) {
         console.log(error);
@@ -89,7 +89,7 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosClient.get(`/restaurants/${id}/available-tables`, {
+      const response = await axiosClient.get(`/restaurantss/${id}/available-tables`, {
         params: {
           restaurant_id: id,
           date,
@@ -199,7 +199,7 @@ const handleReserveClick = () => {
       <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
         <h1 className="text-5xl font-bold mb-2 text-white">{restaurant.restaurantname}</h1>
         <p className="text-gray-100">{restaurant.description}</p>
-        <Link to={`/restaurants/${id}/meals`}>
+        <Link to={`/restaurantss/${id}/meals`}>
       <button className="border border-green-500 bg-white text-green-500 px-4 py-2 rounded-lg mb-6 mt-8">
   View Menu
 </button>
