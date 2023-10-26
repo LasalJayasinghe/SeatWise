@@ -47,20 +47,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/waitlist', [WaitlistController::class, 'store']);
 
     // Restaurant routes
-    Route::get('/restaurants', [RestaurantController::class, 'index']); // Fetch all restaurants
-    Route::get('/restaurants/{id}', [RestaurantController::class, 'show']); // Fetch a single restaurant by ID
-    Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
-    Route::get('/restaurants/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
+    Route::get('/restaurantss', [RestaurantController::class, 'index']); // Fetch all restaurants
+    Route::get('/restaurantss/{id}', [RestaurantController::class, 'show']); // Fetch a single restaurant by ID
+    Route::get('/restaurantss/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
+    Route::get('/restaurantss/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
 
     Route::post('/make-reservation', [TableReservationController::class, 'makeReservation']);
 
     // Hall routes
-    Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']);
+    Route::get('/restaurantss/{restaurantId}/halls', [HallController::class, 'index']);
     Route::get('/halls/{id}', [HallController::class, 'show']);
     Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
 
     // Additional routes for restaurant data
-    Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
+    Route::get('/restaurantss/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
 
     //TableForTwo routes
     Route::prefix('/tablefortwo')->group(function () {

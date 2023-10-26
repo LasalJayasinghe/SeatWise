@@ -11,10 +11,10 @@ const Restaurants = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axiosClient.get('/restaurants');
+        const response = await axiosClient.get('/restaurantss');
         setRestaurants(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 

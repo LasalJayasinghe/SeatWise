@@ -63,14 +63,14 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::find($id);
-
+    
         if (!$restaurant) {
             return response()->json(['message' => 'Restaurant not found'], 404);
         }
-
+    
         return response()->json($restaurant);
     }
-
+    
     public function getAvailableTables(Request $request, $restaurantId)
     {
         $date = $request->input('date');
