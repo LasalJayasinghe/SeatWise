@@ -5,6 +5,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import axiosClient from '../../axios-client';
 import restaurantimage from '../../assets/restaurant3.jpg';
 import restaurantimage2 from '../../assets/restaurant1.jpg';
+import StarRatings from 'react-rating-stars-component';
+
 
 import slide1 from '../../assets/slide1.png';
 import slide2 from '../../assets/slide2.png';
@@ -15,6 +17,19 @@ export default function Dashboard() {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedArea, setSelectedArea] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
+  function getOpenDays(profile) {
+    const days = [];
+    if (profile && profile.monday === 1) days.push('Monday');
+    if (profile && profile.tuesday === 1) days.push('Tuesday');
+    if (profile && profile.wednesday === 1) days.push('Wednesday');
+    if (profile && profile.thursday === 1) days.push('Thursday');
+    if (profile && profile.friday === 1) days.push('Friday');
+    if (profile && profile.saturday === 1) days.push('Saturday');
+    if (profile && profile.sunday === 1) days.push('Sunday');
+  
+    return days.join(', ');
+  }
 
   useEffect(() => {
     fetchRestaurants();
@@ -99,73 +114,175 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {/* Display restaurants based on displayRestaurants */}
-          {displayRestaurants.slice(0, 3).map((restaurant) => (
-                        <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
-              <div className="bg-white p-4 shadow-md rounded-md">
-                <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
-                <p className="mt-2 text-sm">{restaurant.description}</p>
-                <div className="mt-2 text-gray-500" style={{ fontSize: '12px' }}>
-                  <strong>Opening Days : </strong> 
-                  {restaurant.monday ? 'Mon ' : ''}
-                  {restaurant.tuesday ? 'Tue ' : ''}
-                  {restaurant.wednesday ? 'Wed ' : ''}
-                  {restaurant.thursday ? 'Thu ' : ''}
-                  {restaurant.friday ? 'Fri ' : ''}
-                  {restaurant.saturday ? 'Sat ' : ''}
-                  {restaurant.sunday ? 'Sun ' : ''}
+  {displayRestaurants.slice(0, 6).map((restaurant) => (
+<Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+            <div className="restaurant-card">
+              <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+                
+                  <img
+                    className="object-cover"
+                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                    alt="product image"
+                  />
+                  <span className="absolute top-0 left-0 m-2 rounded-xl bg-red-700 px-2 text-center text-sm font-medium text-white">New</span>
+              
+                <div className="mt-4 px-5 pb-5">
+                  
+                    <h5 className="text-xl tracking-tight text-slate-900 font-bold">{restaurant.restaurantname}</h5>
+                  
+
+                  {/* Display opening dates and time */}
+                  <div className="mt-2">
+  <p className="text-sm text-slate-700 "><b>Open Days: </b>{getOpenDays(restaurant.profile)}</p>
+  <p className="text-slate-700"><b>Open Time:</b> {restaurant.profile && restaurant.profile.opening} to {restaurant.profile && restaurant.profile.closing}</p>
+
+</div>
+
+
+
+<div className="mt-5 flex items-center justify-between">
+                    <p>
+                      <span className="text-sm text-slate-700">{restaurant.resType}</span>
+                    </p>
+                    <div className="flex items-center">
+                      {restaurant.avgRate ? (
+                        <StarRatings
+                          rating={restaurant.avgRate}
+                          count={restaurant.avgRate}
+                          size={24}
+                          edit={false}
+                          isHalf={true}
+                          color="#FFD700"
+                        />
+                      ) : (
+                        <p>No ratings yet</p>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <img src={restaurantimage} alt={restaurant.restaurantname} className="w-full h-40 object-cover mt-2 rounded-md" />
               </div>
-            </Link>
-          ))}
+            </div>
+          </Link>
+))}
+
+
+
         </div>
 
         {/* Restaurants you may like */}
         <h2 className="mt-8 text-2xl font-semibold">Restaurants you may like</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-          {restaurants.slice(0, 3).map((restaurant) => (
-                        <Link to={`/restaurantss/${restaurant.id}`} key={restaurant.id}>
-                        <div className="bg-white p-4 shadow-md rounded-md">
-                          <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
-                          <p className="mt-2 text-sm">{restaurant.description}</p>
-                          <div className="mt-2 text-gray-500" style={{ fontSize: '12px' }}>
-                            <strong>Opening Days : </strong> 
-                            {restaurant.monday ? 'Mon ' : ''}
-                            {restaurant.tuesday ? 'Tue ' : ''}
-                            {restaurant.wednesday ? 'Wed ' : ''}
-                            {restaurant.thursday ? 'Thu ' : ''}
-                            {restaurant.friday ? 'Fri ' : ''}
-                            {restaurant.saturday ? 'Sat ' : ''}
-                            {restaurant.sunday ? 'Sun ' : ''}
-                          </div>
-                          <img src={restaurantimage2} alt={restaurant.restaurantname} className="w-full h-40 object-cover mt-2 rounded-md" />
-                        </div>
-                      </Link>
-          ))}
+{displayRestaurants.slice(0, 6).map((restaurant) => (
+<Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+            <div className="restaurant-card">
+              <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+                
+                  <img
+                    className="object-cover"
+                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                    alt="product image"
+                  />
+                  <span className="absolute top-0 left-0 m-2 rounded-xl bg-red-700 px-2 text-center text-sm font-medium text-white">New</span>
+              
+                <div className="mt-4 px-5 pb-5">
+                  
+                    <h5 className="text-xl tracking-tight text-slate-900 font-bold">{restaurant.restaurantname}</h5>
+                  
+
+                  {/* Display opening dates and time */}
+                  <div className="mt-2">
+  <p className="text-sm text-slate-700 "><b>Open Days: </b>{getOpenDays(restaurant.profile)}</p>
+  <p className="text-slate-700"><b>Open Time:</b> {restaurant.profile && restaurant.profile.opening} to {restaurant.profile && restaurant.profile.closing}</p>
+
+</div>
+
+
+
+<div className="mt-5 flex items-center justify-between">
+                    <p>
+                      <span className="text-sm text-slate-700">{restaurant.resType}</span>
+                    </p>
+                    <div className="flex items-center">
+                      {restaurant.avgRate ? (
+                        <StarRatings
+                          rating={restaurant.avgRate}
+                          count={restaurant.avgRate}
+                          size={24}
+                          edit={false}
+                          isHalf={true}
+                          color="#FFD700"
+                        />
+                      ) : (
+                        <p>No ratings yet</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+))}
+
+
+
         </div>
 
         {/* Popular Restaurants */}
         <h2 className="mt-8 text-2xl font-semibold">Popular Restaurants</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-          {restaurants.slice(0, 3).map((restaurant) => (
-                        <Link to={`/restaurantss/${restaurant.id}`} key={restaurant.id}>
-                        <div className="bg-white p-4 shadow-md rounded-md">
-                          <h3 className="text-xl font-semibold">{restaurant.restaurantname}</h3>
-                          <p className="mt-2 text-sm">{restaurant.description}</p>
-                          <div className="mt-2 text-gray-500" style={{ fontSize: '12px' }}>
-                            <strong>Opening Days : </strong> 
-                            {restaurant.monday ? 'Mon ' : ''}
-                            {restaurant.tuesday ? 'Tue ' : ''}
-                            {restaurant.wednesday ? 'Wed ' : ''}
-                            {restaurant.thursday ? 'Thu ' : ''}
-                            {restaurant.friday ? 'Fri ' : ''}
-                            {restaurant.saturday ? 'Sat ' : ''}
-                            {restaurant.sunday ? 'Sun ' : ''}
-                          </div>
-                          <img src={restaurantimage} alt={restaurant.name} className="w-full h-40 object-cover mt-2 rounded-md" />
-                        </div>
-                      </Link>
-          ))}
+{displayRestaurants.slice(0, 6).map((restaurant) => (
+<Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+            <div className="restaurant-card">
+              <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+                
+                  <img
+                    className="object-cover"
+                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                    alt="product image"
+                  />
+                  <span className="absolute top-0 left-0 m-2 rounded-xl bg-red-700 px-2 text-center text-sm font-medium text-white">New</span>
+              
+                <div className="mt-4 px-5 pb-5">
+                  
+                    <h5 className="text-xl tracking-tight text-slate-900 font-bold">{restaurant.restaurantname}</h5>
+                  
+
+                  {/* Display opening dates and time */}
+                  <div className="mt-2">
+  <p className="text-sm text-slate-700 "><b>Open Days: </b>{getOpenDays(restaurant.profile)}</p>
+  <p className="text-slate-700"><b>Open Time:</b> {restaurant.profile && restaurant.profile.opening} to {restaurant.profile && restaurant.profile.closing}</p>
+
+</div>
+
+
+
+<div className="mt-5 flex items-center justify-between">
+                    <p>
+                      <span className="text-sm text-slate-700">{restaurant.resType}</span>
+                    </p>
+                    <div className="flex items-center">
+                      {restaurant.avgRate ? (
+                        <StarRatings
+                          rating={restaurant.avgRate}
+                          count={restaurant.avgRate}
+                          size={24}
+                          edit={false}
+                          isHalf={true}
+                          color="#FFD700"
+                        />
+                      ) : (
+                        <p>No ratings yet</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+))}
+
+
+
         </div>
       </div>
     </div>
