@@ -4,8 +4,6 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import axiosClient from '../../axios-client';
 import StarRatings from 'react-rating-stars-component';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import slide1 from '../../assets/slide1.png';
 import slide2 from '../../assets/slide2.png';
@@ -103,10 +101,9 @@ export default function Dashboard() {
               style={{ fontSize: '12px' }}
             />
           </label>
-          <button type="submit" className="mr-2 bg-green-500 text-white py-1 px-4 rounded-lg">
-  <FontAwesomeIcon icon={faSearch} />
-</button>
-
+          <button type="submit" className="mr-4 bg-green-500 text-white py-2 px-4 rounded-lg">
+            Search
+          </button>
         </form>
 
         {/* Search Results */}
@@ -162,7 +159,7 @@ export default function Dashboard() {
         {/* Restaurants you may like */}
         <h2 className="mt-8 text-2xl font-semibold">Restaurants you may like</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-          {displayRestaurants.slice(0, 6).map((restaurant) => (
+          {restaurants.slice(0, 6).map((restaurant) => (
             <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
               <div className="restaurant-card">
                 <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
