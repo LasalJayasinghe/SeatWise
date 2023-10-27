@@ -134,7 +134,7 @@ export default function landing(){
             </Fade>
             <Fade bottom>
                 <div className="flex flex-col items-center basis-1/3 h-80 hover:shadow-md">
-                <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M29 18L19 30H28L27 38L37 26H28L29 18Z" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
+                {/* <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M29 18L19 30H28L27 38L37 26H28L29 18Z" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg> */}
                 <p className='my-3 text-xl font-semibold font-inter'>Search meals by restaurant</p>
                 <p className='w-4/5 mt-5 font-medium text-center text-gray-600 text-medium font-inter'>Indulge your taste buds like never before. With Seatwise, effortlessly search meals by restaurant, allowing you to discover delectable dishes and savor unforgettable flavors at your preferred dining destinations.</p>
                 <button className="mt-5 learn-more">
