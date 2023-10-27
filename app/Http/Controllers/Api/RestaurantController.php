@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Mail;
 use http\Env\Response;
 use App\Mail\AssistanceRequest;
 use App\Http\Controllers\Controller;
+use Laravel\Sanctum\Sanctum;
+
 
 use App\Models\User;
 use App\Models\View;
@@ -47,17 +49,25 @@ class RestaurantController extends Controller
     public function index(Request $request)
     {
         $area = $request->query('area');
-
+    
         $query = Restaurant::query();
-
+    
         if ($area) {
             $query->where('area', $area);
         }
+    
+        $restaurants = $query->with('profile')->get();
 
-        $restaurants = $query->get();
-
-        return response()->json($restaurants);
+        $restaurantsWithAvgRate = $restaurants->map(function ($restaurant) {
+            $avgRate = $restaurant->rates->average('starCount');
+            $restaurant->avgRate = $avgRate;
+    
+            return $restaurant;
+        });
+    
+        return response()->json($restaurantsWithAvgRate);
     }
+    
 
     
     public function show($id)
@@ -159,9 +169,13 @@ class RestaurantController extends Controller
     {
         /** @var \App\Models\Restaurants $user */
         $user = $request->user();
-        $user->currentAccessToken()->delete();
+    
+        // Revoke the current user's token
+        $user->tokens->each->delete();
+    
         return response('', 204);
     }
+    
 
     public function addView(addViewRequest $request)
     {
