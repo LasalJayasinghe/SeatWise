@@ -52,13 +52,13 @@ import TechnicalAssistance from './views/restaurant/TechnicalAssistance.jsx';
 import ViewOffers from './views/restaurant/ViewOffers.jsx';
 import AddOffer from './views/restaurant/addOffer.jsx';
 import ViewComplaints from './views/restaurant/ViewComplaints.jsx';
-
 import CashierGuestLayout from './components/restaurant/CashierGuestLayout.jsx';  
 import CashierDefaultLayout from './components/restaurant/CashierDefaultLayout.jsx';
 import CashierLogin from './views/restaurant/cashierLogin.jsx';
 import AddCashier from './views/restaurant/addCashier.jsx';
 import CashierUpdate from './views/restaurant/CashierUpdate.jsx';
 import CashierDashboard from './views/restaurant/CashierDashboard.jsx';
+
 
 
 
@@ -135,6 +135,7 @@ const router = createBrowserRouter([
                 path: '/users',
                 element : <Users />
             },
+
 
             {
                 path: '/mealview',
