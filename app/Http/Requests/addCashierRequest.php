@@ -31,6 +31,7 @@ class addCashierRequest extends FormRequest
             'password' => [
                 'required',
             ],
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             
         ];
     }

@@ -7,6 +7,8 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Models\User;
 use App\Models\Customer;
+use App\Models\Restaurant;
+use App\Models\Restaurants;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,20 +18,21 @@ class AuthController extends Controller
     public function signup(SignupRequest $request)
     {
         $data = $request->validated();
+        var_dump($data);
         /** @var \App\Models\User $user */
-
         $user = User::create([
-            'name' => $data['name'],
+            'firstname' => $data['firstname'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'mealPreferences' => json_encode($data['mealPreferences']), // Convert to JSON
+            // 'lastname' => $data['lastname'],
+            // 'dob' => $data['dob'],
+            // 'gender' => $data['gender'],
+            // 'photo' => $data['photo'],
+            // 'about' => $data['about'],
             // 'hometown' => $data['hometown'],
+            'password' => bcrypt($data['password']),
         ]);
 
-        /** @var \App\Models\Customer $customer */
-        // $customer = Customer::create([
-        //     'firstname'=>'hellow',
-        //     'lastname'=>'yellow',
-        // ]);
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
     }
@@ -74,7 +77,20 @@ class AuthController extends Controller
         // For example, you can access the authenticated user's data with $request->user();
         $user = $request->user();
 
-        return response()->json($user);
+        return response()->json(['name' => $user->name, 'id' => $user->id]);
     }
     
+    public function getUserDetails($id)
+    {
+        $data = User::where('id', $id)->first();
+        
+        return response()->json($data);
+    }
+
+    public function getRestaurantDetails($id)
+    {
+        $data = Restaurants::select('restaurantname')->where('id', $id)->first();
+        
+        return response()->json($data);
+    }
 }

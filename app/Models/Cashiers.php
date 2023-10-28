@@ -27,6 +27,7 @@ class Cashiers extends Authenticatable
         'email',
         'cashier_phone_number',
         'password',
+        'photo',
     ];
 
     /**

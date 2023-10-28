@@ -21,6 +21,10 @@ import Mealspage from './views/customer/restaurants/Mealspage.jsx';
 import Complaints from './views/customer/activities/Complaints.jsx';
 import Activities from './views/customer/activities/Activities.jsx';
 import Completed from './views/customer/activities/Completed.jsx';
+import MealView from './views/customer/MealView.jsx';
+import Advertisements from './views/customer/Advertisements.jsx';
+import AddBanner from './views/customer/AddBanner.jsx';
+import Profile from './views/customer/Profile.jsx';
 
 import RestaurantGuestLayout from './components/restaurant/RestaurantGuestLayout.jsx';
 import RestaurantDefaultLayout from './components/restaurant/RestaurantDefaultLayout.jsx';
@@ -45,6 +49,9 @@ import People from './views/restaurant/People.jsx';
 import UpdateEmployee from './views/restaurant/updateEmployee.jsx';
 import Settings from './views/restaurant/Settings.jsx';
 import TechnicalAssistance from './views/restaurant/TechnicalAssistance.jsx';
+import ViewOffers from './views/restaurant/ViewOffers.jsx';
+import AddOffer from './views/restaurant/addOffer.jsx';
+import ViewComplaints from './views/restaurant/ViewComplaints.jsx';
 
 import CashierGuestLayout from './components/restaurant/CashierGuestLayout.jsx';  
 import CashierDefaultLayout from './components/restaurant/CashierDefaultLayout.jsx';
@@ -52,6 +59,7 @@ import CashierLogin from './views/restaurant/cashierLogin.jsx';
 import AddCashier from './views/restaurant/addCashier.jsx';
 import CashierUpdate from './views/restaurant/CashierUpdate.jsx';
 import CashierDashboard from './views/restaurant/CashierDashboard.jsx';
+
 
 
 const router = createBrowserRouter([
@@ -101,11 +109,11 @@ const router = createBrowserRouter([
                 element : <Suggestions />
             },
             {
-                path: '/tablefortwo/requests',
+                path: '/tablefortwo/Requests',
                 element : <Recieved />
             },
             {
-                path: '/tablefortwo/sent',
+                path: '/tablefortwo/Invitations',
                 element : <Sent />
             },
             {
@@ -126,7 +134,25 @@ const router = createBrowserRouter([
             {
                 path: '/users',
                 element : <Users />
-            }
+            },
+
+            {
+                path: '/mealview',
+                element : <MealView/>
+            },
+            {
+                path: '/advertisements',
+                element : <Advertisements/>
+            },
+            {
+                path: '/advertisements/addbanner',
+                element : <AddBanner/>
+            },
+            {
+                path: '/profile',
+                element : <Profile/>
+            },   
+   
         ]
     },
     {
@@ -212,6 +238,16 @@ const router = createBrowserRouter([
                 path: "/addCashier",
                 element: <AddCashier />, 
             },
+
+            {
+                path: "/ViewOffers",
+                element: <ViewOffers />, 
+            },
+
+            {
+                path: "/addOffer",
+                element: <AddOffer />, 
+            },
             {
                 path: "/menu",
                 element: <Menu />, 
@@ -232,6 +268,13 @@ const router = createBrowserRouter([
                 path: "/TechnicalAssistance",
                 element: <TechnicalAssistance/>, 
             },
+             
+
+            {
+                path: "/ViewComplaints",
+                element: <ViewComplaints/>, 
+            },
+
 
             {
                 path: "/orderhistory",

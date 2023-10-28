@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class TableReservation extends Model
 {
     use HasFactory;
@@ -13,16 +14,20 @@ class TableReservation extends Model
     protected $table = 'table_reservations';
 
     protected $fillable = [
+        'reservant_ID',
+        'reservationNumber',
+        'table_number',
         'restaurant_id',
         'reservation_date',
         'start_time',
         'end_time',
-        'reservant_name',
         'number_of_participants',
         'table_structure_id',
         'tablefortwo',
         'status',
+        'floor',
     ];
+    
 
         public static function getAvailableTables($restaurantId, $date, $startTime, $endTime, $numParticipants)
     {
@@ -33,11 +38,30 @@ class TableReservation extends Model
             ->pluck('table_structure_id')
             ->toArray();
 
-        $availableTables = TableStructure::where('restaurant_id', $restaurantId)
+            $availableTables = TableStructure::with('view') // Eager load the "view" relationship
+            ->where('restaurant_id', $restaurantId)
             ->whereNotIn('id', $reservedTableIds)
             ->where('number_of_chairs', '>=', $numParticipants)
             ->get();
 
         return $availableTables;
     }
+
+    public function tablefortwo()
+    {
+        // return $this->hasMany(Tablefortwo::class, 'reservationNumber', 'reservationNumber');
+        return $this->belongsTo(Tablefortwo::class, 'reservationNumber', 'reservationNumber');
+
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
+
+    public function user()
+    {
+        
+        return $this->belongsTo(User::class, TableforTwo::class,'acceptedID');
+        }
 }

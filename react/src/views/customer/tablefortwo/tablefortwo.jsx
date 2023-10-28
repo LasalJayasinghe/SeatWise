@@ -1,66 +1,89 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axiosClient from "../../../axios-client.js";
 import Sidebar from "../../../components/Sidebar.jsx";
-import TFTcard from "../../../components/tablefortwo/peopleCard.jsx";
+import TFTcard from "../../../components/tablefortwo/reservationCard.jsx";
 
 export default function TableForTwo() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [userData, setUserData] = useState([]);
+  const [invitesData , setInviteData] = useState([]);
+
+	useEffect(() => {
+		axiosClient.get('tablefortwo/userdata')
+		.then((response) => {
+			return axiosClient.get('tablefortwo/accepted/' + response.data.id);
+		})
+		.then((response) => {
+			setInviteData(response.data);
+		})
+		.catch((error) => {
+			console.error('Error fetching data:', error);
+		});
+	}, []);
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
-  const getUsers = () => {
-    setLoading(true);
-    axiosClient.get('/users')
-      .then(({ data }) => {
-        setLoading(false);
-        setUsers(data.data);
-      })
-      .catch(() => {	
-        setLoading(false);
-      });
-  };
-
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Assuming loggedInUserId contains the ID of the logged-in user
-  const loggedInUserId = 24; // Replace with your actual logged-in user's ID
-
-  // Filter out the logged-in user's card
-  const visibleUsers = filteredUsers.filter(user => user.id !== loggedInUserId).slice(0, 12);
-
+		axiosClient.get('tablefortwo/userdata')
+		.then((response) => {
+			return axiosClient.get('tablefortwo/todayAccepted/' + response.data.id);
+		})
+		.then((response) => {
+			setUserData(response.data);
+		})
+		.catch((error) => {
+			console.error('Error fetching data:', error);
+		});
+	}, []);
   return (
-    <div>
-      <div className="users-container">
-        <Sidebar />
-        <div className="content-container">
-          <p className="text-zinc-900 text-3xl font-semibold leading-normal">People</p>
-          <p className="text-gray-500 text-base font-normal leading-normal">Discover people to share your dining table with</p>
-          
-          <div className="relative flex items-center mb-4 sm:mb-0">
-            <input
-              type="text"
-              className="block w-full h-12 py-1 pl-10 pr-4 mt-3 text-gray-900 placeholder-gray-400 border-gray-300 rounded-md sm:w-64 focus:ring-2 focus:ring-green-500 focus:border-transparent sm:text-sm"
-              placeholder="Search People"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
-          <div className="grid grid-cols-3 gap-4">
-            {visibleUsers.map((user) => (
-              <div key={user.id}>
-                <TFTcard user={user} />
-              </div>
-            ))}
-          </div>
-        </div>
+<div className="users-container">
+  <Sidebar />
+  {userData.length > 0 ? (
+  <div className="content-container">
+    <p className="text-zinc-900 text-3xl font-semibold leading-normal">You have a Reservation Today!!</p>
+    <p className="text-gray-500 text-base font-normal leading-normal">Enjoy your meal.</p>
+    {userData.map((user) => (
+      <div key={user.id}>
+        <TFTcard user={user} reserveID={user.reservationNumber} />
       </div>
+    ))}
+    <div className="mt-10">
+      <p className="text-zinc-900 text-3xl font-semibold leading-normal">Upcoming Reservations</p>
+      <p className="text-gray-500 text-base font-normal leading-normal">Embark on a Flavorful Journey Together</p>
+      {invitesData.map((user) => (
+        <div key={user.id}>
+          <TFTcard user={user} reserveID={user.reservationNumber} />
+        </div>
+      ))}
     </div>
+    </div>
+) : (
+  invitesData.length > 0 ? (
+    <div className="content-container">
+      <p className="text-zinc-900 text-3xl font-semibold leading-normal">Upcoming Reservations</p>
+      <p className="text-gray-500 text-base font-normal leading-normal">Embark on a Flavorful Journey Together</p>
+      {invitesData.map((user) => (
+        <div key={user.id}>
+          <TFTcard user={user} reserveID={user.reservationNumber} />
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div className="content-container mx-auto text-center md:w-1/2 lg:w-1/3">
+      <p className="text-zinc-900 text-4xl font-semibold leading-normal mb-4">No Upcoming Reservations Yet?</p>
+      <p className="text-gray-500 text-lg font-normal leading-normal mb-4">Why not make a reservation and savor a delightful meal?</p>
+      <Link to="/restaurants">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full mb-4 w-full">
+          Make Reservation
+        </button>
+      </Link>
+      <p className="text-gray-500 text-lg font-normal leading-normal mb-4">Or, join someone for a memorable dining experience.</p>
+      <Link to="/tablefortwo/suggestions">
+        <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full w-full">
+          Join a Table
+        </button>
+      </Link>
+    </div>
+  )
+)}
+</div>
   );
-}
+      }  

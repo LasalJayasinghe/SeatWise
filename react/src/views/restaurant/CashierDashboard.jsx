@@ -167,9 +167,9 @@ return (
       <tbody>
       {RecentBookings.map((RecentBooking) => (
         <tr className="border-none" key={RecentBooking.id}>
-          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking[0].reservant_name}</td>
-          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking[0].start_time}</td>
-          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking[0].table_structure_id}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.reservant_ID}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.start_time}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.table_structure_id}</td>
         </tr>
       ))}
 

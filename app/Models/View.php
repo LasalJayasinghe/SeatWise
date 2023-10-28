@@ -11,15 +11,21 @@ class View extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+
+    protected $table = 'views';
+
     protected $fillable = [
         'restaurant_id',
         'name',
         'photo',
         'description',
     ];
+
+    // Define the relationship with the Restaurant model
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
+
+    // Define any other relationships or methods specific to the View model if needed
 }

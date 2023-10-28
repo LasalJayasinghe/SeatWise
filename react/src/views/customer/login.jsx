@@ -4,6 +4,9 @@ import { useState, useRef } from "react";
 import axiosClient from "../../axios-client.js";
 import { useStateContext } from "../../context/ContextProvider.jsx";
 
+
+
+//Since these are helper functions, its betterto leave them in the view file itself
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();

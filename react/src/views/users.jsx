@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 
 
 export default function Users(){
-	const [users,setUsers] = useState([]);
+	const [user, setUser] = useState(null); // Initialize user state
 	const[loading,setLoading] = useState(false);
 
 	useEffect(() => {
@@ -16,7 +16,7 @@ export default function Users(){
 		axiosClient.get('/users')
 		.then(({ data }) => {
 			setLoading(false)
-			setUsers(data.data)
+			setUser(data.data)
 		})
 		.catch(() => {
 		setLoading(false)
@@ -33,18 +33,11 @@ export default function Users(){
 			setToken(null)
 		})
 	  }
-
-
 	return(
 	<div>
-		<Header/>
 		<a   href="/login"  onClick={onLogout}   >
              Sign out
-        </a>
-
-		
-
-		
+        </a>		
 	</div>
 	)
 }

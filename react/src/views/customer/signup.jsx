@@ -1,89 +1,57 @@
-// import {Link} from "react-router-dom";
-// import {createRef, useState} from "react";
-// import axiosClient from "../axios-client.js";
-// import {useStateContext} from "../context/ContextProvider.jsx";
-
-// export default function Signup() {
-//   const nameRef = createRef()
-//   const emailRef = createRef()
-//   const passwordRef = createRef()
-//   const passwordConfirmationRef = createRef()
-//   const {setUser, setToken} = useStateContext()
-//   const [errors, setErrors] = useState(null)
-
-//   const onSubmit = ev => {
-//     ev.preventDefault()
-
-//     const payload = {
-//       name: nameRef.current.value,
-//       email: emailRef.current.value,
-//       password: passwordRef.current.value,
-//       password_confirmation: passwordConfirmationRef.current.value,
-//     }
-//     axiosClient.post('/signup', payload)
-//       .then(({data}) => {
-//         setUser(data.user)
-//         setToken(data.token);
-//       })
-//       .catch(err => {
-//         const response = err.response;
-//         if (response && response.status === 422) {
-//           setErrors(response.data.errors)
-//         }
-//       })
-//   }
-
-//   return (
-//     <div className="login-signup-form animated fadeInDown">
-//       <div className="form">
-//         <form onSubmit={onSubmit}>
-//           <h1 className="title">Signup for Free</h1>
-//           {errors &&
-//             <div className="alert">
-//               {Object.keys(errors).map(key => (
-//                 <p key={key}>{errors[key][0]}</p>
-//               ))}
-//             </div>
-//           }
-//           <input ref={nameRef} type="text" placeholder="Full Name"/>
-//           <input ref={emailRef} type="email" placeholder="Email Address"/>
-//           <input ref={passwordRef} type="password" placeholder="Password"/>
-//           <input ref={passwordConfirmationRef} type="password" placeholder="Repeat Password"/>
-//           <button className="btn btn-block">Signup</button>
-//           <p className="message">Already registered? <Link to="/login">Sign In</Link></p>
-//         </form>
-//       </div>
-//     </div>
-//   )
-// }
-
-
-
-
-
-
-
 import {Link} from "react-router-dom";
-import {createRef, useState} from "react";
+import {createRef, useState, useEffect, map} from "react";
 import axiosClient from "../../axios-client.js";
 import {useStateContext} from "../../context/ContextProvider.jsx";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import Logo from "../../assets/logo.svg";
 
 export default function Signup() {
-  const nameRef = createRef()
-  // const lastnameRef = createRef()
-  // const hometownRef = createRef()
-  // const birthdateRef = createRef()
-  // const genderRef = createRef()
-  // const photoRef = createRef()
-  // const aboutRef = createRef()
-  // const mealRef = createRef()
-  // const cuisineRef = createRef()
-  // const beverageRef = createRef()
-  // const restaurantRef = createRef()
-  // const whoareyouRef = createRef()
-  // const personalityRef = createRef()
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [categories, setCategories] = useState([]); // State to store categories
+
+  useEffect(() => {
+    // Fetch categories data when the component mounts
+    axiosClient.get("/getAllCategories").then(({ data }) => {
+      if (Array.isArray(data)) {
+        // Set the categories in the state
+        setCategories(data);
+      }
+    });
+  }, []);
+  
+  const handleOptionClick = (option) => {
+    if (selectedOptions.includes(option)) {
+      // If it's selected, remove it
+      setSelectedOptions(selectedOptions.filter((item) => item !== option));
+      ref.current.classList.remove("bg-green-100", "border-green-300");
+    } else {
+      // If it's not selected, add it
+      setSelectedOptions([...selectedOptions, option]);
+      ref.current.classList.add("bg-green-100", "border-green-300");
+    }
+  };
+  
+
+
+  const firstnameRef = createRef()
+  const dessertRef = createRef();
+  const bakeryRef = createRef();
+  const snackRef = createRef();
+  const mealPreferences = createRef();
+  // Add more refs for other meal preferences as needed
+  
+  const lastnameRef = createRef()
+  const hometownRef = createRef()
+  const dobRef = createRef()
+  // const genderRef = useRef()
+  const photoRef = createRef()
+  const aboutRef = createRef()
+  const mealRef = createRef()
+  const cuisineRef = createRef()
+  const beverageRef = createRef()
+  const restaurantRef = createRef()
+  const whoareyouRef = createRef()
+  const personalityRef = createRef()
   const emailRef = createRef()
   const passwordRef = createRef()
   const passwordConfirmationRef = createRef()
@@ -94,10 +62,13 @@ export default function Signup() {
     ev.preventDefault()
 
     const payload = {
-      name: nameRef.current.value,
-      // lastname: lastnameRef.current.value,
-      // hometown: hometownRef.current.value,
-      // birthdate: birthdateRef.current.value,
+      mealPreferences: selectedOptions,  
+      firstname: firstnameRef.current.value,
+      lastname: lastnameRef.current.value,
+      hometown: hometownRef.current.value,
+      dob: dobRef.current.value,
+      about: aboutRef.current.value,
+      // photo: photoRef.current.value,
       // gender: genderRef.current.value, 
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -114,41 +85,11 @@ export default function Signup() {
           setErrors(response.data.errors)
         }
       })
+    
   }
 
   return (
     <div className="p-12 mx-20 ">
-      {/* <div className="form">
-        <form onSubmit={onSubmit}>
-          <h1 className="title">Signup for Free</h1>
-          {errors &&
-            <div className="alert">
-              {Object.keys(errors).map(key => (
-                <p key={key}>{errors[key][0]}</p>
-              ))}
-            </div>
-          }
-          <input ref={nameRef} type="text" placeholder="Full Name"/>
-          <input ref={emailRef} type="email" placeholder="Email Address"/>
-          <input ref={passwordRef} type="password" placeholder="Password"/>
-          <input ref={passwordConfirmationRef} type="password" placeholder="Repeat Password"/>
-          <button className="btn btn-block">Signup</button>
-          <p className="message">Already registered? <Link to="/login">Sign In</Link></p>
-        </form>
-      </div> */}
-
-
-
-
-
-
-
-
-
-
-
-
-
       <form onSubmit={onSubmit}>
       {errors &&
             <div className="alert">
@@ -181,15 +122,15 @@ export default function Signup() {
 
           <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="firstname" className="block text-sm font-medium leading-6 text-gray-900">
                 First name
               </label>
               <div className="mt-2">
                 <input
-                  ref={nameRef}
+                  ref={firstnameRef}
                   type="text"
-                  name="first-name"
-                  id="first-name"
+                  name="firstname"
+                  id="firstname"
                   autoComplete="given-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
                 />
@@ -197,15 +138,15 @@ export default function Signup() {
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="lastname" className="block text-sm font-medium leading-6 text-gray-900">
                 Last name
               </label>
               <div className="mt-2">
                 <input
-                  // ref={lastnameRef}
+                  ref={lastnameRef}
                   type="text"
-                  name="last-name"
-                  id="last-name"
+                  name="lastname"
+                  id="lastname"
                   autoComplete="family-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
                 />
@@ -219,7 +160,7 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <input
-                  // ref={hometownRef}
+                  ref={hometownRef}
                   type="text"
                   name="hometown"
                   id="hometown"
@@ -237,7 +178,7 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <input
-                  // ref={birthdateRef}
+                  ref={dobRef}
                   type="date"
                   name="birth-date"
                   id="birth-date"
@@ -262,6 +203,7 @@ export default function Signup() {
                     id="push-everything"
                     name="push-notifications"
                     type="radio"
+                    value="M"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
                   />
                   <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
@@ -274,6 +216,7 @@ export default function Signup() {
                     id="push-email"
                     name="push-notifications"
                     type="radio"
+                    value="F"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
                   />
                   <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -286,6 +229,7 @@ export default function Signup() {
                     id="push-nothing"
                     name="push-notifications"
                     type="radio"
+                    value="O"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
                   />
                   <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
@@ -318,7 +262,7 @@ export default function Signup() {
               </label>
               <div className="mt-2">
                 <textarea
-                // ref={aboutRef}
+                ref={aboutRef}
                   id="about"
                   name="about"
                   rows={3}
@@ -339,35 +283,82 @@ export default function Signup() {
           </p>
 
 
-          
+          {/* Meal Preferences */}
           <div className="mt-5 col-span-full">
-              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                Meal preferences
-              </label>
- 
-              <div className="mt-2">
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Dessert</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Bakery</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Snack</button>
-
-             
-              </div>
-              
+            <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+              Meal preferences
+            </label>
+          </div>   
+          <div>
+            <div className="flex">
+              {categories.map((data) => (
+                <div key={data.id} className="mr-2">
+                  <button
+                    className={`p-2 px-5 rounded-full ${
+                      selectedOptions.includes(data.category)
+                        ? "bg-green-100 border-green-300"
+                        : "bg-gray-100 border-gray-300"
+                    }`}
+                    onClick={() => handleOptionClick(data.category)}
+                  >
+                    {data.category}
+                  </button>
+                </div>
+              ))}
             </div>
+          </div>
+
+
+
+      {/* Cuisine Preferences */}
             <div className="mt-5 col-span-full">
               <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
                 Cuisine preferences
               </label>
 
               <div className="mt-2">
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">English</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Sri lankan</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Indian</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Italian</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Chinese</button>
-              
-              
-              </div>
+              <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("English") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("English")}
+          >
+            English
+          </button>
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Sri Lankan") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Sri Lankan")}
+          >
+            Sri Lankan
+          </button>
+          
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Indian") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Indian")}
+          >
+            Indian
+          </button>
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Italian") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Italian")}
+          >
+            Italian
+          </button>
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Chinese") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Chinese")}
+          >
+            Chinese
+          </button>              
+        </div>
               
             </div>
             <div className="mt-5 col-span-full">
@@ -376,14 +367,32 @@ export default function Signup() {
               </label>
 
               <div className="mt-2">
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Cold</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Hot</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Natural</button>
-            
-
-              </div>
-              
-            </div>
+              <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Cold") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Cold")}
+          >
+            Cold
+          </button>              
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Hot") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Hot")}
+          >
+            Hot
+          </button>
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Natural") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Natural")}
+          >
+            Natural
+          </button>            
+        </div>  
+      </div>
 
             <div className="mt-5 col-span-full">
               <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
@@ -391,9 +400,30 @@ export default function Signup() {
               </label>
 
               <div className="mt-2">
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Luxury</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Casual</button>
-              <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Fast</button>
+              <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Luxury") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Luxury")}
+          >
+            Luxury
+          </button>              
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Casual") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Casual")}
+          >
+            Casual
+          </button>
+          <button
+            className={`p-2 px-5 mb-2 mr-2 rounded-full ${
+              selectedOptions.includes("Fast") ? "bg-green-100 border-green-300" : "bg-gray-100 border-gray-300"
+            }`}
+            onClick={() => handleOptionClick("Fast")}
+          >
+            Fast
+          </button>
               <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Cafe</button>
               <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">Family</button>
 
@@ -430,12 +460,9 @@ export default function Signup() {
               <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">NF</button>
               <button className="p-2 px-5 mb-2 mr-2 bg-gray-100 border-2 border-gray-300 rounded-full hover:bg-green-100 hover:border-green-300">NT</button>
 
-              </div>
-              
+              </div>  
             </div>
-
         </div>
-
 
 
         <div className="grid grid-cols-1 pb-12 mt-10 border-b border-gray-900/10 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -458,15 +485,15 @@ export default function Signup() {
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                 Password
               </label>
               <div className="mt-2">
                 <input
                   ref={passwordRef}
                   type="password"
-                  name="first-name"
-                  id="first-name"
+                  name="password"
+                  id="password"
                   autoComplete="given-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
                 />
@@ -475,7 +502,7 @@ export default function Signup() {
 
             <div className="sm:col-span-3">
               <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
-                Conform password
+                Confirm password
               </label>
               <div className="mt-2">
                 <input
@@ -488,26 +515,10 @@ export default function Signup() {
                 />
               </div>
             </div>
-
-
-
-            
-
-          
-   
-
         </div>
-
-
-
       </div>
-
       <div className="flex items-center justify-end mt-6 gap-x-6">
-        {/* <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
-          Cancel
-        </button> */}
         <p className="message">Already registered? <Link to="/login">Sign In</Link></p>
-
         <button
           type="submit"
           className="px-3 py-2 text-sm font-semibold text-white bg-green-500 rounded-md hover:bg-green-600 focus-visible:outline-green-500"
@@ -516,39 +527,6 @@ export default function Signup() {
         </button>
       </div>
     </form>
-     
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   )
 }
-
-
-
-
-

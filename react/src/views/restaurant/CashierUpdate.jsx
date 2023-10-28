@@ -1,58 +1,28 @@
-
 import { useState } from "react";
 import { useStateContext } from "../../context/ContextProvider";
 import axiosClient from "../../axios-client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import DeleteConfirmationModal from "../../components/restaurant/DeleteConfirmationModal";
 import CashierUpdateModal from "../../components/restaurant/CashierUpdateModal";
-
-// import AddCashier from './addCashier.jsx';
-
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-
-
-
-// const products = [
-//   {
-//     id: 1,
-//     name: 'Basic Tee',
-//     href: '#',
-//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-//     imageAlt: "Front of men's Basic Tee in black.",
-//     price: '$35',
-//     color: 'Black',
-//   },
-//   // More products...
-// ]
+import {
+  DataGrid,
+  GridToolbar,
+} from "@mui/x-data-grid";
+import Switch from '@mui/material/Switch';
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 export default function CashierUpdate() {
 
-
-    const [cashiers, setCashiers] = useState([]);
     const {user, setUser} = useStateContext();
+    const [loading, setLoading] = useState(false);  
+    const [cashiers, setCashiers] = useState([]);
     const [errors, setErrors] = useState(null);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [showConfirmationModalDelete, setShowConfirmationModalDelete] = useState(false);
-
-  const [selectedCashierForUpdate, setSelectedCashierForUpdate] = useState(null);
-  const [selectedCashierForDelete, setSelectedCashierForDelete] = useState(null);
-
-  const navigate = useNavigate();
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [showConfirmationModalDelete, setShowConfirmationModalDelete] = useState(false);
+    const [selectedCashierForUpdate, setSelectedCashierForUpdate] = useState(null);
+    const [selectedCashierForDelete, setSelectedCashierForDelete] = useState(null);
+    const navigate = useNavigate();
   
   useEffect(() => {
     axiosClient.get('/user')
@@ -202,24 +172,73 @@ const handleUpdate = (cashierId) => {
 
 
 
+  const columns = [
+    { field: 'id', headerName: 'Cashier ID', width: 90 },
+   
+    {
+      field: 'cashier_name',
+      headerName: 'Name',
+      width: 150,
+      editable: false,
+    },
+    {
+      field: 'email',
+      headerName: 'E mail',
+      width: 300,
+      editable: false,
+    
+    },
+   
+
+    
+   {
+    field: 'cashier_phone_number',
+    headerName: 'Phone number',
+      width: 260,
+    editable: false,
+},
+    {
+        field:"actions",
+        headerName:"Actions", 
+        width:190,
+        renderCell: (params) => {
+            return <div className="flex">
+ <button
+            onClick={() => handleUpdate(params.row.id)} 
+            style={{ marginLeft: '0rem' }}
+            className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Update
+          </button>                           
+<button 
+  onClick={() => handleRemove(params.row.id)} style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+Remove
+</button>  
+                
+            </div>
+        }
+    },
+];
+
 
 
 
 
 
   return (
-  <>
-    <header className="bg-white shadow">
-    <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900">Employees</h1>
-      <div className="loading-container">
-        {/* {loading && <p className="loading-text">Loading...</p>} */}
-      </div>
-    </div>
-    </header>
-    <div>
-    <button onClick={handleClick} style={{ marginLeft: '73rem',
-     marginTop: '4rem',
+    <>
+      <header className="bg-white shadow">
+        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Employees</h1>
+          <div className="loading-container">
+            
+          </div>
+        </div>
+        </header>
+
+        <main>
+        <button onClick={handleClick} style={{ marginLeft: '73rem',
+     marginTop: '3rem',
      fontSize: '1.3rem', // Increase font size
      padding: '1rem 1rem', // Increase padding vertically and horizontally
      borderRadius: '0.6rem',
@@ -227,43 +246,59 @@ const handleUpdate = (cashierId) => {
      }}className="bg-white text-green-500 font-bold py-2 px-4 rounded">
  + Add Cashier
 </button>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 
-<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-      <table className="table-fixed w-81 my-20 bg-white shadow-lg rounded-lg" style={{ marginTop: '2rem' }}>
-  <thead>
-    <tr className="hover:shadow-md"> 
-      <th className="bg-gray-900 text-white font-bold px-6 py-3">Cashier Name</th>
-      <th className="bg-gray-900  text-white font-bold px-6 py-3"> Email</th>
-      <th className="bg-gray-900  text-white font-bold px-6 py-3">Phone Number</th>
-      <th className="bg-gray-900  text-white font-bold px-6 py-3">Action</th>
-    </tr>
-  </thead>
-  <tbody>
+            <div className="flex mb-5">
+                
 
+        
+                
 
-  {cashiers.map((cashiers) => (
-            <tr className="hover:shadow-md" key={cashiers.id}>
-              <td className="px-6 py-8">{cashiers.cashier_name}</td>
-              <td className="px-6 py-8">{cashiers.email}</td>
-              <td className="px-6 py-8">{cashiers.cashier_phone_number}</td>
-            <td>     <button
-                onClick={() => handleUpdate(cashiers.id)} 
-                style={{ marginLeft: '0rem' }}
-                className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Update
-              </button>
- <button  onClick={() => handleRemove(cashiers.id)}  style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-Remove
-</button></td>
-            </tr>
-          ))}
-  </tbody>
-</table>
-</div>
-</div>
+                
+            </div>
 
-<CashierUpdateModal
+            
+            <div className="w-[1253px] h-[72px] p-4 justify-start items-center gap-[1000px] inline-flex">
+                <div className="h-8 justify-start items-start gap-6 flex">
+                    {/* <div style={{width:'250px'}} className="grow shrink basis-0 h-8 px-[9px] py-2 rounded-lg border border-neutral-400 justify-start items-center gap-2 flex">
+                    <div className="w-4 h-4 relative" />
+                    <div className="grow shrink basis-0 text-neutral-400 text-xs font-medium">Search...</div>
+                    </div> */}
+                </div>
+           
+            </div>
+            
+            <div className="dataTable">
+                <DataGrid
+                    rows={cashiers}
+                    getRowId={(row) => row.id}
+                    columns={columns}
+                    initialState={{
+                    pagination: {
+                        paginationModel: {
+                        pageSize: 5,
+                        },
+                    },
+                    }}
+                    slots={{ toolbar: GridToolbar }}
+                    slotProps={{
+                    toolbar: {
+                        showQuickFilter: true,
+                        quickFilterProps: { debounceMs: 500 },
+                    },
+                    }}
+                    pageSizeOptions={[5]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    disableColumnFilter
+                    disableDensitySelector
+                    disableColumnSelector
+                />
+
+            </div>
+
+            </div>
+            <CashierUpdateModal
         isOpen={showUpdateModal}
         onCancel={cancelUpdate}
         onConfirm={confirmUpdate}
@@ -277,8 +312,7 @@ Remove
         onCancel={cancelDelete}
         onConfirm={confirmDelete}
       />
-</>
+        </main>
+    </>
   )
-
-
 }

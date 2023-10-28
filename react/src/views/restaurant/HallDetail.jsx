@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axiosClient from '../../axios-client';
-//import Calendar from 'react-calendar';
-//import 'react-calendar/dist/Calendar.css';
-//import '../util/custom-calendar.css'
-//import { Carousel } from 'react-responsive-carousel';
-//import { Carousel } from 'react-responsive-carousel';
-//import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Import the CSS for
+import axiosClient from "../../axios-client";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import '../../util/custom-calendar.css'
+import { Carousel } from 'react-responsive-carousel';
 
 import slide1 from '../../assets/slide1.png';
 import slide2 from '../../assets/slide2.png';
@@ -93,20 +91,7 @@ const HallDetail = () => {
         <p className="mb-6 text-gray-600">{hall.description}</p>
       </div>
 
-      <Carousel autoPlay infiniteLoop showThumbs={false}>
-          <div>
-            <img className="object-contain h-128" src={slide1} alt="Image 1" />
-          </div>
-          <div>
-            <img src={slide2} alt="Image 2" />
-          </div>
-          <div>
-            <img src={slide3} alt="Image 3" />
-          </div>
-          <div>
-            <img src={slide4} alt="Image 4" />
-          </div>
-        </Carousel>
+     
 
       {/* Calendar and Time Availabilities */}
       <div className="flex justify-center mt-20">

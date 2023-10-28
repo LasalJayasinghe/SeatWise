@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('meals', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->decimal('price', 8, 2);
-            // Add more columns as needed for your meals table
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->char('gender')->nullable()->change();
+
         });
     }
 
@@ -30,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meals');
+        Schema::table('user_nullable_columns', function (Blueprint $table) {
+            //
+        });
     }
 };

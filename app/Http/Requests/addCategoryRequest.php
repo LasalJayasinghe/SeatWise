@@ -24,7 +24,6 @@ class addCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'restaurant_id' => 'required',
             'category' => 'required',
         ];
     }
