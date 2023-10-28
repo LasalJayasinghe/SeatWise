@@ -126,6 +126,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/getOrder/{id}', [RestaurantController::class, 'getOrder']);
     Route::get('/getAllOrder/{id}', [RestaurantController::class, 'getAllOrder']);
+    Route::get('/getUpcomingOrder/{id}', [RestaurantController::class, 'getUpcomingOrder']);
     Route::get('/getReservationsByUser/{id}', [RestaurantController::class, 'getReservationsByUser']);
     Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
