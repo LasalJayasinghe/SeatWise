@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class addCashierRequest extends FormRequest
+class replyComplaintRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,8 @@ class addCashierRequest extends FormRequest
     public function rules()
     {
         return [
-            'restaurant_id' => 'required',
-            'cashiername' => ['required', 'string'],
-            'email' => ['required', 'email'],
-            'address' => ['required', 'string'],
-            'phone' => ['required', 'numeric'],
-            'password' => [
-                'required',
-            ],
-            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'id' => 'required',
+             'reply' =>['string'],
             
         ];
     }

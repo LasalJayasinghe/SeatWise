@@ -7,9 +7,9 @@ import {
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import Switch from '@mui/material/Switch';
-import ComplaintUpdateModal from "../../components/restaurant/ComplaintUpdateModal";
+import OfferDeleteConfirmationModel from "../../components/OfferDeleteConfirmationModel";
 import SettingsBar from "../../components/restaurant/SettingsBar";
-import DeleteConfirmationModal from "../../components/restaurant/DeleteConfirmationModal";
+
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 export default function Complaints() {
@@ -18,7 +18,6 @@ export default function Complaints() {
     const [menu, setMenu] = useState([]);
     const [loading, setLoading] = useState(false);
     const [complaints, setComplaints] = useState([]);
-    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showConfirmationModalDelete, setShowConfirmationModalDelete] = useState(false);
     const [selectedComplaintForDelete, setSelectedComplaintForDelete] = useState(null);
     const [selectedComplaintForUpdate, setSelectedComplaintForUpdate] = useState(null);
@@ -130,16 +129,15 @@ const handleUpdate = (complaintID) => {
     
  
       const payLoad = {
-      id: updatedComplaintData.id,
-        reply :updatedComplaintData.reply,
-        //title: updatedComplaintData.title,
-        //user_email:updatedComplaintData.user_email,
-        //description:updatedComplaintData.description,
-
-    
+        id: updatedComplaintData.id,
+        Complaintname: updatedComplaintData.Complaintname,
+        email: updatedComplaintData.email,
+        phone: updatedComplaintData.phone,
+        password: updatedComplaintData.password,
+        password_confirmation: updatedComplaintData.password_confirmation,
       };
       console.log(updatedComplaintData.id);
-      axiosClient.post('/replyComplaint', payLoad)
+      axiosClient.post('/updateComplaint', payLoad)
         .then(({ data }) => {
           setMessage(data.message);
           // Update Complaints or perform any other necessary updates
@@ -173,7 +171,7 @@ const handleUpdate = (complaintID) => {
 
 
   const columns = [
-    { field: 'id', headerName: 'complaint ID', width: 90 },
+    { field: 'complaintID', headerName: 'complaint ID', width: 90 },
    
     {
       field: 'title',
@@ -196,14 +194,6 @@ const handleUpdate = (complaintID) => {
           width: 160,
         editable: false,
     },
-
-    {
-      field: 'reply',
-      headerName: 'Reply',
-        width: 160,
-      editable: false,
-  },
- 
   
     {
         field:"actions",
@@ -212,10 +202,10 @@ const handleUpdate = (complaintID) => {
         renderCell: (params) => {
             return <div className="flex">
 
-  <button  onClick={() => handleUpdate(params.row.id)}  style={{ marginLeft: '1rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+  <button  onClick={() => handleUpdate(params.row.complaintID)}  style={{ marginLeft: '1rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
 Reply
 </button>                    
-<button  onClick={() => handleRemove(params.row.id)}  style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+<button  onClick={() => handleRemove(params.row.complaintID)}  style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
 Remove
 </button>  
                 
@@ -232,7 +222,12 @@ Remove
   return (
     <>
       <header className="bg-white shadow">
-        
+        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Employees</h1>
+          <div className="loading-container">
+            
+          </div>
+        </div>
         </header>
 
         <main>
@@ -259,7 +254,7 @@ Remove
             <div className="dataTable">
                 <DataGrid
                     rows={complaints}
-                    getRowId={(row) => row.id}
+                    getRowId={(row) => row.complaintID}
                     columns={columns}
                     initialState={{
                     pagination: {
@@ -301,7 +296,7 @@ Remove
         isOpen={showUpdateModal}
         onCancel={cancelUpdate}
         onConfirm={confirmUpdate}
-        complaint={selectedComplaintForUpdate}
+        Complaint={selectedComplaintForUpdate}
         
         
        

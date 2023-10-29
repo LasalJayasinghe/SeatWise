@@ -60,6 +60,7 @@ export default function AddCashier() {
     const phoneRef = useRef()
     const passwordRef = useRef()
     const photoRef = useRef();
+    const addressRef = useRef();
     const [errors, setErrors] = useState(null);
    // const {setUser, setToken} = useStateContext();
     // const navigate = useNavigate();
@@ -82,6 +83,7 @@ export default function AddCashier() {
       formData.append("email", emailRef.current.value);
       formData.append("phone", phoneRef.current.value);
       formData.append("password", passwordRef.current.value);
+      formData.append("address", addressRef.current.value);
       if (photoRef.current) {
         // Append the photo if it's selected
         formData.append("photo", photoRef.current);
@@ -211,7 +213,24 @@ export default function AddCashier() {
             </div>
           </div>
 
-         
+          <div>
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >Address
+            </label>
+            <div className="mt-2">
+              <input
+                ref={addressRef}
+                id="address"
+                name="address"
+                type="text"
+                autoComplete="address"
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
           <div>
 		<label htmlFor='password' className="block text-sm font-medium leading-6 text-gray-900">
 				Password 
