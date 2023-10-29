@@ -413,8 +413,24 @@ class RestaurantController extends Controller
     }
 
     public function getAllOrder($id) {
+
+        $today = date('Y-m-d');
     
         $order = TableReservation::where('restaurant_id', $id)
+            ->whereDate('reservation_date', '<', $today)
+            ->get();
+
+        return response()->json($order);
+
+    }
+
+    public function getUpcomingOrder($id) {
+
+        $today = date('Y-m-d');
+    
+        $order = TableReservation::where('restaurant_id', $id)
+            ->whereDate('reservation_date', '>', $today)
+            ->orderBy('reservation_date', 'asc')
             ->get();
 
         return response()->json($order);

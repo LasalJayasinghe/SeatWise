@@ -52,6 +52,7 @@ import TechnicalAssistance from './views/restaurant/TechnicalAssistance.jsx';
 import ViewOffers from './views/restaurant/ViewOffers.jsx';
 import AddOffer from './views/restaurant/addOffer.jsx';
 import ViewComplaints from './views/restaurant/ViewComplaints.jsx';
+import Requests from './views/restaurant/Requests.jsx';
 
 import CashierGuestLayout from './components/restaurant/CashierGuestLayout.jsx';  
 import CashierDefaultLayout from './components/restaurant/CashierDefaultLayout.jsx';
@@ -287,6 +288,10 @@ const router = createBrowserRouter([
             {
                 path: "/settings",
                 element: <Settings />, 
+            },
+            {
+                path: "/requests",
+                element: <Requests />, 
             },
         ]
     },
