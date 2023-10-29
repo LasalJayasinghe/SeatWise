@@ -53,6 +53,7 @@ import ViewOffers from './views/restaurant/ViewOffers.jsx';
 import AddOffer from './views/restaurant/addOffer.jsx';
 import ViewComplaints from './views/restaurant/ViewComplaints.jsx';
 import Requests from './views/restaurant/Requests.jsx';
+import Advertisement from './views/restaurant/Advertisement.jsx';
 
 import CashierGuestLayout from './components/restaurant/CashierGuestLayout.jsx';  
 import CashierDefaultLayout from './components/restaurant/CashierDefaultLayout.jsx';
@@ -60,6 +61,8 @@ import CashierLogin from './views/restaurant/cashierLogin.jsx';
 import AddCashier from './views/restaurant/addCashier.jsx';
 import CashierUpdate from './views/restaurant/CashierUpdate.jsx';
 import CashierDashboard from './views/restaurant/CashierDashboard.jsx';
+import Payments from './views/restaurant/Payments.jsx';
+import AddAdvertisement from './views/restaurant/AddAdvertisement.jsx';
 
 
 
@@ -292,6 +295,18 @@ const router = createBrowserRouter([
             {
                 path: "/requests",
                 element: <Requests />, 
+            },
+            {
+                path: "/adds",
+                element: <Advertisement />, 
+            },
+            {
+                path: "/payments",
+                element: <Payments />, 
+            },
+            {
+                path: "/addadd",
+                element: <AddAdvertisement />, 
             },
         ]
     },
