@@ -98,7 +98,7 @@ class RestaurantController extends Controller
 
             foreach ($tableStructures as $table) {
                 $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
-                
+
                 // Check if the table is unavailable but has the tablefortwo option enabled
                 $tableReservation = TableReservation::where('restaurant_id', $restaurantId)
                     ->where('reservation_date', $date)
@@ -108,6 +108,7 @@ class RestaurantController extends Controller
                     ->first();
                 
                 $table->isTableForTwo = !$table->isAvailable && $tableReservation && $tableReservation->tablefortwo == 1;
+
             }               
 
         return response()->json($tableStructures);

@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axiosClient from '../../../axios-client';
-import Cards from '../../../components/Cards';
 import StarRatings from 'react-rating-stars-component';
-
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axiosClient.get(`/restaurants/search?q=${searchQuery}`);
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const displayRestaurants = searchResults.length > 0 ? searchResults : restaurants;
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -25,17 +38,6 @@ const Restaurants = () => {
     fetchRestaurants();
   }, []);
 
-  const handleDropdownToggle = () => {
-    setDropdownOpen((prevState) => !prevState);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    // Implement the search functionality here
-    console.log('Search query:', searchQuery);
-    // You can add the logic to perform the search based on the searchQuery value
-  };
-
   function getOpenDays(profile) {
     const days = [];
     if (profile && profile.monday === 1) days.push('Monday');
@@ -45,7 +47,7 @@ const Restaurants = () => {
     if (profile && profile.friday === 1) days.push('Friday');
     if (profile && profile.saturday === 1) days.push('Saturday');
     if (profile && profile.sunday === 1) days.push('Sunday');
-  
+
     return days.join(', ');
   }
 
@@ -74,6 +76,8 @@ const Restaurants = () => {
             </span>
             <input
               type="text"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
               name="price"
               id="price"
               className="block w-full h-12 py-1 pl-10 pr-4 mt-3 text-gray-900 placeholder-gray-400 border-gray-300 rounded-md sm:w-64 focus:ring-2 focus:ring-green-500 focus:border-transparent sm:text-sm"
@@ -91,6 +95,7 @@ const Restaurants = () => {
             >
               <option>All Categories</option>
               <option value="">All categories</option>
+              <option value="">All categories</option>
               <option value="Italian Cuisine">Italian Cuisine</option>
               <option value="Mexican Food">Mexican Food</option>
               <option value="Chinese Cuisine">Chinese Cuisine</option>
@@ -103,7 +108,11 @@ const Restaurants = () => {
               <option value="Bakery & Desserts">Bakery & Desserts</option>
             </select>
           </div>
-          <button className="px-4 py-2 font-semibold text-white bg-black rounded sm:ml-4">
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="px-4 py-2 font-semibold text-white bg-black rounded sm:ml-4"
+          >
             Search
           </button>
         </div>
@@ -114,33 +123,24 @@ const Restaurants = () => {
       </div>
 
       <div className="flex flex-wrap mx-10 mt-5 -m-4 restaurant-cards">
-        {restaurants.map((restaurant) => (
+        {displayRestaurants.map((restaurant) => (
           <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
             <div className="restaurant-card">
               <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-                
-                  <img
-                    className="object-cover"
-                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
-                    alt="product image"
-                  />
-                  <span className="absolute top-0 left-0 m-2 rounded-xl bg-red-700 px-2 text-center text-sm font-medium text-white">New</span>
-              
+                <img
+                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                  alt="product image"
+                />
+                <span className="absolute top-0 left-0 m-2 rounded-xl bg-red-700 px-2 text-center text-sm font-medium text-white">New</span>
                 <div className="mt-4 px-5 pb-5">
-                  
-                    <h5 className="text-xl tracking-tight text-slate-900 font-bold">{restaurant.restaurantname}</h5>
-                  
-
+                  <h5 className="text-xl tracking-tight text-slate-900 font-bold">{restaurant.restaurantname}</h5>
                   {/* Display opening dates and time */}
                   <div className="mt-2">
-  <p className="text-sm text-slate-700 "><b>Open Days: </b>{getOpenDays(restaurant.profile)}</p>
-  <p className="text-slate-700"><b>Open Time:</b> {restaurant.profile && restaurant.profile.opening} to {restaurant.profile && restaurant.profile.closing}</p>
-
-</div>
-
-
-
-<div className="mt-5 flex items-center justify-between">
+                    <p className="text-sm text-slate-700"><b>Open Days: </b>{getOpenDays(restaurant.profile)}</p>
+                    <p className="text-slate-700"><b>Open Time:</b> {restaurant.profile && restaurant.profile.opening} to {restaurant.profile && restaurant.profile.closing}</p>
+                  </div>
+                  <div className="mt-5 flex items-center justify-between">
                     <p>
                       <span className="text-sm text-slate-700">{restaurant.resType}</span>
                     </p>
