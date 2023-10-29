@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, BellIcon, XMarkIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import logo from '../assets/logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import axiosClient from '../axios-client.js';
@@ -19,6 +19,23 @@ function classNames(...classes) {
 }
 
 const Header = ({ user, onLogout }) => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openSlideOver = () => {
+    setIsOpen(true);
+  };
+
+  const closeSlideOver = () => {
+    setIsOpen(false);
+  };
+
+  const slideOverClasses = isOpen
+    ? 'fixed inset-y-0 right-0 z-50 flex flex-col bg-white w-96 shadow-xl transform translate-x-0 transition-transform ease-in-out duration-300'
+    : 'fixed inset-y-0 right-0 z-50 flex flex-col bg-white w-96 shadow-xl transform translate-x-full transition-transform ease-in-out duration-300';
+
+
+
   const location = useLocation(); // Get the current location
   const [isNotificationOpen, setNotificationOpen] = useState(false);
 
@@ -30,6 +47,100 @@ const Header = ({ user, onLogout }) => {
     <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <>
+
+
+<div className={slideOverClasses}>
+        <div className="p-4 border-r border-gray-200">
+          <div className="flex justify-between mb-4">
+            <h2 className="text-2xl font-bold">Cart</h2>
+            <button className="text-gray-500" onClick={closeSlideOver}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="py-4">
+  <div className="flex mb-4">
+    <div className="rounded-lg w-16 h-16 bg-gray-300 mr-4"></div> {/* Product image */}
+    <div className="flex-grow">
+      <div className="font-semibold">Product Name 1</div> {/* Product name */}
+      <div className="text-gray-500">Quantity: 2</div> {/* Product quantity */}
+      <div className="font-semibold">LKR 20.00</div> {/* Product price */}
+    </div>
+    <button className="text-red-500 ml-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <circle cx="12" cy="12" r="10" strokeWidth="0" fill="#FED7D7" /> {/* Change the fill color here */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 12H18" />
+      </svg>
+    </button>
+  </div>
+
+  <div className="flex mb-4">
+    <div className="rounded-lg w-16 h-16 bg-gray-300 mr-4"></div> {/* Product image */}
+    <div className="flex-grow">
+      <div className="font-semibold">Product Name 2</div> {/* Product name */}
+      <div className="text-gray-500">Quantity: 1</div> {/* Product quantity */}
+      <div className="font-semibold">LKR 15.00</div> {/* Product price */}
+    </div>
+    <button className="text-red-500 ml-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <circle cx="12" cy="12" r="10" strokeWidth="0" fill="#FED7D7" /> {/* Change the fill color here */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 12H18" />
+      </svg>
+    </button>
+  </div>
+
+  {/* Cart total */}
+  <div className="mt- text-gray-500">
+    <span className="font-bold">Total:</span>
+    <span className="ml-auto">LKR 35.00</span>
+    <p><span className="font-bold">Order Fee: LKR 1552.00</span><span className="ml-auto"> (40% off the total)</span></p>
+  </div>
+  
+</div>
+
+
+        </div>
+
+        <button className="bg-green-500 text-white p-4 hover:bg-green-600" onClick={closeSlideOver}>
+          Conform Order - LKR 1552.00
+        </button>
+      </div>
+
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-10"
+          onClick={closeSlideOver}
+        />
+      )}
+
+
+
+
           {/* Desktop view */}
           <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
@@ -75,12 +186,18 @@ const Header = ({ user, onLogout }) => {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               
   
-
+              <button
+        onClick={openSlideOver}
+        className="p-1 text-gray-500 bg-white rounded-full hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 focus:ring-offset-green-500 "
+      >
+       <ShoppingBagIcon className="w-6 h-6" aria-hidden="true" /> {/* Cart icon */}
+      </button>
 
 
 
               <Menu as="div" className="relative inline-block text-left">
       <div>
+
       <Menu.Button >
   <span
     className="p-1 text-gray-500 bg-white rounded-full hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 focus:ring-offset-green-500 focus:text-green-500">

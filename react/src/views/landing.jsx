@@ -10,6 +10,7 @@ import Fade from 'react-reveal/Fade';
 import { TypeAnimation } from 'react-type-animation';
 import CountUp, { useCountUp } from 'react-countup';
 import {Link} from "react-router-dom";
+import landingimg from "../assets/landingimg.png"
 
 export default function landing(){
 
@@ -59,58 +60,65 @@ export default function landing(){
     </div>
     :
     <header>
-        <div className='container h-screen p-20'>
-        <div className="flex flex-row-reverse ">
+        <div className='container h-screen p-0'>
+        <div className="flex flex-row-reverse px-20 pt-8">
             <div>
                <Link to = "/signup" > 
-                    <button className="px-5 py-2 font-semibold text-white bg-black border border-black rounded hover:bg-transparent hover:text-black hover:border-black">
-                        Sign Up
+                    <button className="px-5 py-2 font-semibold text-white bg-black border border-black rounded-2xl hover:bg-transparent hover:text-black hover:border-black">
+                        I'm a customer
                     </button>
                 </Link>
             </div>
             <div className='pr-5'>
                 <Link to = "/login" >
-                <button className="px-5 py-2 font-semibold text-black bg-transparent border border-black rounded hover:bg-black hover:text-white">
-                    Log In
+                <button className="px-5 py-2 font-semibold text-black bg-transparent border border-black rounded-2xl hover:bg-black hover:text-white">
+                    I'm a restaurant
                 </button>
                 </Link>
             </div>
         </div>
-        <Fade left>
-            <img src={logo} alt="loading"  className='mt-24'/>
-        </Fade>
-        <div className='flex-auto mt-7'>
-            <Fade bottom>
-                <p className='w-1/2 text-2xl font-semibold font-inter'>
-                    Discover seamless dining experience<br></br>
-                    with <span className='text-green-500'>Seatwise,</span> <br></br>
-                    the ultimate destination for hassle-free <br></br>
-                    restaurant table bookings.
-                </p>
-            </Fade>
-        
-            <div className='mt-6'>
-                <TypeAnimation
-                    sequence={[
-                        1000,
-                        // Same substring at the start will only be typed out once, initially
-                        'Book your table in ease and dine with delight!!',
-                        1000, // wait 1s before replacing "Mice" with "Hamsters"
-                        'Reserve your spot effortlessly and savor the joy of dining!!',
-                        1000,
-                        'Discover the pleasure of sharing a meal with a delightful stranger!!',
-                        1000,
-                    ]}
-                    wrapper="span"
-                    speed={75}
-                    style={{ fontFamily:'sans-serif', fontSize: '1.5em', display: 'inline-block', fontWeight: 'light' }}
-                    repeat={Infinity}
-                    />
-            </div>
-                <button className="px-5 py-3 mt-6 font-semibold text-white bg-black border border-black rounded hover:bg-transparent hover:text-black hover:border-black">
-                        Get Started
-                </button>
-        </div>
+        <div className='mt-24 flex items-center justify-center'>
+        <Fade bottom>
+            
+            <img src={logo} alt="loading"  className='mt-01 flex items-center justify-center'/>
+        </Fade></div>
+        <div className="flex items-center justify-center mt-16">
+  <div className='flex-auto mt-2 text-center'>
+    <Fade bottom>
+      <p className='w-full text-2xl font-semibold font-inter'>
+        Discover seamless dining experience
+        with <span className='text-green-500'>Seatwise,</span> <br />
+        the ultimate destination for hassle-free 
+        restaurant table bookings.
+      </p>
+      
+    </Fade>
+    
+    <div className='mt-4 pb-4'>
+      <TypeAnimation
+        sequence={[
+          1000,
+          // Same substring at the start will only be typed out once, initially
+          'Book your table in ease and dine with delight!!',
+          1000, // wait 1s before replacing "Mice" with "Hamsters"
+          'Reserve your spot effortlessly and savor the joy of dining!!',
+          1000,
+          'Discover the pleasure of sharing a meal with a delightful stranger!!',
+          1000,
+        ]}
+        wrapper="span"
+        speed={75}
+        style={{ fontFamily:'sans-serif', fontSize: '1.5em', display: 'inline-block', fontWeight: 'light' }}
+        repeat={Infinity}
+      />
+    </div>
+    <img src={landingimg} alt="" className='w-full' />
+    {/* <button className="px-5 py-3 mt-6 font-semibold text-white bg-black border border-black rounded hover:bg-transparent hover:text-black hover:border-black">
+      Get Started
+    </button> */}
+  </div>
+</div>
+
 
         {/* ------------------------------------------------New Section------------------------------------------------ */}
         <section className='mt-20'>
