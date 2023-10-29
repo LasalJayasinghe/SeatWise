@@ -123,6 +123,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/restaurants/{restaurant_id}/halls', [HallController::class, 'index']);
     Route::get('/halls/{id}', [HallController::class, 'show']);
     Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
+    Route::get('/displayComplaint/{complaintID}', [RestaurantController::class, 'displayComplaint']);
 
     Route::get('/getOrder/{id}', [RestaurantController::class, 'getOrder']);
     Route::get('/getAllOrder/{id}', [RestaurantController::class, 'getAllOrder']);
@@ -131,6 +132,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
     Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
+
 
 });
 
@@ -190,6 +192,7 @@ Route::get('/getCheckInCount/{restaurant_id}', [RestaurantController::class, 'ge
 Route::get('/getCheckOutCount/{restaurant_id}', [RestaurantController::class, 'getCheckOutCount']);
 Route::get('/getReservationCount/{restaurant_id}', [RestaurantController::class, 'getReservationCount']);
 Route::get('/getRecentBookings/{restaurant_id}', [RestaurantController::class, 'getRecentBookings']);
+Route::post('/replyComplaint', [RestaurantController::class, 'replyComplaint']);
 
 Route::post('/deleteComplaint/{complaintID}', [RestaurantController::class, 'deleteComplaint']);
 Route::post('/deleteOffer/{offerId}', [RestaurantController::class, 'deleteOffer']);

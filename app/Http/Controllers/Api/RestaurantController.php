@@ -2,29 +2,31 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use http\Env\Response;
-use App\Mail\AssistanceRequest;
-use App\Http\Controllers\Controller;
-
 use App\Models\User;
 use App\Models\View;
 use App\Models\Meals;
 use App\Models\Offers;
+use http\Env\Response;
 use App\Models\Profile;
 use App\Models\Cashiers;
+
 use App\Models\Category;
 use App\Models\Customer;
-use App\Models\Restaurant;
 use App\Models\Complaints;
+use App\Models\Restaurant;
 use App\Models\Restaurants;
+use Illuminate\Http\Request;
 use App\Models\TableStructure;
+use App\Mail\AssistanceRequest;
 use App\Models\TableReservation;
+use App\Http\Requests\LoginRequest;
 use App\Models\TechnicalAssistance;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\SignupRequest;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\addMealRequest;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addOfferRequest;
@@ -34,13 +36,12 @@ use App\Http\Requests\addCategoryRequest;
 use App\Http\Requests\updateOfferRequest;
 use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
+use App\Http\Requests\replyComplaintRequest;
 use App\Http\Requests\updateEmployeeRequest;
 use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\SignupRequest;
 
 class RestaurantController extends Controller
 {
@@ -669,7 +670,8 @@ class RestaurantController extends Controller
 
     }
 
-
+  
+    
     public function getOffers($id) {
     
         // $restaurant = Restaurants::find($id);
@@ -678,15 +680,15 @@ class RestaurantController extends Controller
  
      
      }
-    public function displayCashier($id) {
+
+    public function displayComplaint($id) {
 
     
-        $cashier = Cashiers::where('id', $id)->get();
-        return response()->json($cashier);
+        $complaint = Complaints::where('id', $id)->get();
+        return response()->json($complaint);
 
     
     }
-
   
      public function displayOffer($id) {
     
@@ -1049,14 +1051,53 @@ public function deleteOffer($id)
 public function getComplaints($id) {
     
     // $restaurant = Restaurants::find($id);
-    $cashiers = Complaints::where('restaurantID', $id)
+    $Complaints = Complaints::where('restaurantID', $id)
     ->join('users', 'complaints.userID', '=', 'users.id')
     ->select('complaints.*','users.name as name', 'users.email as user_email')
+    ->orderBy('reply')
     ->get();
 
-    return response()->json($cashiers);
+    return response()->json($Complaints);
 
  
  }
+
+ public function displayCashier($id) {
+
+    
+    $cashier = Cashiers::where('id', $id)->get();
+    return response()->json($cashier);
+
+
+}
+
+
+public function replyComplaint(replyComplaintRequest $request) {
+    $data = $request->validated();
+    /** @var Complaints $complaint */
+    //$restaurant = auth()->guard('restaurants')->user();
+    $complaintId = $data['id'];
+    $complaint = Complaints::where('id', $complaintId)->first();
+  
+    // $restaurant = Restaurant::find($id);
+    if ($complaint) {
+    $complaint->update([
+        //'id' => $restaurantId,
+        'reply' => $data['reply'],
+        
+    ]);
+    return response()->json(['message' => ' Successfully replied']);
+    }
+
+    else{
+    return response()->json(['message' => 'Updatation replied']);  
+
+
+
+
+
+    }
+
+    }
 
 }

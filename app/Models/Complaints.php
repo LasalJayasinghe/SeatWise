@@ -27,7 +27,7 @@ class Complaints extends Authenticatable
         'description',
         'restaurantID',
         'userID', 
-        
+        'reply',
 
     ];
 
