@@ -582,9 +582,9 @@ class RestaurantController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('uploads/cashiers/', $filename); 
+            $file->move('src/assets/', $filename); 
             
-            $photoPath = 'uploads/cashiers/' . $filename;
+            $photoPath = $filename;
         }
         // Check if a photo file was uploaded
         
@@ -593,6 +593,7 @@ class RestaurantController extends Controller
             'restaurant_id' => $restaurantId,
             'cashier_name' => $data['cashiername'],
             'email' => $data['email'],
+             'address' =>$data['address'],
             'cashier_phone_number' => $data['phone'],
             'password' => bcrypt($data['password']),
             'photo' => $photoPath ?? null,

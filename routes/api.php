@@ -182,7 +182,7 @@ Route::get('/getStatus/{reservationId}', [RestaurantController::class, 'getStatu
 Route::get('/restaurants/{restaurant_id}', [RestaurantController::class, 'showRestaurantx']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{restaurant_id}/table-structures', [RestaurantController::class, 'getTableStructures']);
 Route::get('/restaurants/{restaurant_id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
-Route::post('/updateCashier', [RestaurantController::class, 'updateOffer']);
+Route::post('/updateCashier', [RestaurantController::class, 'updateCashier']);
 Route::post('/updateOffer', [RestaurantController::class, 'updateOffer']);
 Route::post('/deleteEmployee/{cashierId}', [RestaurantController::class, 'deleteEmployee']);
 Route::get('/getCheckInCount/{restaurant_id}', [RestaurantController::class, 'getCheckInCount']);

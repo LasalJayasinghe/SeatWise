@@ -20,6 +20,7 @@ export default function Complaints() {
     const [complaints, setComplaints] = useState([]);
     const [showConfirmationModalDelete, setShowConfirmationModalDelete] = useState(false);
     const [selectedComplaintForDelete, setSelectedComplaintForDelete] = useState(null);
+    const [selectedComplaintForUpdate, setSelectedComplaintForUpdate] = useState(null);
 
 
     
@@ -43,54 +44,132 @@ export default function Complaints() {
           });
       }
     }, [user]);
+
+
+
+const handleRemove = (complaintID) => {
+
+    setSelectedComplaintForDelete(complaintID);
+    setShowConfirmationModalDelete(true);
+  };
+
+  
+  const cancelDelete = () => {
+    setShowConfirmationModalDelete(false);
+    setSelectedComplaintForDelete(null);
+  };
+  const confirmDelete = () => {
+    setShowConfirmationModalDelete(false);
+  //const shouldDelete = window.confirm("Are you sure you want to delete this Complaint?");
+  
+  
+    // User confirmed deletion, send a DELETE request to the deleteEmployee API endpoint
+    axiosClient.post(`/deleteComplaint/${selectedComplaintForDelete}`)
+      .then(response => {
+        // Handle success (e.g., show a success message)
+        console.log(response.data.message); // Display success message from the server
+        
+        // Fetch updated Complaint data
+        if (user && user.id) {
+          axiosClient.get(`/getComplaints/${user.id}`)
+            .then(({ data }) => {
+              setComplaints(data);
+            
+      // Clear the selected complaint after successful deletion
+     
+
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
+      })
+      .catch(error => {
+        // Handle error (e.g., show an error message)
+        console.error('Error deleting Complaint:', error);
+      });
+  
+};
   
 
 
-    const handleRemove = (complaintID) => {
 
-      setSelectedComplaintForDelete(complaintID);
-      setShowConfirmationModalDelete(true);
-    };
+
+
+
+//get the id of relevant Complaint
+
+const handleUpdate = (complaintID) => {
+
+
+
+  axiosClient.get(`/displayComplaint/${complaintID}`)
+    .then(({ data }) => {
+      setSelectedComplaintForUpdate(data);
+      setShowUpdateModal(true);
+      console.log("Fetched Complaint Data:", data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+
+    setSelectedComplaintForUpdate(complaintID);
+    setShowUpdateModal(true);
+  };
+
   
-    const cancelDelete = () => {
-      setShowConfirmationModalDelete(false);
-      setSelectedComplaintForDelete(null);
+    const cancelUpdate = () => {
+      setShowUpdateModal(false);
+      setSelectedComplaintForUpdate(null);
     };
-    const confirmDelete = () => {
-      setShowConfirmationModalDelete(false);
-    //const shouldDelete = window.confirm("Are you sure you want to delete this cashier?");
+    const confirmUpdate = (updatedComplaintData) => {
+      setShowUpdateModal(false);
+    //const shouldDelete = window.confirm("Are you sure you want to delete this Complaint?");
     
-    
-      // User confirmed deletion, send a DELETE request to the deleteEmployee API endpoint
-      axiosClient.post(`/deleteComplaint/${selectedComplaintForDelete}`)
-        .then(response => {
-          // Handle success (e.g., show a success message)
-          console.log(response.data.message); // Display success message from the server
-          
-          // Fetch updated cashier data
+ 
+      const payLoad = {
+        id: updatedComplaintData.id,
+        Complaintname: updatedComplaintData.Complaintname,
+        email: updatedComplaintData.email,
+        phone: updatedComplaintData.phone,
+        password: updatedComplaintData.password,
+        password_confirmation: updatedComplaintData.password_confirmation,
+      };
+      console.log(updatedComplaintData.id);
+      axiosClient.post('/updateComplaint', payLoad)
+        .then(({ data }) => {
+          setMessage(data.message);
+          // Update Complaints or perform any other necessary updates
+          // ...
           if (user && user.id) {
             axiosClient.get(`/getComplaints/${user.id}`)
               .then(({ data }) => {
                 setComplaints(data);
-              
-        // Clear the selected complaint after successful deletion
-       
-
+                window.location.reload(); 
               })
               .catch((error) => {
                 console.error(error);
               });
           }
+          setTimeout(() => {
+            navigate('/Employees');
+          }, 2000);
         })
-        .catch(error => {
-          // Handle error (e.g., show an error message)
-          console.error('Error deleting cashier:', error);
+        .catch((err) => {
+          const response = err.response;
+          if (response && response.status === 422) {
+            setErrors(response.data.errors);
+          }
         });
     
-  };
+      // User confirmed deletion, send a DELETE request to the deleteEmployee API endpoint
+  
     
+  };
 
-   
+
+
   const columns = [
     { field: 'complaintID', headerName: 'complaint ID', width: 90 },
    
@@ -123,7 +202,7 @@ export default function Complaints() {
         renderCell: (params) => {
             return <div className="flex">
 
-  <button  onClick={() => handleRemove(params.row.complaintID)}  style={{ marginLeft: '1rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+  <button  onClick={() => handleUpdate(params.row.complaintID)}  style={{ marginLeft: '1rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
 Reply
 </button>                    
 <button  onClick={() => handleRemove(params.row.complaintID)}  style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
@@ -138,12 +217,22 @@ Remove
 
 
 
+
+
   return (
     <>
+      <header className="bg-white shadow">
+        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Employees</h1>
+          <div className="loading-container">
+            
+          </div>
+        </div>
+        </header>
 
-    <div className="main">
-        
-
+        <main>
+   
+         
         <div className="ordercontainer">
             <div className="menuContainer">
                 <SettingsBar />
@@ -201,14 +290,23 @@ Remove
         
 
         {/* <Footer /> */}
-    </div>
+  
 
-
-
-
-
-
+            <ComplaintUpdateModal
+        isOpen={showUpdateModal}
+        onCancel={cancelUpdate}
+        onConfirm={confirmUpdate}
+        Complaint={selectedComplaintForUpdate}
         
+        
+       
+      />
+<DeleteConfirmationModal
+        isOpen={showConfirmationModalDelete}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+      />
+        </main>
     </>
-)
+  )
 }
