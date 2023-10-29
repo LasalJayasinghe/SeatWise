@@ -285,8 +285,18 @@ Remove
                     </header>
                 </div>
                 <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <button onClick={handleClick} style={{ marginLeft: '43rem',
+     marginTop: '3rem',
+     fontSize: '1.3rem', // Increase font size
+     padding: '1rem 1rem', // Increase padding vertically and horizontally
+     borderRadius: '0.6rem',
+
+     }}className="bg-white text-green-500 font-bold py-2 px-4 rounded">
+ + Add Offers
+</button>
+    </div>            <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     
-                  
+        
              
                 <div className="dataTable">
                 <DataGrid
