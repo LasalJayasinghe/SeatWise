@@ -9,6 +9,7 @@ const HallReservation = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Use the useLocation hook to access state
   const { selectedDate, selectedSlot } = location.state;
+  console.log (selectedDate);
 
   const [formData, setFormData] = useState({
     reservantName: '',
@@ -48,8 +49,22 @@ const HallReservation = () => {
   };
 
   return (
-    <div>
-      <h1 className="mb-4 text-3xl font-bold">Hall Reservation</h1>
+    <div >
+      <div className=' flex mb-4 text-3xl font-bold'>
+      <button 
+              type="button"
+              onClick={handleClose} 
+              
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+</svg>
+            </button>
+     
+      <h1 className='ml-5' >Hall Reservation</h1>
+
+      </div>
+      
       {/* <div className='flex justify-end'>
           <button 
             type="button"
@@ -63,6 +78,8 @@ const HallReservation = () => {
   <p>Selected Slot's Hall ID: {selectedSlot.hall_id}</p>
   <p>Selected Slot Start Time: {selectedSlot.start_time}</p>
   <p>Selected Slot End Time: {selectedSlot.end_time}</p>
+  <p>Selected Slot Date: {selectedDate.toLocaleDateString()}</p>
+
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="reservantName">Reservant Name</label>
