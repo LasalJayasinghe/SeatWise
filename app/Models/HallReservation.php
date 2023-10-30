@@ -18,7 +18,6 @@ class HallReservation extends Model
         'contact_number',
         'Occasion_type',
         'Description',
-        'Slot_id',
-        'Transaction_status',
+        
     ];
 }

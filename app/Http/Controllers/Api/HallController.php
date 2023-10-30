@@ -32,6 +32,8 @@ class HallController extends Controller
 
         $timeSlots = $slots->map(function ($slot) use ($date, $hallId) {
             return [
+                'id' => $slot->id, // Include the slot ID
+                'hall_id' => $hallId, // Include the hall ID
                 'start_time' => $slot->start_time,
                 'end_time' => $slot->end_time,
                 'availability' => Hall::find($hallId)->isSlotAvailable(

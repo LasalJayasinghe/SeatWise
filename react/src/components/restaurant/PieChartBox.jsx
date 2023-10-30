@@ -1,8 +1,8 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 const data = [
-  { name: "Table", value: 400, color: "#0088FE" },
-  { name: "Hall", value: 300, color: "#00C49F" },
+  { name: "Tables", value: 400, color: "#61e5ff" },
+  { name: "Halls", value: 300, color: "#0088FE" },
 //   { name: "Laptop", value: 300, color: "#FFBB28" },
 //   { name: "Tablet", value: 200, color: "#FF8042" },
 ];
@@ -19,7 +19,7 @@ export default function PieChartBox() {
             />
             <Pie
               data={data}
-              innerRadius={"70%"}
+              innerRadius={"60%"}
               outerRadius={"90%"}
               paddingAngle={5}
               dataKey="value"
