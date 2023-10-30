@@ -132,6 +132,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
     Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
+    Route::get('/adds', [RestaurantController::class, 'getAdds']);
+    Route::post('/addAdvertisement', [RestaurantController::class, 'addAdvertisement']);
 
 
 });
