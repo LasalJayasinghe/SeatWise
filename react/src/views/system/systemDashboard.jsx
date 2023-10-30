@@ -24,6 +24,7 @@ export default function SystemDashboard(){
         <div>
             <Header/>
             <div>{users.user_count}</div>
+            
         </div>
     )
 }
