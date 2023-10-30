@@ -60,7 +60,7 @@ import CashierLogin from './views/restaurant/cashierLogin.jsx';
 import AddCashier from './views/restaurant/addCashier.jsx';
 import CashierUpdate from './views/restaurant/CashierUpdate.jsx';
 import CashierDashboard from './views/restaurant/CashierDashboard.jsx';
-
+import ViewAssistanceHistory from './views/restaurant/ViewAssistanceHistory.jsx';
 
 
 const router = createBrowserRouter([
@@ -267,10 +267,15 @@ const router = createBrowserRouter([
             },
             {
                 path: "/TechnicalAssistance",
-                element: <TechnicalAssistance/>, 
+                element: <ViewAssistanceHistory/>, 
             },
              
+            
 
+            {
+                path: "/AddTechnicalAssistance",
+                element: <TechnicalAssistance/>, 
+            },
             {
                 path: "/ViewComplaints",
                 element: <ViewComplaints/>, 

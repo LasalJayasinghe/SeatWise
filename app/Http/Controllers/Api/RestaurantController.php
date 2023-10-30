@@ -8,8 +8,9 @@ use App\Models\Meals;
 use App\Models\Offers;
 use http\Env\Response;
 use App\Models\Profile;
-use App\Models\Cashiers;
+use App\Mail\MailNotify;
 
+use App\Models\Cashiers;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Complaints;
@@ -17,14 +18,14 @@ use App\Models\Restaurant;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Models\TableStructure;
-use App\Mail\AssistanceRequest;
+///use App\Mail\AssistanceRequest;
 use App\Models\TableReservation;
 use App\Http\Requests\LoginRequest;
 use App\Models\TechnicalAssistance;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SignupRequest;
 
+use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\addMealRequest;
@@ -42,6 +43,7 @@ use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
+use App\Http\Requests\updateAssistanceDataRequest;
 
 class RestaurantController extends Controller
 {
@@ -932,7 +934,7 @@ public function HandleCheckOut($reservationId)
         'cashier_name' => $data['cashiername'],
         'email' => $data['email'],
         'cashier_phone_number' => $data['phone'],
-        'password' => bcrypt($data['password']),
+        //'password' => bcrypt($data['password']),
     ]);
     return response()->json(['message' => ' Successfully updated']);
     }
@@ -1025,22 +1027,26 @@ public function deleteOffer($id)
         'priority'=>$data['priority'],
         
     ]);
-
-    $emailData = [
-        'email' => $data['email'],
-        'priority' => $data['priority'],
-        'restaurantName' => $data['restaurantname'],
-        'brn' => $data['brn'],
+  
+    return response()->json(['message' => 'Successfully requested']);
+   // $emailData = [
+       // 'email' => $data['email'],
+       // 'priority' => $data['priority'], 
+       // 'restaurantName' => $data['restaurantname'],
+       // 'brn' => $data['brn'],
         // Add other email data as needed
-    ];
+      //  'subject'=>'test',
+      //  'body' =>'Hello'
+
+  //  ];
 
     // Send an email using the email-related data
     // You can use Laravel's email sending functionality here
 
     // Example of sending an email using the Mail facade
-    Mail::to($data['email'])->send(new AssistanceRequest($emailData));
+    //Mail::to($data['email'])->send(new MailNotify ($emailData));
 
-    return response()->json(['message' => 'Successfully sent the email']);
+   // return response()->json(['message' => 'Successfully sent the email']);
 
     // return response()->json(['user' => $user, 'token' => $token, 'redirect_url' => '/restaurant']);
     //return redirect('/restaurant');
@@ -1099,5 +1105,75 @@ public function replyComplaint(replyComplaintRequest $request) {
     }
 
     }
+
+
+
+    public function getAssistanceData($id) {
+
+        // $restaurant = Restaurants::find($id);
+        $Assistance = TechnicalAssistance::where('restaurant_id', $id)->get();
+        return response()->json($Assistance);
+    
+    
+        }
+
+        public function displayRequest($id) {
+    
+            // $restaurant = Restaurants::find($id);
+            $request = TechnicalAssistance::where('technical_assistances.id', $id)
+            ->join('restaurants', 'restaurants.id', '=', 'technical_assistances.restaurant_id')
+            //->select('complaints.*','users.name as name', 'users.email as user_email')
+           // ->orderBy('reply')
+            ->get();
+        
+            return response()->json($request);
+        
+         
+         }
+
+
+
+         public function updateAssistanceData(updateAssistanceDataRequest $request) {
+            $data = $request->validated();
+            /** @var TechnicalAssistance $as1 */
+            //$restaurant = auth()->guard('restaurants')->user();
+            $asId = $data['id'];
+            $as = TechnicalAssistance::find($asId);
+            // $restaurant = Restaurant::find($id);
+            if ($as) {
+            $as->update([
+                //'id' => $restaurantId,
+                'status' => 1,
+               
+            ]);
+            return response()->json(['message' => ' Successfully updated']);
+            }
+        
+            else{
+            return response()->json(['message' => 'Updatation failed']);  
+        
+        
+        
+        
+        
+            }
+        
+            }
+           
+            public function handelStatusUpdate($Id)
+{
+     
+    $asis = TechnicalAssistance::find($Id);
+    if ($asis) {
+        $asis->update([
+            'status' => "Not Solved",
+            
+        ]);
+
+
+    }
+    }
+
+            //handleStatusUpdate
 
 }

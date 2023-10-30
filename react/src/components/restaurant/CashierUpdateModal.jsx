@@ -41,8 +41,7 @@ export default function CashierUpdateModal({ isOpen, onCancel, onConfirm ,cashie
         cashiername: cashiernameRef.current.value,
         email: emailRef.current.value,
         phone: phoneRef.current.value,
-        password: passwordRef.current.value,
-        password_confirmation: passwordConfirmationRef.current.value,
+       
       };
   
       // Call the parent's update function and pass the updated data
