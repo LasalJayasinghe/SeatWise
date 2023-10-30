@@ -46,7 +46,7 @@ input {
 }
 
 input:focus {
-    border-color: #359564;
+    border-color: #3EB075;
 }
 
 .btn,
@@ -466,17 +466,22 @@ table > tbody > tr > td {
     .box {
       padding: 20px;
       border-radius: 10px;
-      border: 2px solid #43ee5d;
+      /* border: 2px solid #43ee5d; */
     }
   
      .box1 {
       grid-column: span 1;
       grid-row: span 3;
+      /* border: 2px solid #d9ffec; */
+      background: linear-gradient(to right bottom, #fdfbf2, #f9fae9, #ffffff);
+      color:#1f1900 ;
     }
   
     .box4 {
       grid-column: span 1;
       grid-row: span 3;
+      background: linear-gradient(to right bottom, #e1f5ff, #fafcff);
+      /* border: 2px solid #11661e; */
     }
     
     .box7 {
@@ -557,8 +562,10 @@ table > tbody > tr > td {
       }
 
       .box2, .box3, .box5, .box6 {
-        background-color: #22c55e;
+        background: linear-gradient(to right bottom, #3EB075, #51d591, #67d79d);
+
       }
+      
 
       .chartBox .boxInfo {
         flex: 3;
@@ -575,7 +582,7 @@ table > tbody > tr > td {
         display: flex;
         align-items: center;
         gap: 10px;
-        color: #ccc;
+        color: #ffffff;
   
         /* @include xxl{
           font-size: 14px;
@@ -731,7 +738,7 @@ table > tbody > tr > td {
   height: 10px;
   width: 10px;
   border-radius: 5px;
-  color: #00a762;
+  color: #3EB075;
 }
 
 .menu .item {

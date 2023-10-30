@@ -110,7 +110,7 @@ export default function ChartBox() {
               <Line
                 type="monotone"
                 dataKey="pv"
-                stroke="#8884d8"
+                stroke="#e1faeb"
                 strokeWidth={2}
                 dot={false}
               />

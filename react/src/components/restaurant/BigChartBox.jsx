@@ -68,22 +68,22 @@ export default function BigChartBox() {
               type="monotone"
               dataKey="table"
               stackId="1"
-              stroke="#8884d8"
-              fill="#8884d8"
+              stroke="#a5e5fa"
+              fill="#a5e5fa"
             />
             <Area
               type="monotone"
               dataKey="hall"
               stackId="1"
-              stroke="#82ca9d"
-              fill="#82ca9d"
+              stroke="#f09ed2"
+              fill="#f09ed2"
             />
             <Area
               type="monotone"
               dataKey="both"
               stackId="1"
-              stroke="#ffc658"
-              fill="#ffc658"
+              stroke="#8884d8"
+              fill="#B8B5E8"
             />
           </AreaChart>
         </ResponsiveContainer>
