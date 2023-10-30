@@ -13,11 +13,11 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
   { name: 'Dashboard', to: '/restaurantDashboard', current: false },
   { name: 'Orders', to: '/orders', current: false },
-  { name: 'Profile', to: '/setup', current: false },
   { name: 'Table structure', to: '/structure', current: false },
   { name: 'Reservations', to: '/reservations', current: false },
   { name: 'Employees', to: '/employees', current: false },
   { name: 'Menu', to: '/menu', current: false },
+  { name: 'Settings', to: '/settings', current: false },
 ]
 
 
@@ -150,6 +150,17 @@ return (
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-green-500 ring-opacity-5 focus:outline-none">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            to="/setup"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            Profile
+                          </Link>
+                        )}
+                      </Menu.Item>
+
                       <Menu.Item>
                         {({ active }) => (
                           <Link

@@ -102,7 +102,7 @@ export default function Reservations() {
           </div>
         </div>
         </header>
-        <main>
+        <main className="bg-zinc-100">
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 
             <div className="flex gap-10">
