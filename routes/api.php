@@ -26,6 +26,9 @@ Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup
 Route::post('/landing', [AuthController::class, 'landing']);
 
 
+// System routes
+
+
 
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
