@@ -142,13 +142,13 @@ export default function AddOffer() {
         <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
           <SettingsBar />
         </div>
-        <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex-col justify-center flex-1 px-6 py-12 lg:px-8">
+        <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-10 text-4xl font-bold leading-9 tracking-tight text-center text-gray-900">
            Add Offers
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 max-w">
+          <p className="mt-2 text-sm text-center text-gray-600 max-w">
             Please add offers given for meals
           </p>
         </div>
