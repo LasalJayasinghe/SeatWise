@@ -84,6 +84,10 @@ const router = createBrowserRouter([
                 path: '/meals',
                 element: <Meals/>
               },
+              {
+                path: '/meals/:mealId',
+                element : <MealView/>
+            },
 
               {
                 path: '/restaurants/:id/meals', 
@@ -141,12 +145,6 @@ const router = createBrowserRouter([
             {
                 path: '/users',
                 element : <Users />
-            },
-
-
-            {
-                path: '/mealview',
-                element : <MealView/>
             },
             {
                 path: '/advertisements',

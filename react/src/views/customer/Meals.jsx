@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axiosClient from '../../axios-client';
 import mealimage from '../../assets/meal.jpg';
 
@@ -117,7 +118,7 @@ export default function Meals() {
             Search
           </button>
           <button
-            className="px-4 py-2 text-gray-400 bg-transparent rounded sm:ml-4 flex item-center hover:text-gray-500"
+            className="flex px-4 py-2 text-gray-400 bg-transparent rounded sm:ml-4 item-center hover:text-gray-500"
             onClick={handleClear}
           >
             <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -131,16 +132,19 @@ export default function Meals() {
         </div>
       </div>
       {/* Display the list of meals */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mt-10">
+      <div className="grid grid-cols-1 gap-10 mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
   {(filteredMeals.length > 0 ? filteredMeals : meals).map((meal) => (
-    <div key={meal.id} className="bg-white p-0 shadow-md rounded-md hover:cursor-pointer">
+   <div key={meal.id} className="p-0 bg-white rounded-md shadow-md hover:cursor-pointer">
+   <Link to={`/meals/${meal.id}`}>
       
-      <img src={mealimage} alt={meal.name} className="w-full h-40 object-cover mt-2 rounded-md " />
-      <h2 className="text-lg font-semibold p-4">{meal.name}</h2>
-      <p className="text-gray-600  px-4">{meal.description}</p>
-      <p className="text-gray-800 font-medium  px-4 pb-4">Price: LKR {meal.price}</p>
-      {/* You can add more fields here as needed */}
-    </div>
+      <img src={mealimage} alt={meal.name} className="object-cover w-full h-40 mt-2 rounded-md " />
+      <h2 className="p-4 text-lg font-semibold">{meal.name}</h2>
+      <p className="px-4 text-gray-600">{meal.description}</p>
+      <p className="px-4 pb-4 font-medium text-gray-800">Price: LKR {meal.price}</p>
+    
+      </Link>
+      </div>
+
   ))}
 </div>
 

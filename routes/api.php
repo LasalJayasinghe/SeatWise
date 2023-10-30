@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals/{id}', [MealController::class, 'show']);
     Route::get('/all-meals', [AllMealsController::class, 'index']);
 
+
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
     Route::get('/hallreservation', [HallReservationController::class, 'showForm']);
@@ -69,7 +70,7 @@ Route::get('/halls/{hallId}/check-availability/{slotId}/{selectedDate}', [HallCo
 
 
     // Additional routes for restaurant data
-    Route::get('/restaurantss/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
+    Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
 
     //TableForTwo routes
     Route::prefix('/tablefortwo')->group(function () {

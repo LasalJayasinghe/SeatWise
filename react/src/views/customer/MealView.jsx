@@ -1,9 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axiosClient from '../../axios-client';
 import CounterInput from '../../components/CounterInput'
 
 export default function MealView() {
+
+  const [meal, setMeal] = useState(null);
+  const { mealId } = useParams();
+  
+  useEffect(() => {
+    const fetchMealDetail = async () => {
+      try {
+        const response = await axiosClient.get(`/meals/${mealId}`);
+        setMeal(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMealDetail();
+  }, [mealId]);
+
+  if (!meal) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
+
+<h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">{meal.name}</h1>
+<p className="leading-relaxed">{meal.description}</p>
+<p className="leading-relaxed">{meal.price}</p>
+<p className="leading-relaxed">{meal.potion}</p>
+<p className="leading-relaxed">Category: {meal.category.category}</p>
+
+
+
+
+
      
 <section class="text-gray-700 body-font overflow-hidden bg-white">
   
