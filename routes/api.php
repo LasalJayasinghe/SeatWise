@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals/{id}', [MealController::class, 'show']);
     Route::get('/all-meals', [AllMealsController::class, 'index']);
 
+
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
     Route::get('/hallreservation', [HallReservationController::class, 'showForm']);

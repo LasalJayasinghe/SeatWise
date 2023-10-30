@@ -11,4 +11,9 @@ class Meal extends Model
     protected $fillable = [
         'name', 'description', 'price', // Add more columns as needed
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

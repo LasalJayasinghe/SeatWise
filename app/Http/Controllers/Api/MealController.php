@@ -18,7 +18,7 @@ class MealController extends Controller
     public function show($id)
     {
         // Fetch a specific meal by ID
-        $meal = Meal::findOrFail($id);
+        $meal = Meal::with('category')->findOrFail($id);
         return response()->json($meal);
     }
 
