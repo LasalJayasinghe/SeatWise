@@ -195,9 +195,11 @@ Route::get('/getCheckOutCount/{restaurant_id}', [RestaurantController::class, 'g
 Route::get('/getReservationCount/{restaurant_id}', [RestaurantController::class, 'getReservationCount']);
 Route::get('/getRecentBookings/{restaurant_id}', [RestaurantController::class, 'getRecentBookings']);
 Route::post('/replyComplaint', [RestaurantController::class, 'replyComplaint']);
+Route::get('/send', [RestaurantController::class, 'addTechincalAssistanceRequest']);
 
 Route::post('/deleteComplaint/{complaintID}', [RestaurantController::class, 'deleteComplaint']);
 Route::post('/deleteOffer/{offerId}', [RestaurantController::class, 'deleteOffer']);
+Route::get('/getAssistanceData/{id}', [RestaurantController::class, 'getAssistanceData']);
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -233,7 +235,9 @@ Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
 Route::post('/updatemealavailability', [RestaurantController::class, 'updateMealAvailability']);
 Route::post('/reserve-table', [TableReservationController::class, 'reserveTable']);
-
-
+Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
+Route::get('/displayRequest/{RequestId}', [RestaurantController::class, 'displayRequest']);
+Route::post('/updateAssistanceData', [RestaurantController::class, 'updateAssistanceData']);
+Route::post('/handleStatusUpdate/{RequestId}', [RestaurantController::class, 'handelStatusUpdate']);
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store']);
