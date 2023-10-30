@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import axiosClient from '../../../axios-client';
 import { useLocation, useNavigate } from 'react-router-dom';
-import backBtn from '../../../assets/back-button.png';
+// import backBtn from '../../../assets/back-button.png';
 
 
 const HallReservation = () => {
+
+  const navigate = useNavigate();
+  const location = useLocation(); // Use the useLocation hook to access state
+  const { selectedDate, selectedSlot } = location.state;
+
   const [formData, setFormData] = useState({
     reservantName: '',
     emailAddress: '',
@@ -12,8 +17,7 @@ const HallReservation = () => {
     occasionType: '',
     description: '',
   });
-  const navigate = useNavigate();
-
+  
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -37,6 +41,8 @@ const HallReservation = () => {
       setErrorMessage('Reservation failed. Please try again.'); // Customize error message
     }
   };
+
+  
   const handleClose = () => {
     navigate(-1); // go back to the previous page
   };
@@ -44,14 +50,19 @@ const HallReservation = () => {
   return (
     <div>
       <h1 className="mb-4 text-3xl font-bold">Hall Reservation</h1>
-      <div className='flex justify-end'>
+      {/* <div className='flex justify-end'>
           <button 
             type="button"
             onClick={handleClose} 
             className="border-transparent border-radius-50% ">
             <img src={backBtn} className='w-10' onClick={handleClose} alt="Back Button" />
           </button>
-        </div>
+        </div> */}
+
+<p>Selected Slot ID: {selectedSlot.id}</p>
+  <p>Selected Slot's Hall ID: {selectedSlot.hall_id}</p>
+  <p>Selected Slot Start Time: {selectedSlot.start_time}</p>
+  <p>Selected Slot End Time: {selectedSlot.end_time}</p>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="reservantName">Reservant Name</label>
@@ -109,10 +120,17 @@ const HallReservation = () => {
         </div>
         <button
           type="submit"
-          className="px-4 py-2 bg-green-500 text-white rounded"
+          className="px-4 py-2 text-white bg-green-500 rounded"
         >
           Reserve Hall
         </button>
+        <button 
+              type="button"
+              onClick={handleClose} 
+              className="px-4 py-2 ml-4 border border-gray-500 rounded"
+            >
+              Cancel
+            </button>
       </form>
       {successMessage && <p className="text-green-500">{successMessage}</p>}
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}

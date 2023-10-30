@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\HallController;
+use App\Http\Controllers\Api\HallReservationController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
@@ -48,6 +49,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
     Route::get('/hallreservation', [HallReservationController::class, 'showForm']);
+Route::post('/hall-reservation', [HallReservationController::class, 'create']);
+
 
     // Restaurant routes
     Route::get('/restaurantss', [RestaurantController::class, 'index']); // Fetch all restaurants

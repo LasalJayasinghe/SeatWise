@@ -28,7 +28,7 @@ const HallDetail = () => {
 
   useEffect(() => {
     const adjustedDate = new Date(selectedDate);
-  adjustedDate.setDate(adjustedDate.getDate() + 1); // Subtract 2 days
+  adjustedDate.setDate(adjustedDate.getDate() + 1); 
 
   const formattedDate = adjustedDate.toISOString().split('T')[0];
     const fetchTimeSlots = async () => {
@@ -64,6 +64,7 @@ const HallDetail = () => {
   };
 
   const handleHallReservation = () => {
+
     navigate('/hallreservation', {
       state: {
         selectedDate,

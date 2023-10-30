@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../../axios-client';
-import backBtn from '../../../assets/back-button.png';
+// import backBtn from '../../../assets/back-button.png';
 
 const WaitlistPage = ({ onClose }) => {
   const location = useLocation();
@@ -61,16 +61,16 @@ const WaitlistPage = ({ onClose }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
+    <div className="flex flex-col justify-center flex-1 min-h-full px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className='flex justify-end'>
+        {/* <div className='flex justify-end'>
           <button 
             type="button"
             onClick={handleClose} 
             className="border-transparent border-radius-50% ">
             <img src={backBtn} className='w-10' onClick={handleClose} alt="Back Button" />
           </button>
-        </div>
+        </div> */}
         
         <h2 className="mt-10 mb-4 text-4xl font-bold leading-9 tracking-tight text-left text-gray-900">
           Join the waitlist
@@ -142,7 +142,7 @@ const WaitlistPage = ({ onClose }) => {
               onClick={handleClose} 
               className="px-4 py-2 ml-4 rounded border border-gray-500"
             >
-              Close
+              Cancel
             </button>
           </div>
         </form>
