@@ -200,7 +200,7 @@ const handleReserveClick = () => {
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40">
         <h1 className="mb-2 text-5xl font-bold text-white">{restaurant.restaurantname}</h1>
         <p className="text-gray-100">{restaurant.description}</p>
-        <Link to={`/restaurantss/${id}/meals`}>
+        <Link to={`/restaurants/${id}/meals`}>
       <button className="px-4 py-2 mt-8 mb-6 text-green-500 bg-white border border-green-500 rounded-lg">
   View Menu
 </button>

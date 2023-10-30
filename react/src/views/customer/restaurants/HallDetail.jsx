@@ -28,7 +28,7 @@ const HallDetail = () => {
 
   useEffect(() => {
     const adjustedDate = new Date(selectedDate);
-  adjustedDate.setDate(adjustedDate.getDate() + 1); 
+  adjustedDate.setDate(adjustedDate.getDate()); 
 
   const formattedDate = adjustedDate.toISOString().split('T')[0];
     const fetchTimeSlots = async () => {
