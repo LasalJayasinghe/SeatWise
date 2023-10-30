@@ -121,11 +121,13 @@ const Restaurants = () => {
       <div>
         <h4 className='mx-10 mt-10 text-lg text-gray-500'>Restaurants you may like</h4>
       </div>
+     
 
-      <div className="flex flex-wrap mx-10 mt-5 -m-4 restaurant-cards">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 mr-12">
         {displayRestaurants.map((restaurant) => (
           <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
-            <div className="restaurant-card">
+            
+            <div className="restaurant-card ">
               <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
                 <img
                   className="object-cover"
@@ -162,6 +164,7 @@ const Restaurants = () => {
                 </div>
               </div>
             </div>
+            
           </Link>
         ))}
       </div>

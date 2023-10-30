@@ -117,21 +117,28 @@ export default function Meals() {
             Search
           </button>
           <button
-            className="px-4 py-2 font-semibold text-white bg-gray-400 rounded sm:ml-4"
+            className="px-4 py-2 text-gray-400 bg-transparent rounded sm:ml-4 flex item-center hover:text-gray-500"
             onClick={handleClear}
           >
-            Refresh
+            <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+</svg></span><span className='ml-2'>Refresh</span>
+            
+
+            
+
           </button>
         </div>
       </div>
       {/* Display the list of meals */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mt-10">
   {(filteredMeals.length > 0 ? filteredMeals : meals).map((meal) => (
-    <div key={meal.id} className="bg-white p-4 shadow-md rounded-md">
-      <h2 className="text-lg font-semibold">{meal.name}</h2>
-      <img src={mealimage} alt={meal.name} className="w-full h-40 object-cover mt-2 rounded-md" />
-      <p className="text-gray-600 mt-2">{meal.description}</p>
-      <p className="text-gray-800 font-medium mt-2">Price: LKR {meal.price}</p>
+    <div key={meal.id} className="bg-white p-0 shadow-md rounded-md hover:cursor-pointer">
+      
+      <img src={mealimage} alt={meal.name} className="w-full h-40 object-cover mt-2 rounded-md " />
+      <h2 className="text-lg font-semibold p-4">{meal.name}</h2>
+      <p className="text-gray-600  px-4">{meal.description}</p>
+      <p className="text-gray-800 font-medium  px-4 pb-4">Price: LKR {meal.price}</p>
       {/* You can add more fields here as needed */}
     </div>
   ))}

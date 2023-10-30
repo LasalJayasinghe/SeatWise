@@ -22,13 +22,13 @@ export default function Dashboard() {
 
   function getOpenDays(profile) {
     const days = [];
-    if (profile && profile.monday === 1) days.push('Monday');
-    if (profile && profile.tuesday === 1) days.push('Tuesday');
-    if (profile && profile.wednesday === 1) days.push('Wednesday');
-    if (profile && profile.thursday === 1) days.push('Thursday');
-    if (profile && profile.friday === 1) days.push('Friday');
-    if (profile && profile.saturday === 1) days.push('Saturday');
-    if (profile && profile.sunday === 1) days.push('Sunday');
+    if (profile && profile.monday === 1) days.push('Mon');
+    if (profile && profile.tuesday === 1) days.push('Tue');
+    if (profile && profile.wednesday === 1) days.push('Wed');
+    if (profile && profile.thursday === 1) days.push('Thu');
+    if (profile && profile.friday === 1) days.push('Fri');
+    if (profile && profile.saturday === 1) days.push('Sat');
+    if (profile && profile.sunday === 1) days.push('Sun');
 
     return days.join(', ');
   }
@@ -75,18 +75,18 @@ export default function Dashboard() {
   return (
     <div>
       <div className="bg-white">
-        <Carousel autoPlay infiniteLoop showThumbs={false}>
+        <Carousel autoPlay infiniteLoop showThumbs={false} >
           <div>
-            <img className="object-contain h-128" src={slide1} alt="Image 1" />
+            <img className="object-contain h-128 rounded-lg" src={slide1} alt="Image 1" />
           </div>
           <div>
-            <img src={slide2} alt="Image 2" />
+            <img src={slide2} alt="Image 2" className='rounded-lg' />
           </div>
           <div>
-            <img src={slide3} alt="Image 3" />
+            <img src={slide3} alt="Image 3" className='rounded-lg' />
           </div>
           <div>
-            <img src={slide4} alt="Image 4" />
+            <img src={slide4} alt="Image 4" className='rounded-lg' />
           </div>
         </Carousel>
 
@@ -111,12 +111,12 @@ export default function Dashboard() {
           <div className="mt-8 text-2xl font-semibold">Search Results</div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
           {/* Display search results */}
           {displayRestaurants.slice(0, 6).map((restaurant) => (
             <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
               <div className="restaurant-card">
-                <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+                <div className="relative flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
                   <img
                     className="object-cover"
                     src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
@@ -145,7 +145,7 @@ export default function Dashboard() {
                             color="#FFD700"
                           />
                         ) : (
-                          <p>No ratings yet</p>
+                          <p className='text-gray-400'>No ratings yet</p>
                         )}
                       </div>
                     </div>
@@ -158,11 +158,11 @@ export default function Dashboard() {
 
         {/* Restaurants you may like */}
         <h2 className="mt-8 text-2xl font-semibold">Restaurants you may like</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
           {restaurants.slice(0, 6).map((restaurant) => (
             <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
               <div className="restaurant-card">
-                <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+                <div className="relative flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
                   <img
                     className="object-cover"
                     src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
@@ -188,9 +188,10 @@ export default function Dashboard() {
                             edit={false}
                             isHalf={true}
                             color="#FFD700"
+                            
                           />
                         ) : (
-                          <p>No ratings yet</p>
+                          <p className='text-gray-400'>No ratings yet</p>
                         )}
                       </div>
                     </div>
@@ -203,11 +204,11 @@ export default function Dashboard() {
 
         {/* Popular Restaurants */}
         <h2 className="mt-8 text-2xl font-semibold">Popular Restaurants</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
           {restaurants.slice(0, 6).map((restaurant) => (
             <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
               <div className="restaurant-card">
-                <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+                <div className="relative  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
                   <img
                     className="object-cover"
                     src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
@@ -235,7 +236,7 @@ export default function Dashboard() {
                             color="#FFD700"
                           />
                         ) : (
-                          <p>No ratings yet</p>
+                          <p className='text-gray-400'>No ratings yet</p>
                         )}
                       </div>
                     </div>
