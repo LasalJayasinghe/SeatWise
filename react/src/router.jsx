@@ -5,6 +5,8 @@ import Landing from './views/landing.jsx';
 import NotFound from './views/notFound.jsx';
 import Users from './views/users.jsx';
 
+import SystemDashboard from './views/system/systemDashboard.jsx';
+
 import Dashboard from './views/customer/dashboard.jsx';
 import Login from './views/customer/login.jsx';
 import Signup from './views/customer/signup.jsx';
@@ -347,6 +349,13 @@ const router = createBrowserRouter([
             },
 
         ]
+    },
+
+
+    //system routes
+    {
+        path: '/systemDashboard',
+        element: <SystemDashboard />
     },
     
     {
