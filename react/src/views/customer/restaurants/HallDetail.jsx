@@ -3,7 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axiosClient from '../../../axios-client';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { Carousel } from 'react-responsive-carousel';
 
+import slide1 from '../../../assets/slide1.png';
+import slide2 from '../../../assets/slide2.png';
+import slide3 from '../../../assets/slide3.png';
+import slide4 from '../../../assets/slide4.png';
 
 const HallDetail = () => {
   const { hallId } = useParams();
@@ -81,7 +86,21 @@ const HallDetail = () => {
     <div>
       {/* Hall Name and Description */}
       <h1 className="mb-4 text-3xl font-bold">{hall.name}</h1>
-      <p className="mb-6 text-gray-600">{hall.description}</p>
+      <Carousel autoPlay infiniteLoop showThumbs={false} >
+          <div>
+            <img className="object-contain h-128 rounded-lg" src={slide1} alt="Image 1" />
+          </div>
+          <div>
+            <img src={slide2} alt="Image 2" className='rounded-lg' />
+          </div>
+          <div>
+            <img src={slide3} alt="Image 3" className='rounded-lg' />
+          </div>
+          <div>
+            <img src={slide4} alt="Image 4" className='rounded-lg' />
+          </div>
+        </Carousel>
+      <p className="mb-6 mt-6 text-gray-600">{hall.description}</p>
 
       {/* Calendar and Time Availabilities */}
       <div className="flex justify-center mt-20">

@@ -421,21 +421,21 @@ const handleReserveClick = () => {
 
       {/* Display other relevant restaurant details here */}
       {toggle === 'halls' && (
-  <div className="grid gap-4 mt-6">
-    {halls.map((hall) => (
-      <Link to={`/halls/${hall.id}`} key={hall.id}>
-        <div className="p-4 border rounded-lg">
-          <h3 className="text-lg font-semibold">{hall.name}</h3>
-          <img
-            src={hallImage} // Replace with the actual path to the image in your assets folder
-            alt={`Image of ${hall.name}`}
-            className="h-auto mt-2 rounded-lg w-72"
-          />
-          <p className="text-gray-600">{hall.description}</p>
-        </div>
-      </Link>
-    ))}
-  </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center items-center">
+  {halls.map((hall) => (
+    <Link to={`/halls/${hall.id}`} key={hall.id}>
+      <div className="rounded-lg">
+        <img
+          src={hallImage} // Replace with the actual path to the image in your assets folder
+          alt={`Image of ${hall.name}`}
+          className="h-auto mt-2 rounded-lg w-full"
+        />
+        <h3 className="text-lg font-semibold">{hall.name}</h3>
+        <p className="text-gray-600">{hall.description}</p>
+      </div>
+    </Link>
+  ))}
+</div>
 )}
 
 
