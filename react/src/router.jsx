@@ -16,6 +16,7 @@ import Restaurants from './views/customer/restaurants/Restaurants.jsx';
 import RestaurantDetail from './views/customer/restaurants/RestaurantDetail.jsx';
 import HallDetail from './views/customer/restaurants/HallDetail.jsx';
 import WaitlistPage from './views/customer/restaurants/WaitlistPage.jsx';
+import HallReservation from './views/customer/restaurants/HallReservation.jsx';
 import Meals from './views/customer/Meals.jsx';
 import Mealspage from './views/customer/restaurants/Mealspage.jsx';
 import Complaints from './views/customer/activities/Complaints.jsx';
@@ -99,6 +100,12 @@ const router = createBrowserRouter([
             {
                 path: '/waitlist',
                 element: <WaitlistPage />,
+            },
+            {
+
+                path:'/hallreservation',
+                element : <HallReservation />
+                
             },
             {
                 path: '/tablefortwo',
