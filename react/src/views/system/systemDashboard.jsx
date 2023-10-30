@@ -23,7 +23,7 @@ export default function SystemDashboard(){
     return(
         <div>
             <Header/>
-            <div>{users.usercount}</div>
+            <div>{users.user_count}</div>
         </div>
     )
 }
