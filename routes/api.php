@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
+use App\Http\Controllers\Api\SystemController;
 use App\Http\Controllers\Api\TablefortwoController;
 use App\Http\Controllers\Api\TableReservationController;
 
@@ -28,7 +29,7 @@ Route::post('/landing', [AuthController::class, 'landing']);
 
 // System routes
 
-
+Route::get('/systemDashboard/getUserCount', [SystemController::class, 'getUserCount']);
 
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
