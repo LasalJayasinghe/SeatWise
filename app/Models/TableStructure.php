@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TableStructure extends Model
 {
+    
     use HasFactory;
 
     protected $table = 'table_structures';
@@ -26,7 +27,6 @@ class TableStructure extends Model
 {
     return $this->belongsTo(View::class, 'view');
 }
-
 
     // Add the relationship with TableReservation
     public function reservation()

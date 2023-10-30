@@ -97,11 +97,11 @@ export default function Dashboard() {
               value={searchQuery}
               onChange={handleSearchInputChange}
               placeholder="Search by restaurant name"
-              className="w-64 mr-5 p-2 border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-64 mr-1 p-2 border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               style={{ fontSize: '12px' }}
             />
           </label>
-          <button type="submit" className="mr-4 bg-green-500 text-white py-2 px-4 rounded-lg">
+          <button type="submit" className="mr-4 bg-green-500 text-white py-1 px-4 rounded-lg">
             Search
           </button>
         </form>

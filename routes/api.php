@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
+    Route::get('/hallreservation', [HallReservationController::class, 'showForm']);
 
     // Restaurant routes
     Route::get('/restaurantss', [RestaurantController::class, 'index']); // Fetch all restaurants
@@ -58,8 +59,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Hall routes
     Route::get('/restaurantss/{restaurantId}/halls', [HallController::class, 'index']);
-    Route::get('/halls/{id}', [HallController::class, 'show']);
-    Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
+    // Hall routes
+Route::get('/halls/{hallId}', [HallController::class, 'show']);
+Route::get('/halls/{hallId}/time-slots/{selectedDate}', [HallController::class, 'fetchTimeSlots']);
+Route::get('/halls/{hallId}/check-availability/{slotId}/{selectedDate}', [HallController::class, 'checkSlotAvailability']);
+
 
     // Additional routes for restaurant data
     Route::get('/restaurantss/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant

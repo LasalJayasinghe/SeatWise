@@ -346,6 +346,7 @@ const handleReserveClick = () => {
                     >
                       <p>{table.number_of_chairs} chairs</p>
                       <p>{table.view.name}</p>
+                      <img src={table.view.photo} />
                       
                     </div>
                   )}
