@@ -141,6 +141,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/deleteAdd/{addId}', [RestaurantController::class, 'deleteAdd']);
     Route::post('/addAdvertisement', [RestaurantController::class, 'addAdvertisement']);
     Route::post('addPayment', [RestaurantController::class, 'addPayment']);
+    Route::post('updatemenu', [RestaurantController::class, 'editMenu']);
+    Route::post('deletemenu//{menuId}', [RestaurantController::class, 'deleteMenu']);
 
 
 });

@@ -198,9 +198,9 @@ export default function AddMenu() {
                                     </div>
                                     <div className="mt-1 mb-3" style={{width: '282px'}}>
                                         <select ref={potionRef} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" type="text">
-                                            <option value="S">Small</option>
-                                            <option value="M">Medium</option>
-                                            <option value="L">Large</option>
+                                            <option value="Small">Small</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Large">Large</option>
                                             <option value="Normal">Normal</option>
                                         </select>
                                     </div>
