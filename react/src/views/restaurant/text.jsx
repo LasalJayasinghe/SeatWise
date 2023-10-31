@@ -1,312 +1,263 @@
-import { Link } from "react-router-dom";
-import { useStateContext } from "../../context/ContextProvider";
-import {
-    DataGrid,
-    GridToolbar,
-  } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
-import axiosClient from "../../axios-client";
-import Switch from '@mui/material/Switch';
-import OfferDeleteConfirmationModel from "../../components/OfferDeleteConfirmationModel";
-import SettingsBar from "../../components/restaurant/SettingsBar";
-
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
-export default function Complaints() {
-
-    const {user, setUser} = useStateContext();
-    const [menu, setMenu] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [complaints, setComplaints] = useState([]);
-    const [showConfirmationModalDelete, setShowConfirmationModalDelete] = useState(false);
-    const [selectedComplaintForDelete, setSelectedComplaintForDelete] = useState(null);
-    const [selectedComplaintForUpdate, setSelectedComplaintForUpdate] = useState(null);
-
-
-    
-
-    useEffect(() => {
-      axiosClient.get('/user')
-        .then(({ data }) => {
-          setUser(data);
-        });
-    }, []);
-  
-  
-     useEffect(() => {
-      if (user && user.id) {
-        axiosClient.get(`/getComplaints/${user.id}`)
-          .then(({ data }) => {
-              setComplaints(data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-    }, [user]);
-
-
-
-const handleRemove = (complaintID) => {
-
-    setSelectedComplaintForDelete(complaintID);
-    setShowConfirmationModalDelete(true);
-  };
-
-  
-  const cancelDelete = () => {
-    setShowConfirmationModalDelete(false);
-    setSelectedComplaintForDelete(null);
-  };
-  const confirmDelete = () => {
-    setShowConfirmationModalDelete(false);
-  //const shouldDelete = window.confirm("Are you sure you want to delete this Complaint?");
-  
-  
-    // User confirmed deletion, send a DELETE request to the deleteEmployee API endpoint
-    axiosClient.post(`/deleteComplaint/${selectedComplaintForDelete}`)
-      .then(response => {
-        // Handle success (e.g., show a success message)
-        console.log(response.data.message); // Display success message from the server
-        
-        // Fetch updated Complaint data
-        if (user && user.id) {
-          axiosClient.get(`/getComplaints/${user.id}`)
-            .then(({ data }) => {
-              setComplaints(data);
-            
-      // Clear the selected complaint after successful deletion
-     
-
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-      })
-      .catch(error => {
-        // Handle error (e.g., show an error message)
-        console.error('Error deleting Complaint:', error);
-      });
-  
-};
-  
-
-
-
-
-
-
-//get the id of relevant Complaint
-
-const handleUpdate = (complaintID) => {
-
-
-
-  axiosClient.get(`/displayComplaint/${complaintID}`)
-    .then(({ data }) => {
-      setSelectedComplaintForUpdate(data);
-      setShowUpdateModal(true);
-      console.log("Fetched Complaint Data:", data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-
-    setSelectedComplaintForUpdate(complaintID);
-    setShowUpdateModal(true);
-  };
-
-  
-    const cancelUpdate = () => {
-      setShowUpdateModal(false);
-      setSelectedComplaintForUpdate(null);
-    };
-    const confirmUpdate = (updatedComplaintData) => {
-      setShowUpdateModal(false);
-    //const shouldDelete = window.confirm("Are you sure you want to delete this Complaint?");
-    
- 
-      const payLoad = {
-        id: updatedComplaintData.id,
-        Complaintname: updatedComplaintData.Complaintname,
-        email: updatedComplaintData.email,
-        phone: updatedComplaintData.phone,
-        password: updatedComplaintData.password,
-        password_confirmation: updatedComplaintData.password_confirmation,
-      };
-      console.log(updatedComplaintData.id);
-      axiosClient.post('/updateComplaint', payLoad)
-        .then(({ data }) => {
-          setMessage(data.message);
-          // Update Complaints or perform any other necessary updates
-          // ...
-          if (user && user.id) {
-            axiosClient.get(`/getComplaints/${user.id}`)
-              .then(({ data }) => {
-                setComplaints(data);
-                window.location.reload(); 
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-          }
-          setTimeout(() => {
-            navigate('/Employees');
-          }, 2000);
-        })
-        .catch((err) => {
-          const response = err.response;
-          if (response && response.status === 422) {
-            setErrors(response.data.errors);
-          }
-        });
-    
-      // User confirmed deletion, send a DELETE request to the deleteEmployee API endpoint
-  
-    
-  };
-
-
-
-  const columns = [
-    { field: 'complaintID', headerName: 'complaint ID', width: 90 },
-   
-    {
-      field: 'title',
-      headerName: 'Complaint Title',
-      width: 150,
-      editable: false,
-    },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 300,
-      editable: false,
-    
-    },
-   
-
-    {
-        field: 'user_email',
-        headerName: 'User Email',
-          width: 160,
-        editable: false,
-    },
-  
-    {
-        field:"actions",
-        headerName:"Actions", 
-        width:260,
-        renderCell: (params) => {
-            return <div className="flex">
-
-  <button  onClick={() => handleUpdate(params.row.complaintID)}  style={{ marginLeft: '1rem'}}className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-Reply
-</button>                    
-<button  onClick={() => handleRemove(params.row.complaintID)}  style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-Remove
-</button>  
-                
+<div className="ordercontainer">
+<div className="menuContainer">
+    <SettingsBar />
+</div>
+<div className="contentContainer">
+    <div>
+        <header className="bg-white shadow">
+            <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900">Complaints</h1>
+                <div className="loading-container">
+                    {/* {loading && <p className="loading-text">Loading...</p>} */}
+                </div>
             </div>
-        }
-    },
-];
-
-
-
-
-
-
-  return (
-    <>
-      <header className="bg-white shadow">
-        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Employees</h1>
-          <div className="loading-container">
-            
-          </div>
-        </div>
         </header>
-
-        <main>
-   
-         
-        <div className="ordercontainer">
-            <div className="menuContainer">
-                <SettingsBar />
-            </div>
-            <div className="contentContainer">
-                <div>
-                    <header className="bg-white shadow">
-                        <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Complaints</h1>
-                            <div className="loading-container">
-                                {/* {loading && <p className="loading-text">Loading...</p>} */}
-                            </div>
-                        </div>
-                    </header>
-                </div>
-                <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    
-                  
-            <div className="dataTable">
-                <DataGrid
-                    rows={complaints}
-                    getRowId={(row) => row.complaintID}
-                    columns={columns}
-                    initialState={{
-                    pagination: {
-                        paginationModel: {
-                        pageSize: 5,
-                        },
-                    },
-                    }}
-                    slots={{ toolbar: GridToolbar }}
-                    slotProps={{
-                    toolbar: {
-                        showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
-                    },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    disableColumnFilter
-                    disableDensitySelector
-                    disableColumnSelector
-                    style={{ maxWidth: '900px' }}
-                />
-
-            </div>
-                </div>
-
-                
-                
-            </div>
+    </div>
+    <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        
+    <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          
+          <h1 className="mt-10 text-center text-4xl font-bold leading-12 tracking-tight text-gray-900">
+           Request Assistance 
+          </h1>
+          <p className="mt-2 text-center text-sm text-gray-600 max-w">
+           Request Technical Assistance for your restaurant.
+          </p>
         </div>
 
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form
+          onSubmit={onSubmit}
+          className="space-y-1"
+          action="#"
+          method="POST"
+        >
+             {message && (
+ <div className={`p-2 ${message.includes('Successfully') ? 'bg-green-500 text-white-300' : 'bg-red-200 text-white-800'}`}>
+    {message}
+  </div>
+)}
+
+            {errors && (
+              <div className="alert">
+                {Object.keys(errors).map((key) => (
+                  <p key={key}>{errors[key][0]}</p>
+                ))}
+              </div>
+            )}
+        <div className="grid grid-cols-2 gap-2">
+
+          <div>
+            <label
+              htmlFor="restaurantname"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >Restaurant Name
+            </label>
+            <div className="mt-1">
+              <input
+                ref={restaurantnameRef}
+                id="restaurantname"
+                name="restaurantname"
+                type="text"
+                required
+                defaultValue={user.restaurantname}
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="brn"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >Business Registration No
+            </label>
+            <div className="mt-1">
+              <input
+                ref={brnRef}
+                id="brn"
+                name="brn"
+                type="text"
+                defaultValue={user.brn}
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          </div>
+
+          <div className="my-4">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >Email address
+            </label>
+            <div className="mt-1">
+              <input
+                ref={emailRef}
+                id="email"
+                name="email"
+                type="email"
+                defaultValue={user.email}
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+
+
+
+          <div className="grid grid-cols-2 gap-2">
+
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >Contact Person Name
+            </label>
+            <div className="mt-1">
+              <input
+                ref={nameRef}
+                id="name"
+                name="name"
+                type="text"
+                defaultValue={user.name}
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >Phone Number
+            </label>
+            <div className="mt-1">
+              <input
+                ref={phoneRef}
+                id="phone"
+                name="phone"
+                type="text"
+                defaultValue={user.phone}
+                required
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+        
         
 
-        {/* <Footer /> */}
-  
+      
 
-            <ComplaintUpdateModal
-        isOpen={showUpdateModal}
-        onCancel={cancelUpdate}
-        onConfirm={confirmUpdate}
-        Complaint={selectedComplaintForUpdate}
-        
-        
-       
-      />
-<DeleteConfirmationModal
-        isOpen={showConfirmationModalDelete}
-        onCancel={cancelDelete}
-        onConfirm={confirmDelete}
-      />
-        </main>
-    </>
-  )
-}
+          </div>
+          <div>
+  <label
+    htmlFor="priority"
+    className="block text-sm font-medium leading-6 text-gray-900"
+  >
+    Priority
+  </label>
+  <div className="mt-2 flex items-center space-x-4">
+  <label className="inline-flex items-center">
+            <input
+              type="radio"
+              id="lowPriority"
+              name="priority"
+              value="low"
+              checked={selectedPriority === 'low'} // Check if 'low' is selected
+              onChange={handlePriorityChange} // Call the function when a radio button is clicked
+              className="form-radio h-4 w-4 text-indigo-600"
+            />
+            <span className="ml-2">Low</span>
+          </label>
+          <label className="inline-flex items-center">
+    <input
+      type="radio"
+      id="mediumPriority"
+      name="priority"
+      value="medium"
+      checked={selectedPriority === 'medium'}
+      onChange={handlePriorityChange}
+      className="form-radio h-4 w-4 text-indigo-600"
+    />
+    <span className="ml-2">Medium</span>
+  </label>
+  <label className="inline-flex items-center">
+    <input
+      type="radio"
+      id="highPriority"
+      name="priority"
+      value="high"
+      checked={selectedPriority === 'high'}
+      onChange={handlePriorityChange}
+      className="form-radio h-4 w-4 text-indigo-600"
+    />
+    <span className="ml-2">High</span>
+  </label>
+  <label className="inline-flex items-center">
+    <input
+      type="radio"
+      id="criticalPriority"
+      name="priority"
+      value="critical"
+      checked={selectedPriority === 'critical'}
+      onChange={handlePriorityChange}
+      className="form-radio h-4 w-4 text-indigo-600"
+    />
+    <span className="ml-2">Critical</span>
+  </label>
+  </div>
+</div>
+          <div className="my-4">
+            <label
+              htmlFor="issue"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >Describe your issue 
+            </label>
+            <div className="mt-1">
+            <textarea
+      ref={issueRef}
+      id="issue"
+      name="issue"
+      rows="2" // You can adjust the number of rows as needed
+      required
+      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+    ></textarea>
+            </div>
+          </div>
+          <br></br>     
+         
+<br></br>
+
+
+
+      <br/>
+
+          <div>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            > Request
+            </button>
+          </div>
+        </form>
+
+        <br /> 
+
+</div>
+      </div>
+    </div>
+
+    </div>
+
+    
+    
+</div>
+</div>

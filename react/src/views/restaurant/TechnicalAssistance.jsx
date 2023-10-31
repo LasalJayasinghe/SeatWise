@@ -6,6 +6,7 @@ import SideBar from "../../components/restaurant/SideBar";
 import { useStateContext } from "../../context/ContextProvider";
 import { useEffect } from "react";
 import SettingsBar from "../../components/restaurant/SettingsBar";
+
 // import { Navigate } from 'react-router-dom'
 // import { useHistory } from 'react-router-dom';
 
@@ -75,13 +76,27 @@ export default function TechnicalAssistance() {
   } 
 
     return (
-      <div className="flex">
+      <>
       {/* Sidebar */}
-      <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
-        <SettingsBar />
-      </div>
-      <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="ordercontainer">
+<div className="menuContainer">
+    <SettingsBar />
+</div>
+<div className="contentContainer">
+    <div>
+        <header className="bg-white shadow">
+            <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900">Technical Assistance</h1>
+                <div className="loading-container">
+                    {/* {loading && <p className="loading-text">Loading...</p>} */}
+                </div>
+            </div>
+        </header>
+    </div>
+    <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        
+    <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           
           <h1 className="mt-10 text-center text-4xl font-bold leading-12 tracking-tight text-gray-900">
@@ -316,10 +331,17 @@ export default function TechnicalAssistance() {
 
         <br /> 
 
-
+</div>
       </div>
     </div>
+
     </div>
-    </div>
+
+    
+    
+</div>
+
+
+    </>
     );
 }
