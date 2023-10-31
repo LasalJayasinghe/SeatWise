@@ -35,6 +35,8 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   });
 
   const [selectedTableStructureId, setSelectedTableStructureId] = useState(null);
+  const bookingFeePerTable = 49.00;
+  const bookingFee = selectedTables.filter(table => table.isAvailable).length * bookingFeePerTable;
 
 
   useEffect(() => {
@@ -357,9 +359,10 @@ const handleReserveClick = () => {
 
 {/* Show selected tables count and Reserve button for available (green) tables */}
 {selectedTables.some(table => table.isAvailable) && (
+  
             <div className="flex items-center mt-6">
             <p className="mr-4">Selected: {selectedTables.filter(table => table.isAvailable).length} Table(s)</p>
-            <p className="mr-2 text-2xl ml-9">LKR 8888.88</p>
+            <p className="mr-2 text-2xl ml-9">LKR {bookingFee.toFixed(2)}</p>
             <button
               className="px-4 py-2 text-white bg-black rounded-lg"
               onClick={handleReserveClick}
@@ -378,6 +381,7 @@ const handleReserveClick = () => {
             user={user}
             restaurantId={restaurant.id}
             selectedTableStructureId={selectedTableStructureId}
+            bookingFee={bookingFee}
             />
           )}
         </div>

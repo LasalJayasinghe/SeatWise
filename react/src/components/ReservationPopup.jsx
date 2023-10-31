@@ -1,5 +1,8 @@
-import React , { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosClient from '../axios-client';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import ReservationSuccessPopup from './ReservationSuccessPopup';
+
 
 
 
@@ -29,10 +32,18 @@ const generateReservationNumber = () => {
 
   return reservationNumber;
 };
-const ReservationPopup = ({ onClose, selectedTables, formSubmissionData, user,restaurantId, selectedTableStructureId }) => {
+const ReservationPopup = ({ onClose, selectedTables, formSubmissionData, user,restaurantId, selectedTableStructureId, bookingFee }) => {
+const { id } = useParams();
 const [tablefortwo, settablefortwo] = useState(false);
-const reservationNumber = generateReservationNumber();
+const [reservationNumber, setReservationNumber] = useState(generateReservationNumber()); // Initialize with the generated number
 const tableNumbers = selectedTables.map((table) => table.table_number);
+const [showSuccessPopup, setShowSuccessPopup] = useState(false); // State to control the success popup
+const navigate = useNavigate(); // Access the navigate function
+
+
+useEffect(() => {
+  setReservationNumber(generateReservationNumber());
+}, []);
 
 const handleConfirmReservation = async () => {
   try {
@@ -55,8 +66,8 @@ const handleConfirmReservation = async () => {
     const response = await axiosClient.post('/make-reservation', reservationData);
 
     if (response.status === 201) {
-      // Reservation was successful, you can handle the response as needed
-      onClose();
+      // Reservation was successful, show the success popup
+      setShowSuccessPopup(true);
     } else {
       // Reservation failed, handle errors or show a message to the user
       console.error('Reservation failed:', response.statusText);
@@ -106,6 +117,8 @@ const handleConfirmReservation = async () => {
         <p className='mb-3'><span className='mr-4'>From: {formSubmissionData.startTime}</span><span>To: {formSubmissionData.endTime}</span></p>
 
         <p>Number of Participants: {formSubmissionData.numParticipants}</p>
+      
+
 
         {/* <p>reservant name : {user.name}</p>
             <p>reservant id : {user.id}</p> */}
@@ -149,15 +162,16 @@ const handleConfirmReservation = async () => {
             className="bg-green-500 font-semibold text-white py-3 px-4 rounded-md mb-2 w-full"
             onClick={handleConfirmReservation}
           >
-            Confirm
+            Checkout - LKR {bookingFee.toFixed(2)}
           </button>
-          
+          <Link to={`/restaurants/${id}/meals`}>
           <button
             className="bg-green-50 border font-semibold border-green-300 text-green-500 py-3 px-4 rounded-md mb-2 w-full"
             
           >
             Order meal
           </button>
+          </Link>
           <p className='text-xs font-thin text-gray-500'>(You can order your meal to be prepared when you arrive the restaurant)</p><br />
           <button
             className="bg-red-50 text-red-500 py-3 px-4 rounded-md w-full"
@@ -171,6 +185,17 @@ const handleConfirmReservation = async () => {
 
 
       </div>
+      {showSuccessPopup && (
+        <ReservationSuccessPopup
+          onClose={() => setShowSuccessPopup(false)}
+          onHomeClick={() => {
+            navigate('/dashboard'); // Use navigate to navigate
+          }}
+          onActivitiesClick={() => {
+            navigate('/activities'); // Use navigate to navigate
+          }}
+        />
+      )}
     </div>
   );
 };
