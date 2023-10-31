@@ -60,11 +60,14 @@ export default function TableForTwo() {
     <div className="content-container">
       <p className="text-3xl font-semibold leading-normal text-zinc-900">Upcoming Reservations</p>
       <p className="text-base font-normal leading-normal text-gray-500">Embark on a Flavorful Journey Together</p>
-      {invitesData.map((user) => (
-        <div key={user.id}>
-          <TFTcard user={user} reserveID={user.reservationNumber} />
-        </div>
-      ))}
+      {invitesData
+          .sort((a, b) => new Date(a.reservation.reservation_date) - new Date(b.reservation.reservation_date))
+          .map((user) => (
+            <div key={user.id}>
+              <TFTcard user={user} reserveID={user.reservationNumber} />
+            </div>
+          ))
+        }
     </div>
   ) : (
     // <div className="mx-auto text-center content-container md:w-1/2 lg:w-1/3">

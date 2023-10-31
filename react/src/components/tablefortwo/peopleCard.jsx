@@ -26,8 +26,6 @@ export default function Cards({ user }) {
       });
   }, [user.reservation.reservant_ID, user.reservation.restaurant_id]);
   
-
-
   useEffect(() => {
       const profilePicFilename = `../../assets/profile_${user.reservation.reservant_ID}.jpg`;
 
