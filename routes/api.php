@@ -136,8 +136,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
     Route::get('/adds', [RestaurantController::class, 'getAdds']);
+
+    Route::get('/getAdvertisementFee', [RestaurantController::class, 'getAdvertisementFee']);
     Route::post('/deleteAdd/{addId}', [RestaurantController::class, 'deleteAdd']);
     Route::post('/addAdvertisement', [RestaurantController::class, 'addAdvertisement']);
+    Route::post('addPayment', [RestaurantController::class, 'addPayment']);
 
 
 });

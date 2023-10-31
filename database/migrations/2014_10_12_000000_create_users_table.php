@@ -21,6 +21,14 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            // $table->string('hometown');
+            // $table->string('lastname');
+            // $table->date('dob');
+            // $table->string('gender');
+            // $table->string('photo');
+            // $table->string('about');
+            // $table->string('mealPreferences');
+            
         });
     }
 
