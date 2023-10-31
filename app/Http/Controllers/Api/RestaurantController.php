@@ -20,11 +20,12 @@ use App\Models\Restaurants;
 use Illuminate\Http\Request;
 ///use App\Mail\AssistanceRequest;
 use App\Models\Advertisements;
+use App\Models\MonthlyPayment;
 use App\Models\TableStructure;
 use App\Models\HallReservations;
 use App\Models\TableReservation;
-use App\Http\Requests\LoginRequest;
 
+use App\Http\Requests\LoginRequest;
 use App\Models\TechnicalAssistance;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -46,6 +47,7 @@ use App\Http\Requests\RestaurantLoginRequest;
 use App\Http\Requests\addAdvertisementRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
+use App\Http\Requests\addMonthlyPaymentRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
 use App\Http\Requests\updateAssistanceDataRequest;
 
@@ -627,6 +629,35 @@ class RestaurantController extends Controller
         $adds = Advertisements::where('restaurant_id', $restaurantId)->get();
 
         return response()->json($adds);
+    }
+
+    public function getAdvertisementFee(Request $request) {
+
+        $restaurantId = $request->input('restaurant_id');
+        $currentMonth = now()->month; // Get the current month
+    
+        $sum = Advertisements::where('restaurant_id', $restaurantId)
+            ->whereMonth('updated_at', $currentMonth)
+            ->sum('price');
+    
+        return response()->json($sum);
+    }
+
+    public function addPayment(addMonthlyPaymentRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+
+        /** @var MonthlyPayment $user */
+        $user = MonthlyPayment::create([
+            'restaurant_id' => $restaurantId,
+            'amount' => $data['amount'],
+            'card' => $data['card'],
+            'cardno' => $data['cardno'],
+            'expiry_date' => $data['expiry'],
+            'cvv' => $data['cvv'],
+        ]);
+
     }
 
     // public function updateMealAvailability(Request $request)
