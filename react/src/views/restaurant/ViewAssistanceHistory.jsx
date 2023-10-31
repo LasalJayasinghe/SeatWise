@@ -257,7 +257,7 @@ Not Solved
                     </header>
             
             <div className="contentContainer">
-        <button onClick={handleClick} style={{ marginLeft: '73rem',
+        <button onClick={handleClick} style={{ marginLeft: '63rem',
      marginTop: '3rem',
      fontSize: '1.3rem', // Increase font size
      padding: '1rem 1rem', // Increase padding vertically and horizontally
@@ -293,6 +293,12 @@ Not Solved
                     rows={Requests}
                     getRowId={(row) => row.id}
                     columns={columns}
+                    style={{
+                      width: '1100px',
+                      '& .MuiDataGrid-cell:focus': {
+                        outline: 'none',
+                      },
+                    }}
                     initialState={{
                     pagination: {
                         paginationModel: {

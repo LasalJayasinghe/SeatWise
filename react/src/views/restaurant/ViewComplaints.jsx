@@ -261,12 +261,14 @@ Remove
                     rows={complaints}
                     getRowId={(row) => row.id}
                     columns={columns}
+                    style={{ maxWidth: '1200px' }}
                     initialState={{
                     pagination: {
                         paginationModel: {
                         pageSize: 5,
                         },
                     },
+                    
                     }}
                     slots={{ toolbar: GridToolbar }}
                     slotProps={{
@@ -281,7 +283,7 @@ Remove
                     disableColumnFilter
                     disableDensitySelector
                     disableColumnSelector
-                    style={{ maxWidth: '900px' }}
+                    
                 />
 
             </div>

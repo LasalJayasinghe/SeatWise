@@ -8,8 +8,9 @@ use App\Models\Meals;
 use App\Models\Offers;
 use http\Env\Response;
 use App\Models\Profile;
-use App\Mail\MailNotify;
+use App\Models\Ratings;
 
+use App\Mail\MailNotify;
 use App\Models\Cashiers;
 use App\Models\Category;
 use App\Models\Customer;
@@ -18,14 +19,14 @@ use App\Models\Restaurant;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use App\Models\Advertisements;
-use App\Models\TableStructure;
 ///use App\Mail\AssistanceRequest;
+use App\Models\TableStructure;
 use App\Models\TableReservation;
 use App\Http\Requests\LoginRequest;
 use App\Models\TechnicalAssistance;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -1211,6 +1212,32 @@ public function replyComplaint(replyComplaintRequest $request) {
     }
     }
 
+    public function getRatings($id) {
+    
+        // $restaurant = Restaurants::find($id);
+        $Rating = Ratings::where('restaurantID', $id)
+        ->join('users', 'rate.customerID', '=', 'users.id')
+        ->select('rate.*','users.name as name')
+        ->orderBy('starCount')
+        ->get();
+    
+        return response()->json($Rating);
+    
+     
+     }
             //handleStatusUpdate
+
+            public function getAverageRating($id) {
+                // Assuming you have a "ratings" table with a "rating" column
+                $ratings = Ratings::where('restaurantID', $id)->get();
+            
+                // Calculate the average rating
+                $totalRatings = count($ratings);
+                $sumRatings = $ratings->sum('starCount');
+                $averageRating = $totalRatings > 0 ? $sumRatings / $totalRatings : 0;
+            
+                return response()->json($averageRating);
+            }
+            
 
 }

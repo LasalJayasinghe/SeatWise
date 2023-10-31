@@ -25,7 +25,7 @@ export default function SettingsBar() {
               <span className="listItemTitle">Complaints</span>
             </Link>
 
-            <Link to="/home" className="listItem">
+            <Link to="/Ratings" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Ratings</span>
             </Link>

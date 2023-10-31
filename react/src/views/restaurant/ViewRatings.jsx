@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import DeleteConfirmationModal from "../../components/restaurant/DeleteConfirmationModal";
 import OffersUpdateModal from "../../components/OffersUpdateModal";
 import SettingsBar from "../../components/restaurant/SettingsBar";
+import StarIcon from '@mui/icons-material/Star';
+
+import renderStarRatings from "../../components/restaurant/renderStarRatings";
 
 import {
     DataGrid,
@@ -14,16 +17,15 @@ import Switch from '@mui/material/Switch';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-export default function ViewOffers() {
+export default function ViewRatings() {
 
     const {user, setUser} = useStateContext();
     const [loading, setLoading] = useState(false);  
-    const [offers, setOffers] = useState([]);
+    const [Ratings, setRatings] = useState([]);
+    const [AverageRating, setAverageRating] = useState([]);
     const [errors, setErrors] = useState(null);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
-    const [showConfirmationModalDelete, setShowConfirmationModalDelete] = useState(false);
-    const [selectedOfferForUpdate, setSelectedOfferForUpdate] = useState(null);
-    const [selectedOfferForDelete, setSelectedOfferForDelete] = useState(null);
+   
     const navigate = useNavigate();
   
   useEffect(() => {
@@ -36,9 +38,9 @@ export default function ViewOffers() {
 
    useEffect(() => {
     if (user && user.id) {
-      axiosClient.get(`/getOffers/${user.id}`)
+      axiosClient.get(`/getRatings/${user.id}`)
         .then(({ data }) => {
-          setOffers(data);
+          setRatings(data);
         })
         .catch((error) => {
           console.error(error);
@@ -46,16 +48,27 @@ export default function ViewOffers() {
     }
   }, [user]);
 
-const handleClick = () =>{
 
-navigate("/addOffer");
+  useEffect(() => {
+    if (user && user.id) {
+      axiosClient.get(`/getAverageRating/${user.id}`)
+        .then(({ data }) => {
+          setAverageRating(data);
 
-}
+          console.log('Data from getAverageRating:', data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [user]);
 
 
 
 
-const handleRemove = (offerId) => {
+
+
+/*const handleRemove = (offerId) => {
 
     setSelectedOfferForDelete(offerId);
     setShowConfirmationModalDelete(true);
@@ -93,7 +106,7 @@ const handleRemove = (offerId) => {
         console.error('Error deleting offers:', error);
       });
   
-};
+};*/
 
 
 
@@ -103,7 +116,7 @@ const handleRemove = (offerId) => {
 
 //get the id of relevant cashier
 
-const handleUpdate = (offerId) => {
+/*const handleUpdate = (offerId) => {
 
 
 
@@ -175,87 +188,36 @@ const handleUpdate = (offerId) => {
       // User confirmed deletion, send a DELETE request to the deleteEmployee API endpoint
   
     
-  };
+  };*/
 
 
 
   const columns = [
-    { field: 'id', headerName: 'Offer ID', width: 90 },
+    { field: 'rateID', headerName: 'Rate ID', width: 300 },
    
+  
     {
-      field: 'meal',
-      headerName: 'Meal',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'offer_type',
-      headerName: 'Offer Type',
-      width: 160,
-      editable: true,
+      field: 'starCount',
+      headerName: 'Rating',
+      width: 460,
+      renderCell: renderStarRatings,
     
     },
    
 
     
    {
-    field: 'offer_percentage',
-    headerName: 'Offer Percentage',
-      width: 130,
+    field: 'name',
+    headerName: 'Customer Name',
+      width: 350,
     editable: true,
 },
 
 
-{
-    field: 'start_date',
-    headerName: 'Start Date',
-      width: 160,
-    editable: true,
-},
 
 
-{
-    field: 'end_date',
-    headerName: 'End Date',
-      width: 160,
-    editable: true,
-},
 
-{
-    field: 'days_of_week',
-    headerName: 'days_of_week',
-      width: 160,
-    editable: true,
-},
 
-{
-    field: 'minimum_purchase_amount',
-    headerName: 'Minimum Purchase Amount',
-      width: 150,
-    editable: true,
-},
-
-    {
-        field:"actions",
-        headerName:"Actions", 
-        width:390,
-        renderCell: (params) => {
-            return <div className="flex">
- <button
-            onClick={() => handleUpdate(params.row.id)} 
-            style={{ marginLeft: '0rem',  outline: 'none',}}
-            className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Update
-          </button>                           
-<button 
-  onClick={() => handleRemove(params.row.id)} style={{ marginLeft: '1rem'}}className="bg-gray-700 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-Remove
-</button>  
-                
-            </div>
-        }
-    },
 ];
 
 
@@ -277,7 +239,7 @@ Remove
                 <div>
                     <header className="bg-white shadow">
                         <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Offers</h1>
+                            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Ratings</h1>
                             <div className="loading-container">
                                 {/* {loading && <p className="loading-text">Loading...</p>} */}
                             </div>
@@ -285,14 +247,14 @@ Remove
                     </header>
                 </div>
                 <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <button onClick={handleClick} style={{ marginLeft: '60rem',
+                <button  style={{ marginLeft: '60rem',
      marginTop: '3rem',
      fontSize: '1.3rem', // Increase font size
      padding: '1rem 1rem', // Increase padding vertically and horizontally
      borderRadius: '0.6rem',
 
      }}className="bg-white text-green-500 font-bold py-2 px-4 rounded">
- + Add Offers
+Average Rating  ☆ {AverageRating}
 </button>
     </div>            <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     
@@ -300,8 +262,8 @@ Remove
              
                 <div className="dataTable">
                 <DataGrid
-                    rows={offers}
-                    getRowId={(row) => row.id}
+                    rows={Ratings}
+                    getRowId={(row) => row.rateID}
                     columns={columns}
                    // disableColumnReorder={true} // Disable column reordering
                   //  disableColumnResize={true} 
@@ -309,9 +271,7 @@ Remove
                     style={{
                       width: '1230px',
                       // Remove the cell outline
-                      '& .MuiDataGrid-cell:focus': {
-                        outline: 'none',
-                      },
+                      
                     }}
                     initialState={{
                     pagination: {
@@ -347,21 +307,8 @@ Remove
         
 
         {/* <Footer /> */}
-        <OffersUpdateModal
-        isOpen={showUpdateModal}
-        onCancel={cancelUpdate}
-        onConfirm={confirmUpdate}
-        //offers={setSelectedOfferForUpdate}
-        Offer={selectedOfferForUpdate}
+      
 
-
-
-      />
-<DeleteConfirmationModal
-        isOpen={showConfirmationModalDelete}
-        onCancel={cancelDelete}
-        onConfirm={confirmDelete}
-      />
     </div>
 
 

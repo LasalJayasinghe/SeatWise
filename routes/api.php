@@ -240,4 +240,6 @@ Route::get('/displayRequest/{RequestId}', [RestaurantController::class, 'display
 Route::post('/updateAssistanceData', [RestaurantController::class, 'updateAssistanceData']);
 Route::post('/handleStatusUpdate/{RequestId}', [RestaurantController::class, 'handelStatusUpdate']);
 // Waitlist
+Route::get('/getRatings/{id}', [RestaurantController::class, 'getRatings']);
+Route::get('/getAverageRating/{id}', [RestaurantController::class, 'getAverageRating']);
 Route::post('/waitlist', [WaitlistController::class, 'store']);
