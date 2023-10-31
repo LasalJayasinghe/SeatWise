@@ -119,6 +119,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);
     Route::get('/getTotalUserCount/{id}', [RestaurantController::class, 'totalUserCount']);
     Route::get('/getTotalMonthlyReservationCount/{id}', [RestaurantController::class, 'getTotalMonthlyReservationCount']);
+    Route::get('/getMonthlyHallReservations/{id}', [RestaurantController::class, 'getMonthlyHallReservationCount']);
+    Route::get('/getMonthlyVisitsCount/{id}', [RestaurantController::class, 'getMonthlyVisitsCount']);
     Route::post('/addTechincalAssistanceRequest', [RestaurantController::class, 'addTechincalAssistanceRequest']);
     Route::get('/restaurants/{restaurant_id}/halls', [HallController::class, 'index']);
     Route::get('/halls/{id}', [HallController::class, 'show']);
@@ -127,12 +129,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/getOrder/{id}', [RestaurantController::class, 'getOrder']);
     Route::get('/getAllOrder/{id}', [RestaurantController::class, 'getAllOrder']);
+    Route::get('/getHallRequests/{id}', [RestaurantController::class, 'getHallRequests']);
     Route::get('/getUpcomingOrder/{id}', [RestaurantController::class, 'getUpcomingOrder']);
     Route::get('/getReservationsByUser/{id}', [RestaurantController::class, 'getReservationsByUser']);
     Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
     Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
     Route::get('/adds', [RestaurantController::class, 'getAdds']);
+    Route::post('/deleteAdd/{addId}', [RestaurantController::class, 'deleteAdd']);
     Route::post('/addAdvertisement', [RestaurantController::class, 'addAdvertisement']);
 
 

@@ -17,7 +17,7 @@ const navigation = [
   { name: 'Reservations', to: '/reservations', current: false },
   { name: 'Employees', to: '/employees', current: false },
   { name: 'Menu', to: '/menu', current: false },
-  { name: 'Settings', to: '/settings', current: false },
+  { name: 'Settings', to: '/ViewOffers', current: false },
 ]
 
 

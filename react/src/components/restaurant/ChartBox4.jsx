@@ -62,7 +62,7 @@ export default function ChartBox() {
 
   useEffect(() => {
     if (user && user.id) {
-    axiosClient.get(`/getTotalUserCount/${user.id}`)
+    axiosClient.get(`/getMonthlyHallReservations/${user.id}`)
       .then(({ data }) => {
         setCount1(data);
       })
@@ -88,6 +88,7 @@ export default function ChartBox() {
         </Link> */}
         {/* <h1><b>{count1}</b></h1> */}       
         {/* ...............................................showing 4 */}
+        <h1><b>{count1}</b></h1> 
         <Link className="link">View all</Link>
       </div>
       <div className="chartInfo">
