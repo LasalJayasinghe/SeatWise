@@ -9,24 +9,32 @@ export default function Complaints() {
     const toggleAddComplaint = () => {
       setAddComplaintVisible(!isAddComplaintVisible);
     };
+
   return (
     <div>
       
       {/* {isAddComplaintVisible && (
         <AddComplaint open={isAddComplaintVisible} setOpen={setAddComplaintVisible} />
       )} */}
-      <AddComplaint/>
+            {isAddComplaintVisible && (
+        <AddComplaint open={isAddComplaintVisible} setOpen={setAddComplaintVisible} />
+      )}
+      {/* <AddComplaint/> */}
 		  <div className="users-container">
         <Sidebar2 />
         <div className="content-container">
               <h1 className='text-2xl font-bold '>Complaints</h1>
               <p className='text-gray-500'>Description goed here</p>
-              <div className="flex items-center my-5 space-x-2 ">
-                <button className="flex items-center justify-center w-10 h-10 text-gray-500 bg-gray-200 rounded-lg hover:text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400">
-                    <span className="text-3xl">+</span>
+              <div className="flex items-center my-5 space-x-2">
+                <button
+                  onClick={toggleAddComplaint}
+                  className="flex items-center justify-center w-10 h-10 text-gray-500 bg-gray-200 rounded-lg hover:text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400"
+                >
+                  <span className="text-3xl">+</span>
                 </button>
                 <span className="font-bold text-gray-700">Add complaint</span>
               </div>
+
               <div>
                     
               <div
