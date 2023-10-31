@@ -37,7 +37,7 @@ export function SidebarWithContentSeparator() {
       <Link to="/activities">
       <ListItem
             className={`${
-              location.pathname === "/tablefortwo" ? "text-green-500" : "text-blue-gray-500 hover:text-green-500"
+              location.pathname === "/activities" ? "text-green-500" : "text-blue-gray-500 hover:text-green-500"
             }`}
           >
           <ListItemPrefix>

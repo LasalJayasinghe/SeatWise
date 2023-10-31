@@ -4,10 +4,15 @@ import axiosClient from '../../axios-client';
 import CounterInput from '../../components/CounterInput'
 
 export default function MealView() {
-
+  
+  const navigate = useNavigate()
   const [meal, setMeal] = useState(null);
   const { mealId } = useParams();
   
+  const handleClose = () => {
+    navigate(-1); // go back to the previous page
+  };
+
   useEffect(() => {
     const fetchMealDetail = async () => {
       try {
@@ -27,13 +32,13 @@ export default function MealView() {
   return (
     <div>
 
-<h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">{meal.name}</h1>
+{/* <h1 className="mb-1 text-3xl font-medium text-gray-900 title-font">{meal.name}</h1>
 <p className="leading-relaxed">{meal.description}</p>
 <p className="leading-relaxed">{meal.price}</p>
 <p className="leading-relaxed">{meal.potion}</p>
 <p className="leading-relaxed">Category: {meal.category.category}</p>
 
-
+ */}
 
 
 
@@ -41,7 +46,9 @@ export default function MealView() {
 <section class="text-gray-700 body-font overflow-hidden bg-white">
   
   <div class="container px-5 py-8 mx-auto">
-  <button class="flex items-center text-gray-500 hover:text-gray-700 mb-5">
+  <button 
+  class="flex items-center text-gray-500 hover:text-gray-700 mb-5"
+  onClick={handleClose}>
   <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-gray-500" viewBox="0 0 24 24">
       <path d="M15 19l-7-7 7-7"></path>
