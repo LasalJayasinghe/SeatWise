@@ -50,6 +50,7 @@ use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\addMonthlyPaymentRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
 use App\Http\Requests\updateAssistanceDataRequest;
+use App\Models\Ratings;
 
 class RestaurantController extends Controller
 {
@@ -1305,6 +1306,32 @@ public function replyComplaint(replyComplaintRequest $request) {
     }
     }
 
+    public function getRatings($id) {
+    
+        // $restaurant = Restaurants::find($id);
+        $Rating = Ratings::where('restaurantID', $id)
+        ->join('users', 'rate.customerID', '=', 'users.id')
+        ->select('rate.*','users.name as name')
+        ->orderBy('starCount')
+        ->get();
+    
+        return response()->json($Rating);
+    
+     
+     }
             //handleStatusUpdate
+
+            public function getAverageRating($id) {
+                // Assuming you have a "ratings" table with a "rating" column
+                $ratings = Ratings::where('restaurantID', $id)->get();
+            
+                // Calculate the average rating
+                $totalRatings = count($ratings);
+                $sumRatings = $ratings->sum('starCount');
+                $averageRating = $totalRatings > 0 ? $sumRatings / $totalRatings : 0;
+            
+                return response()->json($averageRating);
+            }
+            
 
 }

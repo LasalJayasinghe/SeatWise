@@ -64,6 +64,7 @@ import CashierDashboard from './views/restaurant/CashierDashboard.jsx';
 import Payments from './views/restaurant/Payments.jsx';
 import AddAdvertisement from './views/restaurant/AddAdvertisement.jsx';
 import ViewAssistanceHistory from './views/restaurant/ViewAssistanceHistory.jsx';
+import ViewRatings from './views/restaurant/ViewRatings.jsx';
 
 
 const router = createBrowserRouter([
@@ -282,6 +283,10 @@ const router = createBrowserRouter([
             {
                 path: "/ViewComplaints",
                 element: <ViewComplaints/>, 
+            },
+            {
+                path: "/Ratings",
+                element: <ViewRatings/>, 
             },
 
 
