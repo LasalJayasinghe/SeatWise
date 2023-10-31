@@ -82,6 +82,10 @@ Route::get('/halls/{hallId}/check-availability/{slotId}/{selectedDate}', [HallCo
 
     });
 
+    //activities page routes
+    Route::get('/get-ongoing-reservations', [TableReservationController::class, 'getOngoingReservations']);
+    Route::get('/get-completed-reservations', [TableReservationController::class, 'getCompletedReservations']);
+
     Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
     Route::get('/restaurantDetails/{id}', [AuthController::class, 'getRestaurantDetails']);
     Route::get('/tablefortwo/suggestions/getPendingInvites', [TablefortwoController::class, 'getPendingInvites']);

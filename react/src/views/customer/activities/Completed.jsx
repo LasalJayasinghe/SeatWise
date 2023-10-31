@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axiosClient from '../../../axios-client';
+
 import Sidebar2 from '../../../components/sidebar2'
 import respic from '../../../assets/restaurant1.jpg'
 import chocolatecake from '../../../assets/chocolatecake.jpeg'
 import pizza from '../../../assets/Pizza-3007395.jpg'
+import restaurantImage from '../../../assets/restaurant3.jpg';
+
 
 
 export default function Completed() {
-    return (
+  const [completedReservations, setCompletedReservations] = useState([]);
+
+  useEffect(() => {
+    axiosClient.get('/completed-reservations').then((response) => {
+      setCompletedReservations(response.data);
+    });
+  }, []);    return (
         <div>
               <div className="users-container">
                 <Sidebar2 />

@@ -1,5 +1,4 @@
 <?php
-namespace App\Http\Controllers\Api\customer;
 
 namespace App\Http\Controllers\Api;
 
@@ -12,11 +11,6 @@ class TableReservationController extends Controller
 {
     public function makeReservation(Request $request)
     {
-        // Remove the validation rules
-        // $validatedData = $request->validate([
-        //     ...
-        // ]);
-
         // Create a new TableReservation instance and fill it with the request data
         $reservation = new TableReservation();
         $reservation->fill($request->all());
@@ -27,4 +21,23 @@ class TableReservationController extends Controller
         // Optionally, you can return a response indicating success or failure
         return response()->json(['message' => 'Reservation created successfully'], 201);
     }
+
+    public function getOngoingReservations()
+{
+    $userId = auth()->id(); // Assuming you are using Laravel's built-in authentication
+
+    $ongoingReservations = TableReservation::where('reservant_ID', $userId)
+        ->where('status', 2)
+        ->get();
+
+    return response()->json($ongoingReservations);
+}
+
+
+    public function getCompletedReservations()
+{
+    $completedReservations = TableReservation::where('status', 0)->get();
+    return response()->json($completedReservations);
+}
+
 }

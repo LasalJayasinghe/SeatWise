@@ -24,6 +24,7 @@ const Header = ({ user, onLogout }) => {
 
   const openSlideOver = () => {
     setIsOpen(true);
+  const userID = (user.id);
   };
 
   const closeSlideOver = () => {
