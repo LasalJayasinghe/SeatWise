@@ -4,7 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon, ShoppingBagIcon } from '@heroicons/reac
 import logo from '../assets/logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import axiosClient from '../axios-client.js';
-
+import Cart from './Cart';
 
 const navigation = [
   { name: 'Home', to: '/dashboard' },
@@ -48,88 +48,9 @@ const Header = ({ user, onLogout }) => {
       {({ open }) => (
         <>
 
+      {/* CART COMPONENT */}
+      <Cart isOpen={isOpen} closeSlideOver={closeSlideOver} slideOverClasses={slideOverClasses} />
 
-<div className={slideOverClasses}>
-        <div className="p-4 border-r border-gray-200">
-          <div className="flex justify-between mb-4">
-            <h2 className="text-2xl font-bold">Cart</h2>
-            <button className="text-gray-500" onClick={closeSlideOver}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <div className="py-4">
-  <div className="flex mb-4">
-    <div className="rounded-lg w-16 h-16 bg-gray-300 mr-4"></div> {/* Product image */}
-    <div className="flex-grow">
-      <div className="font-semibold">Product Name 1</div> {/* Product name */}
-      <div className="text-gray-500">Quantity: 2</div> {/* Product quantity */}
-      <div className="font-semibold">LKR 20.00</div> {/* Product price */}
-    </div>
-    <button className="text-red-500 ml-2">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <circle cx="12" cy="12" r="10" strokeWidth="0" fill="#FED7D7" /> {/* Change the fill color here */}
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 12H18" />
-      </svg>
-    </button>
-  </div>
-
-  <div className="flex mb-4">
-    <div className="rounded-lg w-16 h-16 bg-gray-300 mr-4"></div> {/* Product image */}
-    <div className="flex-grow">
-      <div className="font-semibold">Product Name 2</div> {/* Product name */}
-      <div className="text-gray-500">Quantity: 1</div> {/* Product quantity */}
-      <div className="font-semibold">LKR 15.00</div> {/* Product price */}
-    </div>
-    <button className="text-red-500 ml-2">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <circle cx="12" cy="12" r="10" strokeWidth="0" fill="#FED7D7" /> {/* Change the fill color here */}
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 12H18" />
-      </svg>
-    </button>
-  </div>
-
-  {/* Cart total */}
-  <div className="mt- text-gray-500">
-    <span className="font-bold">Total:</span>
-    <span className="ml-auto">LKR 35.00</span>
-    <p><span className="font-bold">Order Fee: LKR 1552.00</span><span className="ml-auto"> (40% off the total)</span></p>
-  </div>
-  
-</div>
-
-
-        </div>
-
-        <button className="bg-green-500 text-white p-4 hover:bg-green-600" onClick={closeSlideOver}>
-          Conform Order - LKR 1552.00
-        </button>
-      </div>
 
       {isOpen && (
         <div
