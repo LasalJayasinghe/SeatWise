@@ -17,6 +17,7 @@ use App\Models\Complaints;
 use App\Models\Restaurant;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
+use App\Models\Advertisements;
 use App\Models\TableStructure;
 ///use App\Mail\AssistanceRequest;
 use App\Models\TableReservation;
@@ -40,6 +41,7 @@ use App\Http\Requests\setupProfileRequest;
 use App\Http\Requests\replyComplaintRequest;
 use App\Http\Requests\updateEmployeeRequest;
 use App\Http\Requests\RestaurantLoginRequest;
+use App\Http\Requests\addAdvertisementRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
@@ -527,6 +529,41 @@ class RestaurantController extends Controller
         
         return response()->json(['message' => 'Meal Added Successfully']);
 
+    }
+
+    public function addAdvertisement(addAdvertisementRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/views/', $filename); 
+            
+            $photoPath = 'uploads/views/' . $filename;
+        }
+
+        /** @var Advertisements $user */
+        $user = Advertisements::create([
+            'restaurant_id' => $restaurantId,
+            'price' => $data['price'],
+            'duration' => $data['duration'],
+            'photo' => $photoPath ?? null,
+        ]);
+
+    }
+
+    public function getAdds(Request $request)
+    {
+        // Access the 'restaurant_id' parameter from the request
+        $restaurantId = $request->input('restaurant_id');
+
+        // Assuming you have a 'restaurant_id' column in the 'views' table
+        $adds = Advertisements::where('restaurant_id', $restaurantId)->get();
+
+        return response()->json($adds);
     }
 
     // public function updateMealAvailability(Request $request)

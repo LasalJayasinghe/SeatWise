@@ -1,6 +1,61 @@
+import { useEffect, useRef, useState } from "react";
 import SettingsBar from "../../components/restaurant/SettingsBar";
+import axiosClient from "../../axios-client";
+import { useStateContext } from "../../context/ContextProvider";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AddAdvertisement() {
+    const navigate = useNavigate();
+
+    const [selectedPrice, setSelectedPrice] = useState(0);
+    const [selectedDuration, setSelectedDuration] = useState('');
+
+    const {user, setUser } = useStateContext();
+    const [errors, setErrors] = useState(null);
+
+    const photoRef = useRef();
+
+    const onSubmitAdd = (ev) => {
+        ev.preventDefault()
+    
+        const formData = new FormData();
+        formData.append('restaurant_id', user.id);
+        formData.append('price', selectedPrice);
+        formData.append('photo', photoRef.current.files[0]);
+        formData.append('duration', selectedDuration);
+        setErrors(null)
+        axiosClient.post('/addAdvertisement', formData)
+        .then((response) => {
+          console.log('API response:', response.data);
+          navigate('/adds');
+        })
+        .catch(err => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    if(response.data.errors)
+                    {
+                        setErrors(response.data.errors)
+                    }else{
+                        setErrors({
+                            email: [response.data.message]
+                        })
+                    }
+                }
+                })
+    }
+
+    useEffect(() => {
+        axiosClient.get('/user')
+        .then(({data}) => {
+            setUser(data)
+    })
+    }, [])
+
+    
+
+
+
+
   return (
     <>
     <div className="main">
@@ -26,8 +81,10 @@ export default function AddAdvertisement() {
                     {/* Advertisement content start */}
 
                         <div className='px-32'>
-                        <h1 className='text-2xl font-bold '>Add banner</h1>
+                            <h1 className='text-2xl font-bold '>Add banner</h1>
                             <p className='text-gray-500'>Description goes here</p>
+
+                            <form onSubmit={onSubmitAdd} method="post">
 
                             <div className="w-full mt-10 ">
                                 <label
@@ -42,7 +99,7 @@ export default function AddAdvertisement() {
                                             <span className="text-green-500 underline"> browse</span>
                                         </span>
                                     </span>
-                                    <input type="file" name="file_upload" className="hidden"/>
+                                    <input ref={photoRef} type="file" name="file_upload" className="hidden"/>
                                 </label>
 
                                 <p className='mt-5 mb-10 ext-gray-500 m'><span className='font-semibold'>Important:</span> Your advertisement banner size should be 1440 x 543 px for a better view</p>
@@ -51,7 +108,10 @@ export default function AddAdvertisement() {
 
                             <h1 className='mb-10 text-xl font-bold '>Choose duration</h1>
 
-                            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
+                            <button onClick={() => {
+                                        setSelectedPrice(199);
+                                        setSelectedDuration('1 day');
+                                        }} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
                             <div className="relative px-10 py-10 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                                 <div className="text-sm font-medium text-gray-00">1 day</div>
                                 <div className="text-2xl font-medium text-gray-900">LKR 199/-</div>
@@ -59,21 +119,27 @@ export default function AddAdvertisement() {
                             </button>
 
 
-                            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
+                            <button onClick={() => {
+                                        setSelectedPrice(599);
+                                        setSelectedDuration('1 week');}} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
                             <div className="relative px-10 py-10 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                                 <div className="text-sm font-medium text-gray-00">1 week</div>
                                 <div className="text-2xl font-medium text-gray-900">LKR 599/-</div>
                             </div>
                             </button>
 
-                            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
+                            <button onClick={() => {
+                                        setSelectedPrice(1499);
+                                        setSelectedDuration('1 month');}} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
                             <div className="relative px-10 py-10 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                                 <div className="text-sm font-medium text-gray-00">1 month</div>
                                 <div className="text-2xl font-medium text-gray-900">LKR 1499/-</div>
                             </div>
                             </button>
 
-                            <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
+                            <button onClick={() => {
+                                        setSelectedPrice(2699);
+                                        setSelectedDuration('3 months');}} className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-5 overflow-hidden  rounded-lg group bg-gradient-to-br from-[#49D28B] to-[#3EB075]  group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 ">
                             <div className="relative px-10 py-10 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                                 <div className="text-sm font-medium text-gray-00">3 months</div>
                                 <div className="text-2xl font-medium text-gray-900">LKR 2699/-</div>
@@ -82,19 +148,19 @@ export default function AddAdvertisement() {
 
 
 
-                            <div> 
-                            {/* <h1 className='my-10 text-xl font-bold '>Boost banner <span className="font-medium text-gray-400">(optional)</span></h1>
-                            <p>How frequent your banner should be displayed</p> */}
-                            </div>            
+                                        
 
 
-                        <div className="flex flex-col items-center justify-between mt-20 lg:flex-row">
-                        <div className="mb-2 text-3xl lg:text-3xl lg:mr-4 lg:mb-0">Total fee: LKR 2100/-</div>
-                        <button className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">Publish banner</button>
-                        </div>
+                            <div className="flex flex-col items-center justify-between mt-20 lg:flex-row">
+                                <div className="mb-2 text-3xl lg:text-3xl lg:mr-4 lg:mb-0">Total fee: LKR {selectedPrice}/- {selectedDuration}</div>
+                                <button type="submit" className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">Publish banner</button>
+                            </div>
 
+                        </form>
 
                         </div>
+
+                        
 
                     {/* Advertisement content end */}
         
