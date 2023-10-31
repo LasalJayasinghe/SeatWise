@@ -1301,6 +1301,19 @@ public function replyComplaint(replyComplaintRequest $request) {
             
                 return response()->json($averageRating);
             }
+
+
+    public function deleteComplaint($id)
+{
+    $complaint=Complaints::find($id);
+
+    if ($complaint) {
+        $complaint->delete();
+       
+    } else {
+       
+    }
+}
             
 
 }

@@ -99,7 +99,7 @@ export default function TechnicalAssistance() {
     
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           
-          <h1 className="mt-10 text-center text-4xl font-bold leading-12 tracking-tight text-gray-900">
+          <h1 className="mt-2 text-center text-4xl font-bold leading-12 tracking-tight text-gray-900">
            Request Assistance 
           </h1>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">

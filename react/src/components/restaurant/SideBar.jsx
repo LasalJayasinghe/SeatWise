@@ -25,10 +25,7 @@ export default function SideBar() {
               <img src="" alt="" />
               <span className="listItemTitle">Requests</span>
             </Link>
-            <Link to="/settings" className="listItem">
-              <img src="" alt="" />
-              <span className="listItemTitle">Settings</span>
-            </Link>
+           
         </div>
     </div>
   )

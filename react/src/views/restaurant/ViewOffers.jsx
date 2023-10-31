@@ -1,6 +1,6 @@
 import { useStateContext } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
-import DeleteConfirmationModal from "../../components/restaurant/DeleteConfirmationModal";
+import OfferDeleteConfirmationModel from "../../components/OfferDeleteConfirmationModel";
 import OffersUpdateModal from "../../components/OffersUpdateModal";
 import SettingsBar from "../../components/restaurant/SettingsBar";
 
@@ -357,7 +357,7 @@ Remove
 
 
       />
-<DeleteConfirmationModal
+<OfferDeleteConfirmationModel
         isOpen={showConfirmationModalDelete}
         onCancel={cancelDelete}
         onConfirm={confirmDelete}

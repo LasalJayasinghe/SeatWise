@@ -9,7 +9,8 @@ import axiosClient from "../../axios-client";
 import Switch from '@mui/material/Switch';
 import ComplaintUpdateModal from "../../components/restaurant/ComplaintUpdateModal";
 import SettingsBar from "../../components/restaurant/SettingsBar";
-import DeleteConfirmationModal from "../../components/restaurant/DeleteConfirmationModal";
+
+import ComplaintDeleteConfirmationModal from "../../components/restaurant/ComplaintDeleteConfirmationModal";
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 export default function Complaints() {
@@ -308,7 +309,7 @@ Remove
         
        
       />
-<DeleteConfirmationModal
+<ComplaintDeleteConfirmationModal
         isOpen={showConfirmationModalDelete}
         onCancel={cancelDelete}
         onConfirm={confirmDelete}
