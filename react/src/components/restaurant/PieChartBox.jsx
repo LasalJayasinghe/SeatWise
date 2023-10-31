@@ -1,13 +1,49 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { useStateContext } from "../../context/ContextProvider";
+import { useEffect, useState } from "react";
+import axiosClient from "../../axios-client";
 
-const data = [
-  { name: "Table", value: 400, color: "#0088FE" },
-  { name: "Hall", value: 300, color: "#00C49F" },
-//   { name: "Laptop", value: 300, color: "#FFBB28" },
-//   { name: "Tablet", value: 200, color: "#FF8042" },
-];
+
 
 export default function PieChartBox() {
+
+  const {user} = useStateContext();
+  const [count2, setCount2] = useState([]);
+  const [count1, setCount1] = useState([]);
+
+
+
+  useEffect(() => {
+    if (user && user.id) {
+    axiosClient.get(`/getTotalMonthlyReservationCount/${user.id}`)
+      .then(({ data }) => {
+        setCount2(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && user.id) {
+    axiosClient.get(`/getMonthlyHallReservations/${user.id}`)
+      .then(({ data }) => {
+        setCount1(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [user]);
+
+  const data = [
+    { name: "Table", value: count2, color: "#0088FE" },
+    { name: "Hall", value: count1, color: "#00C49F" },
+  ];
+
+
+
   return (
     <div className="pieChartBox">
       <h1>Leads by Source</h1>

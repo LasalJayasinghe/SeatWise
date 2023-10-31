@@ -1,4 +1,10 @@
-import { Bar, BarChart, ResponsiveContainer, Tooltip } from "recharts";
+// import { Bar, BarChart, ResponsiveContainer, Tooltip } from "recharts";
+import { useStateContext } from "../../context/ContextProvider";
+import { useEffect, useState } from "react";
+import axiosClient from "../../axios-client";
+
+import * as React from 'react';
+import { BarChart } from '@mui/x-charts/BarChart';
 
 const data = [
     {
@@ -46,36 +52,53 @@ const data = [
   ];
 
 export default function BarChartBox() {
+
+  const {user} = useStateContext();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (user && user.id) {
+    axiosClient.get(`/getMonthlyVisitsCount/${user.id}`)
+    .then(response => {
+      setData(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [user]);
+
+
+
   return (
-    // <div className="barChartBox">
-    //   <h1>{props.title}</h1>
-    //   <div className="chart">
-    //     <ResponsiveContainer width="99%" height={150}>
-    //       <BarChart data={props.chartData}>
-    //         <Tooltip
-    //           contentStyle={{ background: "#2a3447", borderRadius: "5px" }}
-    //           labelStyle={{ display: "none" }}
-    //           cursor={{fill:"none"}}
-    //         />
-    //         <Bar dataKey={props.dataKey} fill={props.color} />
-    //       </BarChart>
-    //     </ResponsiveContainer>
-    //   </div>
-    // </div>
-    <div className="barChartBox">
-      <h1>Total Visit</h1>
-      <div className="chart">
-        <ResponsiveContainer width="99%" height={90}>
-          <BarChart data={data}>
-            <Tooltip
-              contentStyle={{ background: "#2a3447", borderRadius: "5px" }}
-              labelStyle={{ display: "none" }}
-              cursor={{fill:"none"}}
-            />
-            <Bar dataKey="uv" fill="#22c55e" />
-          </BarChart>
-        </ResponsiveContainer>
+
+  <div className="barChartBox">
+      <h1 className="mb-0">Total Visit - Hall</h1>
+      <div className="">
+
+      <BarChart
+        xAxis={[
+          {
+            id: 'barCategories',
+            data: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Auguest', 'September', 'October', 'November', 'December'],
+            // data: data.map(month => month.label),
+            scaleType: 'band',
+          },
+        ]}
+        series={[
+          {
+            data: [2, 2, 3, 4, 1, 2, 3, 3, 4, 2, 1, 8],
+          },
+        ]}
+        width={300}
+        height={200}
+    />
+
       </div>
-    </div>
+  </div>
+
+  
+
   )
+
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Hall;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Meals;
 use App\Models\Offers;
 use http\Env\Response;
-use App\Models\Profile;
-use App\Models\Ratings;
 
+use App\Models\Profile;
 use App\Mail\MailNotify;
 use App\Models\Cashiers;
 use App\Models\Category;
@@ -18,14 +18,15 @@ use App\Models\Complaints;
 use App\Models\Restaurant;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
-use App\Models\Advertisements;
 ///use App\Mail\AssistanceRequest;
+use App\Models\Advertisements;
 use App\Models\TableStructure;
+use App\Models\HallReservations;
 use App\Models\TableReservation;
 use App\Http\Requests\LoginRequest;
+
 use App\Models\TechnicalAssistance;
 use Illuminate\Support\Facades\Log;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,7 @@ use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
 use App\Http\Requests\updateAssistanceDataRequest;
+use App\Models\Ratings;
 
 class RestaurantController extends Controller
 {
@@ -476,6 +478,67 @@ class RestaurantController extends Controller
             ->count();
 
         return response()->json($reservationCount);
+    }
+
+    public function getMonthlyHallReservationCount($id) {
+        // Get the current year and month
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $reservationCount = Hall::where('halls.restaurant_id', $id)
+            ->join('hall_reservations', 'hall_reservations.hall_id', '=', 'halls.id')
+            ->distinct()
+            ->whereYear('hall_reservations.slot_date', $currentYear)
+            ->whereMonth('hall_reservations.slot_date', $currentMonth)
+            ->count();
+
+        return response()->json($reservationCount);
+    }
+
+    public function getMonthlyVisitsCount($id) {
+        // Get the current year and month
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $formattedData = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+
+            $hallreservationCount = HallReservations::where('restaurant_id', $id)
+                ->whereMonth('slot_date', $month)
+                ->count();
+
+            $formattedData[] = [
+                'label' => date('F', mktime(0, 0, 0, $month, 1)),
+                'value' => $hallreservationCount
+            ];
+        }
+
+        return response()->json($formattedData);
+
+        // return $formattedData;
+    }
+
+    public function getHallRequests($id) {
+
+        $today = date('Y-m-d');
+    
+        $request = HallReservations::where('restaurant_id', $id)
+            ->whereDate('slot_date', '<', $today)
+            ->get();
+
+        return response()->json($request);
+
+    }
+
+    public function deleteAdd($id)
+    {
+        $add=Advertisements::find($id);
+
+        if ($add) {
+            $add->delete();
+        } else {
+        }
     }
 
     public function getFloor(Request $request)
