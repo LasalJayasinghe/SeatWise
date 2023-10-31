@@ -30,6 +30,7 @@ Route::post('/landing', [AuthController::class, 'landing']);
 // System routes
 
 Route::get('/systemDashboard/getUserCount', [SystemController::class, 'getUserCount']);
+Route::get('/systemDashboard/getRestaurantCount', [SystemController::class, 'getRestaurantCount']);
 
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {
