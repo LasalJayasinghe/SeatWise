@@ -137,7 +137,7 @@ export default function Meals() {
    <div key={meal.id} className="p-0 bg-white rounded-md shadow-md hover:cursor-pointer">
    <Link to={`/meals/${meal.id}`}>
       
-      <img src={mealimage} alt={meal.name} className="object-cover w-full h-40 mt-2 rounded-md " />
+      <img src={meal.photo} alt={meal.name} className="object-cover w-full h-40 mt-2 rounded-md " />
       <h2 className="p-4 text-lg font-semibold">{meal.name}</h2>
       <p className="px-4 text-gray-600">{meal.description}</p>
       <p className="px-4 pb-4 font-medium text-gray-800">Price: LKR {meal.price}</p>

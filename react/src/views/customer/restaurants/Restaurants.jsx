@@ -123,26 +123,30 @@ const Restaurants = () => {
       </div>
      
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 mr-12">
+      <div className="grid grid-cols-1 gap-4 mt-6 mr-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {displayRestaurants.map((restaurant) => (
           <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
             
             <div className="restaurant-card ">
-              <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-                <img
-                  className="object-cover"
-                  src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
-                  alt="product image"
-                />
-                <span className="absolute top-0 left-0 m-2 rounded-xl bg-red-700 px-2 text-center text-sm font-medium text-white">New</span>
-                <div className="mt-4 px-5 pb-5">
-                  <h5 className="text-xl tracking-tight text-slate-900 font-bold">{restaurant.restaurantname}</h5>
+              <div className="relative flex flex-col w-full max-w-xs m-10 overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md">
+              <img
+                    className="object-cover"
+                    src={restaurant.profile && restaurant.profile.cover ? restaurant.profile.cover : 'https://img.freepik.com/free-photo/restaurant-hall-with-lots-table_140725-6309.jpg?size=626&ext=jpg&ga=GA1.1.2030009063.1698396006&semt=sph'}
+                    alt="product image"
+                    onError={(e) => {
+                      console.error('Image load error:', e.target.src);
+                      e.target.src = 'https://img.freepik.com/free-photo/restaurant-hall-with-lots-table_140725-6309.jpg?size=626&ext=jpg&ga=GA1.1.2030009063.1698396006&semt=sph'; // Set a fallback image URL
+                    }}
+                  />
+                <span className="absolute top-0 left-0 px-2 m-2 text-sm font-medium text-center text-white bg-red-700 rounded-xl">New</span>
+                <div className="px-5 pb-5 mt-4">
+                  <h5 className="text-xl font-bold tracking-tight text-slate-900">{restaurant.restaurantname}</h5>
                   {/* Display opening dates and time */}
                   <div className="mt-2">
                     <p className="text-sm text-slate-700"><b>Open Days: </b>{getOpenDays(restaurant.profile)}</p>
                     <p className="text-slate-700"><b>Open Time:</b> {restaurant.profile && restaurant.profile.opening} to {restaurant.profile && restaurant.profile.closing}</p>
                   </div>
-                  <div className="mt-5 flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-5">
                     <p>
                       <span className="text-sm text-slate-700">{restaurant.resType}</span>
                     </p>

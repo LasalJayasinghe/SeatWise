@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
 {
+
+
+    public function index()
+    {
+        // Retrieve all complaints from the database
+        $complaints = Complaints::all();
+        
+        return response()->json($complaints, 200);
+    }
+
     public function store(Request $request)
     {
         // Get the user ID of the authenticated user, assuming you have authentication in place
@@ -24,3 +34,4 @@ class ComplaintController extends Controller
         return response()->json($complaint, 201);
     }
 }
+
