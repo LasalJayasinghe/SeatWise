@@ -201,7 +201,7 @@ Route::post('/updateCashier', [RestaurantController::class, 'updateCashier']);
 Route::post('/updateOffer', [RestaurantController::class, 'updateOffer']);
 Route::post('/deleteEmployee/{cashierId}', [RestaurantController::class, 'deleteEmployee']);
 Route::get('/getCheckInCount/{restaurant_id}', [RestaurantController::class, 'getCheckInCount']);
-Route::get('/getCheckOutCount/{restaurant_id}', [RestaurantController::class, 'getCheckOutCount']);
+Route::get('/getPendingCount/{restaurant_id}', [RestaurantController::class, 'getPendingCount']);
 Route::get('/getReservationCount/{restaurant_id}', [RestaurantController::class, 'getReservationCount']);
 Route::get('/getRecentBookings/{restaurant_id}', [RestaurantController::class, 'getRecentBookings']);
 Route::post('/replyComplaint', [RestaurantController::class, 'replyComplaint']);

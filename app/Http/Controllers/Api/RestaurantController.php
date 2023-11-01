@@ -986,19 +986,18 @@ class RestaurantController extends Controller
 
         return response()->json($reservation);
 
-
     }
 
-    public function getCheckInCount($id) //get the res id
+    public function getPendingCount($id) //get the res id
 
     {   $today = date('Y-m-d');
         
-        $checkedInCount = TableReservation::where('restaurant_id', $id)
+        $PendingCount = TableReservation::where('restaurant_id', $id)
         ->where('reservation_date', $today)
-        ->where('status', 1)
+        ->where('status', 2)
         ->count();
 
-    return response()->json($checkedInCount);
+    return response()->json($PendingCount);
 
     }
 
@@ -1007,7 +1006,7 @@ class RestaurantController extends Controller
         $today = date('Y-m-d');
         $checkedOutCount = TableReservation::where('restaurant_id', $id)
         ->where('reservation_date', $today)
-        ->where('status', 0)
+        ->where('status',0)
         ->count();
 
     return response()->json($checkedOutCount);

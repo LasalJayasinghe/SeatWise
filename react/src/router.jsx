@@ -42,7 +42,7 @@ import ViewReservations from './views/restaurant/ViewReservations.jsx';
 import Menu from './views/restaurant/Menu.jsx';
 import AddMenu from './views/restaurant/AddMenu.jsx';
 import Orders from './views/restaurant/Orders.jsx';
-import RestaurantHallDetail from './views/restaurant/HallDetail.jsx';
+import Hall_Details from './views/restaurant/Hall_Details.jsx';
 import RestaurantWaitlistPage from './views/restaurant/WaitlistPage .jsx';
 import OrderHistory from './views/restaurant/OrderHistory.jsx';
 import People from './views/restaurant/People.jsx';
@@ -367,8 +367,8 @@ const router = createBrowserRouter([
             },
             
             {
-                path: '/halls/:hallId', 
-                element: <RestaurantHallDetail />
+                path: '/hall/:hallId', 
+                element: <Hall_Details />
             },
 
             {

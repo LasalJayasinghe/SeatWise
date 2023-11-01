@@ -30,7 +30,7 @@ class WaitlistController extends Controller
             'name' => $username,
             'email' => $email,
             'selected_slot_id' => $selectedSlotId,
-            'user_id' => auth()->user()->id, // Assuming you have an authenticated user
+            'user_id' => 1// Assuming you have an authenticated user
         ]);
     
         return response()->json(['message' => 'Successfully added to the waitlist'], 201);
