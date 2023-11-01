@@ -185,13 +185,13 @@ const handleUpdate = (offerId) => {
     {
       field: 'meal',
       headerName: 'Meal',
-      width: 150,
+      width: 70,
       editable: true,
     },
     {
       field: 'offer_type',
       headerName: 'Offer Type',
-      width: 160,
+      width: 100,
       editable: true,
     
     },
@@ -201,7 +201,7 @@ const handleUpdate = (offerId) => {
    {
     field: 'offer_percentage',
     headerName: 'Offer Percentage',
-      width: 130,
+      width: 140,
     editable: true,
 },
 
@@ -209,7 +209,7 @@ const handleUpdate = (offerId) => {
 {
     field: 'start_date',
     headerName: 'Start Date',
-      width: 160,
+      width: 100,
     editable: true,
 },
 
@@ -217,28 +217,28 @@ const handleUpdate = (offerId) => {
 {
     field: 'end_date',
     headerName: 'End Date',
-      width: 160,
+      width: 100,
     editable: true,
 },
 
 {
     field: 'days_of_week',
     headerName: 'days_of_week',
-      width: 160,
+      width: 100,
     editable: true,
 },
 
 {
     field: 'minimum_purchase_amount',
     headerName: 'Minimum Purchase Amount',
-      width: 150,
+      width: 170,
     editable: true,
 },
 
     {
         field:"actions",
         headerName:"Actions", 
-        width:390,
+        width:200,
         renderCell: (params) => {
             return <div className="flex">
  <button

@@ -78,30 +78,19 @@ export default function Requests() {
             editable: true,
         },
         {
-            field:"status",
-            headerName:"Actions", 
-            width:170,
-            renderCell: (params) => {
-                const status = params.value;
-                let statusLabel = "";
-               
-                if (status == "0") {
-                    statusLabel = "Completed";
-                } else if (status == "1") {
-                    statusLabel = "Ongoing";
-                } else if (status == "2") {
-                    statusLabel = "Not Arrived Yet";
-                }
-    
-                return (
-                    <div className="flex">
-                        <p className={status == "0" ? "text-green-500" : status == "1" ? "text-red-500" : "text-black-500"}>
-                            {statusLabel}
-                        </p>
-                    </div>
-                );
-            }
-        },
+            field: "status",
+            headerName: "Actions",
+            width: 170,
+            renderCell: (params) => (
+                <button
+                    // onClick={handleDeleteModalClose}
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Facilitated
+                </button>
+            ),
+        }
+        
     ];
 
     useEffect(() => {

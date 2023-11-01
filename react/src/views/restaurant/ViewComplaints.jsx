@@ -174,18 +174,18 @@ const handleUpdate = (complaintID) => {
 
 
   const columns = [
-    { field: 'id', headerName: 'complaint ID', width: 90 },
+    { field: 'id', headerName: 'complaint ID', width: 130 },
    
     {
       field: 'title',
       headerName: 'Complaint Title',
-      width: 150,
+      width: 170,
       editable: false,
     },
     {
       field: 'description',
       headerName: 'Description',
-      width: 300,
+      width: 180,
       editable: false,
     
     },

@@ -143,13 +143,13 @@ export default function Advertisement() {
                                         <img className="h-20 w-full object-cover object-center" src={adimage} alt="Product Image" />
                                         <div className="p-4">
                                             <div className="flex items-center">
-                                                <p className="text-xs text-gray-500 mr-5">
-                                                    <span className='text-xl font-bold text-gray-800'>509&nbsp;</span> views <br />
-                                                    Posted on {datePart}
+                                                <p className="text-xs text-gray-500 mr-10">
+                                                    <span className='text-xl font-bold text-gray-800'></span> <br />
+                                                    Posted on <br/> {datePart}
                                                 </p>
                                                 <p className="text-xs text-gray-500 mr-5">
                                                     <span className='text-xl font-bold text-red-700'>{add.duration}&nbsp;</span> more<br />
-                                                    Expire on 21/08/2023
+                                                    Expire in <br/> {add.duration}
                                                 </p>
                                                 <button onClick={() => handleAddModalOpen(add.id)} className="bg-red-100 hover:bg-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 rounded">
                                                     Delete
