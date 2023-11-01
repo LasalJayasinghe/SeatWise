@@ -26,7 +26,7 @@ const Cart = ({ isOpen, closeSlideOver, slideOverClasses }) => {
                     </button>
                 </div>
                 <div className='flex justify-center item-center'>
-                    <h5 className='font-semibold text-gray-500'>ABC Restaurant</h5>
+                    <h5 className='font-semibold text-gray-500'>Flower drums Restaurant</h5>
                 </div>
                 <div className='flex justify-center px-10 my-2 item-center'>
                     <p className='justify-center text-xs text-center text-gray-400'><span className='text-red-300'>IMPORTANT:</span> You are only allowed to order meals from the chosen restaurant!</p>
@@ -35,11 +35,14 @@ const Cart = ({ isOpen, closeSlideOver, slideOverClasses }) => {
         <hr />
                 <div className="py-4">
         <div className="flex mb-4">
-            <div className="w-16 h-16 mr-4 bg-gray-300 rounded-lg"></div> {/* Product image */}
+        <div className="w-16 h-16 mr-4 bg-gray-300 rounded-lg">
+  <img src="https://img.freepik.com/free-photo/crispy-mixed-pizza-with-olives-sausage_140725-3095.jpg?size=626&ext=jpg&ga=GA1.1.2030009063.1698396006&semt=ais" alt="" className="object-cover w-full h-full" />
+</div>
+
             <div className="flex-grow">
-            <div className="font-semibold">Product Name 1</div> {/* Product name */}
+            <div className="font-semibold">Chicken Pizza</div> {/* Product name */}
             <div className="text-gray-500">Quantity: 2</div> {/* Product quantity */}
-            <div className="font-semibold">LKR 20.00</div> {/* Product price */}
+            <div className="font-semibold">LKR 4200.00</div> {/* Product price */}
             </div>
             <button className="ml-2 text-red-500">
             <svg
@@ -56,11 +59,13 @@ const Cart = ({ isOpen, closeSlideOver, slideOverClasses }) => {
         </div>
 
         <div className="flex mb-4">
-            <div className="w-16 h-16 mr-4 bg-gray-300 rounded-lg"></div> {/* Product image */}
+            <div className="w-16 h-16 mr-4 bg-gray-300 rounded-lg">
+                <img src="https://img.freepik.com/free-photo/chocolate-lava-cake-white-plate_1150-6317.jpg?size=626&ext=jpg&ga=GA1.1.2030009063.1698396006&semt=ais" alt="" />
+                </div> {/* Product image */}
             <div className="flex-grow">
-            <div className="font-semibold">Product Name 2</div> {/* Product name */}
+            <div className="font-semibold">Lava cake</div> {/* Product name */}
             <div className="text-gray-500">Quantity: 1</div> {/* Product quantity */}
-            <div className="font-semibold">LKR 15.00</div> {/* Product price */}
+            <div className="font-semibold">LKR 490.00</div> {/* Product price */}
             </div>
             <button className="ml-2 text-red-500">
             <svg
@@ -101,8 +106,8 @@ const Cart = ({ isOpen, closeSlideOver, slideOverClasses }) => {
             </div>
 
             <span className="font-bold">Total:</span>
-            <span className="ml-auto">LKR 35.00</span>
-            <p><span className="font-bold">Order Fee: LKR 1552.00</span><span className="ml-auto"> (40% off the total)</span></p>
+            <span className="ml-auto">LKR 4690.00</span>
+            <p><span className="font-bold">Order Fee: LKR 1876.00</span><span className="ml-auto"> (40% off the total)</span></p>
         </div>
         
         </div>
