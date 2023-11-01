@@ -1191,7 +1191,7 @@ public function getComplaints($id) {
     // $restaurant = Restaurants::find($id);
     $Complaints = Complaints::where('restaurantID', $id)
     ->join('users', 'complaints.userID', '=', 'users.id')
-    ->select('complaints.*','users.name as name', 'users.email as user_email')
+    ->select('complaints.*','users.firstname as name', 'users.email as user_email')
     ->orderBy('reply')
     ->get();
 
@@ -1311,7 +1311,7 @@ public function replyComplaint(replyComplaintRequest $request) {
         // $restaurant = Restaurants::find($id);
         $Rating = Ratings::where('restaurantID', $id)
         ->join('users', 'rate.customerID', '=', 'users.id')
-        ->select('rate.*','users.name as name')
+        ->select('rate.*','users.firstname as name')
         ->orderBy('starCount')
         ->get();
     
