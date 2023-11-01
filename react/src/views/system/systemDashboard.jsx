@@ -5,6 +5,7 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { Line } from 'react-chartjs-2';
 import {Chart as chartjs} from 'chart.js/auto'
 
+
 // import { MdRestaurant } from 'react-icons/md';
 
 
@@ -52,6 +53,21 @@ export default function SystemDashboard(){
 	}, []);
 
 
+    useEffect(() => {
+		axiosClient.get('/systemDashboard/getProfitDataForGraph')
+		.then((response) => {
+            console.log(response.data)
+			
+		})
+		.catch((error) => {
+			console.error('Error fetching data:', error);
+		});
+	}, []);
+
+
+
+
+
     const [chartData, setChartData] = useState({
         labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
         datasets: [
@@ -78,13 +94,14 @@ export default function SystemDashboard(){
 
 
     return(
-        <div class="overflow-x-hidden" style={{ overflowY: 'auto' }}>
+        <div>
+        <div className="overflow-x-hidden" style={{ overflowY: 'auto' }}>
             <Header/>
-            <hr class="border-t border-gray-300 my-4" />
+            <hr className="border-t border-gray-300 my-4" />
             {/*<div>{usercount.user_count}</div>
             <div>{restaurantcount.restaurant_count}</div>*/}
 
-            <div class="container mx-auto flex justify-center mt-20">
+            <div className="container mx-auto flex justify-center mt-20">
                 <div class="w-1/5  p-2 h-24 mr-12 flex flex-row border-r border-gray-400">
 
                     <div class=" w-1/3 flex items-center justify-center">
@@ -141,19 +158,20 @@ export default function SystemDashboard(){
 
             </div>
 
-            <div class="bg-red-600  container mr-3/4 flex justify-center mt-20 ">
+            <div className="container mr-3 flex justify-center mt-20 ">
 
-               <div class="bg-white h-[400px] w-[700px] mr-4 p-5 flex items-center"> 
+               <div className="bg-white h-[300px] w-[700px] mr-4 p-5 flex items-center border border-solid border-gray-500"> 
                     <Line data={chartData} options={chartOptions} />
                 </div>
 
-                <div class="bg-green-500 h-[300px] w-1/4 p-5 flex items-center ml-4"> 
-                    hello
+                <div className="h-[300px] w-[500px]  p-5 flex items-center ml-4"> 
+                     map
                 </div>
                 
             </div>
 
 
+        </div>
         </div>
     )
 }
