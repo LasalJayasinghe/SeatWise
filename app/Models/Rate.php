@@ -11,6 +11,12 @@ class Rate extends Model
 
     protected $table = 'rate';
 
+    protected $fillable = [
+        'starCount',
+        'customerID',
+        'restaurantID',
+    ];
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'restaurantID', 'id');

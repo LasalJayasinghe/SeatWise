@@ -73,32 +73,50 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::find($id);
+
+        if (!$restaurant) {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+        return response()->json($restaurant);
+    }
+
+    public function getTableStructures($id)
+    {
+        $restaurant = Restaurant::find($id);
     
         if (!$restaurant) {
             return response()->json(['message' => 'Restaurant not found'], 404);
         }
     
-        return response()->json($restaurant);
+        // Fetch the table structures associated with the restaurant
+        $tableStructures = TableStructure::with('view')->where('restaurant_id', $id)->get();
+    
+        // Return the fetched table structures as a JSON response
+        return response()->json($tableStructures);
     }
     
+
     public function getAvailableTables(Request $request, $restaurantId)
     {
         $date = $request->input('date');
         $startTime = $request->input('start_time');
         $endTime = $request->input('end_time');
         $numParticipants = $request->input('num_participants');
-
-        $tableStructures = TableStructure::where('restaurant_id', $restaurantId)->get();
+    
         $reservedTableIds = TableReservation::where('restaurant_id', $restaurantId)
             ->where('reservation_date', $date)
             ->where('start_time', '<=', $endTime)
             ->where('end_time', '>=', $startTime)
             ->pluck('table_structure_id')
             ->toArray();
-
-            foreach ($tableStructures as $table) {
+    
+        $tableStructures = TableStructure::with('view') // Eager load the "view" relationship
+            ->where('restaurant_id', $restaurantId)
+            ->get()
+            ->map(function ($table) use ($reservedTableIds, $numParticipants, $date, $startTime, $endTime, $restaurantId) {
                 $table->isAvailable = !in_array($table->id, $reservedTableIds) && $table->number_of_chairs >= $numParticipants;
-
+    
                 // Check if the table is unavailable but has the tablefortwo option enabled
                 $tableReservation = TableReservation::where('restaurant_id', $restaurantId)
                     ->where('reservation_date', $date)
@@ -106,11 +124,12 @@ class RestaurantController extends Controller
                     ->where('end_time', '>=', $startTime)
                     ->where('table_structure_id', $table->id)
                     ->first();
-                
+    
                 $table->isTableForTwo = !$table->isAvailable && $tableReservation && $tableReservation->tablefortwo == 1;
-
-            }               
-
+    
+                return $table;
+            });
+    
         return response()->json($tableStructures);
     }
     
@@ -717,20 +736,20 @@ class RestaurantController extends Controller
         return response()->json($restaurant);
     }
 
-    public function getTableStructures($id)
-    {
-        $restaurant = Restaurants::find($id);
+    // public function getTableStructures($id)
+    // {
+    //     $restaurant = Restaurants::find($id);
     
-        if (!$restaurant) {
-            return response()->json(['message' => 'Restaurant not found'], 404);
-        }
+    //     if (!$restaurant) {
+    //         return response()->json(['message' => 'Restaurant not found'], 404);
+    //     }
     
-        // Fetch the table structures associated with the restaurant
-        $tableStructures = TableStructure::with('view')->where('restaurant_id', $id)->get();
+    //     // Fetch the table structures associated with the restaurant
+    //     $tableStructures = TableStructure::with('view')->where('restaurant_id', $id)->get();
     
-        // Return the fetched table structures as a JSON response
-        return response()->json($tableStructures);
-    }
+    //     // Return the fetched table structures as a JSON response
+    //     return response()->json($tableStructures);
+    // }
 
     public function cashierLogin(cashierLoginRequest $request)
     {   

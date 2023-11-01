@@ -1,11 +1,44 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import axiosClent from '../axios-client';
+import { useStateContext } from '../context/ContextProvider';
 
 export default function Example() {
   const [open, setOpen] = useState(true)
-
+  const [complaintTitle, setComplaintTitle] = useState(''); // Define complaintTitle state
+  const [complaintDescription, setComplaintDescription] = useState(''); // Define complaintDescription state
   const cancelButtonRef = useRef(null)
+  const {user} = useStateContext();
+  const userId = user ? user.id : null;
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axiosClent.post('/complaints', {
+        title: complaintTitle,
+        description: complaintDescription,
+        user_id: userId, // Include the user_id in the POST request
+        // Other complaint data as needed
+      });
+  
+      // Handle success, e.g., close the modal
+      console.log('Complaint submitted:', response.data);
+      setOpen(false);
+    } catch (error) {
+      // Handle errors, e.g., display an error message
+      console.error('Error submitting complaint:', error);
+    }
+  };
+  const handleTitleChange = (event) => {
+    setComplaintTitle(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setComplaintDescription(event.target.value);
+  };
+
+
+  
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -43,26 +76,33 @@ export default function Example() {
                       <Dialog.Title as="h3" className="mb-10 text-lg font-semibold leading-6 text-center text-gray-900">
                         Add complaint
                       </Dialog.Title>
-                      <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-medium mb-2" for="username">
-                            Title
-                        </label>
-                        <input class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline  focus:ring-green-300 focus:border-green-500 focus:border-2" id="username" type="text" placeholder="Brief title for your complaint..." />
-                        </div>
-                        <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-medium mb-2" for="username">
-                            Description
-                        </label>
-                        <textarea
-                // ref={aboutRef}
-                  id="description"
-                  name="description"
-                  rows={3}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
-                  defaultValue={''}
-                />
-                       
-                        </div>
+                      <div className="mb-4">
+          <label className="block mb-2 text-sm font-medium text-gray-700" htmlFor="complaintTitle">
+            Title
+          </label>
+          <input
+            id="complaintTitle"
+            type="text"
+            value={complaintTitle} // Bind value to state
+            onChange={handleTitleChange} // Handle input change
+            className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded shadow appearance-none focus:outline-none focus:shadow-outline focus:ring-green-300 focus:border-green-500 focus:border-2"
+            placeholder="Brief title for your complaint..."
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-2 text-sm font-medium text-gray-700" htmlFor="complaintDescription">
+            Description
+          </label>
+          <textarea
+            id="complaintDescription"
+            name="complaintDescription"
+            value={complaintDescription} // Bind value to state
+            onChange={handleDescriptionChange} // Handle input change
+            rows={3}
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
+            defaultValue={''}
+          />
+        </div>
                       <div className="mt-2">
                         <p className="text-sm text-justify text-gray-500">
                         Please describe the issue you're facing in as much detail as possible. Our team will prioritize this matter and work diligently to resolve it as soon as possible. Your feedback is important to us.
@@ -75,7 +115,7 @@ export default function Example() {
                   <button
                     type="button"
                     className="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-green-500 rounded-md shadow-sm hover:bg-green-600 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    onClick={handleSubmit}
                   >
                     Submit
                   </button>
@@ -96,4 +136,3 @@ export default function Example() {
     </Transition.Root>
   )
 }
-

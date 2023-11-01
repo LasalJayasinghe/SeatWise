@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\TablefortwoController;
 use App\Http\Controllers\Api\TableReservationController;
 use App\Http\Controllers\Api\RecommendationController;
 use App\Http\Controllers\Api\RestaurantRecommendationController;
+use App\Http\Controllers\Api\ComplaintController;
 
 
 // Authentication routes
@@ -47,6 +48,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals', [MealController::class, 'index'])->name('meals.index');
     Route::get('/meals/{id}', [MealController::class, 'show']);
     Route::get('/all-meals', [AllMealsController::class, 'index']);
+
+    //complaint
+    Route::post('/complaints', [ComplaintController::class,'store']);
+    Route::get('complaints',[ComplaintController::class,'index']);
 
 
     // Waitlist
@@ -87,6 +92,10 @@ Route::get('/halls/{hallId}/check-availability/{slotId}/{selectedDate}', [HallCo
         Route::put('/acceptReservation/{id}/{userID}', [TablefortwoController::class,'acceptReservations']);
 
     });
+
+    //activities page routes
+    Route::get('/get-ongoing-reservations', [TableReservationController::class, 'getOngoingReservations']);
+    Route::get('/get-completed-reservations', [TableReservationController::class, 'getCompletedReservations']);
 
     Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
     Route::get('/restaurantDetails/{id}', [AuthController::class, 'getRestaurantDetails']);
@@ -240,6 +249,8 @@ Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
 Route::post('/updatemealavailability', [RestaurantController::class, 'updateMealAvailability']);
 Route::post('/reserve-table', [TableReservationController::class, 'reserveTable']);
+
+Route::post('/rate-restaurant', [TableReservationController::class, 'rateRestaurant']);
 
 
 // Waitlist
