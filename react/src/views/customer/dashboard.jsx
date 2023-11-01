@@ -11,6 +11,7 @@ import slide3 from '../../assets/slide3.png';
 import slide4 from '../../assets/slide4.png';
 
 export default function Dashboard() {
+  const [meals, setMeals] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [selectedArea, setSelectedArea] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -19,6 +20,19 @@ export default function Dashboard() {
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
+  useEffect(() => {
+    const fetchAllMeals = async () => {
+      try {
+        const allMealsResponse = await axiosClient.get('/all-meals');
+        setMeals(allMealsResponse.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAllMeals();
+  }, []);
 
   function getOpenDays(profile) {
     const days = [];
@@ -178,11 +192,28 @@ export default function Dashboard() {
           ))}
         </div>
 
+{/* Newly Added Meals  */}
+<h2 className="mt-8 text-2xl font-semibold">Freshly Added Meals</h2>
+
+<div style={{ overflowX: 'auto' }}>
+  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style={{ display: 'flex', flexWrap: 'no-wrap' }}>
+    {(meals).map((meal) => (
+      <div key={meal.id} className="p-0 bg-white rounded-md shadow-md hover:cursor-pointer" style={{ flex: '0 0 25%', minWidth: '25%' }}>
+        <Link to={`/meals/${meal.id}`}>
+          <img src={meal.photo} alt={meal.name} className="object-cover w-full h-40 mt-2 rounded-md" />
+          <h2 className="p-4 text-lg font-semibold">{meal.name}</h2>
+          <p className="px-4 text-gray-600">{meal.description}</p>
+          <p className="px-4 pb-4 font-medium text-gray-800">Price: LKR {meal.price}</p>
+        </Link>
+      </div>
+    ))}
+  </div>
+</div>
+
         {/* Restaurants you may like */}
         {user !== null && (
           <div>
-
-<h2 className="mt-8 text-2xl font-semibold">Restaurants you may like</h2>
+<h2 className="mt-8 text-2xl font-semibold">Restaurants You May Like</h2>
 
 <div className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
   {user.map((restaurant) => (
