@@ -925,26 +925,30 @@ class RestaurantController extends Controller
     }
 
     public function getReservations($restaurant_id,$filter,$input) 
-    {
+    {     $today = date('Y-m-d');
            if($input){
         // $restaurant = Restaurants::find($id);
         if ($filter == "all" ) {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
             ->where('reservationNumber',$input)
+            ->where('reservation_date', $today)
             ->get();
         } else if ($filter == "checkedIn") {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
                 ->where('status', 1)
                 ->where('reservationNumber',$input)
+                ->where('reservation_date', $today)
                 ->get();
         } else if ($filter == "checkedOut") {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
                 ->where('reservationNumber',$input)
+                ->where('reservation_date', $today)
                 ->get();
         } else if ($filter == "pending") {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
                 ->where('status', 2)
                 ->where('reservationNumber',$input)
+                ->where('reservation_date', $today)
                 ->get();
         } 
 
@@ -961,19 +965,22 @@ class RestaurantController extends Controller
 
             if ($filter == "all" ) {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
-               
+                ->where('reservation_date', $today)
                 ->get();
             } else if ($filter == "checkedIn") {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('reservation_date', $today)
                     ->where('status', 1)
                   
                     ->get();
             } else if ($filter == "checkedOut") {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('reservation_date', $today)
                 ->where('status', 0)
                     ->get();
             } else if ($filter == "pending") {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('reservation_date', $today)
                     ->where('status', 2)
                  
                     ->get();
@@ -986,19 +993,18 @@ class RestaurantController extends Controller
 
         return response()->json($reservation);
 
-
     }
 
-    public function getCheckInCount($id) //get the res id
+    public function getPendingCount($id) //get the res id
 
     {   $today = date('Y-m-d');
         
-        $checkedInCount = TableReservation::where('restaurant_id', $id)
+        $PendingCount = TableReservation::where('restaurant_id', $id)
         ->where('reservation_date', $today)
-        ->where('status', 1)
+        ->where('status', 2)
         ->count();
 
-    return response()->json($checkedInCount);
+    return response()->json($PendingCount);
 
     }
 
@@ -1007,7 +1013,7 @@ class RestaurantController extends Controller
         $today = date('Y-m-d');
         $checkedOutCount = TableReservation::where('restaurant_id', $id)
         ->where('reservation_date', $today)
-        ->where('status', 0)
+        ->where('status',0)
         ->count();
 
     return response()->json($checkedOutCount);

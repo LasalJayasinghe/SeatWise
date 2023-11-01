@@ -408,7 +408,7 @@ const handleReserveClick = () => {
       {toggle === 'halls' && (
   <div className="mt-6 grid gap-4">
     {halls.map((hall) => (
-      <Link to={`/halls/${hall.id}`} key={hall.id}>
+      <Link to={`/hall/${hall.id}`} key={hall.id}>
         <div className="p-4 border rounded-lg">
           <h3 className="text-lg font-semibold">{hall.name}</h3>
           <img
