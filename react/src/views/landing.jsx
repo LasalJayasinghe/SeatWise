@@ -77,10 +77,10 @@ export default function landing(){
                 </Link>
             </div>
         </div>
-        <div className='mt-24 flex items-center justify-center'>
+        <div className='flex items-center justify-center mt-24'>
         <Fade bottom>
             
-            <img src={logo} alt="loading"  className='mt-01 flex items-center justify-center'/>
+            <img src={logo} alt="loading"  className='flex items-center justify-center mt-01'/>
         </Fade></div>
         <div className="flex items-center justify-center mt-16">
   <div className='flex-auto mt-2 text-center'>
@@ -94,7 +94,7 @@ export default function landing(){
       
     </Fade>
     
-    <div className='mt-4 pb-4'>
+    <div className='pb-4 mt-4'>
       <TypeAnimation
         sequence={[
           1000,
@@ -129,7 +129,7 @@ export default function landing(){
             <div className="flex flex-row my-20">
             <Fade left>
                 <div className="flex flex-col items-center basis-1/3 h-80 hover:shadow-md">
-                <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M38 22C38 20.9 37.1 20 36 20H20C18.9 20 18 20.9 18 22M38 22V34C38 35.1 37.1 36 36 36H20C18.9 36 18 35.1 18 34V22M38 22L28 29L18 22" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
+                
                 <p className='my-3 text-xl font-semibold font-inter'>Search restaurants by meals</p>
                 <p className='w-4/5 mt-5 font-medium text-center text-gray-600 text-medium font-inter'>Explore a world of culinary delights at your fingertips. With Seatwise, easily search restaurants by meals, unlocking a realm of dining possibilities tailored to your cravings.</p>
                 <button className="mt-10 learn-more">
@@ -155,7 +155,7 @@ export default function landing(){
             </Fade>
             <Fade right>
                 <div className="flex flex-col items-center basis-1/3 h-80 hover:shadow-md">
-                <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="48" height="48" rx="24" fill="#3EB075" fill-opacity="0.2"/><path d="M34 36V26M28 36V20M22 36V30" stroke="#3EB075" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="48" height="48" rx="24" stroke="#3EB075" stroke-opacity="0.1" stroke-width="8"/></svg>
+                
                 <p className='my-3 text-xl font-semibold font-inter'>Table for two</p>
                 <p className='w-4/5 mt-5 font-medium text-center text-gray-600 text-medium font-inter '>Share the joy of dining. With Seatwise, book a table for two and connect with fellow food lovers. Enhance your experience, forge connections, and create lasting memories around a shared table.</p>
                 <button className="mt-10 learn-more">
@@ -366,14 +366,14 @@ export default function landing(){
           Phone: +1 (123) 456-7890
         </p>
       </div>
-      <div>
+      {/* <div>
         <h3 className="text-xl font-semibold">Follow Us</h3>
         <ul className="flex mt-3 space-x-4">
           <li><a href="#" className="text-2xl"><i className="fab fa-facebook"></i></a></li>
           <li><a href="#" className="text-2xl"><i className="fab fa-twitter"></i></a></li>
           <li><a href="#" className="text-2xl"><i className="fab fa-instagram"></i></a></li>
         </ul>
-      </div>
+      </div> */}
     </div>
     <div className="pt-4 mt-8 text-center text-green-500 border-t border-green-300 ">
       <p>&copy; 2023 Seatwise. All rights reserved.</p>

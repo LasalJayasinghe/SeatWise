@@ -47,9 +47,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals/{id}', [MealController::class, 'show']);
     Route::get('/all-meals', [AllMealsController::class, 'index']);
 
-    //Add complaint
+    //complaint
     Route::post('/complaints', [ComplaintController::class,'store']);
-
+    Route::get('complaints',[ComplaintController::class,'index']);
 
 
     // Waitlist

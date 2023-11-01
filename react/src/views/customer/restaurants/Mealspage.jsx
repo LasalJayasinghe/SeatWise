@@ -29,14 +29,14 @@ const MealsPage = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Menu for {restaurantName}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <h1 className="mb-4 text-2xl font-bold">Menu for {restaurantName}</h1>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {meals.map((meal) => (
-          <div key={meal.id} className="bg-white p-4 shadow-md rounded-md">
+          <div key={meal.id} className="p-4 bg-white rounded-md shadow-md">
             <h2 className="text-lg font-semibold">{meal.name}</h2>
-            <img src= {mealimage} alt={meal.name} className="w-full h-40 object-cover mt-2 rounded-md" />
-            <p className="text-gray-600 mt-2">{meal.description}</p>
-            <p className="text-gray-800 font-medium mt-2">Price: LKR {meal.price}</p>
+            <img src= {mealimage} alt={meal.name} className="object-cover w-full h-40 mt-2 rounded-md" />
+            <p className="mt-2 text-gray-600">{meal.description}</p>
+            <p className="mt-2 font-medium text-gray-800">Price: LKR {meal.price}</p>
             {/* You can add more fields here as needed */}
           </div>
         ))}
