@@ -2,15 +2,43 @@ import React, { useEffect, useState } from 'react';
 import axiosClient from '../../../axios-client';
 import Sidebar2 from '../../../components/sidebar2';
 import restaurantImage from '../../../assets/restaurant3.jpg';
+import { useStateContext } from '../../../context/ContextProvider.jsx';
 
 export default function Completed() {
+  const { user } = useStateContext();
+  const userId = user ? user.id : null;
+
   const [completedReservations, setCompletedReservations] = useState([]);
+  const [ratingSuccessMessage, setRatingSuccessMessage] = useState('');
+  const [submittedRatings, setSubmittedRatings] = useState({});
 
   useEffect(() => {
-    axiosClient.get('/get-completed-reservations').then((response) => {
-      setCompletedReservations(response.data);
-    });
-  }, []);
+    if (userId) {
+      axiosClient.get('/get-completed-reservations').then((response) => {
+        setCompletedReservations(response.data);
+      });
+    }
+  }, [userId]);
+
+  const handleRating = (restaurantID, rating) => {
+    // Check if userId is available
+    if (userId) {
+      // Send a POST request to API to save the rating
+      axiosClient
+        .post('/rate-restaurant', { restaurantID, rating, userId })
+        .then((response) => {
+          setRatingSuccessMessage('Thanks for rating!');
+          setSubmittedRatings({ ...submittedRatings, [restaurantID]: rating });
+
+          setTimeout(() => {
+            setRatingSuccessMessage('');
+          }, 1000); 
+        })
+        .catch((error) => {
+          // Handle error
+        });
+    }
+  };
 
   return (
     <div>
@@ -40,6 +68,27 @@ export default function Completed() {
                 <p className="text-gray-500">
                   People: {reservation.number_of_participants}
                 </p>
+
+                <div>
+                  {submittedRatings[reservation.restaurant_id] ? (
+                    // Display submitted rating instead of rating buttons
+                    <p>Rating: {submittedRatings[reservation.restaurant_id]}</p>
+                  ) : (
+                    // Display rating buttons
+                    <>
+                      Rate the restaurant:
+                      <button onClick={() => handleRating(reservation.restaurant_id, 1)}>1</button>
+                      <button onClick={() => handleRating(reservation.restaurant_id, 2)}>2</button>
+                      <button onClick={() => handleRating(reservation.restaurant_id, 3)}>3</button>
+                      <button onClick={() => handleRating(reservation.restaurant_id, 4)}>4</button>
+                      <button onClick={() => handleRating(reservation.restaurant_id, 5)}>5</button>
+                    </>
+                  )}
+                </div>
+
+                {ratingSuccessMessage && (
+                  <div className="text-green-500">{ratingSuccessMessage}</div>
+                )}
               </div>
             ))}
           </div>

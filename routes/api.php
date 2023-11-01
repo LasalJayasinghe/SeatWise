@@ -247,6 +247,8 @@ Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
 Route::post('/updatemealavailability', [RestaurantController::class, 'updateMealAvailability']);
 Route::post('/reserve-table', [TableReservationController::class, 'reserveTable']);
 
+Route::post('/rate-restaurant', [TableReservationController::class, 'rateRestaurant']);
+
 
 // Waitlist
 Route::post('/waitlist', [WaitlistController::class, 'store']);

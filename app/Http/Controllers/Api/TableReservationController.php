@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\TableReservation;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -49,5 +50,23 @@ public function getCompletedReservations()
 
     return response()->json($completedReservations);
 }
+
+public function rateRestaurant(Request $request)
+{
+    Log::info($request->all());
+
+    $this->validate($request, [
+        'rating' => 'required|integer|between:1,5',
+    ]);
+
+    $rating = new Rate();
+    $rating->starCount = $request->rating;
+    $rating->customerID = $request->userId; // Use userId from the request
+    $rating->restaurantID = $request->restaurantID;
+    $rating->save();
+
+    return response()->json(['message' => 'Rating saved successfully']);
+}
+
 
 }
