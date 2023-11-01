@@ -58,8 +58,8 @@ const handleConfirmReservation = async () => {
       reservant_ID: user.id,
       number_of_participants: formSubmissionData.numParticipants,
       table_structure_id: selectedTableStructureId,
-      tablefortwo: tablefortwo ? 1 : 0, // Convert to boolean
-      // You may need to include additional fields here based on your API requirements
+      tablefortwo: tablefortwo ? 1 : 0, 
+      price:bookingFee,
     };
 
     // Make the POST request to your API using Axios

@@ -68,6 +68,9 @@ export default function Completed() {
                 <p className="text-gray-500">
                   People: {reservation.number_of_participants}
                 </p>
+                <p className="text-gray-500">
+      Price: {reservation.price}.00 LKR
+    </p>
 
                 <div>
                   {submittedRatings[reservation.restaurant_id] ? (

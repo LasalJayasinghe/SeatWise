@@ -51,7 +51,9 @@ export default function Activities() {
     <p className="text-gray-500">
       People: {reservation.number_of_participants}
     </p>
-    {/* You can add more details here */}
+    <p className="text-gray-500">
+      Price: {reservation.price}.00 LKR
+    </p>
     <button className="px-4 py-2 mb-2 font-semibold text-white bg-black rounded-md md:mb-4">
       Edit Reservation
     </button>
