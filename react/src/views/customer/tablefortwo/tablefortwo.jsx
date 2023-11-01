@@ -8,6 +8,12 @@ export default function TableForTwo() {
   const [userData, setUserData] = useState([]);
   const [invitesData , setInviteData] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+	const cardsPerPage = 3;
+	const indexOfLastCard = currentPage * cardsPerPage;
+	const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+	const currentCards = invitesData.slice(indexOfFirstCard, indexOfLastCard);
+
 	useEffect(() => {
 		axiosClient.get('tablefortwo/userdata')
 		.then((response) => {
@@ -48,26 +54,83 @@ export default function TableForTwo() {
     <div className="mt-10">
       <p className="text-3xl font-semibold leading-normal text-zinc-900">Upcoming Reservations</p>
       <p className="text-base font-normal leading-normal text-gray-500">Embark on a Flavorful Journey Together</p>
-      {invitesData.map((user) => (
-        <div key={user.id}>
-          <TFTcard user={user} reserveID={user.reservationNumber} />
-        </div>
-      ))}
-    </div>
+        {currentCards.map((user) => (
+            <div key={user.id}>
+              <TFTcard user={user} reserveID={user.reservationNumber} />
+            </div>
+            ))}
+            <div class="mt-4 flex items-center justify-center"> {/* Center-align buttons */}
+            <button
+              onClick={() => {
+              if (currentPage > 1) {
+                setCurrentPage(currentPage - 1);
+              }
+              }}
+              class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-white bg-green-500 border border-green-500 rounded-lg hover:bg-green-600"
+              disabled={currentPage === 1}
+            >
+              <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+              </svg>
+              Previous
+            </button>
+            <button
+              onClick={() => {
+              if (currentCards.length === cardsPerPage) {
+                setCurrentPage(currentPage + 1);
+              }
+              }}
+              class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-white bg-green-500 border border-green-500 rounded-lg hover:bg-green-600"
+              disabled={currentCards.length < cardsPerPage}  // Disable when there are no more pages
+            >
+              Next
+              <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
+            </button>
+				  </div>
+      </div>
     </div>
 ) : (
   invitesData.length > 0 ? (
     <div className="content-container">
       <p className="text-3xl font-semibold leading-normal text-zinc-900">Upcoming Reservations</p>
       <p className="text-base font-normal leading-normal text-gray-500">Embark on a Flavorful Journey Together</p>
-      {invitesData
-          .sort((a, b) => new Date(a.reservation.reservation_date) - new Date(b.reservation.reservation_date))
-          .map((user) => (
-            <div key={user.id}>
-              <TFTcard user={user} reserveID={user.reservationNumber} />
-            </div>
-          ))
-        }
+      {currentCards.map((user) => (
+					<div key={user.id}>
+            <TFTcard user={user} reserveID={user.reservationNumber} />
+					</div>
+				  ))}
+				  <div class="mt-4 flex items-center justify-center"> {/* Center-align buttons */}
+            <button
+              onClick={() => {
+              if (currentPage > 1) {
+                setCurrentPage(currentPage - 1);
+              }
+              }}
+              class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-white bg-green-500 border border-green-500 rounded-lg hover:bg-green-600"
+              disabled={currentPage === 1}
+            >
+					  <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+					  </svg>
+					  Previous
+					</button>
+					<button
+					  onClick={() => {
+						if (currentCards.length === cardsPerPage) {
+						  setCurrentPage(currentPage + 1);
+						}
+					  }}
+					  class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-white bg-green-500 border border-green-500 rounded-lg hover:bg-green-600"
+					  disabled={currentCards.length < cardsPerPage}  // Disable when there are no more pages
+					>
+					  Next
+					  <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+					  </svg>
+					</button>
+        </div>
     </div>
   ) : (
     // <div className="mx-auto text-center content-container md:w-1/2 lg:w-1/3">

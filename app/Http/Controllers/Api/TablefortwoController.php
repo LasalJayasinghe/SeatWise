@@ -133,7 +133,7 @@ class TablefortwoController extends Controller
     //hostory, accepted by user
     public function getHistoryAcceptedRequests($id)
     {
-        $statuses = ['completed', 'rejected'];
+        $statuses = ['completed'];
     
         $Invites = TableForTwo::where('acceptedID', $id)
             ->whereIn('status', $statuses)

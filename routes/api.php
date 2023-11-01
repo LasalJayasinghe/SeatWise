@@ -14,6 +14,8 @@ use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
 use App\Http\Controllers\Api\TablefortwoController;
 use App\Http\Controllers\Api\TableReservationController;
+use App\Http\Controllers\Api\RecommendationController;
+use App\Http\Controllers\Api\RestaurantRecommendationController;
 
 
 // Authentication routes
@@ -88,8 +90,7 @@ Route::get('/halls/{hallId}/check-availability/{slotId}/{selectedDate}', [HallCo
 
     Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
     Route::get('/restaurantDetails/{id}', [AuthController::class, 'getRestaurantDetails']);
-
-
+    Route::get('/userRecommendations/{id}', [RestaurantRecommendationController::class, 'getRecommendedRestaurants']);
 
 
     //---------------------------------------------------------------------------------------------------------------------------------------------
