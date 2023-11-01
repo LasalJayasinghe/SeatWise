@@ -185,12 +185,12 @@ const handleView1 = (RequestId) => {
         
       };*/
   const columns = [
-    { field: 'id', headerName: 'Request ID', width: 400 },
+    { field: 'id', headerName: 'Request ID', width: 150 },
    
     {
       field: 'updated_at',
       headerName: 'Date',
-      width: 150,
+      width: 240,
       editable: true,
     },
     

@@ -152,7 +152,7 @@ export default function AddAdvertisement() {
 
 
                             <div className="flex flex-col items-center justify-between mt-20 lg:flex-row">
-                                <div className="mb-2 text-3xl lg:text-3xl lg:mr-4 lg:mb-0">Total fee: LKR {selectedPrice}/- {selectedDuration}</div>
+                                <div className="mb-2 text-3xl lg:text-3xl lg:mr-4 lg:mb-0">Total fee: LKR {selectedPrice}/- </div>
                                 <button type="submit" className="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600">Publish banner</button>
                             </div>
 

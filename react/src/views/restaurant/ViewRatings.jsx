@@ -193,13 +193,13 @@ export default function ViewRatings() {
 
 
   const columns = [
-    { field: 'rateID', headerName: 'Rate ID', width: 300 },
+    { field: 'rateID', headerName: 'Rate ID', width: 200 },
    
   
     {
       field: 'starCount',
       headerName: 'Rating',
-      width: 460,
+      width: 360,
       renderCell: renderStarRatings,
     
     },
@@ -209,7 +209,7 @@ export default function ViewRatings() {
    {
     field: 'name',
     headerName: 'Customer Name',
-      width: 350,
+      width: 200,
     editable: true,
 },
 

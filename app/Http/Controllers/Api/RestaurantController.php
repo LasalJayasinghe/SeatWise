@@ -525,9 +525,12 @@ class RestaurantController extends Controller
     public function getHallRequests($id) {
 
         $today = date('Y-m-d');
+
+        // ->whereDate('slot_date', '<', $today)
     
-        $request = HallReservations::where('restaurant_id', $id)
-            ->whereDate('slot_date', '<', $today)
+        $request = Hall::where('restaurant_id', $id)
+            ->join('hall_reservations', 'hall_reservations.hall_id', '=', 'halls.id')
+            ->select('hall_reservations.*')
             ->get();
 
         return response()->json($request);
