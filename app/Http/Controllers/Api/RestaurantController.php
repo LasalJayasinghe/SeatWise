@@ -10,6 +10,7 @@ use App\Models\Offers;
 use http\Env\Response;
 
 use App\Models\Profile;
+use App\Models\Ratings;
 use App\Mail\MailNotify;
 use App\Models\Cashiers;
 use App\Models\Category;
@@ -17,14 +18,14 @@ use App\Models\Customer;
 use App\Models\Complaints;
 use App\Models\Restaurant;
 use App\Models\Restaurants;
-use Illuminate\Http\Request;
 ///use App\Mail\AssistanceRequest;
+use Illuminate\Http\Request;
 use App\Models\Advertisements;
 use App\Models\MonthlyPayment;
 use App\Models\TableStructure;
 use App\Models\HallReservations;
-use App\Models\TableReservation;
 
+use App\Models\TableReservation;
 use App\Http\Requests\LoginRequest;
 use App\Models\TechnicalAssistance;
 use Illuminate\Support\Facades\Log;
@@ -37,6 +38,7 @@ use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addOfferRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
+use App\Http\Requests\updateMenuRequest;
 use App\Http\Requests\addCategoryRequest;
 use App\Http\Requests\updateOfferRequest;
 use App\Http\Requests\cashierLoginRequest;
@@ -50,7 +52,6 @@ use App\Http\Requests\updateRestaurantRequest;
 use App\Http\Requests\addMonthlyPaymentRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
 use App\Http\Requests\updateAssistanceDataRequest;
-use App\Models\Ratings;
 
 class RestaurantController extends Controller
 {
@@ -659,6 +660,38 @@ class RestaurantController extends Controller
             'cvv' => $data['cvv'],
         ]);
 
+    }
+
+    public function editMenu(updateMenuRequest $request) {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+        $mealId = $data['id'];
+        
+        // Update first table (Assuming 'restaurants' table)
+        $restaurant = Meals::find($mealId);
+        if ($restaurant) {
+            $restaurant->update([
+                'name' => $data['name'],
+                'potion' => $data['potion'],
+                'price' => $data['price'],
+                'description' => $data['description'],
+            ]);
+        } else {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+
+        return response()->json(['message' => 'Update successful']);
+    }
+
+    public function deleteMenu($id)
+    {
+        $add=Meals::find($id);
+
+        if ($add) {
+            $add->delete();
+        } else {
+        }
     }
 
     // public function updateMealAvailability(Request $request)
