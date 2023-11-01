@@ -192,24 +192,6 @@ export default function Dashboard() {
           ))}
         </div>
 
-{/* Newly Added Meals  */}
-<h2 className="mt-8 text-2xl font-semibold">Freshly Added Meals</h2>
-
-<div style={{ overflowX: 'auto' }}>
-  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style={{ display: 'flex', flexWrap: 'no-wrap' }}>
-    {(meals).map((meal) => (
-      <div key={meal.id} className="p-0 bg-white rounded-md shadow-md hover:cursor-pointer" style={{ flex: '0 0 25%', minWidth: '25%' }}>
-        <Link to={`/meals/${meal.id}`}>
-          <img src={meal.photo} alt={meal.name} className="object-cover w-full h-40 mt-2 rounded-md" />
-          <h2 className="p-4 text-lg font-semibold">{meal.name}</h2>
-          <p className="px-4 text-gray-600">{meal.description}</p>
-          <p className="px-4 pb-4 font-medium text-gray-800">Price: LKR {meal.price}</p>
-        </Link>
-      </div>
-    ))}
-  </div>
-</div>
-
         {/* Restaurants you may like */}
         {user !== null && (
           <div>
@@ -265,10 +247,28 @@ export default function Dashboard() {
         </div>
     </div>
     )}
+    {/* Newly Added Meals  */}
+<h2 className="mt-8 text-2xl font-semibold">Freshly Added Meals</h2>
+
+<div style={{ overflowX: 'auto' }}>
+  <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style={{ display: 'flex', flexWrap: 'no-wrap' }}>
+    {(meals).map((meal) => (
+      <div key={meal.id} className="p-0 bg-white rounded-md shadow-md hover:cursor-pointer" style={{ flex: '0 0 25%', minWidth: '25%' }}>
+        <Link to={`/meals/${meal.id}`}>
+          <img src={meal.photo} alt={meal.name} className="object-cover w-full h-40 mt-2 rounded-md" />
+          <h2 className="p-4 text-lg font-semibold">{meal.name}</h2>
+          <p className="px-4 text-gray-600">{meal.description}</p>
+          <p className="px-4 pb-4 font-medium text-gray-800">Price: LKR {meal.price}</p>
+        </Link>
+      </div>
+    ))}
+  </div>
+</div>
         {/* Popular Restaurants */}
         <h2 className="mt-8 text-2xl font-semibold">Popular Restaurants</h2>
-        <div className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {restaurants.slice(0, 6).map((restaurant) => (
+        <div style={{ overflowX: 'auto' }}>
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style={{ display: 'flex', flexWrap: 'no-wrap' }}>          
+          {restaurants.slice(0, 4).map((restaurant) => (
             <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
               <div className="restaurant-card">
                 <div className="relative flex flex-col w-full max-w-xs overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md">
@@ -281,7 +281,7 @@ export default function Dashboard() {
                       e.target.src = 'https://img.freepik.com/free-photo/restaurant-hall-with-lots-table_140725-6309.jpg?size=626&ext=jpg&ga=GA1.1.2030009063.1698396006&semt=sph'; // Set a fallback image URL
                     }}
                   />
-                  <span className="absolute top-0 left-0 px-2 m-2 text-sm font-medium text-center text-white bg-red-700 rounded-xl">New</span>
+                <span className="absolute top-0 left-0 px-2 m-2 text-sm font-medium text-center text-white bg-red-700 rounded-xl">New</span>
                   <div className="px-5 pb-5 mt-4">
                     <h5 className="text-xl font-bold tracking-tight text-slate-900">{restaurant.restaurantname}</h5>
                     <div className="mt-2">
@@ -313,6 +313,7 @@ export default function Dashboard() {
             </Link>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
