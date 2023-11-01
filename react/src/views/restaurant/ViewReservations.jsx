@@ -68,7 +68,7 @@ export default function ViewReservations() {
 
    useEffect(() => {
     if (user && user.id) {
-      axiosClient.get(`/getReservations/${user.restaurant_id}/${selectedFilter}/${input}/${inputDate}`)
+      axiosClient.get(`/getReservations/${user.restaurant_id}/${selectedFilter}/${input}`)
       
         .then(({ data }) => {
           setReservation(data);
@@ -91,7 +91,8 @@ export default function ViewReservations() {
         setClickedButtonIdTwo(reservationId); 
             
         if (user && user.id) {
-          axiosClient.get(`/getReservations/${user.restaurant_id}`)
+          //axiosClient.get(`/getReservations/${user.restaurant_id}`)
+          axiosClient.get(`/getReservations/${user.restaurant_id}/${selectedFilter}/${input}`)
             .then(({ data }) => {
              
               setReservation(data);
@@ -130,7 +131,8 @@ export default function ViewReservations() {
       .then(response => {
         setClickedButtonIdOne(reservationId); 
         if (user && user.id) {
-          axiosClient.get(`/getReservations/${user.restaurant_id}`)
+         // axiosClient.get(`/getReservations/${user.restaurant_id}`)
+         axiosClient.get(`/getReservations/${user.restaurant_id}/${selectedFilter}/${input}`)
             .then(({ data }) => {
               setReservation(data);
             })
@@ -198,9 +200,10 @@ export default function ViewReservations() {
       <th className="bg-gray-900  text-white font-bold px-6 py-3"> Start time</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3">End time</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Table number</th>
-      <th className="bg-gray-900  text-white font-bold px-6 py-3">Reservant ID</th>
+      <th className="bg-gray-900  text-white font-bold px-6 py-3">Floor</th>
+      <th className="bg-gray-900  text-white font-bold px-2 py-3">Reservant ID</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Number of participants</th>
-      <th className="bg-gray-900  text-white font-bold px-5 py-3">Table for two</th>
+      <th className="bg-gray-900  text-white font-bold px-1 py-3">Table for two</th>
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Status</th>
       
       <th className="bg-gray-900  text-white font-bold px-6 py-3">Action</th>
@@ -213,13 +216,16 @@ export default function ViewReservations() {
           <td className="px-6 py-4">{Reservation.reservationNumber}</td>
           <td className="px-6 py-4">{Reservation.start_time}</td>
           <td className="px-6 py-4">{Reservation.end_time}</td>
-          <td className="px-6 py-4">{Reservation.table_structure_id}</td>
+          <td className="px-6 py-4">{Reservation.table_number}</td>
+          <td className="px-6 py-4">{Reservation.floor}</td>
           <td className="px-6 py-4">{Reservation.	reservant_ID}</td>
          <td className="px-6 py-4">{Reservation.number_of_participants}</td>
-         <td className="px-6 py-4">{Reservation.tablefortwo}</td>
-  
+         <td className="px-6 py-4"  >
+  {Reservation.tablefortwo === 0 ? "Disabled" : "Enabled"}
+</td>
+
           <td
-  className={`px-6 py-4 ${
+  className={`px-0 py-5 ${
     Reservation.status === 1
       ? "text-green-500"
       : Reservation.status === 0
@@ -237,14 +243,14 @@ export default function ViewReservations() {
              <td>  <button
   style={{ marginLeft: '-4rem' }}
   onClick={() => handleCheckIn(Reservation.id)} // Pass a function reference
-  className={`hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-4 rounded`}
+  className={`hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-3 rounded`}
 >
   Check In
 </button>
 <button
-  style={{ marginLeft: '1rem' }}
+  style={{ marginLeft: '1rem',marginRight: '0.5rem' }}
   onClick={() => handleCheckOut(Reservation.id)} // Pass a function reference
-   className={` hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-4 rounded`}
+   className={` hover:bg-green-500 border border-green-500 text-black font-bold py-2 px-3 rounded`}
 >
   Check Out
 </button>
