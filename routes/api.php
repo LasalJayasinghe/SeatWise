@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
+use App\Http\Controllers\Api\SystemController;
 use App\Http\Controllers\Api\TablefortwoController;
 use App\Http\Controllers\Api\TableReservationController;
 use App\Http\Controllers\Api\RecommendationController;
@@ -31,6 +32,14 @@ Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories'
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 Route::post('/landing', [AuthController::class, 'landing']);
 
+
+// System routes
+
+Route::get('/systemDashboard/getUserCount', [SystemController::class, 'getUserCount']);
+Route::get('/systemDashboard/getRestaurantCount', [SystemController::class, 'getRestaurantCount']);
+Route::get('/systemDashboard/getRateCount', [SystemController::class, 'getRateCount']);
+Route::get('/systemDashboard/getWeeklyProfit', [SystemController::class, 'getWeeklyProfit']);
+Route::get('/systemDashboard/getAllRestaurants', [SystemController::class, 'getAllRestaurants']);
 
 
 // Authenticated routes
