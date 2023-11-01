@@ -134,7 +134,7 @@ export default function ChartBox() {
             {props.percentage}%
           </span>
           <span className="duration">this month</span> */}
-          <span className="percentage">45%</span>
+          <span className="percentage">15%</span>
           <span className="duration"> This Month</span>
         </div>
       </div>

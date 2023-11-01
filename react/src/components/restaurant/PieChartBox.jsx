@@ -38,10 +38,9 @@ export default function PieChartBox() {
   }, [user]);
 
   const data = [
-    { name: "Table", value: count2, color: "#0088FE" },
-    { name: "Hall", value: count1, color: "#00C49F" },
+    { name: "Table", value: count2, color: "#22C55E" },
+    { name: "Hall", value: count1, color: "#374151" },
   ];
-
 
 
   return (

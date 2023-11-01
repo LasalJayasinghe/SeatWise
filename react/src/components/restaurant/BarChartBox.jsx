@@ -88,6 +88,7 @@ export default function BarChartBox() {
         series={[
           {
             data: [2, 2, 3, 4, 1, 2, 3, 3, 4, 2, 1, 8],
+            color: '#374151',
           },
         ]}
         width={300}
