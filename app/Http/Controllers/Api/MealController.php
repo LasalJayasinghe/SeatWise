@@ -16,10 +16,11 @@ class MealController extends Controller
     }
 
     public function show($id)
-    {
-        // Fetch a specific meal by ID
-        $meal = Meal::with('category')->findOrFail($id);
-        return response()->json($meal);
-    }
+{
+    // Fetch a specific meal by ID and eager load the 'restaurant' relationship
+    $meal = Meal::with('category', 'restaurant')->findOrFail($id);
+    return response()->json($meal);
+}
+
 
 }
