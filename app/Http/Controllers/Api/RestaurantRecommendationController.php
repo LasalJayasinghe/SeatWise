@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Restaurants;
+use App\Models\Restaurant;
+use App\Models\Profile;
+
 
 class RestaurantRecommendationController extends Controller
 {
@@ -14,7 +17,7 @@ class RestaurantRecommendationController extends Controller
 
         $userFeatures = $this->extractFeatures($user);
 
-        $allRestaurants = Restaurants::all();
+        $allRestaurants = Restaurant::with('profile')->get();
 
         $recommendedRes = $this->calculateUserSimilarity($userFeatures, $allRestaurants);
         return response()->json($recommendedRes);
@@ -28,6 +31,7 @@ class RestaurantRecommendationController extends Controller
             'mealPreference' => $user->mealPreferences,
             'beverageType' => $user->beverageType,
             'restaurantType' => $user->restaurantType,
+
             // Add more features as needed
         ];
 
@@ -39,6 +43,7 @@ class RestaurantRecommendationController extends Controller
         $similarUsers = [];
 
         foreach ($allUsers as $user) {
+            $profile = $user->profile;
             $accountFeatures = $this->extractFeatures($user);
 
             $similarityScore = $this->calculateSimilarity($userFeatures, $accountFeatures);
@@ -47,6 +52,8 @@ class RestaurantRecommendationController extends Controller
                 'resID' => $user->id,
                 'resName' => $user->restaurantname,
                 'similarity_score' => $similarityScore,
+                'profile' => $profile, // Include the profile data
+
             ];
         }
 

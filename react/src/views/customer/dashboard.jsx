@@ -45,6 +45,24 @@ export default function Dashboard() {
       console.error(error);
     }
   };
+  //Dashboard Recommendation
+  const [user, setUserData] = useState(null); // Initialize user state
+	useEffect(() => {
+		axiosClient.get('tablefortwo/userdata')
+		.then((response) => {
+			return axiosClient.get('/userRecommendations/' + response.data.id);
+		})
+		.then((response) => {
+			setUserData(response.data);
+		})
+		.catch((error) => {
+			console.error('Error fetching data:', error);
+		});
+	}, []);
+	
+	useEffect(() => {
+		console.log("Data:", user);
+	}, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -161,10 +179,14 @@ export default function Dashboard() {
         </div>
 
         {/* Restaurants you may like */}
+        {user !== null && (
+          <div>
+
 <h2 className="mt-8 text-2xl font-semibold">Restaurants you may like</h2>
+
 <div className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-  {restaurants.slice(0, 6).map((restaurant) => (
-    <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
+  {user.map((restaurant) => (
+    <Link to={`/restaurants/${restaurant.resID}`} key={restaurant.resID}>
       <div className="restaurant-card">
         <div className="relative flex flex-col w-full max-w-xs overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md">
           <img
@@ -179,7 +201,7 @@ export default function Dashboard() {
 
                   <span className="absolute top-0 left-0 px-2 m-2 text-sm font-medium text-center text-white bg-red-700 rounded-xl">New</span>
                   <div className="px-5 pb-5 mt-4">
-                    <h5 className="text-xl font-bold tracking-tight text-slate-900">{restaurant.restaurantname}</h5>
+                    <h5 className="text-xl font-bold tracking-tight text-slate-900">{restaurant.resName}</h5>
                     <div className="mt-2">
                       <p className="text-sm text-slate-700"><b>Open Days: </b>{getOpenDays(restaurant.profile)}</p>
                       <p className="text-sm text-slate-700"><b>Open Time:</b> {restaurant.profile && restaurant.profile.opening} to {restaurant.profile && restaurant.profile.closing}</p>
@@ -210,7 +232,8 @@ export default function Dashboard() {
             </Link>
           ))}
         </div>
-
+    </div>
+    )}
         {/* Popular Restaurants */}
         <h2 className="mt-8 text-2xl font-semibold">Popular Restaurants</h2>
         <div className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
