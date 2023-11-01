@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import AddCashier from './addCashier.jsx';
 import Reservations from "./Reservations";
 
+
 /*
   This example requires some changes to your config:
   
@@ -40,7 +41,7 @@ const products = [
 
 
 const filterOptions = [
-  { value: "all", label: "All Reservations" },
+  { value: "all", label: "All" },
   { value: "checkedIn", label: "Checked In" },
   { value: "checkedOut", label: "Checked Out" },
   { value: "pending", label: "Pending" },
@@ -56,6 +57,7 @@ export default function ViewReservations() {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [input, setInput] = useState(0);
   const [inputDate, setInputDate] = useState("");
+  const [date, setDate] = useState('');
  
   
   useEffect(() => {
@@ -164,33 +166,39 @@ export default function ViewReservations() {
   
   <div className="mx-auto max-w-10xl py-6 sm:px-6 lg:px-8">
 
-  <div className="my-4 mx-auto max-w-2xl flex items-center" >
+  <div className="my-4 mx-auto max-w-2xl flex items-center">
   <select
-              value={selectedFilter}
-              onChange={(e) => {
-                setSelectedFilter(e.target.value);
-                setInput(0); // Clear the input when the filter selection changes
-              }}
-              className="border rounded w-1/3 p-2 mr-4"
-            >
-              {filterOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          
-
+    value={selectedFilter}
+    onChange={(e) => {
+      setSelectedFilter(e.target.value);
+      setInput(0); // Clear the input when the filter selection changes
+    }}
+    className="bg-green-500 border rounded text-white font-bold w-1/2 mr-4 mt -1 py-4" // Reduce the padding here
+  >
+    {filterOptions.map((option) => (
+      <option key={option.value} value={option.value}>
+        {option.label}
+      </option>
+    ))}
+  </select>
+  <input
+    type="date"
+    value={date}
+    onChange={(e) => setDate(e.target.value)}
+    required
+    className="p-2 border rounded-lg px -5 mr-4" // Remove the margin class
+  />
   <input
     type="text"
     placeholder="Search by Reservation ID"
     className="border rounded w-full p-2"
     value={input}
     onChange={(e) => setInput(e.target.value)}
-    
- / >
-  
+  />
+
+ 
 </div>
+
 
 
   <table className="table-fixed w-full my-20 bg-white shadow-lg rounded-lg">
