@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurants;
+use App\Models\Restaurant;
 use App\Models\User;
 use App\Models\Rate;
 use App\Models\Profits;
@@ -87,8 +88,25 @@ public function getWeeklyProfit()
             return $weekProfits->sum('profit');
         });
 
-    return response()->json(['weekly_profit' => $weeklyProfit]);
+    // Sort the weekly profits in descending order and take the top 6
+    $topWeeklyProfits = $weeklyProfit
+        ->sortDesc()
+        ->take(6);
+
+    return response()->json(['top_weekly_profits' => $topWeeklyProfits]);
 }
+
+
+        public function getAllRestaurants()
+        {
+            // Use the Restaurants model to retrieve all data from the restaurants table
+            $restaurants = Restaurants::with('profile')->get();
+
+            // Return the retrieved data as a JSON response
+            return response()->json($restaurants);
+        }
+
+
 
 
 

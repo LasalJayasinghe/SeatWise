@@ -61,6 +61,9 @@ import CashierLogin from './views/restaurant/cashierLogin.jsx';
 import AddCashier from './views/restaurant/addCashier.jsx';
 import CashierUpdate from './views/restaurant/CashierUpdate.jsx';
 import CashierDashboard from './views/restaurant/CashierDashboard.jsx';
+import SystemRestaurants from './views/system/systemRestaurants.jsx';
+import SystemMeals from './views/system/systemMeals.jsx';
+import SystemUsers from './views/system/systemUsers.jsx';
 
 
 
@@ -357,6 +360,22 @@ const router = createBrowserRouter([
         path: '/systemDashboard',
         element: <SystemDashboard />
     },
+
+    {
+        path: '/systemRestaurants',
+        element: <SystemRestaurants />
+    },
+
+    {
+        path: '/systemMeals',
+        element: <SystemMeals />
+    },
+
+    {
+        path: '/systemUsers',
+        element: <SystemUsers />
+    },
+
     
     {
         path: '*',

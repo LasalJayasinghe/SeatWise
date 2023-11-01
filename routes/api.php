@@ -32,7 +32,9 @@ Route::post('/landing', [AuthController::class, 'landing']);
 Route::get('/systemDashboard/getUserCount', [SystemController::class, 'getUserCount']);
 Route::get('/systemDashboard/getRestaurantCount', [SystemController::class, 'getRestaurantCount']);
 Route::get('/systemDashboard/getRateCount', [SystemController::class, 'getRateCount']);
-Route::get('/systemDashboard/getProfitDataForGraph', [SystemController::class, 'getWeeklyProfit']);
+Route::get('/systemDashboard/getWeeklyProfit', [SystemController::class, 'getWeeklyProfit']);
+Route::get('/systemDashboard/getAllRestaurants', [SystemController::class, 'getAllRestaurants']);
+
 
 // Authenticated routes
 Route::middleware(['auth:sanctum'])->group(function () {

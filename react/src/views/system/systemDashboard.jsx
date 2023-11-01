@@ -1,6 +1,7 @@
+import '../../util/system-chart.css';
 import {useEffect, useState} from "react";
 import axiosClient from "../../axios-client.js";
-import Header from "../../components/Header.jsx";
+import Header from "../../components/SystemHeader.jsx";
 import { BsFillPersonFill } from 'react-icons/bs';
 import { Line } from 'react-chartjs-2';
 import {Chart as chartjs} from 'chart.js/auto'
@@ -15,6 +16,7 @@ export default function SystemDashboard(){
     const [restaurantcount, setRestaurantcount] = useState([]);
     const [ratecount, setRatecount] = useState([]);
     const [averagestarcount, setAveragestarcount] = useState([]);
+    const [weeklyProfitData,setWeeklyProfitData] = useState([]);
 
     useEffect(() => {
 		axiosClient.get('/systemDashboard/getUserCount')
@@ -53,38 +55,89 @@ export default function SystemDashboard(){
 	}, []);
 
 
-    useEffect(() => {
-		axiosClient.get('/systemDashboard/getProfitDataForGraph')
-		.then((response) => {
-            console.log(response.data)
+    // useEffect(() => {
+	// 	axiosClient.get('/systemDashboard/getWeeklyProfit')
+	// 	.then((response) => {
+    //         console.log(response.data)
 			
-		})
-		.catch((error) => {
-			console.error('Error fetching data:', error);
-		});
-	}, []);
+	// 	})
+	// 	.catch((error) => {
+	// 		console.error('Error fetching data:', error);
+	// 	});
+	// }, []);
 
 
 
 
 
     const [chartData, setChartData] = useState({
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        labels: [],
         datasets: [
           {
             label: 'Profit',
-            data: [1000, 1500, 1200, 2000],
+            data: [],
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 2,
+            fill: true
           },
         ],
       });
+
+
+      useEffect(() => {
+        // Check if weeklyProfitData has data
+        if (weeklyProfitData && weeklyProfitData.length > 0) {
+            // Extract labels (week numbers) and profits
+            const labels = weeklyProfitData.map((weekProfit) => `Week ${weekProfit.week}`);
+            const profits = weeklyProfitData.map((weekProfit) => weekProfit.total_profit);
+    
+            // Update the chartData state with the new data
+            setChartData({
+                labels: labels,
+                datasets: [
+                    {
+                        ...chartData.datasets[0], // Keep other dataset properties
+                        data: profits,
+                    },
+                ],
+            });
+        }
+    }, [weeklyProfitData]);
+
+
+
+
+
       
       const[chartOptions,setChartOptions] = useState({
-        scales: {
-          y: {
-            beginAtZero: true,
+
+        
+
+        elements: {
+            line: {
+              cubicInterpolationMode: 'monotone', // 'default', 'monotone'
+            },
           },
+
+
+        scales: {
+
+         x: {
+
+            ticks: {
+                color: 'black', // Set the color of the tick labels to black
+              },
+
+         },
+         
+         y: {
+            beginAtZero: true,
+
+            ticks: {
+                color: 'black', // Set the color of the tick labels to black
+              },
+          },
+
         },
 
         
@@ -160,11 +213,13 @@ export default function SystemDashboard(){
 
             <div className="container mr-3 flex justify-center mt-20 ">
 
-               <div className="bg-white h-[300px] w-[700px] mr-4 p-5 flex items-center border border-solid border-gray-500"> 
+               <div className=" bg-white h-[300px] w-[600px] mr-3 p-5 flex justify-center items-center border border-solid border-gray-500 transition-transform transform hover:scale-105"> 
+                    
                     <Line data={chartData} options={chartOptions} />
+                    
                 </div>
 
-                <div className="h-[300px] w-[500px]  p-5 flex items-center ml-4"> 
+                <div className="h-[300px] w-[600px]  p-5 flex items-center ml-4"> 
                      map
                 </div>
                 
