@@ -145,7 +145,7 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {/* Display search results */}
-          {displayRestaurants.slice(0, 6).map((restaurant) => (
+          {displayRestaurants.slice(0, 8).map((restaurant) => (
             <Link to={`/restaurants/${restaurant.id}`} key={restaurant.id}>
               <div className="restaurant-card">
                 <div className="relative flex flex-col w-full max-w-xs overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md">
@@ -223,7 +223,7 @@ export default function Dashboard() {
                       <p>
                         <span className="text-sm text-slate-700">{restaurant.resType}</span>
                       </p>
-                      <div className="flex items-center">
+                      {/* <div className="flex items-center">
                         {restaurant.avgRate ? (
                           <StarRatings
                             rating={restaurant.avgRate}
@@ -237,7 +237,7 @@ export default function Dashboard() {
                         ) : (
                           <p className='text-gray-400'>No ratings yet</p>
                         )}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

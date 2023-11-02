@@ -63,14 +63,14 @@ export default function landing(){
         <div className='container h-screen p-0'>
         <div className="flex flex-row-reverse px-20 pt-8">
             <div>
-               <Link to = "/signup" > 
+               <Link to = "/login" > 
                     <button className="px-5 py-2 font-semibold text-white bg-black border border-black rounded-2xl hover:bg-transparent hover:text-black hover:border-black">
                         I'm a customer
                     </button>
                 </Link>
             </div>
             <div className='pr-5'>
-                <Link to = "/login" >
+                <Link to = "/restaurantlogin" >
                 <button className="px-5 py-2 font-semibold text-black bg-transparent border border-black rounded-2xl hover:bg-black hover:text-white">
                     I'm a restaurant
                 </button>
