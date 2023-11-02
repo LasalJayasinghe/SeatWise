@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axiosClient from '../../../axios-client';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import backBtn from '../../../assets/back-button.png';
-
+import ReservationSuccessPopup from '../../../components/ReservationSuccessPopup';
 
 const HallReservation = () => {
 
@@ -21,7 +21,10 @@ const HallReservation = () => {
   
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const handleClosePopup = () => {
+    setShowSuccessPopup(false);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -162,8 +165,18 @@ const HallReservation = () => {
         
         
       </form>
-      {successMessage && <p className="text-green-500">{successMessage}</p>}
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+      {successMessage && showSuccessPopup && (
+        <ReservationSuccessPopup
+          message={successMessage}
+          onClose={handleClosePopup} // Pass the close function
+          onHomeClick={() => {
+            navigate('/dashboard');
+          }}
+          onActivitiesClick={() => {
+            navigate('/activities');
+          }}
+        />
+      )}     {errorMessage && <p className="text-red-500">{errorMessage}</p>}
     </div>
   );
 };

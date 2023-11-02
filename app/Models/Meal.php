@@ -9,11 +9,16 @@ class Meal extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'description', 'price', // Add more columns as needed
+        'name', 'description', 'price', 
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
     }
 }
