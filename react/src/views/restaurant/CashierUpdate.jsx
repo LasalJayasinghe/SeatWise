@@ -174,6 +174,13 @@ const handleUpdate = (cashierId) => {
 
   const columns = [
     { field: 'id', headerName: 'Cashier ID', width: 90 },
+
+    {
+      field:"avatar", headerName:"Avatar", width:100,
+      renderCell: (params) => {
+          return <img src={`http://127.0.0.1:8000/src/assets/${params.row.photo}`} alt="Hello" />
+      }
+  },
    
     {
       field: 'cashier_name',
@@ -181,20 +188,29 @@ const handleUpdate = (cashierId) => {
       width: 150,
       editable: false,
     },
+
+    {
+      field: 'address',
+      headerName: 'Address',
+      width: 150,
+      editable: false,
+    
+    },
     {
       field: 'email',
       headerName: 'E mail',
-      width: 300,
+      width: 250,
       editable: false,
     
     },
    
-
+   
+   
     
    {
     field: 'cashier_phone_number',
     headerName: 'Phone number',
-      width: 260,
+      width: 230,
     editable: false,
 },
     {

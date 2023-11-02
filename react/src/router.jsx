@@ -43,7 +43,7 @@ import ViewReservations from './views/restaurant/ViewReservations.jsx';
 import Menu from './views/restaurant/Menu.jsx';
 import AddMenu from './views/restaurant/AddMenu.jsx';
 import Orders from './views/restaurant/Orders.jsx';
-import RestaurantHallDetail from './views/restaurant/HallDetail.jsx';
+import Hall_Details from './views/restaurant/Hall_Details.jsx';
 import RestaurantWaitlistPage from './views/restaurant/WaitlistPage .jsx';
 import OrderHistory from './views/restaurant/OrderHistory.jsx';
 import People from './views/restaurant/People.jsx';
@@ -53,13 +53,19 @@ import TechnicalAssistance from './views/restaurant/TechnicalAssistance.jsx';
 import ViewOffers from './views/restaurant/ViewOffers.jsx';
 import AddOffer from './views/restaurant/addOffer.jsx';
 import ViewComplaints from './views/restaurant/ViewComplaints.jsx';
+import Requests from './views/restaurant/Requests.jsx';
+import Advertisement from './views/restaurant/Advertisement.jsx';
+
 import CashierGuestLayout from './components/restaurant/CashierGuestLayout.jsx';  
 import CashierDefaultLayout from './components/restaurant/CashierDefaultLayout.jsx';
 import CashierLogin from './views/restaurant/cashierLogin.jsx';
 import AddCashier from './views/restaurant/addCashier.jsx';
 import CashierUpdate from './views/restaurant/CashierUpdate.jsx';
 import CashierDashboard from './views/restaurant/CashierDashboard.jsx';
-
+import Payments from './views/restaurant/Payments.jsx';
+import AddAdvertisement from './views/restaurant/AddAdvertisement.jsx';
+import ViewAssistanceHistory from './views/restaurant/ViewAssistanceHistory.jsx';
+import ViewRatings from './views/restaurant/ViewRatings.jsx';
 
 
 
@@ -272,13 +278,22 @@ const router = createBrowserRouter([
             },
             {
                 path: "/TechnicalAssistance",
-                element: <TechnicalAssistance/>, 
+                element: <ViewAssistanceHistory/>, 
             },
              
+            
 
+            {
+                path: "/AddTechnicalAssistance",
+                element: <TechnicalAssistance/>, 
+            },
             {
                 path: "/ViewComplaints",
                 element: <ViewComplaints/>, 
+            },
+            {
+                path: "/Ratings",
+                element: <ViewRatings/>, 
             },
 
 
@@ -293,6 +308,22 @@ const router = createBrowserRouter([
             {
                 path: "/settings",
                 element: <Settings />, 
+            },
+            {
+                path: "/requests",
+                element: <Requests />, 
+            },
+            {
+                path: "/adds",
+                element: <Advertisement />, 
+            },
+            {
+                path: "/payments",
+                element: <Payments />, 
+            },
+            {
+                path: "/addadd",
+                element: <AddAdvertisement />, 
             },
         ]
     },
@@ -343,8 +374,8 @@ const router = createBrowserRouter([
             },
             
             {
-                path: '/halls/:hallId', 
-                element: <RestaurantHallDetail />
+                path: '/hall/:hallId', 
+                element: <Hall_Details />
             },
 
             {

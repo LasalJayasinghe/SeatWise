@@ -92,6 +92,11 @@ export default function Reservations() {
         return reservedtableData.some((table) => (table.table_id) === String(tableNumber) && table.reservation_date === date);
       };
 
+      const isTableInTableForTwo = (tableNumber) => {
+        // const parsedTableNumber = parseInt(tableNumber, 10);
+        return reservedtableData.some((table) => (table.table_id) === String(tableNumber) && table.tablefortwo == '1');
+      };
+
   return (
     <>
       <header className="bg-white shadow"> 
@@ -102,7 +107,7 @@ export default function Reservations() {
           </div>
         </div>
         </header>
-        <main>
+        <main className="bg-zinc-100">
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 
             <div className="flex gap-10">
@@ -170,14 +175,18 @@ export default function Reservations() {
                         const tableNumber = index + 1;
                         const isTablePresent = isTableInStructure(tableNumber);
                         const isTableReserved = isTableInReserved(tableNumber);
+                        const isTableForTwo = isTableInTableForTwo(tableNumber);
                         console.log(isTablePresent);
                         console.log(isTableReserved);
+                        console.log("2:", isTableForTwo);
                         let classes = "grid-item-reserve";
-                        if (isTableReserved && isTablePresent) {
+                        if(isTableReserved && isTablePresent && isTableForTwo){
+                          classes += " bg-amber-300";
+                        } else if (isTableReserved && isTablePresent) {
                             classes += " bg-green-500";
                         } else if (isTablePresent) {
                             classes += " bg-zinc-400";
-                        }
+                        } 
                         return (
                             <div
                             key={tableNumber}

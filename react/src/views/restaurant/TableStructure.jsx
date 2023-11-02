@@ -201,7 +201,7 @@ export default function TableStructure() {
                       <div
                         key={index+1}
                         className={`py-2 px-4 rounded-lg ${
-                          toggle === index + 1 ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+                          toggle === index + 1 ? 'bg-green-500 text-white' : 'bg-zinc-300 text-green-500'
                         }`}
                         onClick={() => handleToggle(index + 1)}
                       >
