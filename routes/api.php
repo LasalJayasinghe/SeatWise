@@ -268,7 +268,13 @@ Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
 Route::post('/updatemealavailability', [RestaurantController::class, 'updateMealAvailability']);
 Route::post('/reserve-table', [TableReservationController::class, 'reserveTable']);
 
+Route::post('/rate-restaurant', [TableReservationController::class, 'rateRestaurant']);
 
+
+Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
+Route::get('/displayRequest/{RequestId}', [RestaurantController::class, 'displayRequest']);
+Route::post('/updateAssistanceData', [RestaurantController::class, 'updateAssistanceData']);
+Route::post('/handleStatusUpdate/{RequestId}', [RestaurantController::class, 'handelStatusUpdate']);
 // Waitlist
 Route::get('/getRatings/{id}', [RestaurantController::class, 'getRatings']);
 Route::get('/getAverageRating/{id}', [RestaurantController::class, 'getAverageRating']);
