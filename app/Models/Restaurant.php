@@ -25,5 +25,11 @@ public function rates()
     return $this->hasMany(Rate::class, 'restaurantID', 'id');
 }
 
+public function meals()
+{
+    return $this->hasMany(Meal::class);
+}
+
+
 }
 

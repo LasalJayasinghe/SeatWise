@@ -43,13 +43,6 @@ const WaitlistPage = ({ onClose }) => {
       // Show the success pop-up
       setShowSuccessPopup(true);
   
-      // Close the success pop-up after a delay (e.g., 2000 milliseconds)
-      setTimeout(() => {
-        setShowSuccessPopup(false);
-  
-        // Navigate to the reservations page
-        navigate('/activities');
-      }, 2000);
     } catch (error) {
       console.error('Error submitting the form:', error);
       // Handle error here (e.g., show an error message)
@@ -154,6 +147,25 @@ const WaitlistPage = ({ onClose }) => {
             <div className="p-16 bg-white rounded-lg shadow-lg">
               <h4 className="mb-4 text-lg font-bold">You have successfully joined the waitlist! </h4>
               <p>We'll notify you as soon as the slot becomes available. Thank you for your interest</p>
+              <div className="mt-4 flex justify-end">
+      <button
+        onClick={() => {
+          setShowSuccessPopup(false); // Close the success popup
+        }}
+        className="px-4 py-2 rounded bg-gray-500 text-white mr-2"
+      >
+        Close
+      </button>
+      <button
+        onClick={() => {
+          setShowSuccessPopup(false); // Close the success popup
+          navigate('/dashboard'); // Navigate to the dashboard
+        }}
+        className="px-4 py-2 rounded bg-green-500 text-white"
+      >
+        Home
+      </button>
+    </div>
             </div>
           </div>
         )}
