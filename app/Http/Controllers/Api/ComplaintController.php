@@ -20,10 +20,8 @@ class ComplaintController extends Controller
 
     public function store(Request $request)
     {
-        // Get the user ID of the authenticated user, assuming you have authentication in place
         $user_id = auth()->user()->id;
 
-        // Create and store the complaint without any specific validation
         $complaint = Complaints::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),

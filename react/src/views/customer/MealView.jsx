@@ -4,6 +4,7 @@ import axiosClient from '../../axios-client';
 import CounterInput from '../../components/CounterInput';
 import Cart from '../../components/Cart';
 import { loadCartFromLocalStorage, saveCartToLocalStorage } from '../../components/cartStorage';
+import ReservationSuccessPopup from '../../components/ReservationSuccessPopup';
 
 
 export default function MealView() {
@@ -18,6 +19,8 @@ export default function MealView() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [instructions, setInstructions] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
+  const [isSuccessPopupVisible, setIsSuccessPopupVisible] = useState(false);
+
   
   const handleClose = () => {
     navigate(-1); 
@@ -100,6 +103,10 @@ const handleInstructionsChange = (event) => {
 };
 const clearCart = () => {
   setCartItems([]);
+};
+const handleConfirmOrder = () => {
+  // handle the confirmation of the order and show the success popup.
+  setIsSuccessPopupVisible(true);
 };
 
   if (!meal) {
@@ -234,8 +241,22 @@ const clearCart = () => {
         selectedRestaurantId={meal.restaurant.id}
         clearCart={clearCart}
         totalAmount={totalAmount}
+        onConfirmOrder={handleConfirmOrder}
 
       />
+    {isSuccessPopupVisible && (
+        <ReservationSuccessPopup
+          onClose={() => setIsSuccessPopupVisible(false)}
+          onHomeClick={() => {
+            navigate('/dashboard'); 
+            setIsSuccessPopupVisible(false);
+          }}
+          onActivitiesClick={() => {
+            navigate('/activities');
+            setIsSuccessPopupVisible(false);
+          }}
+        />
+      )}
     </div>
   );
 }

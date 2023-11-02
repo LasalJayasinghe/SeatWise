@@ -15,6 +15,8 @@ use App\Http\Controllers\Api\AllMealsController;
 use App\Http\Controllers\Api\TablefortwoController;
 use App\Http\Controllers\Api\TableReservationController;
 use App\Http\Controllers\Api\ComplaintController;
+use App\Http\Controllers\Api\MealReservationController;
+
 
 
 // Authentication routes
@@ -46,6 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals', [MealController::class, 'index'])->name('meals.index');
     Route::get('/meals/{id}', [MealController::class, 'show']);
     Route::get('/all-meals', [AllMealsController::class, 'index']);
+    // Route::post('/meal-reservations', [MealReservationController::class, 'store']);
 
     //complaint
     Route::post('/complaints', [ComplaintController::class,'store']);

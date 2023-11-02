@@ -165,18 +165,14 @@ const HallReservation = () => {
         
         
       </form>
-      {successMessage && showSuccessPopup && (
-        <ReservationSuccessPopup
-          message={successMessage}
-          onClose={handleClosePopup} // Pass the close function
+      {successMessage && <ReservationSuccessPopup
+          onClose={() => setShowSuccessPopup(false)}
           onHomeClick={() => {
-            navigate('/dashboard');
+            navigate('/dashboard'); // Use navigate to navigate
           }}
           onActivitiesClick={() => {
-            navigate('/activities');
-          }}
-        />
-      )}     {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            navigate('/activities'); // Use navigate to navigate
+          }} message={successMessage} />}      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
     </div>
   );
 };

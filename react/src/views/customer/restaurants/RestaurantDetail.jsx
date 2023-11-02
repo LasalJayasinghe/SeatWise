@@ -289,16 +289,6 @@ const handleReserveClick = () => {
         </form>
       )}
 
-      {/* Display toggle for table for two */}
-      {/* <div className="mt-4">  
-<label class="relative inline-flex items-center cursor-pointer">
-  <input type="checkbox" value="" class="sr-only peer"/>
-  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 dark:peer-focus:ring-green-600 rounded-full peer dark:bg-gray-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-  <span class="ml-3 text-sm font-small text-gray-500 dark:text-gray-800">Table for two</span>
-</label>
-      </div> */}
-
-
 {/* Display table structures */}
 {toggle === 'tables' && (
         <div className="mt-6">
@@ -423,7 +413,7 @@ const handleReserveClick = () => {
       )}
 
 
-      {/* Display other relevant restaurant details here */}
+      {/* Display halls */}
       {toggle === 'halls' && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center items-center">
   {halls.map((hall) => (
