@@ -24,10 +24,12 @@ class Cashiers extends Authenticatable
     protected $fillable = [
         'restaurant_id',
         'cashier_name',
+        'address',
         'email',
         'cashier_phone_number',
         'password',
         'photo',
+
     ];
 
     /**

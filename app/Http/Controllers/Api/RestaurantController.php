@@ -12,37 +12,50 @@ use App\Http\Controllers\Controller;
 use Laravel\Sanctum\Sanctum;
 
 
+use App\Models\Hall;
 use App\Models\User;
 use App\Models\View;
 use App\Models\Meals;
 use App\Models\Offers;
+
 use App\Models\Profile;
+use App\Models\Ratings;
+use App\Mail\MailNotify;
 use App\Models\Cashiers;
 use App\Models\Category;
 use App\Models\Customer;
-use App\Models\Restaurant;
 use App\Models\Complaints;
+use App\Models\Restaurant;
 use App\Models\Restaurants;
+///use App\Mail\AssistanceRequest;
+use App\Models\Advertisements;
+use App\Models\MonthlyPayment;
 use App\Models\TableStructure;
-use App\Models\TableReservation;
-use App\Models\TechnicalAssistance;
+use App\Models\HallReservations;
 
+use App\Models\TableReservation;
+use App\Http\Requests\LoginRequest;
+use App\Models\TechnicalAssistance;
+use App\Http\Requests\SignupRequest;
 use App\Http\Requests\addMealRequest;
 use App\Http\Requests\addViewRequest;
 use App\Http\Requests\addOfferRequest;
 use App\Http\Requests\addTableRequest;
 use App\Http\Requests\addCashierRequest;
+use App\Http\Requests\updateMenuRequest;
 use App\Http\Requests\addCategoryRequest;
 use App\Http\Requests\updateOfferRequest;
 use App\Http\Requests\cashierLoginRequest;
 use App\Http\Requests\setupProfileRequest;
+use App\Http\Requests\replyComplaintRequest;
 use App\Http\Requests\updateEmployeeRequest;
 use App\Http\Requests\RestaurantLoginRequest;
+use App\Http\Requests\addAdvertisementRequest;
 use App\Http\Requests\RestaurantSignupRequest;
 use App\Http\Requests\updateRestaurantRequest;
+use App\Http\Requests\addMonthlyPaymentRequest;
 use App\Http\Requests\TechnicalAssistanceRequest;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\SignupRequest;
+use App\Http\Requests\updateAssistanceDataRequest;
 
 class RestaurantController extends Controller
 {
@@ -447,8 +460,24 @@ class RestaurantController extends Controller
     }
 
     public function getAllOrder($id) {
+
+        $today = date('Y-m-d');
     
         $order = TableReservation::where('restaurant_id', $id)
+            ->whereDate('reservation_date', '<', $today)
+            ->get();
+
+        return response()->json($order);
+
+    }
+
+    public function getUpcomingOrder($id) {
+
+        $today = date('Y-m-d');
+    
+        $order = TableReservation::where('restaurant_id', $id)
+            ->whereDate('reservation_date', '>', $today)
+            ->orderBy('reservation_date', 'asc')
             ->get();
 
         return response()->json($order);
@@ -488,6 +517,70 @@ class RestaurantController extends Controller
             ->count();
 
         return response()->json($reservationCount);
+    }
+
+    public function getMonthlyHallReservationCount($id) {
+        // Get the current year and month
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $reservationCount = Hall::where('halls.restaurant_id', $id)
+            ->join('hall_reservations', 'hall_reservations.hall_id', '=', 'halls.id')
+            ->distinct()
+            ->whereYear('hall_reservations.slot_date', $currentYear)
+            ->whereMonth('hall_reservations.slot_date', $currentMonth)
+            ->count();
+
+        return response()->json($reservationCount);
+    }
+
+    public function getMonthlyVisitsCount($id) {
+        // Get the current year and month
+        $currentYear = now()->year;
+        $currentMonth = now()->month;
+
+        $formattedData = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+
+            $hallreservationCount = HallReservations::where('restaurant_id', $id)
+                ->whereMonth('slot_date', $month)
+                ->count();
+
+            $formattedData[] = [
+                'label' => date('F', mktime(0, 0, 0, $month, 1)),
+                'value' => $hallreservationCount
+            ];
+        }
+
+        return response()->json($formattedData);
+
+        // return $formattedData;
+    }
+
+    public function getHallRequests($id) {
+
+        $today = date('Y-m-d');
+
+        // ->whereDate('slot_date', '<', $today)
+    
+        $request = Hall::where('restaurant_id', $id)
+            ->join('hall_reservations', 'hall_reservations.hall_id', '=', 'halls.id')
+            ->select('hall_reservations.*')
+            ->get();
+
+        return response()->json($request);
+
+    }
+
+    public function deleteAdd($id)
+    {
+        $add=Advertisements::find($id);
+
+        if ($add) {
+            $add->delete();
+        } else {
+        }
     }
 
     public function getFloor(Request $request)
@@ -542,6 +635,102 @@ class RestaurantController extends Controller
         
         return response()->json(['message' => 'Meal Added Successfully']);
 
+    }
+
+    public function addAdvertisement(addAdvertisementRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/views/', $filename); 
+            
+            $photoPath = 'uploads/views/' . $filename;
+        }
+
+        /** @var Advertisements $user */
+        $user = Advertisements::create([
+            'restaurant_id' => $restaurantId,
+            'price' => $data['price'],
+            'duration' => $data['duration'],
+            'photo' => $photoPath ?? null,
+        ]);
+
+    }
+
+    public function getAdds(Request $request)
+    {
+        // Access the 'restaurant_id' parameter from the request
+        $restaurantId = $request->input('restaurant_id');
+
+        // Assuming you have a 'restaurant_id' column in the 'views' table
+        $adds = Advertisements::where('restaurant_id', $restaurantId)->get();
+
+        return response()->json($adds);
+    }
+
+    public function getAdvertisementFee(Request $request) {
+
+        $restaurantId = $request->input('restaurant_id');
+        $currentMonth = now()->month; // Get the current month
+    
+        $sum = Advertisements::where('restaurant_id', $restaurantId)
+            ->whereMonth('updated_at', $currentMonth)
+            ->sum('price');
+    
+        return response()->json($sum);
+    }
+
+    public function addPayment(addMonthlyPaymentRequest $request)
+    {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+
+        /** @var MonthlyPayment $user */
+        $user = MonthlyPayment::create([
+            'restaurant_id' => $restaurantId,
+            'amount' => $data['amount'],
+            'card' => $data['card'],
+            'cardno' => $data['cardno'],
+            'expiry_date' => $data['expiry'],
+            'cvv' => $data['cvv'],
+        ]);
+
+    }
+
+    public function editMenu(updateMenuRequest $request) {
+        $data = $request->validated();
+        $restaurantId = $data['restaurant_id'];
+        $mealId = $data['id'];
+        
+        // Update first table (Assuming 'restaurants' table)
+        $restaurant = Meals::find($mealId);
+        if ($restaurant) {
+            $restaurant->update([
+                'name' => $data['name'],
+                'potion' => $data['potion'],
+                'price' => $data['price'],
+                'description' => $data['description'],
+            ]);
+        } else {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+
+        return response()->json(['message' => 'Update successful']);
+    }
+
+    public function deleteMenu($id)
+    {
+        $add=Meals::find($id);
+
+        if ($add) {
+            $add->delete();
+        } else {
+        }
     }
 
     // public function updateMealAvailability(Request $request)
@@ -616,9 +805,9 @@ class RestaurantController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('uploads/cashiers/', $filename); 
+            $file->move('src/assets/', $filename); 
             
-            $photoPath = 'uploads/cashiers/' . $filename;
+            $photoPath = $filename;
         }
         // Check if a photo file was uploaded
         
@@ -627,6 +816,7 @@ class RestaurantController extends Controller
             'restaurant_id' => $restaurantId,
             'cashier_name' => $data['cashiername'],
             'email' => $data['email'],
+             'address' =>$data['address'],
             'cashier_phone_number' => $data['phone'],
             'password' => bcrypt($data['password']),
             'photo' => $photoPath ?? null,
@@ -686,7 +876,8 @@ class RestaurantController extends Controller
 
     }
 
-
+  
+    
     public function getOffers($id) {
     
         // $restaurant = Restaurants::find($id);
@@ -695,15 +886,15 @@ class RestaurantController extends Controller
  
      
      }
-    public function displayCashier($id) {
+
+    public function displayComplaint($id) {
 
     
-        $cashier = Cashiers::where('id', $id)->get();
-        return response()->json($cashier);
+        $complaint = Complaints::where('id', $id)->get();
+        return response()->json($complaint);
 
     
     }
-
   
      public function displayOffer($id) {
     
@@ -773,26 +964,30 @@ class RestaurantController extends Controller
     }
 
     public function getReservations($restaurant_id,$filter,$input) 
-    {
+    {     $today = date('Y-m-d');
            if($input){
         // $restaurant = Restaurants::find($id);
         if ($filter == "all" ) {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
             ->where('reservationNumber',$input)
+            ->where('reservation_date', $today)
             ->get();
         } else if ($filter == "checkedIn") {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
                 ->where('status', 1)
                 ->where('reservationNumber',$input)
+                ->where('reservation_date', $today)
                 ->get();
         } else if ($filter == "checkedOut") {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
                 ->where('reservationNumber',$input)
+                ->where('reservation_date', $today)
                 ->get();
         } else if ($filter == "pending") {
             $reservation = TableReservation::where('restaurant_id', $restaurant_id)
                 ->where('status', 2)
                 ->where('reservationNumber',$input)
+                ->where('reservation_date', $today)
                 ->get();
         } 
 
@@ -809,19 +1004,22 @@ class RestaurantController extends Controller
 
             if ($filter == "all" ) {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
-               
+                ->where('reservation_date', $today)
                 ->get();
             } else if ($filter == "checkedIn") {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('reservation_date', $today)
                     ->where('status', 1)
                   
                     ->get();
             } else if ($filter == "checkedOut") {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('reservation_date', $today)
                 ->where('status', 0)
                     ->get();
             } else if ($filter == "pending") {
                 $reservation = TableReservation::where('restaurant_id', $restaurant_id)
+                ->where('reservation_date', $today)
                     ->where('status', 2)
                  
                     ->get();
@@ -834,19 +1032,18 @@ class RestaurantController extends Controller
 
         return response()->json($reservation);
 
-
     }
 
-    public function getCheckInCount($id) //get the res id
+    public function getPendingCount($id) //get the res id
 
     {   $today = date('Y-m-d');
         
-        $checkedInCount = TableReservation::where('restaurant_id', $id)
+        $PendingCount = TableReservation::where('restaurant_id', $id)
         ->where('reservation_date', $today)
-        ->where('status', 1)
+        ->where('status', 2)
         ->count();
 
-    return response()->json($checkedInCount);
+    return response()->json($PendingCount);
 
     }
 
@@ -855,7 +1052,7 @@ class RestaurantController extends Controller
         $today = date('Y-m-d');
         $checkedOutCount = TableReservation::where('restaurant_id', $id)
         ->where('reservation_date', $today)
-        ->where('status', 0)
+        ->where('status',0)
         ->count();
 
     return response()->json($checkedOutCount);
@@ -947,7 +1144,7 @@ public function HandleCheckOut($reservationId)
         'cashier_name' => $data['cashiername'],
         'email' => $data['email'],
         'cashier_phone_number' => $data['phone'],
-        'password' => bcrypt($data['password']),
+        //'password' => bcrypt($data['password']),
     ]);
     return response()->json(['message' => ' Successfully updated']);
     }
@@ -1040,22 +1237,26 @@ public function deleteOffer($id)
         'priority'=>$data['priority'],
         
     ]);
-
-    $emailData = [
-        'email' => $data['email'],
-        'priority' => $data['priority'],
-        'restaurantName' => $data['restaurantname'],
-        'brn' => $data['brn'],
+  
+    return response()->json(['message' => 'Successfully requested']);
+   // $emailData = [
+       // 'email' => $data['email'],
+       // 'priority' => $data['priority'], 
+       // 'restaurantName' => $data['restaurantname'],
+       // 'brn' => $data['brn'],
         // Add other email data as needed
-    ];
+      //  'subject'=>'test',
+      //  'body' =>'Hello'
+
+  //  ];
 
     // Send an email using the email-related data
     // You can use Laravel's email sending functionality here
 
     // Example of sending an email using the Mail facade
-    Mail::to($data['email'])->send(new AssistanceRequest($emailData));
+    //Mail::to($data['email'])->send(new MailNotify ($emailData));
 
-    return response()->json(['message' => 'Successfully sent the email']);
+   // return response()->json(['message' => 'Successfully sent the email']);
 
     // return response()->json(['user' => $user, 'token' => $token, 'redirect_url' => '/restaurant']);
     //return redirect('/restaurant');
@@ -1066,14 +1267,162 @@ public function deleteOffer($id)
 public function getComplaints($id) {
     
     // $restaurant = Restaurants::find($id);
-    $cashiers = Complaints::where('restaurantID', $id)
+    $Complaints = Complaints::where('restaurantID', $id)
     ->join('users', 'complaints.userID', '=', 'users.id')
-    ->select('complaints.*','users.name as name', 'users.email as user_email')
+    ->select('complaints.*','users.firstname as name', 'users.email as user_email')
+    ->orderBy('reply')
     ->get();
 
-    return response()->json($cashiers);
+    return response()->json($Complaints);
 
  
  }
+
+ public function displayCashier($id) {
+
+    
+    $cashier = Cashiers::where('id', $id)->get();
+    return response()->json($cashier);
+
+
+}
+
+
+public function replyComplaint(replyComplaintRequest $request) {
+    $data = $request->validated();
+    /** @var Complaints $complaint */
+    //$restaurant = auth()->guard('restaurants')->user();
+    $complaintId = $data['id'];
+    $complaint = Complaints::where('id', $complaintId)->first();
+  
+    // $restaurant = Restaurant::find($id);
+    if ($complaint) {
+    $complaint->update([
+        //'id' => $restaurantId,
+        'reply' => $data['reply'],
+        
+    ]);
+    return response()->json(['message' => ' Successfully replied']);
+    }
+
+    else{
+    return response()->json(['message' => 'Updatation replied']);  
+
+
+
+
+
+    }
+
+    }
+
+
+
+    public function getAssistanceData($id) {
+
+        // $restaurant = Restaurants::find($id);
+        $Assistance = TechnicalAssistance::where('restaurant_id', $id)->get();
+        return response()->json($Assistance);
+    
+    
+        }
+
+        public function displayRequest($id) {
+    
+            // $restaurant = Restaurants::find($id);
+            $request = TechnicalAssistance::where('technical_assistances.id', $id)
+            ->join('restaurants', 'restaurants.id', '=', 'technical_assistances.restaurant_id')
+            //->select('complaints.*','users.name as name', 'users.email as user_email')
+           // ->orderBy('reply')
+            ->get();
+        
+            return response()->json($request);
+        
+         
+         }
+
+
+
+         public function updateAssistanceData(updateAssistanceDataRequest $request) {
+            $data = $request->validated();
+            /** @var TechnicalAssistance $as1 */
+            //$restaurant = auth()->guard('restaurants')->user();
+            $asId = $data['id'];
+            $as = TechnicalAssistance::find($asId);
+            // $restaurant = Restaurant::find($id);
+            if ($as) {
+            $as->update([
+                //'id' => $restaurantId,
+                'status' => 1,
+               
+            ]);
+            return response()->json(['message' => ' Successfully updated']);
+            }
+        
+            else{
+            return response()->json(['message' => 'Updatation failed']);  
+        
+        
+        
+        
+        
+            }
+        
+            }
+           
+            public function handelStatusUpdate($Id)
+{
+     
+    $asis = TechnicalAssistance::find($Id);
+    if ($asis) {
+        $asis->update([
+            'status' => "Not Solved",
+            
+        ]);
+
+
+    }
+    }
+
+    public function getRatings($id) {
+    
+        // $restaurant = Restaurants::find($id);
+        $Rating = Ratings::where('restaurantID', $id)
+        ->join('users', 'rate.customerID', '=', 'users.id')
+        ->select('rate.*','users.firstname as name')
+        ->orderBy('starCount')
+        ->get();
+    
+        return response()->json($Rating);
+    
+     
+     }
+            //handleStatusUpdate
+
+            public function getAverageRating($id) {
+                // Assuming you have a "ratings" table with a "rating" column
+                $ratings = Ratings::where('restaurantID', $id)->get();
+            
+                // Calculate the average rating
+                $totalRatings = count($ratings);
+                $sumRatings = $ratings->sum('starCount');
+                $averageRating = $totalRatings > 0 ? $sumRatings / $totalRatings : 0;
+            
+                return response()->json($averageRating);
+            }
+
+
+    public function deleteComplaint($id)
+{
+    $complaint=Complaints::find($id);
+
+    if ($complaint) {
+        $complaint->delete();
+       
+    } else {
+       
+    }
+}
+            
 
 }

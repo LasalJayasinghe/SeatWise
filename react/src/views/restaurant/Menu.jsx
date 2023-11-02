@@ -4,7 +4,7 @@ import {
     DataGrid,
     GridToolbar,
   } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axiosClient from "../../axios-client";
 
 import Switch from '@mui/material/Switch';
@@ -17,11 +17,13 @@ export default function Menu() {
     const [menu, setMenu] = useState([]);
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState([]);
+    const [errors, setErrors] = useState(null);
     
     const columns = [
-        { field: 'id', headerName: 'Meal ID', width: 90 },
+        { field: 'id', headerName: 'Meal ID', width: 50
+       },
         {
-            field:"avatar", headerName:"Avatar", width:100,
+            field:"avatar", headerName:"Avatar", width:70,
             renderCell: (params) => {
                 return <img src={params.row.img || "src/assets/meal.jpg" } alt="" />
             }
@@ -29,7 +31,7 @@ export default function Menu() {
         {
           field: 'name',
           headerName: 'Meal Name',
-          width: 150,
+          width: 170,
           editable: true,
         },
         {
@@ -76,7 +78,7 @@ export default function Menu() {
             field: 'availability',
             headerName: 'Availability',
             type: 'boolean',
-            width: 200,
+            width: 120,
             renderCell: (params) => {
 
               const handleSwitchToggle = (ev) => {
@@ -112,25 +114,59 @@ export default function Menu() {
             }
         },
         {
-            field:"actions",
-            headerName:"Actions", 
-            width:100,
-            renderCell: (params) => {
-                return <div className="flex">
-                    <div className="view">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="green" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                        </svg>
-                    </div>
-                    <div className="delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="red" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                        </svg>
-                    </div>
-                </div>
-            }
-        },
+          field: "actions",
+          headerName: "Actions",
+          width: 200, // Adjust the width according to your needs
+          renderCell: (params) => (
+            <div className="flex">
+              <button
+                onClick={() => handleUpdateModalOpen(params.row.id)} // Assuming id is a property of the row data
+                style={{ marginRight: '1rem' }}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => handleDeleteModalOpen(params.row.id)}
+                className="bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"
+              >
+                Remove
+              </button>
+            </div>
+          )
+        }
+        
     ];
+
+    const [selectedUpdate, setSelectedUpdate] = useState(null);
+    const [selectedDelete, setSelectedDelete] = useState(null);
+    const [isopenUpdateModal, setopenUpdateModal] = useState(false);
+    const [isopenDeleteModal, setopenDeleteModal] = useState(false);
+
+    function handleUpdateModalOpen(id) {
+      setopenUpdateModal(true);
+      setSelectedUpdate(id);
+    }
+    
+    function handleUpdateModalClose() {
+      setopenUpdateModal(false);
+      setSelectedUpdate(null);
+    }
+
+    function handleDeleteModalOpen(id) {
+      setopenDeleteModal(true);
+      setSelectedDelete(id);
+    }
+    
+    function handleDeleteModalClose() {
+      setopenDeleteModal(false);
+      setSelectedDelete(null);
+    }
+
+    const nameRef = useRef();
+    const potionRef = useRef();
+    const priceRef = useRef();
+    const descriptionRef = useRef();
 
     
 
@@ -147,6 +183,7 @@ export default function Menu() {
           axiosClient.get(`/getMenu/${user.id}`)
             .then(({ data }) => {
               setMenu(data);
+              console.log(menu);
               setLoading(false);
             })
             .catch((error) => {
@@ -167,6 +204,65 @@ export default function Menu() {
             });
         }
     }, [user]);
+
+    const onSubmitEdit = (ev) => {
+      ev.preventDefault();
+
+      const payload = {
+        id: selectedUpdate,
+        restaurant_id: user.id,
+        name: nameRef.current.value,
+        potion: potionRef.current.value,
+        price: priceRef.current.value,
+        description: descriptionRef.current.value,
+      }
+      // console.log(payload);
+      setErrors(null)
+      axiosClient.post('/updatemenu', payload)
+      .then((response) => {
+        console.log('API response:', response.data);
+        handleUpdateModalClose();
+        window.location.reload();
+      })
+      .catch(err => {
+        const response = err.response;
+        if (response && response.status === 422) {
+          if(response.data.errors)
+          {
+            setErrors(response.data.errors)
+          }else{
+            setErrors({
+              email: [response.data.message]
+            })
+          }
+        }
+        })
+    }
+
+    const onSubmitDelete = (ev) => {
+      ev.preventDefault();
+
+      setErrors(null)
+      axiosClient.post(`/deleteAdd/${selectedDelete}`)
+      .then((response) => {
+        console.log('API response:', response.data);
+        handleDeleteModalClose();
+        window.location.reload();
+      })
+      .catch(err => {
+        const response = err.response;
+        if (response && response.status === 422) {
+          if(response.data.errors)
+          {
+            setErrors(response.data.errors)
+          }else{
+            setErrors({
+              email: [response.data.message]
+            })
+          }
+        }
+        })
+    }
 
 
 
@@ -252,6 +348,108 @@ export default function Menu() {
                 />
 
             </div>
+
+            {menu.map((menu) => {
+              return (
+                isopenUpdateModal && menu.id === selectedUpdate && (
+                  <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                    <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
+                      <h2>Popup Content for Add View {selectedUpdate}</h2>
+                      <h2 className="text-2xl font-bold">Update a Menu Item</h2>
+                      <form 
+                        onSubmit={onSubmitEdit} 
+                        className="space-y-4" 
+                        method="post" 
+                        action="{{ route('structure.addView') }}"
+                      >
+                        <label className="block text-sm font-medium leading-6 text-gray-900 mt-0">Name:</label>
+                        <input 
+                          ref={nameRef}
+                          defaultValue={menu.name} 
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                          type="text" 
+                        />
+
+                        <label htmlFor="capacity" className="block text-sm font-medium leading-6 text-gray-900 mt-0">Portion size:</label>
+                        <input 
+                          ref={potionRef} 
+                          defaultValue={menu.potion} 
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                          type="text" 
+                        />
+
+                        <label className="block text-sm font-medium leading-6 text-gray-900 mt-0">Price:</label>
+                        <input 
+                          ref={priceRef} 
+                          defaultValue={menu.price} 
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                          type="text" 
+                        />
+
+                        <label htmlFor="capacity" className="block text-sm font-medium leading-6 text-gray-900 mt-0">Add a description:</label>
+                        <input 
+                          ref={descriptionRef} 
+                          defaultValue={menu.description} 
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                          type="text" 
+                        />
+                        {/* Add more input fields as needed for other menu item data */}
+                        <div className="flex space-x-4">
+                          <button 
+                            onClick={handleUpdateModalClose} 
+                            className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm"
+                          >
+                            Cancel
+                          </button>
+                          <button 
+                            type="submit" 
+                            className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          >
+                            Update
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )
+              );
+            })}
+
+              {isopenDeleteModal && (
+                  <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                    <div className="bg-white p-4 z-10 mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-lg">
+                      <h2>Popup Content for Add View {selectedDelete}</h2>
+                      <h2 className="text-2xl font-bold">Are you sure you want to delete?</h2>
+                      <form 
+                        onSubmit={onSubmitDelete} 
+                        className="space-y-4" 
+                        method="post" 
+                      >
+                        <br />
+                        
+                        {/* Add more input fields as needed for other menu item data */}
+                        <div className="flex space-x-4">
+                          <button 
+                            onClick={handleDeleteModalClose} 
+                            className="flex w-full justify-center rounded-md bg-white rounded-lg shadow border border border-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm"
+                          >
+                            Cancel
+                          </button>
+                          <button 
+                            type="submit" 
+                            className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )
+              }
+
 
             </div>
         </main>

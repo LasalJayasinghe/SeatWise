@@ -137,18 +137,30 @@ export default function AddOffer() {
 
     return (
       
-        <div className="flex">
-        {/* Sidebar */}
-        <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
-          <SettingsBar />
-        </div>
-        <div className="flex-col justify-center flex-1 px-6 py-12 lg:px-8">
-        <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
+        <>
+        <div className="ordercontainer">
+<div className="menuContainer">
+    <SettingsBar />
+</div>
+<div className="contentContainer">
+    <div>
+        <header className="bg-white shadow">
+            <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900">Offers</h1>
+                <div className="loading-container">
+                    {/* {loading && <p className="loading-text">Loading...</p>} */}
+                </div>
+            </div>
+        </header>
+    </div>
+    <div className="flex mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+    <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+       
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-4xl font-bold leading-9 tracking-tight text-center text-gray-900">
+          <h2 className="mt-1 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
            Add Offers
           </h2>
-          <p className="mt-2 text-sm text-center text-gray-600 max-w">
+          <p className="mt-2 text-center text-sm text-gray-600 max-w">
             Please add offers given for meals
           </p>
         </div>
@@ -405,6 +417,15 @@ export default function AddOffer() {
         </div>
     </div> 
       </div>
+      
+
     </div>
+
+    
+    
+</div>
+
+
+        </>
     );
 }

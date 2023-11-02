@@ -33,7 +33,7 @@ export default function Orders() {
                 // Loop through the customerData array to find a matching customer by id
                 for (const customer of customerData) {
                     if (reservantId == customer.id) {
-                        customerName = customer.name;
+                        customerName = customer.firstname;
                         break; // Stop the loop once a match is found
                     }
                 }

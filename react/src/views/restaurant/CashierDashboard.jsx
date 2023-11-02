@@ -38,7 +38,7 @@ useEffect(() => {
   
   useEffect(() => {
   if (user && user.id) {
-  axiosClient.get(`/getCheckInCount/${user.restaurant_id}`)
+  axiosClient.get(`/getPendingCount/${user.restaurant_id}`)
     .then(({ data }) => {
       setCheckInCount(data);
     })
@@ -124,7 +124,7 @@ return (
   <table className="table-fixed" >
         
         <tr className="border-none"> 
-                <th className="border-none border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray',fontSize:'1.4rem'}}> <span style={{ display: 'flex', alignItems: 'center' ,fontWeight:'400'}}>< FiLogIn  style={{ marginRight: '8px' }}/>Check Ins Today</span></th>
+                <th className="border-none border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray',fontSize:'1.4rem'}}> <span style={{ display: 'flex', alignItems: 'center' ,fontWeight:'400'}}>< FiLogIn  style={{ marginRight: '8px' }}/>Pendings</span></th>
      
               </tr>
            
@@ -162,14 +162,23 @@ return (
     <table className="table-fixed border-collapse border-none">
      
       <tr className="border-none">
-        <th className="border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem' ,fontWeight:'400'}}>Today Bookings</th>
+        <th className="border-none px-6 py-5 text-left" colSpan="3" style={{ color: 'gray', fontSize: '1.5rem' ,fontWeight:'400'}}>Upcomming Bookings</th>
       </tr>
+     
+      <tr>
+        <th className="px-6 py-3 text-left" style={{ color: 'gray', fontSize: '1rem', fontWeight: '600' }}>Reservation Number</th>
+        <th className="px-6 py-3 text-left" style={{ color: 'gray', fontSize: '1rem', fontWeight: '600' }}>Start Time</th>
+        <th className="px-6 py-3 text-left" style={{ color: 'gray', fontSize: '1rem', fontWeight: '600' }}>Floor</th>
+        <th className="px-6 py-3 text-left" style={{ color: 'gray', fontSize: '1rem', fontWeight: '600' }}>Table Number</th>
+      </tr>
+   
       <tbody>
       {RecentBookings.map((RecentBooking) => (
         <tr className="border-none" key={RecentBooking.id}>
-          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.reservant_ID}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.reservationNumber}</td>
           <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.start_time}</td>
-          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.table_structure_id}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.floor}</td>
+          <td className="border-none px-6 py-2" style={{ fontWeight: 600, color: 'gray' }}>{RecentBooking?.table_number}</td>
         </tr>
       ))}
 

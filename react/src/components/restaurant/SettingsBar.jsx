@@ -15,17 +15,29 @@ export default function SettingsBar() {
               <span className="listItemTitle">Offers</span>
             </Link>
 
+            <Link to="/adds" className="listItem">
+              <img src="" alt="" />
+              <span className="listItemTitle">Advertisements</span>
+            </Link>
+
             <Link to="/ViewComplaints" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Complaints</span>
             </Link>
-            <Link to="/home" className="listItem">
+
+            <Link to="/Ratings" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Ratings</span>
             </Link>
+
             <Link to="/TechnicalAssistance" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Technical Assistance</span>
+            </Link>
+
+            <Link to="/payments" className="listItem">
+              <img src="" alt="" />
+              <span className="listItemTitle">Payments</span>
             </Link>
         </div>
     </div>

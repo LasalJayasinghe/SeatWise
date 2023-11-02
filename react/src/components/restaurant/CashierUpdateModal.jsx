@@ -41,8 +41,7 @@ export default function CashierUpdateModal({ isOpen, onCancel, onConfirm ,cashie
         cashiername: cashiernameRef.current.value,
         email: emailRef.current.value,
         phone: phoneRef.current.value,
-        password: passwordRef.current.value,
-        password_confirmation: passwordConfirmationRef.current.value,
+       
       };
   
       // Call the parent's update function and pass the updated data
@@ -149,18 +148,19 @@ export default function CashierUpdateModal({ isOpen, onCancel, onConfirm ,cashie
 
 
           <div className="flex space-x-4">
+          <button
+      className="flex-1 bg-gray-300 hover:bg-gray-400 px-3 py-1.5 rounded"
+      onClick={onCancel}
+    >
+      Cancel
+    </button>
     <button
       type="submit"
       className="flex-1 justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
       Update
     </button>
-    <button
-      className="flex-1 bg-gray-300 hover:bg-gray-400 px-3 py-1.5 rounded"
-      onClick={onCancel}
-    >
-      Cancel
-    </button>
+    
   </div>
         </form>
 

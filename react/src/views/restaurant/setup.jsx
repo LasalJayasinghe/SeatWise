@@ -439,8 +439,8 @@ export default function Setup() {
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                   <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="bg-white p-8 z-10 mt-6 mb-5 sm:mx-auto sm:w-full sm:max-w-2xl rounded-lg" style={{ height: "700px" }}>
-                      <h2>Popup Content for Add Resersation details</h2>
-                      <h2 className="text-2xl font-bold">Reservation Details</h2>
+                      <h2>Popup Content for Add Restaurant details</h2>
+                      <h2 className="text-2xl font-bold">Restaurant Details</h2>
 
                       {/* Scrollable Content */}
                       <div className="flex flex-col overflow-y-auto" style={{ maxHeight: "90%" }}>

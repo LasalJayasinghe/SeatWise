@@ -19,16 +19,13 @@ export default function SideBar() {
             </Link>
             <Link to="/people" className="listItem">
               <img src="" alt="" />
-              <span className="listItemTitle">People</span>
+              <span className="listItemTitle">Upcomming</span>
             </Link>
-            <Link to="/requets" className="listItem">
+            <Link to="/requests" className="listItem">
               <img src="" alt="" />
               <span className="listItemTitle">Requests</span>
             </Link>
-            <Link to="/settings" className="listItem">
-              <img src="" alt="" />
-              <span className="listItemTitle">Settings</span>
-            </Link>
+           
         </div>
     </div>
   )
