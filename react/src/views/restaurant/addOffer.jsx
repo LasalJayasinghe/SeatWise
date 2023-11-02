@@ -137,7 +137,6 @@ export default function AddOffer() {
 
     return (
       
-<<<<<<< HEAD
         <>
         <div className="ordercontainer">
 <div className="menuContainer">
@@ -159,17 +158,6 @@ export default function AddOffer() {
        
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-1 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
-=======
-        <div className="flex">
-        {/* Sidebar */}
-        <div className="menuContainer" style={{ position: 'fixed', top:"62px",left: '0', width: '235px', height: '100%' }}>
-          <SettingsBar />
-        </div>
-        <div className="flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
->>>>>>> parent of 5203f37 (Merge branch 'systemadmin')
            Add Offers
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
