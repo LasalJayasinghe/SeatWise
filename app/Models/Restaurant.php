@@ -15,6 +15,21 @@ class Restaurant extends Model
     // Define the fillable attributes (if applicable)
     protected $fillable = ['restaurantname', 'description','image'];
 
-    // Add any additional methods or relationships as needed
+    public function profile()
+{
+    return $this->hasOne(Profile::class);
+}
+
+public function rates()
+{
+    return $this->hasMany(Rate::class, 'restaurantID', 'id');
+}
+
+public function meals()
+{
+    return $this->hasMany(Meal::class);
+}
+
+
 }
 

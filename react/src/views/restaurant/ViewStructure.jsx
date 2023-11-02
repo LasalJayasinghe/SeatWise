@@ -305,25 +305,35 @@ const handleReserveClick = () => {
 
 
 {/* Display table structures */}
+{/* Display table structures */}
 {toggle === 'tables' && (
         <div className="mt-6">
+          <div class="flex items-center mb-6 text-gray-700">
+            <div class="w-3 h-3 bg-green-500 rounded-full  mr-2"></div>
+            <p>Available</p>
+            <div class="w-3 h-3 bg-gray-400 rounded-full ml-4 mr-2"></div>
+            <p>Unavailable</p>
+            <div class="w-3 h-3 bg-black rounded-full ml-4 mr-2"></div>
+            <p>Selected</p>
+            
+          </div>
           {/* Organize tables into rows */}
           {organizeTablesIntoRows(tables).map((row, rowIndex) => (
             <div key={rowIndex} className="flex mt-4">
               {row.map((table) => (
                 <div
                   key={table.id}
-                  className={`relative p-4 border rounded-lg ${
+                  className={`relative p-4 border rounded-xl ${
                     selectedTables.includes(table) ? 'bg-black text-white' :
                     table.isAvailable
                       ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
                       : table.isTableForTwo
-                      ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                      : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                      ? 'bg-yellow-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : 'bg-gray-400 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
                   }`}
                   style={{
                     width: '2cm',
-                    height: '1cm',
+                    height: '2cm',
                     fontSize: '10px',
                     textAlign: 'center',
                     marginRight: '4px',
@@ -332,17 +342,18 @@ const handleReserveClick = () => {
                   onMouseLeave={handleTableLeave}
                   onClick={() => handleTableClick(table)} // Add the click handler
                 >
-                  <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                  <h5 className="font-light" style={{ fontSize: '28px', color: 'white' }}>
                     {table.table_number}
                   </h5>
                   {/* Pop-up bubble */}
                   {hoveredTable === table && (
                     <div
-                      className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                      className="absolute top-0 left-0 p-2 transform -translate-y-full bg-white rounded-lg shadow-md"
                       style={{ fontSize: '12px', pointerEvents: 'none' }}
                     >
                       <p>{table.number_of_chairs} chairs</p>
                       <p>{table.view.name}</p>
+                    
                       
                     </div>
                   )}
@@ -408,7 +419,7 @@ const handleReserveClick = () => {
       {toggle === 'halls' && (
   <div className="mt-6 grid gap-4">
     {halls.map((hall) => (
-      <Link to={`/halls/${hall.id}`} key={hall.id}>
+      <Link to={`/hall/${hall.id}`} key={hall.id}>
         <div className="p-4 border rounded-lg">
           <h3 className="text-lg font-semibold">{hall.name}</h3>
           <img

@@ -27,6 +27,7 @@ class addCashierRequest extends FormRequest
             'restaurant_id' => 'required',
             'cashiername' => ['required', 'string'],
             'email' => ['required', 'email'],
+            'address' => ['required', 'string'],
             'phone' => ['required', 'numeric'],
             'password' => [
                 'required',

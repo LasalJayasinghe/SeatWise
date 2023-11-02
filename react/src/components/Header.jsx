@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, BellIcon, XMarkIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 import logo from '../assets/logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import axiosClient from '../axios-client.js';
-
+import Cart from './Cart';
 
 const navigation = [
   { name: 'Home', to: '/dashboard' },
@@ -19,6 +19,24 @@ function classNames(...classes) {
 }
 
 const Header = ({ user, onLogout }) => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openSlideOver = () => {
+    setIsOpen(true);
+  const userID = (user.id);
+  };
+
+  const closeSlideOver = () => {
+    setIsOpen(false);
+  };
+
+  const slideOverClasses = isOpen
+    ? 'fixed inset-y-0 right-0 z-50 flex flex-col bg-white w-96 shadow-xl transform translate-x-0 transition-transform ease-in-out duration-300'
+    : 'fixed inset-y-0 right-0 z-50 flex flex-col bg-white w-96 shadow-xl transform translate-x-full transition-transform ease-in-out duration-300';
+
+
+
   const location = useLocation(); // Get the current location
   const [isNotificationOpen, setNotificationOpen] = useState(false);
 
@@ -30,6 +48,21 @@ const Header = ({ user, onLogout }) => {
     <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <>
+
+      {/* CART COMPONENT */}
+      <Cart isOpen={isOpen} closeSlideOver={closeSlideOver} slideOverClasses={slideOverClasses} />
+
+
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-10"
+          onClick={closeSlideOver}
+        />
+      )}
+
+
+
+
           {/* Desktop view */}
           <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
@@ -75,12 +108,18 @@ const Header = ({ user, onLogout }) => {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               
   
-
+              <button
+        onClick={openSlideOver}
+        className="p-1 text-gray-500 bg-white rounded-full hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 focus:ring-offset-green-500 "
+      >
+       <ShoppingBagIcon className="w-6 h-6" aria-hidden="true" /> {/* Cart icon */}
+      </button>
 
 
 
               <Menu as="div" className="relative inline-block text-left">
       <div>
+
       <Menu.Button >
   <span
     className="p-1 text-gray-500 bg-white rounded-full hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 focus:ring-offset-green-500 focus:text-green-500">
@@ -186,7 +225,7 @@ const Header = ({ user, onLogout }) => {
                             to="/profile" 
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Profile
+                            {user.firstname}
                           </Link>
                         )}
                       </Menu.Item>

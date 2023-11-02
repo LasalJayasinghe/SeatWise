@@ -1,17 +1,22 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\Cors;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\HallController;
+use App\Http\Controllers\Api\HallReservationController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WaitlistController;
 use App\Http\Controllers\Api\MealController;
 use App\Http\Controllers\Api\AllMealsController;
-use App\Http\Controllers\Api\SystemController;
 use App\Http\Controllers\Api\TablefortwoController;
 use App\Http\Controllers\Api\TableReservationController;
+use App\Http\Controllers\Api\RecommendationController;
+use App\Http\Controllers\Api\RestaurantRecommendationController;
+use App\Http\Controllers\Api\ComplaintController;
 
 
 // Authentication routes
@@ -26,14 +31,6 @@ Route::get('/getAllCategories', [RestaurantController::class, 'getAllCategories'
 Route::post('/restaurantsignup', [RestaurantController::class, 'restaurantsignup']);
 Route::post('/landing', [AuthController::class, 'landing']);
 
-
-// System routes
-
-Route::get('/systemDashboard/getUserCount', [SystemController::class, 'getUserCount']);
-Route::get('/systemDashboard/getRestaurantCount', [SystemController::class, 'getRestaurantCount']);
-Route::get('/systemDashboard/getRateCount', [SystemController::class, 'getRateCount']);
-Route::get('/systemDashboard/getWeeklyProfit', [SystemController::class, 'getWeeklyProfit']);
-Route::get('/systemDashboard/getAllRestaurants', [SystemController::class, 'getAllRestaurants']);
 
 
 // Authenticated routes
@@ -52,21 +49,32 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meals/{id}', [MealController::class, 'show']);
     Route::get('/all-meals', [AllMealsController::class, 'index']);
 
+    //complaint
+    Route::post('/complaints', [ComplaintController::class,'store']);
+    Route::get('complaints',[ComplaintController::class,'index']);
+
+
     // Waitlist
     Route::post('/waitlist', [WaitlistController::class, 'store']);
+    Route::get('/hallreservation', [HallReservationController::class, 'showForm']);
+Route::post('/hall-reservation', [HallReservationController::class, 'create']);
+
 
     // Restaurant routes
-    Route::get('/restaurants', [RestaurantController::class, 'index']); // Fetch all restaurants
-    Route::get('/restaurants/{id}', [RestaurantController::class, 'show']); // Fetch a single restaurant by ID
-    Route::get('/restaurants/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
-    Route::get('/restaurants/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
+    Route::get('/restaurantss', [RestaurantController::class, 'index']); // Fetch all restaurants
+    Route::get('/restaurantss/{id}', [RestaurantController::class, 'show']); // Fetch a single restaurant by ID
+    Route::get('/restaurantss/{id}/table-structures', [RestaurantController::class, 'getTableStructures']);
+    Route::get('/restaurantss/{id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
 
     Route::post('/make-reservation', [TableReservationController::class, 'makeReservation']);
 
     // Hall routes
-    Route::get('/restaurants/{restaurantId}/halls', [HallController::class, 'index']);
-    Route::get('/halls/{id}', [HallController::class, 'show']);
-    Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
+    Route::get('/restaurantss/{restaurantId}/halls', [HallController::class, 'index']);
+    // Hall routes
+Route::get('/halls/{hallId}', [HallController::class, 'show']);
+Route::get('/halls/{hallId}/time-slots/{selectedDate}', [HallController::class, 'fetchTimeSlots']);
+Route::get('/halls/{hallId}/check-availability/{slotId}/{selectedDate}', [HallController::class, 'checkSlotAvailability']);
+
 
     // Additional routes for restaurant data
     Route::get('/restaurants/{restaurantId}/meals', [MealController::class, 'index']); // Fetch meals for a specific restaurant
@@ -77,16 +85,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
         Route::get('/accepted/{id}' , [TablefortwoController::class, 'getAcceptedInvites']);
         Route::get('/todayAccepted/{id}' , [TablefortwoController::class, 'getTodayInvites']);
-        Route::put('/cancelReservation/{id}', [TablefortwoController::class, 'cancelReservation']);
+        Route::get('/suggestions/getPendingInvites', [TablefortwoController::class, 'getPendingInvites']);
+        Route::get('/Invitations/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
+        Route::get('/Requests/getRequests/{id}', [TablefortwoController::class, 'getHistoryAcceptedRequests']);
+        Route::put('/cancelReservation/{id}', [TablefortwoController::class,'updateStatus']);
+        Route::put('/acceptReservation/{id}/{userID}', [TablefortwoController::class,'acceptReservations']);
 
     });
 
+    //activities page routes
+    Route::get('/get-ongoing-reservations', [TableReservationController::class, 'getOngoingReservations']);
+    Route::get('/get-completed-reservations', [TableReservationController::class, 'getCompletedReservations']);
+
     Route::get('/userDetails/{id}', [AuthController::class, 'getUserDetails']);
     Route::get('/restaurantDetails/{id}', [AuthController::class, 'getRestaurantDetails']);
-    Route::get('/tablefortwo/suggestions/getPendingInvites', [TablefortwoController::class, 'getPendingInvites']);
-    Route::get('/tablefortwo/Invitations/getHistory/{id}', [TablefortwoController::class, 'getHistoryRequests']);
-    Route::get('/tablefortwo/Requests/getRequests/{id}', [TablefortwoController::class, 'getHistoryAcceptedRequests']);
-
+    Route::get('/userRecommendations/{id}', [RestaurantRecommendationController::class, 'getRecommendedRestaurants']);
 
 
     //---------------------------------------------------------------------------------------------------------------------------------------------
@@ -128,17 +141,31 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/getCategories/{id}', [RestaurantController::class, 'getCategories']);
     Route::get('/getTotalUserCount/{id}', [RestaurantController::class, 'totalUserCount']);
     Route::get('/getTotalMonthlyReservationCount/{id}', [RestaurantController::class, 'getTotalMonthlyReservationCount']);
+    Route::get('/getMonthlyHallReservations/{id}', [RestaurantController::class, 'getMonthlyHallReservationCount']);
+    Route::get('/getMonthlyVisitsCount/{id}', [RestaurantController::class, 'getMonthlyVisitsCount']);
     Route::post('/addTechincalAssistanceRequest', [RestaurantController::class, 'addTechincalAssistanceRequest']);
     Route::get('/restaurants/{restaurant_id}/halls', [HallController::class, 'index']);
     Route::get('/halls/{id}', [HallController::class, 'show']);
     Route::get('/halls/{hallId}/time-availabilities/{selectedDate}', [HallController::class, 'fetchTimeAvailabilities']);
+    Route::get('/displayComplaint/{complaintID}', [RestaurantController::class, 'displayComplaint']);
 
     Route::get('/getOrder/{id}', [RestaurantController::class, 'getOrder']);
     Route::get('/getAllOrder/{id}', [RestaurantController::class, 'getAllOrder']);
+    Route::get('/getHallRequests/{id}', [RestaurantController::class, 'getHallRequests']);
+    Route::get('/getUpcomingOrder/{id}', [RestaurantController::class, 'getUpcomingOrder']);
     Route::get('/getReservationsByUser/{id}', [RestaurantController::class, 'getReservationsByUser']);
     Route::get('/getcustomer', [RestaurantController::class, 'getCustomer']);
 
     Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
+    Route::get('/adds', [RestaurantController::class, 'getAdds']);
+
+    Route::get('/getAdvertisementFee', [RestaurantController::class, 'getAdvertisementFee']);
+    Route::post('/deleteAdd/{addId}', [RestaurantController::class, 'deleteAdd']);
+    Route::post('/addAdvertisement', [RestaurantController::class, 'addAdvertisement']);
+    Route::post('addPayment', [RestaurantController::class, 'addPayment']);
+    Route::post('updatemenu', [RestaurantController::class, 'editMenu']);
+    Route::post('deletemenu//{menuId}', [RestaurantController::class, 'deleteMenu']);
+
 
 });
 
@@ -186,21 +213,25 @@ Route::get('/getComplaints/{id}', [RestaurantController::class, 'getComplaints']
 Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
 Route::get('/displayOffer/{offerId}', [RestaurantController::class, 'displayOffer']);
 Route::get('/getReservations/{restaurant_id}/{filter}/{input}', [RestaurantController::class, 'getReservations']);
+//Route::get('/getReservations/{restaurant_id}', [RestaurantController::class, 'getReservations']);
 Route::get('/getStatus/{reservationId}', [RestaurantController::class, 'getStatus']);
 //Route::get('/restaurants/{id}', [RestaurantController::class, 'showRestaurant']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{restaurant_id}', [RestaurantController::class, 'showRestaurantx']); // This route fetches a single restaurant by ID
 Route::get('/restaurants/{restaurant_id}/table-structures', [RestaurantController::class, 'getTableStructures']);
 Route::get('/restaurants/{restaurant_id}/available-tables', [RestaurantController::class, 'getAvailableTables']);
-Route::post('/updateCashier', [RestaurantController::class, 'updateOffer']);
+Route::post('/updateCashier', [RestaurantController::class, 'updateCashier']);
 Route::post('/updateOffer', [RestaurantController::class, 'updateOffer']);
 Route::post('/deleteEmployee/{cashierId}', [RestaurantController::class, 'deleteEmployee']);
 Route::get('/getCheckInCount/{restaurant_id}', [RestaurantController::class, 'getCheckInCount']);
-Route::get('/getCheckOutCount/{restaurant_id}', [RestaurantController::class, 'getCheckOutCount']);
+Route::get('/getPendingCount/{restaurant_id}', [RestaurantController::class, 'getPendingCount']);
 Route::get('/getReservationCount/{restaurant_id}', [RestaurantController::class, 'getReservationCount']);
 Route::get('/getRecentBookings/{restaurant_id}', [RestaurantController::class, 'getRecentBookings']);
+Route::post('/replyComplaint', [RestaurantController::class, 'replyComplaint']);
+Route::get('/send', [RestaurantController::class, 'addTechincalAssistanceRequest']);
 
 Route::post('/deleteComplaint/{complaintID}', [RestaurantController::class, 'deleteComplaint']);
 Route::post('/deleteOffer/{offerId}', [RestaurantController::class, 'deleteOffer']);
+Route::get('/getAssistanceData/{id}', [RestaurantController::class, 'getAssistanceData']);
 // Remove the existing '/user' route that may be conflicting
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -237,6 +268,14 @@ Route::get('/getfloor', [RestaurantController::class, 'getFloor']);
 Route::post('/updatemealavailability', [RestaurantController::class, 'updateMealAvailability']);
 Route::post('/reserve-table', [TableReservationController::class, 'reserveTable']);
 
+Route::post('/rate-restaurant', [TableReservationController::class, 'rateRestaurant']);
 
+
+Route::get('/displayCashier/{cashierId}', [RestaurantController::class, 'displayCashier']);
+Route::get('/displayRequest/{RequestId}', [RestaurantController::class, 'displayRequest']);
+Route::post('/updateAssistanceData', [RestaurantController::class, 'updateAssistanceData']);
+Route::post('/handleStatusUpdate/{RequestId}', [RestaurantController::class, 'handelStatusUpdate']);
 // Waitlist
+Route::get('/getRatings/{id}', [RestaurantController::class, 'getRatings']);
+Route::get('/getAverageRating/{id}', [RestaurantController::class, 'getAverageRating']);
 Route::post('/waitlist', [WaitlistController::class, 'store']);

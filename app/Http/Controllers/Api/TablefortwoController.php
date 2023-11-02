@@ -73,35 +73,6 @@ class TablefortwoController extends Controller
             return response()->json($acceptedInvites);
         }
         
-    //------------------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------Work In Progress------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------------
-    public function cancelReservation($id)
-    {
-        try {
-            // Find the reservation by 'reservationid' (which is the $id parameter)
-            $reservation = TableForTwo::findOrFail($id);
-    
-            // Check if the reservation exists and its status is not canceled
-            if ($reservation->status !== 'rejected') {
-                // Update the reservation status to 'canceled'
-                $reservation->status = 'rejected';
-                $reservation->save();
-    
-                // You can return a success response here if needed
-                return response()->json(['message' => 'Reservation canceled successfully']);
-            } else {
-                // Reservation is already canceled
-                return response()->json(['message' => 'Reservation is already canceled']);
-            }
-        } catch (\Exception $e) {
-            // Handle any exceptions (e.g., reservation not found)
-            return response()->json(['error' => 'Reservation not found'], 404);
-        }
-    }
-
-
-    
 
     //requested by user
     public function getAcceptedRequests($id)
@@ -162,7 +133,7 @@ class TablefortwoController extends Controller
     //hostory, accepted by user
     public function getHistoryAcceptedRequests($id)
     {
-        $statuses = ['completed', 'rejected'];
+        $statuses = ['completed'];
     
         $Invites = TableForTwo::where('acceptedID', $id)
             ->whereIn('status', $statuses)
@@ -171,5 +142,37 @@ class TablefortwoController extends Controller
     
         return response()->json($Invites);
     }
+
+    //Cancel upcoming reservations
+    public function updateStatus($id)
+    {
+        $reservation = Tablefortwo::where('reservationNumber', $id)->first();
+
+        if (!$reservation) {
+            return response()->json(['message' => 'Reservation not found'], 404);
+        }
+
+        $reservation->status = 'pending';
+        $reservation->acceptedID = 0;
+        $reservation->save();
+
+        return response()->json(['message' => 'Reservation status updated successfully']);
+    }
+
+        //Accept reservations
+        public function acceptReservations($id, $userID)
+        {
+            $reservation = Tablefortwo::where('reservationNumber', $id)->first();
+    
+            if (!$reservation) {
+                return response()->json(['message' => 'Reservation not found'], 404);
+            }
+    
+            $reservation->status = 'accepted';
+            $reservation->acceptedID = $userID;
+            $reservation->save();
+    
+            return response()->json(['message' => 'Reservation status accepted successfully']);
+        }
 
 }

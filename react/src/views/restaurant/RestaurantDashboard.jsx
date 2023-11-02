@@ -9,6 +9,7 @@ import ChartBox1 from "../../components/restaurant/ChartBox1";
 import ChartBox2 from "../../components/restaurant/ChartBox2";
 import ChartBox3 from "../../components/restaurant/ChartBox3";
 import ChartBox4 from "../../components/restaurant/ChartBox4";
+import BarChartBox2 from "../../components/restaurant/BarChartBox2";
 
 
 
@@ -101,7 +102,7 @@ export default function RestaurantDashboard() {
                 <BarChartBox />
               </div>
               <div className="box box9">
-                <BarChartBox />
+                <BarChartBox2 />
               </div>
             </div>
           </div>

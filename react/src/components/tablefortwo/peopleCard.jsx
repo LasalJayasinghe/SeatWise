@@ -7,6 +7,18 @@ export default function Cards({ user }) {
   const [showModal, setShowModal] = useState(false);
   const [profilePic, setProfilePic] = useState(profilepic);
   const [resData, setResData] = useState({});
+  const [UserData,setUserData] = useState({}) ;
+
+  useEffect(() => {
+    // Fetch user data from the API
+    axiosClient.get('/tablefortwo/userdata')
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []);
 
   useEffect(() => {
     const getUserDetails = axiosClient.get('userDetails/' + user.reservation.reservant_ID);
@@ -15,9 +27,6 @@ export default function Cards({ user }) {
     Promise.all([getUserDetails, getRestaurantDetails])
       .then((responses) => {
         const [userData, restaurantData] = responses;
-        console.log('user data', userData.data);
-        console.log('restaurant data', restaurantData.data);
-
         setInviteData(userData.data);
         setResData(restaurantData.data);
       })
@@ -26,8 +35,6 @@ export default function Cards({ user }) {
       });
   }, [user.reservation.reservant_ID, user.reservation.restaurant_id]);
   
-
-
   useEffect(() => {
       const profilePicFilename = `../../assets/profile_${user.reservation.reservant_ID}.jpg`;
 
@@ -45,27 +52,42 @@ export default function Cards({ user }) {
       setProfilePic(profilepic); // Fall back to default image if profile image not found
   };
 
-  // Time formatting function
-  const formatTime = (timeString) => {
-    const [hours, minutes] = timeString.split(':');
-    let period = 'AM';
-
-    const hoursNum = parseInt(hours, 10);
-
-    if (hoursNum >= 12) {
-      period = 'PM';
-    }
-
-    const formattedHours = hoursNum % 12 || 12;
-
-    return `${formattedHours}:${minutes} ${period}`;
+  const handleAcceptReservation = () => {
+      axiosClient
+        .put(`/tablefortwo/acceptReservation/`+user.reservation.reservationNumber +'/' +UserData.id)
+        .then((response) => {
+          console.log('Reservation accepted:', response.data);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error('Error accepting reservation:', error);
+        });
   };
 
-  // Date formatting function
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
+  //Time formating---------------------------------------------------------
+    // Time formatting function
+    const formatTime = (timeString) => {
+      const [hours, minutes] = timeString.split(':');
+      let period = 'AM';
+  
+      const hoursNum = parseInt(hours, 10);
+  
+      if (hoursNum >= 12) {
+        period = 'PM';
+      }
+  
+      const formattedHours = hoursNum % 12 || 12;
+  
+      return `${formattedHours}:${minutes} ${period}`;
+    };
+  
+    // Date formatting function
+    const formatDate = (dateString) => {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+    //--------------------------------------------------------------------
+
   return (
           
     <div>
@@ -79,9 +101,9 @@ export default function Cards({ user }) {
                     />       
                                 </div>
               <div className='text-center'>
-                <h3 className="mt-4 text-lg font-bold text-gray-700">{data.firstname}</h3>
+                <h3 className="mt-4 text-lg font-bold text-gray-700">{data.firstname}  {data.lastname}</h3>
                   <div className="flex items-center gap-2 mt-2 ml-20 text-sm text-gray-700">
-                      <h3 className="text-center text-gray-700">{user.reservation.reservation_date}</h3>
+                      <h3 className="text-center text-gray-700">{formatDate(user.reservation.reservation_date)}</h3>
 
                   </div>
                   
@@ -89,7 +111,7 @@ export default function Cards({ user }) {
                 {/* Buttons */}
                   <div className="mt-4">
                       <button onClick ={() => setShowModal(true)} className="block w-full py-2 bg-black text-white rounded-md shadow-md hover:bg-gray-900">Request</button>
-                      <button className="block w-full py-2 mt-2 bg-white text-black border border-gray-300 rounded-md shadow-md hover:bg-gray-100">Remove</button>
+                      {/* <button className="block w-full py-2 mt-2 bg-white text-black border border-gray-300 rounded-md shadow-md hover:bg-gray-100">Remove</button> */}
                   </div>
               </div>
         </div>    
@@ -114,14 +136,15 @@ export default function Cards({ user }) {
                   </div>
                 </div>
                 <div className="flex items-center justify-end px-6 pt-6 pb-2 border-t border-solid border-slate-200 rounded-b">
-                  <div className="w-full py-2 bg-neutral-950 rounded-md shadow-md text-center text-white text-base font-semibold">
+                <button className="w-full py-2 bg-green-500 rounded-md shadow-md text-center text-white text-base font-semibold" onClick={handleAcceptReservation}>
                     Request
-                  </div>
+                  </button>
                 </div>
                 <div className="flex items-center justify-end px-6 pb-12 rounded-b">
                     <button onClick={() => setShowModal(false)} className="w-full py-2 bg-zinc-100 bg-opacity-75 rounded-md shadow-md text-center text-neutral-600 text-base font-semibold">
                       Cancel
                     </button>
+                    
                 </div>
               </div>
             </div>

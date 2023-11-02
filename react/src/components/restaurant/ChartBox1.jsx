@@ -110,7 +110,7 @@ export default function ChartBox() {
               <Line
                 type="monotone"
                 dataKey="pv"
-                stroke="#8884d8"
+                stroke="#e1faeb"
                 strokeWidth={2}
                 dot={false}
               />
@@ -125,7 +125,7 @@ export default function ChartBox() {
             {props.percentage}%
           </span>
           <span className="duration">this month</span> */}
-          <span className="percentage">45%</span>
+          <span className="percentage">65%</span>
           <span className="duration"> This Month</span>
         </div>
       </div>

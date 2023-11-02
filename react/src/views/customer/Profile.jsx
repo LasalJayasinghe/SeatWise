@@ -1,15 +1,32 @@
-import React from 'react';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { Link, useLocation } from 'react-router-dom';
+import {React, useState , useEffect} from 'react';
+import {UserCircleIcon } from '@heroicons/react/24/solid'
+import axiosClient from "../../axios-client.js";
 
 export default function Profile() {
+  const [userData , setUserData] = useState([]);
+
+	useEffect(() => {
+		axiosClient.get('tablefortwo/userdata')
+		.then((response) => {
+			return axiosClient.get('tablefortwo/userDetails/' + response.data.id);
+		})
+		.then((response) => {
+			setUserData(response.data);
+		})
+		.catch((error) => {
+			console.error('Error fetching data:', error);
+		});
+	}, []);
+
+  console.log(userData);
+
+
   return (
 
     <div className="p-12 mx-20 ">
 
     
   
-
  
 
 
@@ -79,6 +96,7 @@ export default function Profile() {
                   name="first-name"
                   id="first-name"
                   autoComplete="given-name"
+                  placeholder={userData.firstname} 
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -95,6 +113,7 @@ export default function Profile() {
                   name="last-name"
                   id="last-name"
                   autoComplete="family-name"
+                  placeholder={userData.lastname} 
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -112,6 +131,7 @@ export default function Profile() {
                   name="hometown"
                   id="hometown"
                   autoComplete="hometown"
+                  placeholder={userData.hometown} 
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -124,15 +144,16 @@ export default function Profile() {
                 Birth date
               </label>
               <div className="mt-2">
-                <input
-                  // ref={birthdateRef}
-                  type="date"
-                  name="birth-date"
-                  id="birth-date"
-                  autoComplete="birth-date"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
-                />
-              </div>
+              <input
+                // ref={birthdateRef}
+                type="date"
+                name="birth-date"
+                id="birth-date"
+                autoComplete="birth-date"
+                value={userData.dob}  // Set the value attribute to the user's date of birth
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
+              />
+            </div>
             </div>
 
             
@@ -151,6 +172,7 @@ export default function Profile() {
                     name="push-notifications"
                     type="radio"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
+                    checked={userData.gender === "M"}
                   />
                   <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
                     Male
@@ -163,6 +185,7 @@ export default function Profile() {
                     name="push-notifications"
                     type="radio"
                     className="w-4 h-4 text-green-500 border-gray-300 focus:ring-green-500"
+                    checked={userData.gender === "F"}
                   />
                   <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
                     Female
@@ -211,6 +234,7 @@ export default function Profile() {
                   name="about"
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-500 sm:text-sm sm:leading-6"
+                  placeholder={userData.about} 
                   defaultValue={''}
                 />
               </div>

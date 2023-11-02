@@ -64,4 +64,16 @@ class TableReservation extends Model
         
         return $this->belongsTo(User::class, TableforTwo::class,'acceptedID');
         }
+
+
+        public static function getOngoingReservations()
+    {
+        return TableReservation::where('status', 2)->get();
+    }
+
+    public static function getCompletedReservations()
+    {
+        return TableReservation::where('status', 0)->get();
+    }
+
 }

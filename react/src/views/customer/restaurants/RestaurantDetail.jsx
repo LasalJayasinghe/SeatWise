@@ -35,12 +35,14 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   });
 
   const [selectedTableStructureId, setSelectedTableStructureId] = useState(null);
+  const bookingFeePerTable = 49.00;
+  const bookingFee = selectedTables.filter(table => table.isAvailable).length * bookingFeePerTable;
 
 
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}`);
+        const response = await axiosClient.get(`/restaurantss/${id}`);
         setRestaurant(response.data);
       } catch (error) {
         console.error(error);
@@ -53,7 +55,7 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   useEffect(() => {
     const fetchTableStructures = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}/table-structures`);
+        const response = await axiosClient.get(`/restaurantss/${id}/table-structures`);
         setTables(response.data);
       } catch (error) {
         console.log(error);
@@ -69,7 +71,7 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   useEffect(() => {
     const fetchHalls = async () => {
       try {
-        const response = await axiosClient.get(`/restaurants/${id}/halls`);
+        const response = await axiosClient.get(`/restaurantss/${id}/halls`);
         setHalls(response.data);
       } catch (error) {
         console.log(error);
@@ -89,7 +91,7 @@ const [formSubmissionData, setFormSubmissionData] = useState({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosClient.get(`/restaurants/${id}/available-tables`, {
+      const response = await axiosClient.get(`/restaurantss/${id}/available-tables`, {
         params: {
           restaurant_id: id,
           date,
@@ -194,13 +196,14 @@ const handleReserveClick = () => {
 
   return (
     <div className="relative mb-4">
-    <div className="relative w-full h-60 overflow-hidden">
+    <div className="relative w-full overflow-hidden h-60">
+    
       <img src={restaurantImage} alt="Restaurant" className="w-full h-auto" />
-      <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center">
-        <h1 className="text-5xl font-bold mb-2 text-white">{restaurant.restaurantname}</h1>
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40">
+        <h1 className="mb-2 text-5xl font-bold text-white">{restaurant.restaurantname}</h1>
         <p className="text-gray-100">{restaurant.description}</p>
         <Link to={`/restaurants/${id}/meals`}>
-      <button className="border border-green-500 bg-white text-green-500 px-4 py-2 rounded-lg mb-6 mt-8">
+      <button className="px-4 py-2 mt-8 mb-6 text-green-500 bg-white border border-green-500 rounded-lg">
   View Menu
 </button>
 </Link>
@@ -208,13 +211,13 @@ const handleReserveClick = () => {
     </div>
 
    <div className="flex flex-col items-center">
-      {/* <h1 className="text-3xl font-bold mb-4">{restaurant.name}</h1>
-      <p className="text-gray-600 mb-6">{restaurant.description}</p> */}
+      {/* <h1 className="mb-4 text-3xl font-bold">{restaurant.name}</h1>
+      <p className="mb-6 text-gray-600">{restaurant.description}</p> */}
       
-      <div className="flex items-center justify-center mb-6 mt-4">
+      <div className="flex items-center justify-center mt-4 mb-6">
         <button
           className={`py-2 px-4 rounded-lg ${
-            toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+            toggle === 'tables' ? 'bg-green-500 text-white' : 'bg-green-100 text-green-500'
           }`}
           onClick={handleToggle}
         >
@@ -222,7 +225,7 @@ const handleReserveClick = () => {
         </button>
         <button
           className={`py-2 px-4 rounded-lg ml-4 ${
-            toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-white text-green-500'
+            toggle === 'halls' ? 'bg-green-500 text-white' : 'bg-green-100 text-green-500'
           }`}
           onClick={handleToggle}
         >
@@ -232,7 +235,7 @@ const handleReserveClick = () => {
 
       {/* Form to input date, start time, end time, and number of participants */}
       {toggle === 'tables' && ( // Conditionally render input fields when toggle is 'tables'
-        <form onSubmit={handleSubmit} className="mt-6 flex gap-4" style={{ fontSize: '12px' }}>
+        <form onSubmit={handleSubmit} className="flex gap-4 mt-6" style={{ fontSize: '12px' }}>
           <div className="flex items-center">
             <label className="flex items-center">
               Date:
@@ -241,7 +244,7 @@ const handleReserveClick = () => {
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 required
-                className="mr-5 p-2 border rounded-lg"
+                className="p-2 mr-5 border rounded-lg"
               />
             </label>
 
@@ -252,7 +255,7 @@ const handleReserveClick = () => {
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
                 required
-                className="mr-5 p-2 border rounded-lg"
+                className="p-2 mr-5 border rounded-lg"
               />
             </label>
 
@@ -263,7 +266,7 @@ const handleReserveClick = () => {
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
                 required
-                className="mr-5 p-2 border rounded-lg"
+                className="p-2 mr-5 border rounded-lg"
               />
             </label>
 
@@ -274,12 +277,12 @@ const handleReserveClick = () => {
                 value={numParticipants}
                 onChange={(e) => setNumParticipants(Math.max(1, parseInt(e.target.value)))}
                 required
-                className=" w-16 mr-5 p-2 border rounded-lg"
+                className="w-16 p-2 mr-5 border rounded-lg "
                 min="1"
               />
             </label>
 
-            <button type="submit" className="mr-4 bg-green-500 text-white py-2 px-4 rounded-lg">
+            <button type="submit" className="px-4 py-2 mr-4 text-white bg-black rounded-md">
               Search
             </button>
           </div>
@@ -299,23 +302,33 @@ const handleReserveClick = () => {
 {/* Display table structures */}
 {toggle === 'tables' && (
         <div className="mt-6">
+          <div class="flex items-center mb-6 text-gray-700">
+            <div class="w-3 h-3 bg-green-500 rounded-full  mr-2"></div>
+            <p>Available</p>
+            <div class="w-3 h-3 bg-gray-400 rounded-full ml-4 mr-2"></div>
+            <p>Unavailable</p>
+            <div class="w-3 h-3 bg-black rounded-full ml-4 mr-2"></div>
+            <p>Selected</p>
+            <div class="w-3 h-3 bg-yellow-500 rounded-full ml-4 mr-2"></div>
+            <p>Table for Two</p>
+          </div>
           {/* Organize tables into rows */}
           {organizeTablesIntoRows(tables).map((row, rowIndex) => (
             <div key={rowIndex} className="flex mt-4">
               {row.map((table) => (
                 <div
                   key={table.id}
-                  className={`relative p-4 border rounded-lg ${
+                  className={`relative p-4 border rounded-xl ${
                     selectedTables.includes(table) ? 'bg-black text-white' :
                     table.isAvailable
                       ? 'bg-green-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
                       : table.isTableForTwo
-                      ? 'bg-yellow-300 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
-                      : 'bg-gray-500 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
+                      ? 'bg-yellow-500 cursor-pointer' // Add 'cursor-pointer' class for the hand cursor
+                      : 'bg-gray-400 cursor-not-allowed' // Add 'cursor-not-allowed' class for the not-allowed cursor
                   }`}
                   style={{
                     width: '2cm',
-                    height: '1cm',
+                    height: '2cm',
                     fontSize: '10px',
                     textAlign: 'center',
                     marginRight: '4px',
@@ -324,17 +337,18 @@ const handleReserveClick = () => {
                   onMouseLeave={handleTableLeave}
                   onClick={() => handleTableClick(table)} // Add the click handler
                 >
-                  <h5 className="font-bold" style={{ fontSize: '9px', color: 'white' }}>
+                  <h5 className="font-light" style={{ fontSize: '28px', color: 'white' }}>
                     {table.table_number}
                   </h5>
                   {/* Pop-up bubble */}
                   {hoveredTable === table && (
                     <div
-                      className="absolute top-0 left-0 transform -translate-y-full bg-white p-2 rounded-lg shadow-md"
+                      className="absolute top-0 left-0 p-2 transform -translate-y-full bg-white rounded-lg shadow-md"
                       style={{ fontSize: '12px', pointerEvents: 'none' }}
                     >
                       <p>{table.number_of_chairs} chairs</p>
                       <p>{table.view.name}</p>
+                      <img src={table.view.photo} />
                       
                     </div>
                   )}
@@ -345,15 +359,18 @@ const handleReserveClick = () => {
 
 {/* Show selected tables count and Reserve button for available (green) tables */}
 {selectedTables.some(table => table.isAvailable) && (
-            <div className="mt-6">
-              <p>Selected: {selectedTables.filter(table => table.isAvailable).length} Tables</p>
-              <button
-                className="mt-2 bg-black text-white py-2 px-4 rounded-lg"
-                onClick={handleReserveClick} // Call the handleReserveClick function
-              >
-                Reserve
-              </button>
-            </div>
+  
+            <div className="flex items-center mt-6">
+            <p className="mr-4">Selected: {selectedTables.filter(table => table.isAvailable).length} Table(s)</p>
+            <p className="mr-2 text-2xl ml-9">LKR {bookingFee.toFixed(2)}</p>
+            <button
+              className="px-4 py-2 text-white bg-black rounded-lg"
+              onClick={handleReserveClick}
+            >
+              Reserve
+            </button>
+          </div>
+
           )}
 
 {/* Show the ReservationPopup when showPopup is true */}
@@ -364,6 +381,7 @@ const handleReserveClick = () => {
             user={user}
             restaurantId={restaurant.id}
             selectedTableStructureId={selectedTableStructureId}
+            bookingFee={bookingFee}
             />
           )}
         </div>
@@ -371,48 +389,57 @@ const handleReserveClick = () => {
 
 {/* Table for Two Pop-up */}
 {showTableForTwoPopup && selectedTableForTwo && (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-            <div className="bg-white rounded-lg p-8">
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+  <div className="p-8 bg-white rounded-lg">
+    <p className="text-lg font-bold text-left">Table for Two!</p>
+    <br />
+    <div className="flex items-center">
+      <div className="w-12 h-12 overflow-hidden rounded-full">
+        <img src={hallImage} alt="Your Image" className="w-12 h-12 rounded-full" />
+      </div>
+      <p className="ml-4 text-gray-500">
+        <span className="font-semibold">John Doe</span> is waiting for someone to share his table.
+      </p>
+    </div>
 
-    <p className="text-center font-bold text-lg">Table for Two</p>
-    <p>John Doe - 2 chairs available</p>
-          {/* Buttons and content */}
-          <button
-            className="block mx-auto bg-green-500 text-white py-1 px-4 rounded-md mt-4"
-            onClick={() => {
-              // Add your logic here for the "Request" button
-            }}
-          >
-            Request
-          </button>
-          <button
-            className="block mx-auto bg-gray-500 text-white py-1 px-4 rounded-md mt-2"
-            onClick={() => setShowTableForTwoPopup(false)}
-          >
-            Close
-          </button>
-        </div>
-        </div>
+    {/* Buttons and content */}
+    <button
+      className="block w-full px-4 py-4 mt-8 text-lg font-semibold text-white bg-yellow-500 rounded-md"
+      onClick={() => {
+        // Add your logic here for the "Request" button
+      }}
+    >
+      Request
+    </button>
+    <button
+      className="block w-full px-4 py-4 mt-2 font-semibold text-gray-700 bg-gray-100 border border-gray-300 rounded-md text-medium"
+      onClick={() => setShowTableForTwoPopup(false)}
+    >
+      Close
+    </button>
+  </div>
+</div>
+
       )}
 
 
       {/* Display other relevant restaurant details here */}
       {toggle === 'halls' && (
-  <div className="mt-6 grid gap-4">
-    {halls.map((hall) => (
-      <Link to={`/halls/${hall.id}`} key={hall.id}>
-        <div className="p-4 border rounded-lg">
-          <h3 className="text-lg font-semibold">{hall.name}</h3>
-          <img
-            src={hallImage} // Replace with the actual path to the image in your assets folder
-            alt={`Image of ${hall.name}`}
-            className="w-72 h-auto rounded-lg mt-2"
-          />
-          <p className="text-gray-600">{hall.description}</p>
-        </div>
-      </Link>
-    ))}
-  </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center items-center">
+  {halls.map((hall) => (
+    <Link to={`/halls/${hall.id}`} key={hall.id}>
+      <div className="rounded-lg">
+        <img
+          src={hallImage} // Replace with the actual path to the image in your assets folder
+          alt={`Image of ${hall.name}`}
+          className="h-auto mt-2 rounded-lg w-full"
+        />
+        <h3 className="text-lg font-semibold">{hall.name}</h3>
+        <p className="text-gray-600">{hall.description}</p>
+      </div>
+    </Link>
+  ))}
+</div>
 )}
 
 

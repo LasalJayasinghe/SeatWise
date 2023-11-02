@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axiosClient from '../../../axios-client';
-import backBtn from '../../../assets/back-button.png';
+// import backBtn from '../../../assets/back-button.png';
 
 const WaitlistPage = ({ onClose }) => {
   const location = useLocation();
@@ -43,13 +43,6 @@ const WaitlistPage = ({ onClose }) => {
       // Show the success pop-up
       setShowSuccessPopup(true);
   
-      // Close the success pop-up after a delay (e.g., 2000 milliseconds)
-      setTimeout(() => {
-        setShowSuccessPopup(false);
-  
-        // Navigate to the reservations page
-        navigate('/activities');
-      }, 2000);
     } catch (error) {
       console.error('Error submitting the form:', error);
       // Handle error here (e.g., show an error message)
@@ -61,16 +54,16 @@ const WaitlistPage = ({ onClose }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8">
+    <div className="flex flex-col justify-center flex-1 min-h-full px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className='flex justify-end'>
+        {/* <div className='flex justify-end'>
           <button 
             type="button"
             onClick={handleClose} 
             className="border-transparent border-radius-50% ">
             <img src={backBtn} className='w-10' onClick={handleClose} alt="Back Button" />
           </button>
-        </div>
+        </div> */}
         
         <h2 className="mt-10 mb-4 text-4xl font-bold leading-9 tracking-tight text-left text-gray-900">
           Join the waitlist
@@ -142,7 +135,7 @@ const WaitlistPage = ({ onClose }) => {
               onClick={handleClose} 
               className="px-4 py-2 ml-4 rounded border border-gray-500"
             >
-              Close
+              Cancel
             </button>
           </div>
         </form>
@@ -154,6 +147,25 @@ const WaitlistPage = ({ onClose }) => {
             <div className="p-16 bg-white rounded-lg shadow-lg">
               <h4 className="mb-4 text-lg font-bold">You have successfully joined the waitlist! </h4>
               <p>We'll notify you as soon as the slot becomes available. Thank you for your interest</p>
+              <div className="mt-4 flex justify-end">
+      <button
+        onClick={() => {
+          setShowSuccessPopup(false); // Close the success popup
+        }}
+        className="px-4 py-2 rounded bg-gray-500 text-white mr-2"
+      >
+        Close
+      </button>
+      <button
+        onClick={() => {
+          setShowSuccessPopup(false); // Close the success popup
+          navigate('/dashboard'); // Navigate to the dashboard
+        }}
+        className="px-4 py-2 rounded bg-green-500 text-white"
+      >
+        Home
+      </button>
+    </div>
             </div>
           </div>
         )}

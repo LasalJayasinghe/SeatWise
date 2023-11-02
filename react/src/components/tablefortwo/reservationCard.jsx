@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import profilepic from '../../assets/defaultProfile.png';
 import axiosClient from '../../axios-client.js';
+import CancelConfirmationModal from '../../components/tablefortwo/cancelConfirmation.jsx'; // Update the import path accordingly
+
 
 export default function Cards({ user , reserveID}) {
-  const [showModal, setShowModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showCancelConfirmationModal, setShowCancelConfirmationModal] = useState(false);
   const [invitesData, setInviteData] = useState({});
+  const [confirmation, setConfirmation] = useState(false);
   const [resData, setResData] = useState({});
 
   useEffect(() => {
@@ -47,34 +51,41 @@ export default function Cards({ user , reserveID}) {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
-
   const handleCancelReservation = () => {
-    // Make an API call to cancel the reservation using user.reservation.reservation_id
-    axiosClient
-      .put(`/tablefortwo/cancelReservation/${reserveID}`)
-      .then((response) => {
-        // Handle a successful response from the API
-        console.log('Reservation canceled:', response.data);
+    if (confirmation) {
+      axiosClient
+        .put(`/tablefortwo/cancelReservation/${reserveID}`)
+        .then((response) => {
+          // Handle a successful response from the API
+          console.log('Reservation canceled:', response.data);
+          setShowCancelConfirmationModal(false);
+          setConfirmation(false);
+          window.location.reload();
+
+        })
+        .catch((error) => {
+          // Handle errors from the API request
+          console.error('Error canceling reservation:', error);
+        });
+    } else {
+      // Show the cancellation confirmation modal
+      setShowCancelConfirmationModal(true);
+    }
+  };
   
-        // Close the modal after successful cancellation
-        setShowModal(false);
+  const handleConfirmCancel = () => {
+    setConfirmation(true);
+    // Trigger the cancellation immediately
+    handleCancelReservation();
+  };
   
-        // You can also update the UI here if needed, e.g., changing the reservation status
-        // For example, if user.status is a state variable, you can update it here
-        // setUserData((prevUserData) => ({
-        //   ...prevUserData,
-        //   status: 'canceled',
-        // }));
-      })
-      .catch((error) => {
-        // Handle errors from the API request
-        console.error('Error canceling reservation:', error);
+  const handleCancelModal = () => {
+    setShowCancelConfirmationModal(false);
+    setConfirmation(false);
+  };
   
-        // You may want to show an error message to the user or handle the error in another way
-      });
+  const handleModalClose = () => {
+    setShowDetailsModal(false);
   };
   
 
@@ -108,15 +119,15 @@ export default function Cards({ user , reserveID}) {
           {user.status === 'accepted' ? 'Accepted' : 'Canceled'}
         </p>
         <button
-          onClick={() => setShowModal(true)}
-          className="block w-24 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
-        >
+          onClick={() => setShowDetailsModal(true)}
+          className="block w-24 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-black"
+          >
           View Details
         </button>
       </div>
 
       {/* Modal View */}
-      {showModal && (
+      {showDetailsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
           <div className="relative w-full mx-auto max-w-md bg-white rounded-lg shadow-lg">
             <div className="p-4">
@@ -167,13 +178,20 @@ export default function Cards({ user , reserveID}) {
                 </div>
               </div>
               <div className="mt-4 flex justify-center">
-                <button
-                  className="bg-red-500 text-white px-16 py-2 rounded-full font-semibold hover:bg-red-600 focus:outline-none"
-                  onClick={handleCancelReservation}
-                >
-                  Cancel Reservation
-                </button>
-              </div>
+               <button
+                className="bg-red-500 text-white px-16 py-2 rounded-full font-semibold hover:bg-red-600 focus:outline-none"
+                onClick={handleCancelReservation}
+              >
+                Cancel Reservation
+              </button>
+            </div>
+
+            {showCancelConfirmationModal && (
+              <CancelConfirmationModal
+                onCancel={handleConfirmCancel}
+                onClose={handleCancelModal}
+              />
+            )}
             </div>
           </div>
         </div>

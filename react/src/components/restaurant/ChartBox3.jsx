@@ -50,21 +50,66 @@ const data = [
 ];
 
 export default function ChartBox() {
-  const {user} = useStateContext();
-  const [count3, setCount3] = useState([]);
 
+    const {user, setUser} = useStateContext();
+    const [addPrice, setAddPrice] = useState([null]);
+    const [tableCount, settableCount] = useState([null]);
+    const [hallCount, sethallCount] = useState([null]);
  
-  useEffect(() => {
-    if (user && user.id) {
-    axiosClient.get(`/getTotalUserCount/${user.id}`)
-      .then(({ data }) => {
-        setCount3(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    }
-  }, [user]);
+
+    useEffect(() => {
+        axiosClient.get('/user')
+        .then(({data}) => {
+            setUser(data)
+            // fetchAddFee(data.id);
+            fetchTableCount(data.id);
+            fetchHallCount(data.id);
+            //fetchReservedTableData(data.id);
+            // getfloordata(data.id);
+        })
+    }, [])
+    
+        // const fetchAddFee = (restaurant_id) => {
+        // //   setLoading(true);
+        //     axiosClient
+        //     .get("/getAdvertisementFee", { params: { restaurant_id } })
+        //     .then(({ data }) => {
+        //         console.log("Fetched data:", data);
+        //         setAddPrice(data);
+        //         // setLoading(false);
+        //     })
+        //     .catch((error) => {
+        //         console.error("Error fetching tables:", error);
+        //     });
+        // };
+
+        const fetchTableCount = (restaurant_id) => {
+            //   setLoading(true);
+                axiosClient
+                .get(`/getTotalMonthlyReservationCount/${restaurant_id}`)
+                .then(({ data }) => {
+                    console.log("Fetched table data:", data);
+                    settableCount(data);
+                    // setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("Error fetching tables:", error);
+                });
+        };
+
+        const fetchHallCount = (restaurant_id) => {
+            //   setLoading(true);
+                axiosClient
+                .get(`/getMonthlyHallReservations/${restaurant_id}`)
+                .then(({ data }) => {
+                    console.log("Fetched table data:", data);
+                    sethallCount(data);
+                    // setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("Error fetching tables:", error);
+                });
+        };
 
 
   return (
@@ -80,7 +125,7 @@ export default function ChartBox() {
         <Link to="/" style={{ color: props.color }}>
           View all
         </Link> */}
-        {/* <h1><b>{count1}</b></h1> */}       
+        <h1><b>{(tableCount * 49) + (hallCount * 1099)}</b></h1>       
         <Link className="link">View all</Link>
       </div>
       <div className="chartInfo">
@@ -111,7 +156,7 @@ export default function ChartBox() {
               <Line
                 type="monotone"
                 dataKey="pv"
-                stroke="#8884d8"
+                stroke="#e1faeb"
                 strokeWidth={2}
                 dot={false}
               />
@@ -126,7 +171,7 @@ export default function ChartBox() {
             {props.percentage}%
           </span>
           <span className="duration">this month</span> */}
-          <span className="percentage">45%</span>
+          <span className="percentage">35%</span>
           <span className="duration"> This Month</span>
         </div>
       </div>

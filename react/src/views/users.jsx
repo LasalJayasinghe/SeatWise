@@ -4,40 +4,28 @@ import Header from "../components/Header.jsx";
 
 
 export default function Users(){
-	const [user, setUser] = useState(null); // Initialize user state
-	const[loading,setLoading] = useState(false);
-
+	const [user, setUserData] = useState(null); // Initialize user state
 	useEffect(() => {
-		getUsers()
-	},[])
-
-	const getUsers = () => {
-		setLoading(true)
-		axiosClient.get('/users')
-		.then(({ data }) => {
-			setLoading(false)
-			setUser(data.data)
+		axiosClient.get('tablefortwo/userdata')
+		.then((response) => {
+			return axiosClient.get('/userRecommendations/' + response.data.id);
 		})
-		.catch(() => {
-		setLoading(false)
+		.then((response) => {
+			setUserData(response.data);
 		})
-	}
-
-
-	const onLogout = ev => {
-		ev.preventDefault()
-	  
-		axiosClient.post('/logout')
-		.then(() => {
-			setUser({})
-			setToken(null)
-		})
-	  }
+		.catch((error) => {
+			console.error('Error fetching data:', error);
+		});
+	}, []);
+	
+	useEffect(() => {
+		console.log("Data:", user);
+	}, [user]); // This will trigger when 'user' changes
+	
 	return(
 	<div>
-		<a   href="/login"  onClick={onLogout}   >
-             Sign out
-        </a>		
+				heelow
+
 	</div>
 	)
 }

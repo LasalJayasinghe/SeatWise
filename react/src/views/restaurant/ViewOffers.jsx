@@ -1,6 +1,6 @@
 import { useStateContext } from "../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
-import DeleteConfirmationModal from "../../components/restaurant/DeleteConfirmationModal";
+import OfferDeleteConfirmationModel from "../../components/OfferDeleteConfirmationModel";
 import OffersUpdateModal from "../../components/OffersUpdateModal";
 import SettingsBar from "../../components/restaurant/SettingsBar";
 
@@ -185,13 +185,13 @@ const handleUpdate = (offerId) => {
     {
       field: 'meal',
       headerName: 'Meal',
-      width: 150,
+      width: 70,
       editable: true,
     },
     {
       field: 'offer_type',
       headerName: 'Offer Type',
-      width: 160,
+      width: 100,
       editable: true,
     
     },
@@ -201,7 +201,7 @@ const handleUpdate = (offerId) => {
    {
     field: 'offer_percentage',
     headerName: 'Offer Percentage',
-      width: 130,
+      width: 140,
     editable: true,
 },
 
@@ -209,7 +209,7 @@ const handleUpdate = (offerId) => {
 {
     field: 'start_date',
     headerName: 'Start Date',
-      width: 160,
+      width: 100,
     editable: true,
 },
 
@@ -217,33 +217,33 @@ const handleUpdate = (offerId) => {
 {
     field: 'end_date',
     headerName: 'End Date',
-      width: 160,
+      width: 100,
     editable: true,
 },
 
 {
     field: 'days_of_week',
     headerName: 'days_of_week',
-      width: 160,
+      width: 100,
     editable: true,
 },
 
 {
     field: 'minimum_purchase_amount',
     headerName: 'Minimum Purchase Amount',
-      width: 260,
+      width: 170,
     editable: true,
 },
 
     {
         field:"actions",
         headerName:"Actions", 
-        width:190,
+        width:200,
         renderCell: (params) => {
             return <div className="flex">
  <button
             onClick={() => handleUpdate(params.row.id)} 
-            style={{ marginLeft: '0rem' }}
+            style={{ marginLeft: '0rem',  outline: 'none',}}
             className="bg-green-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
           >
             Update
@@ -285,14 +285,34 @@ Remove
                     </header>
                 </div>
                 <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <button onClick={handleClick} style={{ marginLeft: '60rem',
+     marginTop: '3rem',
+     fontSize: '1.3rem', // Increase font size
+     padding: '1rem 1rem', // Increase padding vertically and horizontally
+     borderRadius: '0.6rem',
+
+     }}className="bg-white text-green-500 font-bold py-2 px-4 rounded">
+ + Add Offers
+</button>
+    </div>            <div className="flex mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     
-                  
+        
              
                 <div className="dataTable">
                 <DataGrid
                     rows={offers}
                     getRowId={(row) => row.id}
                     columns={columns}
+                   // disableColumnReorder={true} // Disable column reordering
+                  //  disableColumnResize={true} 
+                    //autoFocus={false} 
+                    style={{
+                      width: '1230px',
+                      // Remove the cell outline
+                      '& .MuiDataGrid-cell:focus': {
+                        outline: 'none',
+                      },
+                    }}
                     initialState={{
                     pagination: {
                         paginationModel: {
@@ -313,7 +333,7 @@ Remove
                     disableColumnFilter
                     disableDensitySelector
                     disableColumnSelector
-                    style={{ maxWidth: '900px' }}
+                    //style={{ maxWidth: '900px' }}
                 />
 
             </div>
@@ -327,6 +347,21 @@ Remove
         
 
         {/* <Footer /> */}
+        <OffersUpdateModal
+        isOpen={showUpdateModal}
+        onCancel={cancelUpdate}
+        onConfirm={confirmUpdate}
+        //offers={setSelectedOfferForUpdate}
+        Offer={selectedOfferForUpdate}
+
+
+
+      />
+<OfferDeleteConfirmationModel
+        isOpen={showConfirmationModalDelete}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+      />
     </div>
 
 
