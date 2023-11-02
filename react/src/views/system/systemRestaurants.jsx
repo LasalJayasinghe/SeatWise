@@ -48,6 +48,7 @@ export default function SystemRestaurants(){
                           <th className="border px-4 py-2">Restaurant Name</th>
                           <th className="border px-4 py-2">BRN</th>
                           <th className="border px-4 py-2">Name</th>
+                          <th className="border px-4 py-2">Email</th>
                           <th className="border px-4 py-2">Phone</th>
                           <th className="border px-4 py-2">Email Verified</th>
                         </tr>
@@ -63,6 +64,7 @@ export default function SystemRestaurants(){
                                 <td className="border px-4 py-2">{restaurant.restaurantname}</td>
                                  <td className="border px-4 py-2">{restaurant.brn}</td>
                                  <td className="border px-4 py-2">{restaurant.name}</td>
+                                 <td className="border px-4 py-2">{restaurant.email}</td>
                                <td className="border px-4 py-2">{restaurant.phone}</td>
                                 <td className="border px-4 py-2">
                                     {restaurant.email_verified_at || 'Not Verified'}

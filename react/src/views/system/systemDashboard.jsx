@@ -55,55 +55,80 @@ export default function SystemDashboard(){
 	}, []);
 
 
-    // useEffect(() => {
-	// 	axiosClient.get('/systemDashboard/getWeeklyProfit')
-	// 	.then((response) => {
-    //         console.log(response.data)
+    useEffect(() => {
+		axiosClient.get('/systemDashboard/getWeeklyProfit')
+		.then((response) => {
+            console.log(response.data)
+            setWeeklyProfitData(response.data)
 			
-	// 	})
-	// 	.catch((error) => {
-	// 		console.error('Error fetching data:', error);
-	// 	});
-	// }, []);
+		})
+		.catch((error) => {
+			console.error('Error fetching data:', error);
+		});
+	}, []);
 
 
 
 
-
-    const [chartData, setChartData] = useState({
-        labels: [],
+    
+    const chartData = {
+        labels: Array.isArray(weeklyProfitData)
+        ? weeklyProfitData.map((weekProfit) => `Week ${weekProfit.week}`)
+        : [],
         datasets: [
           {
             label: 'Profit',
-            data: [],
+            data: Array.isArray(weeklyProfitData)
+            ? weeklyProfitData.map((weekProfit) => weekProfit.total_profit)
+            : [],
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 2,
-            fill: true
+            fill: true,
           },
         ],
-      });
+      };
 
 
-      useEffect(() => {
-        // Check if weeklyProfitData has data
-        if (weeklyProfitData && weeklyProfitData.length > 0) {
-            // Extract labels (week numbers) and profits
-            const labels = weeklyProfitData.map((weekProfit) => `Week ${weekProfit.week}`);
-            const profits = weeklyProfitData.map((weekProfit) => weekProfit.total_profit);
+    //   useEffect(() => {
+    //     // Check if weeklyProfitData has data
+    //     if (weeklyProfitData && weeklyProfitData.length > 0) {
+    //         // Extract labels (week numbers) and profits
+    //         const labels = weeklyProfitData.map((weekProfit) => `Week ${weekProfit.week}`);
+    //         const profits = weeklyProfitData.map((weekProfit) => weekProfit.total_profit);
     
-            // Update the chartData state with the new data
-            setChartData({
-                labels: labels,
-                datasets: [
-                    {
-                        ...chartData.datasets[0], // Keep other dataset properties
-                        data: profits,
-                    },
-                ],
-            });
-        }
-    }, [weeklyProfitData]);
-
+    //         // Update the chartData state with the new data
+    //         setChartData({
+    //             labels: labels,
+    //             datasets: [
+    //                 {
+    //                     ...chartData.datasets[0], // Keep other dataset properties
+    //                     data: profits,
+    //                 },
+    //             ],
+    //         });
+    //     }
+    // }, [weeklyProfitData]);
+    // useEffect(() => {
+    //     if (weeklyProfitData && weeklyProfitData.length > 0) {
+    //         const labels = weeklyProfitData.map((weekProfit) => `Week ${weekProfit.week}`);
+    //         const profits = weeklyProfitData.map((weekProfit) => weekProfit.total_profit);
+    
+    //         // Use the callback form of setChartData to ensure the latest state is used
+    //         setChartData((prevChartData) => {
+    //             return {
+    //                 ...prevChartData, // Copy the existing state
+    //                 labels: labels,
+    //                 datasets: [
+    //                     {
+    //                         ...prevChartData.datasets[0], // Copy the existing dataset
+    //                         data: profits,
+    //                     },
+    //                 ],
+    //             };
+    //         });
+    //     }
+    // }, [weeklyProfitData]);
+    
 
 
 
