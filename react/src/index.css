@@ -820,3 +820,28 @@ table > tbody > tr > td {
       display: block;
     } */
 }
+
+/* This is the container holding the scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width of the scrollbar as needed */
+  margin-top: 10px; /* Add a top margin */
+}
+
+/* The thumb (drag handle) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background: #4caf4f00; /* Change the color of the thumb to a greenish color */
+  border-radius: 5px; /* Add curved edges to the thumb */
+}
+
+/* Track (the area behind the thumb) */
+::-webkit-scrollbar-track {
+  background: #cbccca00; /* Change the color of the track to a greenish color */
+  border-radius: 5px; /* Add curved edges to the track */
+}
+
+/* Corner between horizontal and vertical scrollbars */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+

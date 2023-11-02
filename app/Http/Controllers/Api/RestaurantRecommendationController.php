@@ -61,7 +61,7 @@ class RestaurantRecommendationController extends Controller
             return $b['similarity_score'] <=> $a['similarity_score'];
         });
         
-        $similarUsers = array_slice($similarUsers, 0, 5);
+        $similarUsers = array_slice($similarUsers, 0, 4);
 
 
         return $similarUsers;
