@@ -1,66 +1,108 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SEATWISE
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+SEATWISE is a restaurant table booking system that allows users to reserve tables or event halls at restaurants. This project is built using React, Laravel, and Tailwind CSS. It also incorporates two recommendation systems to enhance the user experience.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Table Booking**: Users can easily browse restaurants, view available tables or event halls, and make reservations.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Recommendation Systems**: SEATWISE utilizes two recommendation systems to suggest suitable restaurants and dining options, improving the user experience.
 
-## Learning Laravel
+- **Responsive Design**: The user interface is designed to be responsive, ensuring a seamless experience across different devices and screen sizes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **React**: The frontend is developed using React, a popular JavaScript library for building user interfaces.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Laravel**: The backend is powered by Laravel, a PHP framework known for its elegant syntax and robust features.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Tailwind CSS**: The project uses Tailwind CSS to create a visually appealing and responsive UI.
 
-## Laravel Sponsors
+Certainly! Here's an updated section in the README file with more detailed installation instructions, including npm and Laravel commands:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```markdown
+## Getting Started
 
-### Premium Partners
+1. **Clone the Repository**:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+   ```shell
+   git clone https://github.com/LasalJayasinghe/SeatWise.git
+   cd seatwise
+   ```
 
-## Contributing
+2. **Backend Setup**:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   - Navigate to the Laravel directory and follow the Laravel setup instructions.
 
-## Code of Conduct
+   - Install Composer dependencies:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+     ```shell
+     composer install
+     ```
 
-## Security Vulnerabilities
+   - Create a `.env` file and configure your database settings. You can use the example `.env.example` as a template.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   - Generate an application key:
+
+     ```shell
+     php artisan key:generate
+     ```
+
+   - Run the database migrations to create the required tables:
+
+     ```shell
+     php artisan migrate
+     ```
+
+   - Start the Laravel server:
+
+     ```shell
+     php artisan serve
+     ```
+
+   - Your Laravel backend should now be running at `http://localhost:8000`.
+
+3. **Frontend Setup**:
+
+   - Navigate to the React directory and follow the React setup instructions.
+
+   - Install Node.js dependencies:
+
+     ```shell
+     npm install
+     ```
+
+   - Start the React development server:
+
+     ```shell
+     npm run dev
+     ```
+
+   - Your React frontend should be accessible at `http://localhost:3000`.
+
+4. **Access the Application**:
+
+   - Open a web browser and go to `http://localhost:3000` to access the SEATWISE application.
+
+## Usage
+
+- Users can browse restaurants, view available tables or event halls, and make reservations.
+- The recommendation systems will provide personalized suggestions to enhance the user experience.
+
+## Contributors
+
+- Lasal Jayasinghe
+- AnuththaraSamadhi
+- Lahiru Kavishka
+- K.P.G.K.JAYATHILAKE
+- Madushi Saumya
+- Vimukthi Dulnath
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- Special thanks to the developers of React, Laravel, and Tailwind CSS for their incredible tools.
+```
