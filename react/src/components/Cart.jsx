@@ -2,9 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
-const Cart = ({ isOpen, closeSlideOver, cartItems, removeCartItem, restaurantName, clearCart, selectedRestaurantId, totalAmount }) => {
+
+const Cart = ({ isOpen, closeSlideOver, cartItems, removeCartItem, restaurantName, clearCart, selectedRestaurantId, totalAmount, onConfirmOrder}) => {
     const discountRate = 0.4; // 40% discount rate
     const discountedAmount = totalAmount * discountRate;
+    const handleConfirmOrder = () => {
+        
+      // call the parent component's function to show the success popup
+      onConfirmOrder();
+      closeSlideOver();
+    };
+
     if (!cartItems) {
     return (
       <div
@@ -36,7 +44,7 @@ const Cart = ({ isOpen, closeSlideOver, cartItems, removeCartItem, restaurantNam
             </button>
           </div>
           <div className="flex justify-center item-center">
-            <h5 className="font-semibold text-gray-500">{restaurantName}</h5>
+            <h5 className="font-semibold text-gray-500">Select a restaurant to add meals</h5>
           </div>
           
           <hr />
@@ -144,7 +152,7 @@ const Cart = ({ isOpen, closeSlideOver, cartItems, removeCartItem, restaurantNam
             <p><span className="font-semibold">Total Amount:</span><span className="ml-auto"> LKR {totalAmount}.00</span></p>
             <p><span className="font-semibold">Amount to pay: LKR {discountedAmount.toFixed(2)}</span> <span className="ml-auto"><br/>(40% of the total should be paid to pre order meals)</span></p>
 <br />
-<button className="p-4 font-semibold text-white bg-green-500 hover:bg-green-600"  onClick={closeSlideOver}>
+<button className="p-4 font-semibold text-white bg-green-500 hover:bg-green-600"  onClick={handleConfirmOrder}>
   Confirm Order - Pay LKR {discountedAmount.toFixed(2)}
 </button>
 

@@ -207,11 +207,11 @@ export default function Payments() {
                                         </div>
                                         <div className="justify-start items-start gap-[130px] inline-flex">
                                             <div className="w-[173px] h-[2px] text-zinc-400 text-base font-medium font-['Inter'] leading-3">Flat platform cost</div>
-                                            <div className="w-[51px] h-[25px] text-zinc-400 text-base font-medium font-['Inter'] leading-3">3%</div>
+                                            <div className="w-[51px] h-[25px] text-zinc-400 text-base font-medium font-['Inter'] leading-3">30%</div>
                                         </div>
                                         <div className="justify-start items-start gap-[230px] inline-flex">
                                             <div className="w-[170px] h-[25px] text-zinc-950 text-base font-medium font-['Inter'] leading-3"></div>
-                                            <div className="w-[60px] h-[25px] text-zinc-950 text-base font-medium font-['Inter'] leading-3">{((tableCount * 49) + (hallCount * 1099))*3/100}</div>
+                                            <div className="w-[60px] h-[25px] text-zinc-950 text-base font-medium font-['Inter'] leading-3">{((tableCount * 49) + (hallCount * 1099))*30/100}</div>
                                         </div>
                                         </div>
                                     </div>

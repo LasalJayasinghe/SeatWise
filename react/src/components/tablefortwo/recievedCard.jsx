@@ -9,23 +9,24 @@ export default function Cards({ user }) {
   console.log("user", user);
   
   useEffect(() => {
-    const getUserDetails = axiosClient.get('userDetails/' + user.reservation.reservant_ID);
-    const getRestaurantDetails = axiosClient.get('restaurantDetails/' + user.reservation.restaurant_id);
+    if (user.reservation?.reservant_ID && user.reservation) {
+      const getUserDetails = axiosClient.get('userDetails/' + user.reservation.reservant_ID);
+      const getRestaurantDetails = axiosClient.get('restaurantDetails/' + user.reservation.restaurant_id);
   
-    Promise.all([getUserDetails, getRestaurantDetails])
-      .then((responses) => {
-        const [userData, restaurantData] = responses;
-        console.log("user data", userData.data);
-        console.log("restaurant data", restaurantData.data);
+      Promise.all([getUserDetails, getRestaurantDetails])
+        .then((responses) => {
+          const [userData, restaurantData] = responses;
+          console.log("user data", userData.data);
+          console.log("restaurant data", restaurantData.data);
   
-        setInviteData(userData.data);
-        setResData(restaurantData.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, [user.reservation.reservant_ID, user.reservation.restaurant_id]);
-  
+          setInviteData(userData.data);
+          setResData(restaurantData.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    }
+  }, [user.reservation?.reservant_ID, user.reservation?.restaurant_id]);
   
 
   // Convert time 

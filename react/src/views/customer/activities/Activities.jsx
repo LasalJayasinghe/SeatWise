@@ -90,14 +90,14 @@ export default function Activities() {
     <div className="w-full md:w-1/2">
   <table className="w-full border-collapse border-none">
     <tbody>
-      <tr className="border-b border-none">
+      {/* <tr className="border-b border-none">
         <td className="p-2 text-gray-500 border-r border-none">Order Fee:</td>
         <td className="p-2 border-none">1552.00 LKR</td>
       </tr>
       <tr className="border-b border-none">
         <td className="p-2 text-gray-500 border-r border-none">Reservation Fee:</td>
         <td className="p-2 border-none">150.00 LKR</td>
-      </tr>
+      </tr> */}
       <tr>
         <td className="p-2 text-lg font-bold text-green-500 border-r border-none">Total:</td>
         <td className="p-2 text-lg font-bold text-green-500 border-none">{reservation.price}.00 LKR</td>

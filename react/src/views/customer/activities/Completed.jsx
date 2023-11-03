@@ -75,16 +75,16 @@ export default function Completed() {
                 <div>
                   {submittedRatings[reservation.restaurant_id] ? (
                     // Display submitted rating instead of rating buttons
-                    <p>Rating: {submittedRatings[reservation.restaurant_id]}</p>
+                    <p className='mr-5  bg-green-200 rounded-full p-4 '>Your Rate{submittedRatings[reservation.restaurant_id]}</p>
                   ) : (
                     // Display rating buttons
                     <>
                       Rate the restaurant:
-                      <button onClick={() => handleRating(reservation.restaurant_id, 1)}>1</button>
-                      <button onClick={() => handleRating(reservation.restaurant_id, 2)}>2</button>
-                      <button onClick={() => handleRating(reservation.restaurant_id, 3)}>3</button>
-                      <button onClick={() => handleRating(reservation.restaurant_id, 4)}>4</button>
-                      <button onClick={() => handleRating(reservation.restaurant_id, 5)}>5</button>
+                      <button className='mr-5  bg-green-200 rounded-full p-4 ml-5' onClick={() => handleRating(reservation.restaurant_id, 1)}>1</button>
+                      <button className='mr-5  bg-green-200 rounded-full p-4 '  onClick={() => handleRating(reservation.restaurant_id, 2)}>2</button>
+                      <button className='mr-5  bg-green-200 rounded-full p-4 '  onClick={() => handleRating(reservation.restaurant_id, 3)}>3</button>
+                      <button className='mr-5  bg-green-200 rounded-full p-4 '  onClick={() => handleRating(reservation.restaurant_id, 4)}>4</button>
+                      <button className='mr-5  bg-green-200 rounded-full p-4 '  onClick={() => handleRating(reservation.restaurant_id, 5)}>5</button>
                     </>
                   )}
                 </div>
